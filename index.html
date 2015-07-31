@@ -53,96 +53,58 @@
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
-  <article class="post">
+  <article class="coding">
   
   <div class="post-content">
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-07-30T14:41:43.000Z"><a href="/2015/07/30/index/">2015-07-30</a></time>
+        <time datetime="2009-03-19T01:12:53.000Z"><a href="/2009/03/19/eclipse插件开发获取路径的几种方式/">2009-03-19</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/07/30/index/">index</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-07-30T14:41:30.000Z"><a href="/2015/07/30/index-md/">2015-07-30</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/07/30/index-md/">index.md</a></h1>
+    <h1 class="title"><a href="/2009/03/19/eclipse插件开发获取路径的几种方式/">eclipse插件开发获取路径的几种方式</a></h1>
   
 
     </header>
     <div class="entry">
       
-        
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
+        <p>1.得到runtime workspace目录的绝对路径</p>
+<pre><code><span class="type">String</span> file = <span class="type">Platform</span>.getInstanceLocation<span class="literal">()</span>.getURL<span class="literal">()</span>.getPath<span class="literal">()</span>;
+</code></pre><p>2.得到runtime workspace目录下所有的工程</p>
+<pre><code>IWorkspace workspace = ResourcesPlugin.getWorkspace<span class="params">()</span>;
+   IWorkspaceRoot root = workspace.getRoot<span class="params">()</span>;
+   IProject[] newProjectHandle = root.getProjects<span class="params">()</span>;
 
+<span class="keyword">for</span> <span class="params">(int i = <span class="number">0</span>, size = newProjectHandle.length; i &lt; size; i++)</span> {
+    IProject iProject = newProjectHandle[i];
 
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-07-29T11:20:13.156Z"><a href="/2015/07/29/hello-world/">2015-07-29</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/07/29/hello-world/">Hello World</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
+    <span class="comment">// 工程名字</span>
+String projectName = iProject.getName<span class="params">()</span>;
+IResource[] resources = iProject.members<span class="params">()</span>;
+    <span class="keyword">for</span> <span class="params">(int j = <span class="number">0</span>, n = resources.length; j &lt; n; j++)</span> {
+     <span class="keyword">if</span> <span class="params">(resources[j].getType<span class="params">()</span> == IResource.FILE
+       &amp;&amp; resources[j].getFileExtension<span class="params">()</span>.equals<span class="params">(<span class="string">"xpdl"</span>)</span>)</span> {
+      <span class="comment">// 包:工程下xpdl文件的绝对路径,包路径</span>
+      String xpdlFileFullPath = resources[j].getLocation<span class="params">()</span>
+        .toOSString<span class="params">()</span>;
+      }
+     }
+}
+</code></pre><p>3.取插件项目所在路径</p>
+<pre><code>public static String getPluginPath<span class="params">()</span>{
+  String pluginPath=null;
+  try {
+   pluginPath = FileLocator.toFileURL<span class="params">(
+           Platform.getBundle<span class="params">(Activator.PLUGIN_ID)</span>.getEntry<span class="params">(<span class="string">""</span>)</span>)</span>.getPath<span class="params">()</span>;
+   pluginPath = pluginPath.substring<span class="params">(<span class="number">1</span>)</span>;
+  } catch <span class="params">(IOException e1)</span> {
+   <span class="comment">// TODO 自动生成 catch 块</span>
+   e1.printStackTrace<span class="params">()</span>;
+  }
+  return pluginPath;  
+} 
+</code></pre>
       
     </div>
     <footer>
@@ -175,6 +137,17 @@
   
 
   
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+  </ul>
+</div>
+
 </aside>
     <div class="clearfix"></div>
   </div>

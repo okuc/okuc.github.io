@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>archives | 我的后院自留地</title>
+  <title>eclipse插件开发获取路径的几种方式 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="Ajax d3 echarts  threejs hadoop hbase cassandra hive elasticsearch spider html5">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="archives"/>
+  <meta property="og:title" content="eclipse插件开发获取路径的几种方式"/>
   <meta property="og:site_name" content="我的后院自留地"/>
 
   
@@ -52,27 +52,69 @@
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper"><article class="page">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
   
   <div class="post-content">
     <header>
       
+        <div class="icon"></div>
+        <time datetime="2009-03-19T01:12:53.000Z"><a href="/2009/03/19/eclipse插件开发获取路径的几种方式/">2009-03-19</a></time>
+      
       
   
-    <h1 class="title">archives</h1>
+    <h1 class="title">eclipse插件开发获取路径的几种方式</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>#本页面正在施工中，请静候！</p>
+        <p>1.得到runtime workspace目录的绝对路径</p>
+<pre><code><span class="type">String</span> file = <span class="type">Platform</span>.getInstanceLocation<span class="literal">()</span>.getURL<span class="literal">()</span>.getPath<span class="literal">()</span>;
+</code></pre><p>2.得到runtime workspace目录下所有的工程</p>
+<pre><code>IWorkspace workspace = ResourcesPlugin.getWorkspace<span class="params">()</span>;
+   IWorkspaceRoot root = workspace.getRoot<span class="params">()</span>;
+   IProject[] newProjectHandle = root.getProjects<span class="params">()</span>;
 
+<span class="keyword">for</span> <span class="params">(int i = <span class="number">0</span>, size = newProjectHandle.length; i &lt; size; i++)</span> {
+    IProject iProject = newProjectHandle[i];
+
+    <span class="comment">// 工程名字</span>
+String projectName = iProject.getName<span class="params">()</span>;
+IResource[] resources = iProject.members<span class="params">()</span>;
+    <span class="keyword">for</span> <span class="params">(int j = <span class="number">0</span>, n = resources.length; j &lt; n; j++)</span> {
+     <span class="keyword">if</span> <span class="params">(resources[j].getType<span class="params">()</span> == IResource.FILE
+       &amp;&amp; resources[j].getFileExtension<span class="params">()</span>.equals<span class="params">(<span class="string">"xpdl"</span>)</span>)</span> {
+      <span class="comment">// 包:工程下xpdl文件的绝对路径,包路径</span>
+      String xpdlFileFullPath = resources[j].getLocation<span class="params">()</span>
+        .toOSString<span class="params">()</span>;
+      }
+     }
+}
+</code></pre><p>3.取插件项目所在路径</p>
+<pre><code>public static String getPluginPath<span class="params">()</span>{
+  String pluginPath=null;
+  try {
+   pluginPath = FileLocator.toFileURL<span class="params">(
+           Platform.getBundle<span class="params">(Activator.PLUGIN_ID)</span>.getEntry<span class="params">(<span class="string">""</span>)</span>)</span>.getPath<span class="params">()</span>;
+   pluginPath = pluginPath.substring<span class="params">(<span class="number">1</span>)</span>;
+  } catch <span class="params">(IOException e1)</span> {
+   <span class="comment">// TODO 自动生成 catch 块</span>
+   e1.printStackTrace<span class="params">()</span>;
+  }
+  return pluginPath;  
+} 
+</code></pre>
       
     </div>
     <footer>
       
         
         
+  
+  <div class="tags">
+    <a href="/tags/eclipse/">eclipse</a>, <a href="/tags/eclipse插件开发/">eclipse插件开发</a>
+  </div>
+
         
       
       <div class="clearfix"></div>
@@ -90,7 +132,7 @@
 </nav>
 
 <!-- ��˵���ۿ� start -->
- <div class="ds-thread" data-thread-key="/bigData/index.html" data-title="archives" data-url="http://yoursite.com/bigData/index.html"></div>
+ <div class="ds-thread" data-thread-key="/2009/03/19/eclipse插件开发获取路径的几种方式/" data-title="eclipse插件开发获取路径的几种方式" data-url="http://yoursite.com/2009/03/19/eclipse插件开发获取路径的几种方式/"></div>
 <!-- ��˵���ۿ� end -->
 <!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
 <script type="text/javascript">
