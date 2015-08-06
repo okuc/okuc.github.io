@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>我的后院自留地</title>
+  <title>《Elasticsearch服务器开发》学习笔记（－） | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="Ajax d3 echarts  threejs hadoop hbase cassandra hive elasticsearch spider html5">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="《Elasticsearch服务器开发》学习笔记（－）"/>
   <meta property="og:site_name" content="我的后院自留地"/>
 
   
@@ -52,8 +52,7 @@
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-  <article class="post">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
   
   <div class="post-content">
     <header>
@@ -63,7 +62,7 @@
       
       
   
-    <h1 class="title"><a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（－）/">《Elasticsearch服务器开发》学习笔记（－）</a></h1>
+    <h1 class="title">《Elasticsearch服务器开发》学习笔记（－）</h1>
   
 
     </header>
@@ -233,72 +232,11 @@
       
         
         
-      
-      <div class="clearfix"></div>
-    </footer>
+  
+  <div class="tags">
+    <a href="/tags/elasticsearch/">elasticsearch</a>
   </div>
-</article>
 
-
-
-
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2009-03-19T01:12:53.000Z"><a href="/2009/03/19/eclipse插件开发获取路径的几种方式/">2009-03-19</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2009/03/19/eclipse插件开发获取路径的几种方式/">eclipse插件开发获取路径的几种方式</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>1.得到runtime workspace目录的绝对路径</p>
-<pre><code><span class="type">String</span> file = <span class="type">Platform</span>.getInstanceLocation<span class="literal">()</span>.getURL<span class="literal">()</span>.getPath<span class="literal">()</span>;
-</code></pre><p>2.得到runtime workspace目录下所有的工程</p>
-<pre><code>IWorkspace workspace = ResourcesPlugin.getWorkspace<span class="params">()</span>;
-   IWorkspaceRoot root = workspace.getRoot<span class="params">()</span>;
-   IProject[] newProjectHandle = root.getProjects<span class="params">()</span>;
-
-<span class="keyword">for</span> <span class="params">(int i = <span class="number">0</span>, size = newProjectHandle.length; i &lt; size; i++)</span> {
-    IProject iProject = newProjectHandle[i];
-
-    <span class="comment">// 工程名字</span>
-String projectName = iProject.getName<span class="params">()</span>;
-IResource[] resources = iProject.members<span class="params">()</span>;
-    <span class="keyword">for</span> <span class="params">(int j = <span class="number">0</span>, n = resources.length; j &lt; n; j++)</span> {
-     <span class="keyword">if</span> <span class="params">(resources[j].getType<span class="params">()</span> == IResource.FILE
-       &amp;&amp; resources[j].getFileExtension<span class="params">()</span>.equals<span class="params">(<span class="string">"xpdl"</span>)</span>)</span> {
-      <span class="comment">// 包:工程下xpdl文件的绝对路径,包路径</span>
-      String xpdlFileFullPath = resources[j].getLocation<span class="params">()</span>
-        .toOSString<span class="params">()</span>;
-      }
-     }
-}
-</code></pre><p>3.取插件项目所在路径</p>
-<pre><code>public static String getPluginPath<span class="params">()</span>{
-  String pluginPath=null;
-  try {
-   pluginPath = FileLocator.toFileURL<span class="params">(
-           Platform.getBundle<span class="params">(Activator.PLUGIN_ID)</span>.getEntry<span class="params">(<span class="string">""</span>)</span>)</span>.getPath<span class="params">()</span>;
-   pluginPath = pluginPath.substring<span class="params">(<span class="number">1</span>)</span>;
-  } catch <span class="params">(IOException e1)</span> {
-   <span class="comment">// TODO 自动生成 catch 块</span>
-   e1.printStackTrace<span class="params">()</span>;
-  }
-  return pluginPath;  
-} 
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
         
       
       <div class="clearfix"></div>
@@ -309,12 +247,34 @@ IResource[] resources = iProject.members<span class="params">()</span>;
 
 
 
+<nav id="pagination" >
+    
+    
+    <a href="/2009/03/19/eclipse插件开发获取路径的几种方式/" class="alignright next" >下一页</a>
+    
+    <div class="clearfix"></div>
+</nav>
 
-<nav id="pagination">
-  
-  
-  <div class="clearfix"></div>
-</nav></div></div>
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/08/06/《Elasticsearch服务器开发》学习笔记（－）/" data-title="《Elasticsearch服务器开发》学习笔记（－）" data-url="http://yoursite.com/2015/08/06/《Elasticsearch服务器开发》学习笔记（－）/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
