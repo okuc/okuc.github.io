@@ -59,6 +59,39 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-08-11T12:59:45.000Z"><a href="/2015/08/11/Linux折腾记(2)-CentOS7下安装virtualbox/">2015-08-11</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/11/Linux折腾记(2)-CentOS7下安装virtualbox/">Linux折腾记(2)-CentOS7下安装virtualbox</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>用上了Linux才知道，还是Windows简单，怎么办？怎么办？装个虚拟机吧，怀念时可以耍耍。说干就干，开工。。。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-08-10T14:59:45.000Z"><a href="/2015/08/10/Linux折腾记(1)-CentOS7下安装mysql数据库/">2015-08-10</a></time>
       
       
@@ -108,6 +141,8 @@ mysql56-community/x86_64          MySQL <span class="number">5.6</span> Communit
 </code></pre></li>
 <li><p>使用如下命令安装<code>yum install mariadb-server</code></p>
 </li>
+<li><p>去除大小写敏感（一定要在建数据库之前）,在<code>/etc/my.cnf</code>中的<code>[mysqld]</code>后添加添加<code>lower_case_table_names=1</code>。0表示区分大小写，1表示不驱分，默认是0。</p>
+</li>
 <li><p>启动服务<code>systemctl start mariadb.service</code></p>
 </li>
 <li><p>查询服务状态<code>systemctl is-active mariadb.service</code></p>
@@ -122,8 +157,9 @@ mysql56-community/x86_64          MySQL <span class="number">5.6</span> Communit
 <li><p>开启远程访问：</p>
 <pre><code>MariaDB [(none)]&gt; grant all privileges <span class="literal">on</span> *.* <span class="keyword">to</span> <span class="string">'root'</span>@<span class="string">'%'</span> identified <span class="keyword">by</span> <span class="string">'123456'</span> <span class="keyword">with</span> grant option;
 </code></pre></li>
+<li><p>设置为开机启动<code>systemctl enable mariadb.service</code>(MariaDB)，<code>systemctl enable mariadb.service</code>(mysql)。</p>
+</li>
 </ol>
-<p>4.设置为开机启动<code>systemctl enable mariadb.service</code>(MariaDB)，<code>systemctl enable mariadb.service</code>(mysql)。</p>
 
       
     </div>
@@ -421,7 +457,7 @@ IResource[] resources = iProject.members<span class="params">()</span>;
   
     <li><a href="/tags/elasticsearch/">elasticsearch</a><small>1</small></li>
   
-    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
   
   </ul>
 </div>
