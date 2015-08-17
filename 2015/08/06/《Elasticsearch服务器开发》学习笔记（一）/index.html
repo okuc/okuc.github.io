@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>《Elasticsearch服务器开发》学习笔记（－） | 我的后院自留地</title>
+  <title>《Elasticsearch服务器开发》学习笔记（一） | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="Ajax d3 echarts  threejs hadoop hbase cassandra hive elasticsearch spider html5">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="《Elasticsearch服务器开发》学习笔记（－）"/>
+  <meta property="og:title" content="《Elasticsearch服务器开发》学习笔记（一）"/>
   <meta property="og:site_name" content="我的后院自留地"/>
 
   
@@ -58,11 +58,11 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-08-06T07:38:12.000Z"><a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（－）/">2015-08-06</a></time>
+        <time datetime="2015-08-06T07:38:12.000Z"><a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/">2015-08-06</a></time>
       
       
   
-    <h1 class="title">《Elasticsearch服务器开发》学习笔记（－）</h1>
+    <h1 class="title">《Elasticsearch服务器开发》学习笔记（一）</h1>
   
 
     </header>
@@ -90,7 +90,7 @@
 <p>查询时，查询将被分析。但是，你也可以选择不分析。即你查询的词是否还会自动拆分匹配。</p>
 <p>索引和查询词应该匹配，以返回文档。而且在索引和查询分析时，对所用标记过滤器保持相同的顺序，这样被分析出来的词是一样的。</p>
 <p>6.评分:分数是根据文档和查询的匹配度用计分公式计算的结果。默认情况下，Apache Lucene使用TF/IDF(词频/逆向文档频率)评分机制。分数越高，越相关。</p>
-<p>7.索引index是Elasticsearch对逻辑数据的逻辑存储，相当于关系数据库的表。索引的结构是为快速有效的全文索引准备的，特别是它不存储原始值。索引可以放在一台机器或者分散在多台服务器上，每个索引有一个或多个分片shard，每个分片可以有多个副本replica。</p>
+<p>7.索引index是Elasticsearch对逻辑数据的逻辑存储，相当于关系数据库的表。索引的结构是为快速有效的全文索引准备的，特别是它不存储原始值。索引可以放在一台机器或者分散在多台服务器上，每个索引有一个或多个分片shard，每个分片可以有多个副本replica。<strong>感觉把索引理解成关系数据库的表，类型理解为表，文档理解为一行记录，更好！ by2015.08.14</strong></p>
 <p>8.文档document是存储的主要实体，相当于数据库中表的一行记录。在Elasticsearch的文档中，相同字段必须有相同的类型。如所有包含title字段的文档，title字段类型都必须是一样的，比如string。</p>
 <p>文档由多个字段组成，每个字段可能多次出现在一个文档里，这样的字段叫多值字段multivalued。每个字段都有类型：文本、数值和日期等。字段也可以是复杂类型。文档不需要有固定的结构，每个文档可以有不同的字段，在程序开发期间，不必确定有那些字段。每个文档存储在一个索引中并有一个Elasticsearch自动生成的唯一标识符和文档类型。文档需要有对应文档类型的唯一标识符，这意味着在一个索引中，两个不同类型的文档可以有相同的唯一的标识符。</p>
 <p>9.一个索引对象可以存储很多不同用途的对象。如，一个博客程序可以保存文章和评论。文档类型让我们轻易地区分单个索引中的不同对象，每个文档可以有不同的结构，但是实际操作中，将文件按类型区分对数据操作有很大帮助。<strong>在一个索引中，即使文档类型不同，相同的属性不能设置不同的类型</strong></p>
@@ -258,7 +258,7 @@
 </nav>
 
 <!-- ��˵���ۿ� start -->
- <div class="ds-thread" data-thread-key="/2015/08/06/《Elasticsearch服务器开发》学习笔记（－）/" data-title="《Elasticsearch服务器开发》学习笔记（－）" data-url="http://yoursite.com/2015/08/06/《Elasticsearch服务器开发》学习笔记（－）/"></div>
+ <div class="ds-thread" data-thread-key="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/" data-title="《Elasticsearch服务器开发》学习笔记（一）" data-url="http://yoursite.com/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/"></div>
 <!-- ��˵���ۿ� end -->
 <!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
 <script type="text/javascript">
@@ -294,7 +294,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
   
-    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>1</small></li>
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>2</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
