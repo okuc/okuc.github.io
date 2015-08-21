@@ -68,7 +68,7 @@
     </header>
     <div class="entry">
       
-        <h2 id="第2章_映射配置">第2章 映射配置</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
+        <h2 id="第2章_映射配置(一)">第2章 映射配置(一)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
 <ol>
 <li>Elasticsearch是一个无模式的搜索引警,可以即时算出数据结构,但是自已控制并定义结构是更好的办法。</li>
 <li>Elasticsearch是由一个或多个分片组成，每个分片包含了文档集的一部分。而且这些分片也有副本。在创建索引时，可以规定分片及副本的数量，也可以使用全局配置文件或软件内部的默认值。5个分片，1个副本，就意味着在集群中有10个lucene索引。<strong>副本可以随时调整，但是分片，则不能调整。创建好索引后更改分片的唯一图径是创建另外一个索引并重新索引数据。</strong></li>
@@ -332,6 +332,8 @@
 
 <nav id="pagination" >
     
+    <a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/" class="alignleft prev" >上一页</a>
+    
     
     <a href="/2015/08/10/Linux折腾记(1)-CentOS7下安装mysql数据库/" class="alignright next" >下一页</a>
     
@@ -375,7 +377,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
   
-    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>2</small></li>
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>3</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>1</small></li>
   
