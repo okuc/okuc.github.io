@@ -75,38 +75,47 @@
 <li>直接创建一个索引<code>curl -XPUT http://localhost:9200/blog</code>。不让它自动创建索引是因为有时候要修改分片数目、设置索引结构。因此，可以关闭配置文件中自动创建索引的配置<code>action.auto_create_index:-an*,+a,-*</code>,上面的命令意思是说不允许自动创建以<code>an</code>开头的索引；允许自动创建以<code>a</code>开头的索引，其他的索引也必须手工创建。</li>
 <li>一个手工设置分片及副本数量的例子<code>curl -XPUT http://localhost:9200/blog/ -d &#39;{&quot;settings&quot;:{&quot;number_of_shards&quot;:1,&quot;number_of_replicas&quot;:2}}&#39;</code></li>
 <li>删除索引<code>curl -XDELETE http://localhost:9200/posts</code></li>
-<li><p>映射类似于关系数据库的数据结构。在定义映射时，Elasticsearch可以通过定义的JSON来猜测文档结构。在JSON中，字符串用引号括起来，布尔值用特定的词语定义，数值则是数字。但是，有时ES也会忽略数字类型，全按字符串来处理。可以使用如下命令来强制它进行文本检测。</p>
-<pre><code>curl -XPUT <span class="string">http:</span><span class="comment">//localhost:9200/blog/ -d '{</span>
-    <span class="string">"mappings"</span>:{
-        <span class="string">"article"</span>:{
-            “numberic_detection”:<span class="literal">true</span>
-            }
-      }
- }
-</code></pre><p> 但是，此时仍然不能猜出布尔型。在这种情况下，如果无法改变数据格式，只能在映射中定义字段。<br> 还有日期类型，ES设法识别被提供的时间戳或与日期格式匹配的字符串，还可以使用dynamic_date_formats属性定义可被识别的日期格式列表，该属性允许指定一个数组，如下：</p>
-<pre><code>curl -XPUT http:<span class="comment">//localhost:9200/blog/ -d '{</span>
-    <span class="string">"mappings"</span>:{
-        <span class="string">"article"</span>:{
-            “<span class="keyword">dynamic</span><span class="number">_</span>date<span class="number">_f</span>ormate”:[<span class="string">"yyyy-MM-dd hh:mm"</span>]
-            }
-      }
- }
-</code></pre><p> 上面这段定义了一个叫<code>blog</code>的索引，它包括一个名为<code>article</code>的类型，它是日期型的，只识别固定的格式。ES使用<code>joda-time</code>库定义日期格式</p>
-<p> 为了避免不必要的错误，最好关闭自动识别类型。如同一类型，一个是整型，一个是浮点数，如果先接触到整型，则可能猜成整型，后面的就会丢失小数部分。关闭命令如下：</p>
-<pre><code>curl -XPUT http:<span class="comment">//localhost:9200/blog/ -d '{</span>
-    <span class="string">"mappings"</span>:{
-        <span class="string">"article"</span>:{
-            “dynamic”:“<span class="keyword">false</span>”，
-            “properties”：{
-                “id”：{“<span class="class"><span class="keyword">type</span>”：“<span class="title">string</span>”}，</span>
-                “content”：{“<span class="class"><span class="keyword">type</span>”：“<span class="title">string</span>”}，</span>
-                “author”：{“<span class="class"><span class="keyword">type</span>”：“<span class="title">string</span>”}</span>
+<li>映射类似于关系数据库的数据结构。在定义映射时，Elasticsearch可以通过定义的JSON来猜测文档结构。在JSON中，字符串用引号括起来，布尔值用特定的词语定义，数值则是数字。但是，有时ES也会忽略数字类型，全按字符串来处理。可以使用如下命令来强制它进行文本检测。</li>
+</ol>
+<a id="more"></a>
+<pre><code>    curl -XPUT http:<span class="comment">//localhost:9200/blog/ -d '{</span>
+        <span class="string">"mappings"</span>:{
+            <span class="string">"article"</span>:{
+                “numberic_detection”:<span class="constant">true</span>
                 }
-            }
-      }
- }'
-</code></pre><p> properties即为定义的字段，<strong>如果传入数据时，还传入了其它字段，则ES会自动忽略。</strong></p>
-</li>
+          }
+     }
+
+但是，此时仍然不能猜出布尔型。在这种情况下，如果无法改变数据格式，只能在映射中定义字段。
+还有日期类型，ES设法识别被提供的时间戳或与日期格式匹配的字符串，还可以使用dynamic_date_formats属性定义可被识别的日期格式列表，该属性允许指定一个数组，如下：
+
+    curl -XPUT http:<span class="comment">//localhost:9200/blog/ -d '{</span>
+        <span class="string">"mappings"</span>:{
+            <span class="string">"article"</span>:{
+                “dynamic_date_formate”:[<span class="string">"yyyy-MM-dd hh:mm"</span>]
+                }
+          }
+     }
+
+上面这段定义了一个叫<span class="string">`blog`</span>的索引，它包括一个名为<span class="string">`article`</span>的类型，它是日期型的，只识别固定的格式。ES使用<span class="string">`joda-time`</span>库定义日期格式
+
+为了避免不必要的错误，最好关闭自动识别类型。如同一类型，一个是整型，一个是浮点数，如果先接触到整型，则可能猜成整型，后面的就会丢失小数部分。关闭命令如下：
+
+    curl -XPUT http:<span class="comment">//localhost:9200/blog/ -d '{</span>
+        <span class="string">"mappings"</span>:{
+            <span class="string">"article"</span>:{
+                “dynamic”:“<span class="constant">false</span>”，
+                “properties”：{
+                    “id”：{“<span class="keyword">type</span>”：“<span class="typename">string</span>”}，
+                    “content”：{“<span class="keyword">type</span>”：“<span class="typename">string</span>”}，
+                    “author”：{“<span class="keyword">type</span>”：“<span class="typename">string</span>”}
+                    }
+                }
+          }
+     }<span class="string">'
+
+properties即为定义的字段，**如果传入数据时，还传入了其它字段，则ES会自动忽略。**</span>
+</code></pre><ol>
 <li><p>在ES中，映射可以定义在文件中，以JSON对象的方式传送。新建一A.json文件，内容如下：</p>
 <pre><code>{
    "mappings":{

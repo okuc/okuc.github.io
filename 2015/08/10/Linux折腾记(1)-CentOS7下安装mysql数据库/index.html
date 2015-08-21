@@ -77,9 +77,12 @@ mysql-community-common-<span class="number">5.6</span><span class="number">.26</
 mysql-community-release-el7-<span class="number">5.</span>noarch  
 </code></pre></li>
 <li><p>可以看到我的机器上有两个相关的包，使用下面的命令依次删除：</p>
+</li>
+</ol>
+<a id="more"></a>
 <pre><code>yum remove mysql-community-common<span class="class">.x86_64</span>
 yum remove mysql-community-release-el7-<span class="number">5</span><span class="class">.noarch</span>  
-</code></pre></li>
+</code></pre><ol>
 <li><p>清理其它目录：</p>
 <pre><code><span class="keyword">cd</span> /<span class="keyword">var</span>/lib &amp;&amp; <span class="keyword">rm</span> -rfv mysql
 </code></pre></li>
