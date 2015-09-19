@@ -1,0 +1,507 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>java连接远程HBase 1.1.1 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="由于工作需要用到HBase，今晚使用HBase 1.1.1小试牛刀了一把。HBase 1.1.1运行环境为CentOS7.0，java客户端运行环境为Win10，服务端jdk版本为1.8，客户端jdk版本为1.7。
+提示：本文最后可下载源代码
+具体步骤如下：
+
+下载HBase 1.1.1,下载地址如下：http://mirrors.cnnic.cn/apache/hbase/1.1.1/hbase-1.1.1-bin.tar.gz。
+使用tar -xvf hbase-1.1.1-bin.tar.gz解压。我使用的是root用户
+进入到解压后的bin目录中，使用./start-hbase.sh启动Hbase，启动成功会显示如下提示：starting master, logging to /home/soft/hbase-1.1.1/bin/../logs/hbase-root-master-MiWiFi-R1CM.out
+由于没有作任何设置，此时，所有数据都保存在临时环境中，一旦重启就会丢失。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="java连接远程HBase 1.1.1"/>
+  <meta property="og:site_name" content="Hexo"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-27T17:23:41.000Z"><a href="/2015/08/28/java连接远程HBase/">2015-08-28</a></time>
+      
+      
+  
+    <h1 class="title">java连接远程HBase 1.1.1</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>由于工作需要用到<code>HBase</code>，今晚使用<code>HBase 1.1.1</code>小试牛刀了一把。<code>HBase 1.1.1</code>运行环境为<code>CentOS7.0</code>，java客户端运行环境为<code>Win10</code>，服务端jdk版本为<code>1.8</code>，客户端jdk版本为<code>1.7</code>。</p>
+<p><strong>提示：本文最后可下载源代码</strong></p>
+<p>具体步骤如下：</p>
+<ol>
+<li>下载<code>HBase 1.1.1</code>,下载地址如下：<a href="http://mirrors.cnnic.cn/apache/hbase/1.1.1/hbase-1.1.1-bin.tar.gz" target="_blank" rel="external">http://mirrors.cnnic.cn/apache/hbase/1.1.1/hbase-1.1.1-bin.tar.gz</a>。</li>
+<li>使用<code>tar -xvf hbase-1.1.1-bin.tar.gz</code>解压。<strong>我使用的是root用户</strong></li>
+<li>进入到解压后的bin目录中，使用<code>./start-hbase.sh</code>启动Hbase，启动成功会显示如下提示：<pre><code>starting master, logging to <span class="regexp">/home/</span>soft<span class="regexp">/hbase-1.1.1/</span>bin<span class="regexp">/../</span>logs<span class="regexp">/hbase-root-master-MiWiFi-R1CM.out</span>
+</code></pre><strong>由于没有作任何设置，此时，所有数据都保存在临时环境中，一旦重启就会丢失。</strong><a id="more"></a></li>
+<li>在浏览器输入<code>http://192.168.90.161:16010</code>看看有信息输出没。<strong>网上普遍说端口是<code>60010</code>，但是我下载的版本端口号是<code>16010</code>，原因未知</strong></li>
+<li><p>新建maven工程<code>HBaseHello</code>,设置groupid为<code>xyz.okuc</code>,原因是本站的一个隐藏域名是<a href="www.okuc.xyz">www.okuc.xyz</a>哟！<br> 首先在pom.xml文件中添加所依赖的jar包：</p>
+<pre><code><span class="tag">&lt;<span class="title">dependency</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.hbase<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>hbase-client<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.1.1<span class="tag">&lt;/<span class="title">version</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">dependency</span>&gt;</span>
+</code></pre></li>
+<li><p>新建名为’HbaseTest’的java类，再贴上我从网上问度娘要来的代码：</p>
+<pre><code><span class="keyword">package</span> xyz.okuc.HBaseHello;
+
+<span class="keyword">import</span> java.io.IOException; 
+<span class="keyword">import</span> java.util.ArrayList; 
+<span class="keyword">import</span> java.util.List; 
+
+<span class="keyword">import</span> org.apache.hadoop.conf.Configuration; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.HBaseConfiguration; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.HColumnDescriptor; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.HTableDescriptor; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.KeyValue; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.MasterNotRunningException; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.ZooKeeperConnectionException; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.client.Delete; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.client.Get; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.client.HBaseAdmin; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.client.HTable; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.client.HTablePool; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.client.Put; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.client.Result; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.client.ResultScanner; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.client.Scan; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.<span class="built_in">filter</span>.Filter; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.<span class="built_in">filter</span>.FilterList; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.<span class="built_in">filter</span>.SingleColumnValueFilter; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.<span class="built_in">filter</span>.CompareFilter.CompareOp; 
+<span class="keyword">import</span> org.apache.hadoop.hbase.util.Bytes; 
+
+<span class="keyword">public</span> class HbaseTest { 
+
+    <span class="keyword">public</span> <span class="keyword">static</span> Configuration configuration; 
+    <span class="keyword">static</span> { 
+        configuration = HBaseConfiguration.create(); 
+        configuration.<span class="built_in">set</span>(<span class="string">"hbase.zookeeper.property.clientPort"</span>, <span class="string">"2181"</span>); 
+        configuration.<span class="built_in">set</span>(<span class="string">"hbase.zookeeper.quorum"</span>, <span class="string">"192.168.90.161"</span>); 
+        configuration.<span class="built_in">set</span>(<span class="string">"hbase.master"</span>, <span class="string">"192.168.90.161:16000"</span>); 
+    } 
+
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) { 
+         createTable(<span class="string">"okuc"</span>); 
+        <span class="comment">// insertData("okuc"); </span>
+        <span class="comment">// QueryAll("okuc"); </span>
+        <span class="comment">// QueryByCondition1("okuc"); </span>
+        <span class="comment">// QueryByCondition2("okuc"); </span>
+        <span class="comment">//QueryByCondition3("okuc"); </span>
+        <span class="comment">//deleteRow("okuc","abcdef"); </span>
+         <span class="comment">//deleteByCondition("okuc","abcdef"); </span>
+    } 
+
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> createTable(<span class="keyword">String</span> tableName) { 
+        System.out.<span class="built_in">println</span>(<span class="string">"start create table ......"</span>); 
+        <span class="keyword">try</span> { 
+            HBaseAdmin hBaseAdmin = <span class="keyword">new</span> HBaseAdmin(configuration); 
+            <span class="keyword">if</span> (hBaseAdmin.tableExists(tableName)) {<span class="comment">// 如果存在要创建的表，那么先删除，再创建 </span>
+                hBaseAdmin.disableTable(tableName); 
+                hBaseAdmin.deleteTable(tableName); 
+                System.out.<span class="built_in">println</span>(tableName + <span class="string">" is exist,detele...."</span>); 
+            } 
+            HTableDescriptor tableDescriptor = <span class="keyword">new</span> HTableDescriptor(tableName); 
+            tableDescriptor.addFamily(<span class="keyword">new</span> HColumnDescriptor(<span class="string">"column1"</span>)); 
+            tableDescriptor.addFamily(<span class="keyword">new</span> HColumnDescriptor(<span class="string">"column2"</span>)); 
+            tableDescriptor.addFamily(<span class="keyword">new</span> HColumnDescriptor(<span class="string">"column3"</span>)); 
+            hBaseAdmin.createTable(tableDescriptor); 
+        } <span class="keyword">catch</span> (MasterNotRunningException e) { 
+            e.printStackTrace(); 
+        } <span class="keyword">catch</span> (ZooKeeperConnectionException e) { 
+            e.printStackTrace(); 
+        } <span class="keyword">catch</span> (IOException e) { 
+            e.printStackTrace(); 
+        } 
+        System.out.<span class="built_in">println</span>(<span class="string">"end create table ......"</span>); 
+    } 
+
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> insertData(<span class="keyword">String</span> tableName) { 
+        System.out.<span class="built_in">println</span>(<span class="string">"start insert data ......"</span>); 
+        HTablePool pool = <span class="keyword">new</span> HTablePool(configuration, <span class="number">1000</span>); 
+        HTable table = (HTable) pool.getTable(tableName); 
+        Put put = <span class="keyword">new</span> Put(<span class="string">"112233bbbcccc"</span>.getBytes());<span class="comment">// 一个PUT代表一行数据，再NEW一个PUT表示第二行数据,每行一个唯一的ROWKEY，此处rowkey为put构造方法中传入的值 </span>
+        put.<span class="built_in">add</span>(<span class="string">"column1"</span>.getBytes(), <span class="keyword">null</span>, <span class="string">"aaa"</span>.getBytes());<span class="comment">// 本行数据的第一列 </span>
+        put.<span class="built_in">add</span>(<span class="string">"column2"</span>.getBytes(), <span class="keyword">null</span>, <span class="string">"bbb"</span>.getBytes());<span class="comment">// 本行数据的第三列 </span>
+        put.<span class="built_in">add</span>(<span class="string">"column3"</span>.getBytes(), <span class="keyword">null</span>, <span class="string">"ccc"</span>.getBytes());<span class="comment">// 本行数据的第三列 </span>
+        <span class="keyword">try</span> { 
+            table.put(put); 
+        } <span class="keyword">catch</span> (IOException e) { 
+            e.printStackTrace(); 
+        } 
+        System.out.<span class="built_in">println</span>(<span class="string">"end insert data ......"</span>); 
+    } 
+
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> dropTable(<span class="keyword">String</span> tableName) { 
+        <span class="keyword">try</span> { 
+            HBaseAdmin admin = <span class="keyword">new</span> HBaseAdmin(configuration); 
+            admin.disableTable(tableName); 
+            admin.deleteTable(tableName); 
+        } <span class="keyword">catch</span> (MasterNotRunningException e) { 
+            e.printStackTrace(); 
+        } <span class="keyword">catch</span> (ZooKeeperConnectionException e) { 
+            e.printStackTrace(); 
+        } <span class="keyword">catch</span> (IOException e) { 
+            e.printStackTrace(); 
+        } 
+
+    } 
+
+     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> deleteRow(<span class="keyword">String</span> tablename, <span class="keyword">String</span> rowkey)  { 
+        <span class="keyword">try</span> { 
+            HTable table = <span class="keyword">new</span> HTable(configuration, tablename); 
+            List list = <span class="keyword">new</span> ArrayList(); 
+            Delete d1 = <span class="keyword">new</span> Delete(rowkey.getBytes()); 
+            list.<span class="built_in">add</span>(d1); 
+
+            table.delete(list); 
+            System.out.<span class="built_in">println</span>(<span class="string">"删除行成功!"</span>); 
+
+        } <span class="keyword">catch</span> (IOException e) { 
+            e.printStackTrace(); 
+        } 
+
+    } 
+
+     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> deleteByCondition(<span class="keyword">String</span> tablename, <span class="keyword">String</span> rowkey)  { 
+            <span class="comment">//目前还没有发现有效的API能够实现根据非rowkey的条件删除这个功能能，还有清空表全部数据的API操作 </span>
+
+    } 
+
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> QueryAll(<span class="keyword">String</span> tableName) { 
+        HTablePool pool = <span class="keyword">new</span> HTablePool(configuration, <span class="number">1000</span>); 
+        HTable table = (HTable) pool.getTable(tableName); 
+        <span class="keyword">try</span> { 
+            ResultScanner rs = table.getScanner(<span class="keyword">new</span> Scan()); 
+            <span class="keyword">for</span> (Result r : rs) { 
+                System.out.<span class="built_in">println</span>(<span class="string">"获得到rowkey:"</span> + <span class="keyword">new</span> <span class="keyword">String</span>(r.getRow())); 
+                <span class="keyword">for</span> (KeyValue keyValue : r.raw()) { 
+                    System.out.<span class="built_in">println</span>(<span class="string">"列："</span> + <span class="keyword">new</span> <span class="keyword">String</span>(keyValue.getFamily()) 
+                            + <span class="string">"====值:"</span> + <span class="keyword">new</span> <span class="keyword">String</span>(keyValue.getValue())); 
+                } 
+            } 
+        } <span class="keyword">catch</span> (IOException e) { 
+            e.printStackTrace(); 
+        } 
+    } 
+
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> QueryByCondition1(<span class="keyword">String</span> tableName) { 
+
+        HTablePool pool = <span class="keyword">new</span> HTablePool(configuration, <span class="number">1000</span>); 
+        HTable table = (HTable) pool.getTable(tableName); 
+        <span class="keyword">try</span> { 
+            Get scan = <span class="keyword">new</span> Get(<span class="string">"abcdef"</span>.getBytes());<span class="comment">// 根据rowkey查询 </span>
+            Result r = table.<span class="built_in">get</span>(scan); 
+            System.out.<span class="built_in">println</span>(<span class="string">"获得到rowkey:"</span> + <span class="keyword">new</span> <span class="keyword">String</span>(r.getRow())); 
+            <span class="keyword">for</span> (KeyValue keyValue : r.raw()) { 
+                System.out.<span class="built_in">println</span>(<span class="string">"列："</span> + <span class="keyword">new</span> <span class="keyword">String</span>(keyValue.getFamily()) 
+                        + <span class="string">"====值:"</span> + <span class="keyword">new</span> <span class="keyword">String</span>(keyValue.getValue())); 
+            } 
+        } <span class="keyword">catch</span> (IOException e) { 
+            e.printStackTrace(); 
+        } 
+    } 
+
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> QueryByCondition2(<span class="keyword">String</span> tableName) { 
+
+        <span class="keyword">try</span> { 
+            HTablePool pool = <span class="keyword">new</span> HTablePool(configuration, <span class="number">1000</span>); 
+            HTable table = (HTable) pool.getTable(tableName); 
+            Filter <span class="built_in">filter</span> = <span class="keyword">new</span> SingleColumnValueFilter(Bytes 
+                    .toBytes(<span class="string">"column1"</span>), <span class="keyword">null</span>, CompareOp.EQUAL, Bytes 
+                    .toBytes(<span class="string">"aaa"</span>)); <span class="comment">// 当列column1的值为aaa时进行查询 </span>
+            Scan s = <span class="keyword">new</span> Scan(); 
+            s.setFilter(<span class="built_in">filter</span>); 
+            ResultScanner rs = table.getScanner(s); 
+            <span class="keyword">for</span> (Result r : rs) { 
+                System.out.<span class="built_in">println</span>(<span class="string">"获得到rowkey:"</span> + <span class="keyword">new</span> <span class="keyword">String</span>(r.getRow())); 
+                <span class="keyword">for</span> (KeyValue keyValue : r.raw()) { 
+                    System.out.<span class="built_in">println</span>(<span class="string">"列："</span> + <span class="keyword">new</span> <span class="keyword">String</span>(keyValue.getFamily()) 
+                            + <span class="string">"====值:"</span> + <span class="keyword">new</span> <span class="keyword">String</span>(keyValue.getValue())); 
+                } 
+            } 
+        } <span class="keyword">catch</span> (Exception e) { 
+            e.printStackTrace(); 
+        } 
+
+    } 
+
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> QueryByCondition3(<span class="keyword">String</span> tableName) { 
+
+        <span class="keyword">try</span> { 
+            HTablePool pool = <span class="keyword">new</span> HTablePool(configuration, <span class="number">1000</span>); 
+            HTable table = (HTable) pool.getTable(tableName); 
+
+            List&lt;Filter&gt; filters = <span class="keyword">new</span> ArrayList&lt;Filter&gt;(); 
+
+            Filter filter1 = <span class="keyword">new</span> SingleColumnValueFilter(Bytes 
+                    .toBytes(<span class="string">"column1"</span>), <span class="keyword">null</span>, CompareOp.EQUAL, Bytes 
+                    .toBytes(<span class="string">"aaa"</span>)); 
+            filters.<span class="built_in">add</span>(filter1); 
+
+            Filter filter2 = <span class="keyword">new</span> SingleColumnValueFilter(Bytes 
+                    .toBytes(<span class="string">"column2"</span>), <span class="keyword">null</span>, CompareOp.EQUAL, Bytes 
+                    .toBytes(<span class="string">"bbb"</span>)); 
+            filters.<span class="built_in">add</span>(filter2); 
+
+            Filter filter3 = <span class="keyword">new</span> SingleColumnValueFilter(Bytes 
+                    .toBytes(<span class="string">"column3"</span>), <span class="keyword">null</span>, CompareOp.EQUAL, Bytes 
+                    .toBytes(<span class="string">"ccc"</span>)); 
+            filters.<span class="built_in">add</span>(filter3); 
+
+            FilterList filterList1 = <span class="keyword">new</span> FilterList(filters); 
+
+            Scan scan = <span class="keyword">new</span> Scan(); 
+            scan.setFilter(filterList1); 
+            ResultScanner rs = table.getScanner(scan); 
+            <span class="keyword">for</span> (Result r : rs) { 
+                System.out.<span class="built_in">println</span>(<span class="string">"获得到rowkey:"</span> + <span class="keyword">new</span> <span class="keyword">String</span>(r.getRow())); 
+                <span class="keyword">for</span> (KeyValue keyValue : r.raw()) { 
+                    System.out.<span class="built_in">println</span>(<span class="string">"列："</span> + <span class="keyword">new</span> <span class="keyword">String</span>(keyValue.getFamily()) 
+                            + <span class="string">"====值:"</span> + <span class="keyword">new</span> <span class="keyword">String</span>(keyValue.getValue())); 
+                } 
+            } 
+            rs.close(); 
+
+        } <span class="keyword">catch</span> (Exception e) { 
+            e.printStackTrace(); 
+        } 
+
+    } 
+
+}
+</code></pre><p><strong>注意，以下三行要改为你HBase服务器所在的地址哦。别外，网站都说端口是<code>60000</code>,我下载的版本端口是<code>16000</code>，不要问我为什么，我也不知道</strong></p>
+<pre><code><span class="tag">configuration</span><span class="class">.set</span>("<span class="tag">hbase</span><span class="class">.zookeeper</span><span class="class">.property</span><span class="class">.clientPort</span>", "2181"); 
+<span class="tag">configuration</span><span class="class">.set</span>("<span class="tag">hbase</span><span class="class">.zookeeper</span><span class="class">.quorum</span>", "192<span class="class">.168</span><span class="class">.90</span><span class="class">.161</span>"); 
+<span class="tag">configuration</span><span class="class">.set</span>("<span class="tag">hbase</span><span class="class">.master</span>", "192<span class="class">.168</span><span class="class">.90</span><span class="class">.161</span><span class="pseudo">:16000")</span>; 
+</code></pre></li>
+<li><p>好了，现在可以运行了，运行一下吧，如果，悲剧的报出了以下错误：</p>
+<pre><code><span class="operator"><span class="keyword">start</span> <span class="keyword">create</span> <span class="keyword">table</span> ......
+log4j:WARN <span class="keyword">No</span> appenders could be <span class="keyword">found</span> <span class="keyword">for</span> logger (org.apache.hadoop.metrics2.lib.MutableMetricsFactory).
+log4j:WARN Please initialize the log4j <span class="keyword">system</span> properly.
+log4j:WARN See <span class="keyword">http</span>://<span class="keyword">logging</span>.apache.org/log4j/<span class="number">1.2</span>/faq.html#noconfig <span class="keyword">for</span> more info.
+org.apache.hadoop.hbase.<span class="keyword">client</span>.RetriesExhaustedException: <span class="keyword">Failed</span> <span class="keyword">after</span> attempts=<span class="number">36</span>, <span class="keyword">exceptions</span>:
+Fri Aug <span class="number">28</span> <span class="number">00</span>:<span class="number">19</span>:<span class="number">07</span> CST <span class="number">2015</span>, <span class="literal">null</span>, <span class="keyword">java</span>.net.SocketTimeoutException: callTimeout=<span class="number">60000</span>, callDuration=<span class="number">80060</span>: <span class="keyword">row</span> <span class="string">'okuc,,'</span> <span class="keyword">on</span> <span class="keyword">table</span> <span class="string">'hbase:meta'</span> <span class="keyword">at</span> region=hbase:meta,,<span class="number">1.1588230740</span>, hostname=MiWiFi-R1CM,<span class="number">52877</span>,<span class="number">1440689832421</span>, seqNum=<span class="number">0</span>
+
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.RpcRetryingCallerWithReadReplicas.throwEnrichedException(RpcRetryingCallerWithReadReplicas.<span class="keyword">java</span>:<span class="number">271</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.ScannerCallableWithReplicas.<span class="keyword">call</span>(ScannerCallableWithReplicas.<span class="keyword">java</span>:<span class="number">223</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.ScannerCallableWithReplicas.<span class="keyword">call</span>(ScannerCallableWithReplicas.<span class="keyword">java</span>:<span class="number">61</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.RpcRetryingCaller.callWithoutRetries(RpcRetryingCaller.<span class="keyword">java</span>:<span class="number">200</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.ClientScanner.<span class="keyword">call</span>(ClientScanner.<span class="keyword">java</span>:<span class="number">320</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.ClientScanner.nextScanner(ClientScanner.<span class="keyword">java</span>:<span class="number">295</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.ClientScanner.initializeScannerInConstruction(ClientScanner.<span class="keyword">java</span>:<span class="number">160</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.ClientScanner.&lt;init&gt;(ClientScanner.<span class="keyword">java</span>:<span class="number">155</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.HTable.getScanner(HTable.<span class="keyword">java</span>:<span class="number">811</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.MetaTableAccessor.fullScan(MetaTableAccessor.<span class="keyword">java</span>:<span class="number">602</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.MetaTableAccessor.tableExists(MetaTableAccessor.<span class="keyword">java</span>:<span class="number">366</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.HBaseAdmin.tableExists(HBaseAdmin.<span class="keyword">java</span>:<span class="number">303</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.HBaseAdmin.tableExists(HBaseAdmin.<span class="keyword">java</span>:<span class="number">313</span>)
+    <span class="keyword">at</span> xyz.okuc.HBaseHello.HbaseTest.createTable(HbaseTest.<span class="keyword">java</span>:<span class="number">55</span>)
+    <span class="keyword">at</span> xyz.okuc.HBaseHello.HbaseTest.<span class="keyword">main</span>(HbaseTest.<span class="keyword">java</span>:<span class="number">40</span>)
+Caused <span class="keyword">by</span>: <span class="keyword">java</span>.net.SocketTimeoutException: callTimeout=<span class="number">60000</span>, callDuration=<span class="number">80060</span>: <span class="keyword">row</span> <span class="string">'okuc,,'</span> <span class="keyword">on</span> <span class="keyword">table</span> <span class="string">'hbase:meta'</span> <span class="keyword">at</span> region=hbase:meta,,<span class="number">1.1588230740</span>, hostname=MiWiFi-R1CM,<span class="number">52877</span>,<span class="number">1440689832421</span>, seqNum=<span class="number">0</span>
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.RpcRetryingCaller.callWithRetries(RpcRetryingCaller.<span class="keyword">java</span>:<span class="number">159</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.ResultBoundedCompletionService$QueueingFuture.run(ResultBoundedCompletionService.<span class="keyword">java</span>:<span class="number">64</span>)
+    <span class="keyword">at</span> <span class="keyword">java</span>.util.<span class="keyword">concurrent</span>.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.<span class="keyword">java</span>:<span class="number">1110</span>)
+    <span class="keyword">at</span> <span class="keyword">java</span>.util.<span class="keyword">concurrent</span>.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.<span class="keyword">java</span>:<span class="number">603</span>)
+    <span class="keyword">at</span> <span class="keyword">java</span>.lang.<span class="keyword">Thread</span>.run(<span class="keyword">Thread</span>.<span class="keyword">java</span>:<span class="number">722</span>)
+Caused <span class="keyword">by</span>: <span class="keyword">java</span>.net.UnknownHostException: <span class="keyword">unknown</span> host: MiWiFi-R1CM
+    <span class="keyword">at</span> org.apache.hadoop.hbase.ipc.RpcClientImpl$<span class="keyword">Connection</span>.&lt;init&gt;(RpcClientImpl.<span class="keyword">java</span>:<span class="number">300</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.ipc.RpcClientImpl.createConnection(RpcClientImpl.<span class="keyword">java</span>:<span class="number">130</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.ipc.RpcClientImpl.getConnection(RpcClientImpl.<span class="keyword">java</span>:<span class="number">1284</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.ipc.RpcClientImpl.<span class="keyword">call</span>(RpcClientImpl.<span class="keyword">java</span>:<span class="number">1162</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.ipc.AbstractRpcClient.callBlockingMethod(AbstractRpcClient.<span class="keyword">java</span>:<span class="number">213</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.ipc.AbstractRpcClient$BlockingRpcChannelImplementation.callBlockingMethod(AbstractRpcClient.<span class="keyword">java</span>:<span class="number">287</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.protobuf.<span class="keyword">generated</span>.ClientProtos$ClientService$BlockingStub.<span class="keyword">scan</span>(ClientProtos.<span class="keyword">java</span>:<span class="number">32651</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.ScannerCallable.openScanner(ScannerCallable.<span class="keyword">java</span>:<span class="number">372</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.ScannerCallable.<span class="keyword">call</span>(ScannerCallable.<span class="keyword">java</span>:<span class="number">199</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.ScannerCallable.<span class="keyword">call</span>(ScannerCallable.<span class="keyword">java</span>:<span class="number">62</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.RpcRetryingCaller.callWithoutRetries(RpcRetryingCaller.<span class="keyword">java</span>:<span class="number">200</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.ScannerCallableWithReplicas$RetryingRPC.<span class="keyword">call</span>(ScannerCallableWithReplicas.<span class="keyword">java</span>:<span class="number">369</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.ScannerCallableWithReplicas$RetryingRPC.<span class="keyword">call</span>(ScannerCallableWithReplicas.<span class="keyword">java</span>:<span class="number">343</span>)
+    <span class="keyword">at</span> org.apache.hadoop.hbase.<span class="keyword">client</span>.RpcRetryingCaller.callWithRetries(RpcRetryingCaller.<span class="keyword">java</span>:<span class="number">126</span>)
+    ... <span class="number">4</span> more
+<span class="keyword">end</span> <span class="keyword">create</span> <span class="keyword">table</span> ......</span>
+</code></pre></li>
+<li><p>怎么办？怎么办？哈哈，一看错误，茅塞顿开，我的HBase服务器的机器名为<code>MiWiFi-R1CM</code>,<code>unknown host: MiWiFi-R1CM</code>不就是在说我的这台服务器找不到么。<br>   解决方案如下，打开win10的<code>c:\Windows\System32\drivers\etc\hosts</code>,添加如下一行记录：</p>
+<pre><code><span class="number">192.168</span><span class="number">.90</span><span class="number">.161</span>     MiWiFi-R1CM
+</code></pre></li>
+<li><p>再次运行程序，顺序结束（你就当没看见log4j的错误吧，配置文件懒得配了）：</p>
+<pre><code><span class="operator"><span class="keyword">start</span> <span class="keyword">create</span> <span class="keyword">table</span> ......
+log4j:WARN <span class="keyword">No</span> appenders could be <span class="keyword">found</span> <span class="keyword">for</span> logger (org.apache.hadoop.metrics2.lib.MutableMetricsFactory).
+log4j:WARN Please initialize the log4j <span class="keyword">system</span> properly.
+log4j:WARN See <span class="keyword">http</span>://<span class="keyword">logging</span>.apache.org/log4j/<span class="number">1.2</span>/faq.html#noconfig <span class="keyword">for</span> more info.
+<span class="keyword">end</span> <span class="keyword">create</span> <span class="keyword">table</span> ......</span>
+</code></pre></li>
+<li><p>回到HBase服务器下，在<code>bin</code>目录下，我们看看名为<code>okuc</code>的表创建了没，执行命令如下：</p>
+<pre><code>[root@MiWiFi-R1CM bin]# ./hbase <span class="keyword">shell</span>
+2015-08-28 00:56:33,956 WARN  [main] util.NativeCodeLoader: Unable to load native-hadoop library <span class="keyword">for</span> your platform... using builtin-java classes where applicable
+HBase <span class="keyword">Shell</span>; enter '<span class="keyword">help</span>&lt;<span class="keyword">RETURN</span>&gt;' <span class="keyword">for</span> <span class="keyword">list</span> of supported commands.
+<span class="keyword">Type</span> <span class="string">"exit&lt;RETURN&gt;"</span> to leave the HBase <span class="keyword">Shell</span>
+<span class="keyword">Version</span> 1.1.1, rd0a115a7267f54e01c72c603ec53e91ec418292f, Tue Jun 23 14:44:07 PDT 2015
+
+hbase(main):001:0&gt; <span class="keyword">list</span>
+<span class="keyword">TABLE</span>                                                                                                 
+okuc                                                                                                  
+1 row(s) <span class="keyword">in</span> 1.9350 seconds
+
+=&gt; [<span class="string">"okuc"</span>]
+hbase(main):002:0&gt; 
+</code></pre><p> 可以看到，我们已经成功创建了表<code>okuc</code>。</p>
+</li>
+<li>####<a href="http://www.52brt.com/source/HBaseHello.7z" target="_blank" rel="external">猛击这儿，下载源代码吧</a></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/HBase/">HBase</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/08/30/centos7常用命令/" class="alignleft prev" >上一頁</a>
+    
+    
+    <a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/" class="alignright next" >下一頁</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/08/28/java连接远程HBase/" data-title="java连接远程HBase 1.1.1" data-url="http://yoursite.com/2015/08/28/java连接远程HBase/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>5</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 John Doe
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

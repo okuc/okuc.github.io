@@ -1,0 +1,550 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>《Elasticsearch服务器开发》学习笔记（三） | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="第2章 映射配置(二)本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。
+
+
+lucene 4.0后，允许修改默认的基于TF/IDF的算法。4.0还附加了相似度模型，允许在文档中使用不同的评分公式。
+为每个字段设置不同的相似度模型。如下例子：
+{
+   &quot;mappings&quot;:{
+       &quot;post&quot;:{
+           “properties”：{
+               “id”：{“type”：“long”，“store”：“yes”，“precision_step”：“0”}，
+               “name”：{“type”：“string”，“store”：“yes”，“index”：“analyzed”,&quot;similarity&quot;:&quot;BM25&quot;}，
+               “published”：{“type”：“date”，“store”：“yes”，“precision_step”：“0”}，
+               “contents”：{“type”：“long”，“store”：“no”，“index”：“analyzed”},&quot;similarity&quot;:&quot;BM25&quot;
+               }
+           }
+     }
+
+}">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="《Elasticsearch服务器开发》学习笔记（三）"/>
+  <meta property="og:site_name" content="Hexo"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-22T14:35:02.000Z"><a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/">2015-08-22</a></time>
+      
+      
+  
+    <h1 class="title">《Elasticsearch服务器开发》学习笔记（三）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第2章_映射配置(二)">第2章 映射配置(二)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
+<hr>
+<ol>
+<li>lucene 4.0后，允许修改默认的基于TF/IDF的算法。4.0还附加了相似度模型，允许在文档中使用不同的评分公式。</li>
+<li><p>为每个字段设置不同的相似度模型。如下例子：</p>
+<pre><code><span class="collection">{
+   <span class="string">"mappings"</span>:<span class="collection">{
+       <span class="string">"post"</span>:<span class="collection">{
+           “properties”：<span class="collection">{
+               “id”：<span class="collection">{“type”：“long”，“store”：“yes”，“precision_step”：“<span class="number">0</span>”}</span>，
+               “name”：<span class="collection">{“type”：“string”，“store”：“yes”，“index”：“analyzed”,<span class="string">"similarity"</span>:<span class="string">"BM25"</span>}</span>，
+               “published”：<span class="collection">{“type”：“date”，“store”：“yes”，“precision_step”：“<span class="number">0</span>”}</span>，
+               “contents”：<span class="collection">{“type”：“long”，“store”：“no”，“index”：“analyzed”}</span>,<span class="string">"similarity"</span>:<span class="string">"BM25"</span>
+               }</span>
+           }</span>
+     }</span>
+
+}</span>
+</code></pre><a id="more"></a>
+<p>可给name字段和contents字段中使用BM25相似度模型，修改如下：</p>
+<pre><code><span class="collection">{
+   <span class="string">"mappings"</span>:<span class="collection">{
+       <span class="string">"post"</span>:<span class="collection">{
+           “properties”：<span class="collection">{
+               “id”：<span class="collection">{“type”：“long”，“store”：“yes”，“precision_step”：“<span class="number">0</span>”}</span>，
+               “name”：<span class="collection">{“type”：“string”，“store”：“yes”，“index”：“analyzed”,<span class="string">"similarity"</span>:<span class="string">"BM25"</span>}</span>，
+               “published”：<span class="collection">{“type”：“date”，“store”：“yes”，“precision_step”：“<span class="number">0</span>”}</span>，
+               “contents”：<span class="collection">{“type”：“long”，“store”：“no”，“index”：“analyzed”,<span class="string">"similarity"</span>:<span class="string">"BM25"</span>}</span>
+               }</span>
+           }</span>
+     }</span>
+   }</span>
+</code></pre></li>
+<li><p>可用的相似度模型：</p>
+<ul>
+<li>Okapi BM25模型：基于概率模型，概率模型估算根据指定查询找到指定文档的概率。这种模型在处理简短的文本文档时表现最佳，在这种文档中词条的重复严重有损整体文档的得分。它使用<code>BM25</code>作为名称。</li>
+<li><p>随机性偏差模型：基于具有相同名称的概率模型。为了在ES中全名用，以<code>DFR</code>为名称。它在处理类自然语言时表现良好。它的配置如下：</p>
+<ul>
+<li>basic_model：值为be、d、g、if、in或ine。</li>
+<li>after_effect：值为no、b或l</li>
+<li>normalization：值为no、h1、h2、h3或z。它的值如果不是no，则还需要设置范式化因子<code>normalizationfactor</code>。即，如果它的值是h1，则设置normalization.h1.c(浮点值)；如果是h2，则，则设置normalization.h1.c(浮点值)\normalization.h2.c\normalization.z.z</li>
+<li>一个典型的配置例子<pre><code><span class="string">"similarity"</span>:{
+    “esserverbook_dfr_similarity”：{
+        “<span class="keyword">type</span>”：“DFR”，
+      “basic_model”：“<span class="keyword">g</span>”，
+      “after_effect”：“<span class="keyword">l</span>”，
+      “normalization”：“h2”，
+      “normalization.h2.c”：“2.0”
+        }
+</code></pre></li>
+</ul>
+</li>
+<li><p>信息基础模型：与随机性偏差模型相似，以<code>IB</code>为名称，它也在处理类自然语言时表现良好。它有以下参数可供设置：</p>
+<ul>
+<li>distribution:值为ll或spl。</li>
+<li>lambda属性：df和tff。它也可设置范式化因子。下面是一个例子（也是放到settings部分中。）</li>
+<li><p>一个例子：</p>
+<pre><code><span class="string">"similarity"</span>:{
+    “esserverbook_ib_similarity”：{
+        “<span class="typedef"><span class="keyword">type</span>”：“<span class="type">IB</span>”，</span>
+      “distribution”：“ll”，
+      “lambda”：“df”，
+      “normalization”：“z”，
+      “normalization.z.z”：“<span class="number">0.25</span>”
+        }
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>信息格式：Lucene4.0可以改变索此文件写入的方式。ES利用此功能，可以为每个字段指定信息格式。有时需要改变字段被索引的方式以提高性能，比如为了使主键查找更快。ES中的信息格式如下：</p>
+<ul>
+<li>default:没有明确格式时，此默认信息格式将被使用。它提供了实时的对存储字段和词量的压缩。压缩内容参见<a href="http://solr.pl/en/2012/11/19/solr-4-1-stored-fields-compression/" target="_blank" rel="external"></a></li>
+<li>pulsing:它将高基数字段的信息列表编码为词条矩阵。这让lucene检索文档时可以少执行一个搜索。对高基数字段使用此信处式可以加快此字段的查询速度。（高基数字段：基数越高时，字段的重复值越少，可选性越高。）</li>
+<li>direct：此格式可在读操作过程中将词条加载到矩阵中。这些矩阵未经压缩保存在内存中。所以点用内存量特别大，要慎重。</li>
+<li>memory：将所有的数据都写入内存，但需要一个名为FST的结构读取词条和信息列表到内存中。</li>
+<li>bloom_default:默认信息扩展，增加了把布隆过滤器写入磁盘的功能。在读取过程中，布隆过滤器被读入并存入内存，以便非常快速地检查给定的值是否存在。此格式对高基数字相当有效。</li>
+<li>bloom_pulsing:这是pulsing信息格式的扩展，除了pulsing格式的功能，还使用了布隆过滤器。</li>
+</ul>
+<p>信息格式可在每个字段上设置，就像type和name。为了把字段配置成默认格式以外的格式，添加添加一个postings_format的属性，将所选择信息格式的名字作为值，下面是一个例子：</p>
+<pre><code><span class="collection">{
+  <span class="string">"mappings"</span>:<span class="collection">{
+      <span class="string">"post"</span>:<span class="collection">{
+          “properties”：<span class="collection">{
+              “id”：<span class="collection">{“type”：“long”，“store”：“yes”，“precision_step”：“<span class="number">0</span>”,<span class="string">"postings_format"</span>:<span class="string">"pulsing"</span>}</span>，
+              “name”：<span class="collection">{“type”：“string”，“store”：“yes”，“index”：“analyzed”,<span class="string">"similarity"</span>:<span class="string">"BM25"</span>}</span>，
+              “published”：<span class="collection">{“type”：“date”，“store”：“yes”，“precision_step”：“<span class="number">0</span>”}</span>，
+              “contents”：<span class="collection">{“type”：“long”，“store”：“no”，“index”：“analyzed”,<span class="string">"similarity"</span>:<span class="string">"BM25"</span>}</span>
+              }</span>
+          }</span>
+    }</span>
+  }</span>
+</code></pre></li>
+<li><p>文档值格式是Lucene4.0引入的另一个新功能。它允许定义一个给定的字段，这个字段的值被写入一个具有较高内存效率的列式结构，以便进行高效的排序和切面搜索。使用了文档值的字段将有专属的字段数据缓存实，无需像标准字段一样倒排。因此，它全名索引刷新操作速度更快，让你可以在磁盘上存储字段。如增加个投票字段,并且希望对它进行排序。因为需求排序，所以就很适合使用文档值。示例(doc_values_format)：</p>
+<pre><code><span class="collection">{
+    <span class="string">"mappings"</span>:<span class="collection">{
+        <span class="string">"post"</span>:<span class="collection">{
+            “properties”：<span class="collection">{
+                “id”：<span class="collection">{“type”：“long”，“store”：“yes”，“precision_step”：“<span class="number">0</span>”,<span class="string">"postings_format"</span>:<span class="string">"pulsing"</span>}</span>，
+                “name”：<span class="collection">{“type”：“string”，“store”：“yes”，“index”：“analyzed”,<span class="string">"similarity"</span>:<span class="string">"BM25"</span>}</span>，
+                “published”：<span class="collection">{“type”：“date”，“store”：“yes”，“precision_step”：“<span class="number">0</span>”}</span>，
+                “contents”：<span class="collection">{“type”：“long”，“store”：“no”，“index”：“analyzed”,<span class="string">"similarity"</span>:<span class="string">"BM25"</span>}</span>,
+              “votes”：<span class="collection">{“type”：“integer”，<span class="string">"doc_values_format"</span>:<span class="string">"memory"</span>}</span>
+                }</span>
+            }</span>
+      }</span>
+    }</span>
+</code></pre><p> 目前doc_values_format属性共有以下三个值：</p>
+<ul>
+<li>default:当未指定任何格式时，使用此默认格式。此格式使用少量内存而且性能良好。</li>
+<li>disk：此文档值格式将数据存入磁盘，几乎无需内存。然而，在执行切面和排序操作时，性能略有降低。需要执行切面或排序操作，而又苦恼于内存空间时，可使用此格式。</li>
+<li>memory：此文档格式将数据存入内存。在这种格式中，切面或排序的功能与标准倒排索引字段的功能不相上下。由于这种数据结构存储于内存中，索引的刷新速度更快，而这对快速更改索引及缩短索引更频率很有帮助。</li>
+</ul>
+</li>
+<li><p>为索引批量添加数据：ES可以合并多个请求至单个包中，然后这些包可以单个请求的形式传达，所以，可以将如下操作结合起来：</p>
+<ul>
+<li>在索引中增加或更换现有文档</li>
+<li>从索引中移除文档</li>
+<li><p>当索引不存在其他文档定义时，在索引中增加新文档。<br>为了达到如上的需求，格式为：第一行是包含描述操作说明的JSON对象，第二行是JSON对象本身。唯一的例外是delete操作，它只包含信息行。例子如下：</p>
+<pre><code>{"<span class="attribute">index</span>":<span class="value">{"<span class="attribute">_index</span>":<span class="value"><span class="string">"addr"</span></span>,"<span class="attribute">_type</span>":<span class="value"><span class="string">"contact"</span></span>,"<span class="attribute">_id</span>":<span class="value"><span class="number">1</span></span>}</span>}
+{"<span class="attribute">name</span>":<span class="value"><span class="string">"Fyodor Dostoevsky"</span></span>,"<span class="attribute">country</span>":<span class="value"><span class="string">"RU"</span></span>}
+{"<span class="attribute">create</span>":<span class="value">{"<span class="attribute">_index</span>":<span class="value"><span class="string">"addr"</span></span>,"<span class="attribute">_type</span>":<span class="value"><span class="string">"contact"</span></span>,"<span class="attribute">_id</span>":<span class="value"><span class="number">2</span></span>}</span>}
+{"<span class="attribute">name</span>":<span class="value"><span class="string">"Erich Maria Remarque"</span></span>,"<span class="attribute">country</span>":<span class="value"><span class="string">"DE"</span></span>}
+{"<span class="attribute">create</span>":<span class="value">{"<span class="attribute">_index</span>":<span class="value"><span class="string">"addr"</span></span>,"<span class="attribute">_type</span>":<span class="value"><span class="string">"contact"</span></span>,"<span class="attribute">_id</span>":<span class="value"><span class="number">2</span></span>}</span>}
+{"<span class="attribute">name</span>":<span class="value"><span class="string">"Joseph Heller"</span></span>,"<span class="attribute">country</span>":<span class="value"><span class="string">"US"</span></span>}
+{"<span class="attribute">delete</span>":<span class="value">{"<span class="attribute">_index</span>":<span class="value"><span class="string">"addr"</span></span>,"<span class="attribute">_type</span>":<span class="value"><span class="string">"contact"</span></span>,"<span class="attribute">_id</span>":<span class="value"><span class="number">4</span></span>}</span>}
+{"<span class="attribute">delete</span>":<span class="value">{"<span class="attribute">_index</span>":<span class="value"><span class="string">"addr"</span></span>,"<span class="attribute">_type</span>":<span class="value"><span class="string">"contact"</span></span>,"<span class="attribute">_id</span>":<span class="value"><span class="number">1</span></span>}</span>}
+</code></pre><p>重要的是，每一个文档或操作说明放置在一行中（以换行符结束），这意味着无法美化文档格式，批量索引文件的大小存在限制，它被设定为100M。这个属性在配置文件中的<code>http.max_content_length</code>属性来改变。</p>
+</li>
+</ul>
+</li>
+<li><p>为了执行批量请求，ES提供了<code>_bulk</code>端点，形式可以是<code>/_bulk</code>,也可以是<code>/index_name/_bulk</code>,甚至是<code>/index_name/type_name/_bulk</code>，在第二种和第三种形式定义了索引名称和类型名称的默认值。可以在请求的信息中省略这些属性，ES将使用默认值。运行上边这个JSON文件的命令如下：<br> <code>curl -XPOST &#39;localhost:9200/_bulk?pretty&#39; --data-binary @documents.json</code><br> 注意，在这个命令中，没有使用<code>-d</code>，而是使用了<code>--data-binary</code>参数，这是因为不能忽略换行符。<br> 如果想更快，可以用UDP的批量操作，请注意，使用UDP并不能保证数据包是否会丢失，所以，只在在性能比精确度更重要时，并且要索引全部的文档时，才考虑用它。</p>
+</li>
+<li><p>用附加的内部信息扩展索引结构，这些字段类型应定义在适当的类型级别上，它们不是索引范围内的类型。</p>
+</li>
+<li><p>ES索引中的每个字段都有自已的标识符和类型，在ES内中，文档存在两种标识符：</p>
+<ul>
+<li><code>_uid</code>字段它是索引文档中的唯一标识符，由该文档的标识符和文档类型构成。也就是说，同一个索引中，不同类型的文档可能有相同的标识符。此字段不需要额外设置，总是被索引，是自动的。</li>
+<li>_id字段，此字段存储着过索引时设置的实际标识符。为了使<code>_id</code>字段能够被索引/存储，需要在映射文件中像设置其他属性一样添加_id字段的含义。一个指明希望_id字段不经分析但要编入索引，而且不希望存储的例子：<pre><code><span class="collection">{
+    <span class="string">"book"</span>:<span class="collection">{
+        <span class="string">"_id"</span>:<span class="collection">{
+            <span class="string">"index"</span>:<span class="string">"not_analyzed"</span>,
+            <span class="string">"store"</span>:<span class="string">"no"</span>
+        }</span>,
+        <span class="string">"properties"</span>:<span class="collection">{
+            .
+            .
+            .
+        }</span>
+    }</span>
+}</span>
+</code></pre>除了在索引时间指定标识符，也可从索引文档的一个字段中获取标识识（需要额外解析，比较慢）。为此，需要设定path属性，将将它的值设置为一个字段名称，该字段的值将作为标识符。如将<code>book_id</code>的值作为指定标识符的值：<pre><code><span class="collection">{
+    <span class="string">"book"</span>:<span class="collection">{
+        <span class="string">"_id"</span>:<span class="collection">{
+            <span class="string">"path"</span>:<span class="string">"book_id"</span>
+        }</span>,
+        <span class="string">"properties"</span>:<span class="collection">{
+            .
+            .
+            .
+        }</span>
+    }</span>
+}</span>
+</code></pre>当禁用_id字段时，所有需要文档唯一标识符的功能都能继续工作。</li>
+</ul>
+</li>
+<li><p>_type：由于每个文档至少需要它的标识符和类型来描述，默认情况下，文档的类型会编入索引，但不会被分析及存储。如果想存储，可以按如下方式修改：</p>
+<pre><code><span class="collection">{
+    <span class="string">"book"</span>:<span class="collection">{
+        <span class="string">"_type"</span>:<span class="collection">{
+            <span class="string">"store"</span>:<span class="string">"yes"</span>
+        }</span>,
+        <span class="string">"properties"</span>:<span class="collection">{
+            .
+            .
+            .
+        }</span>
+    }</span>
+}</span>
+</code></pre><p>也可改成不索引_type字段，但是如果这样，一些查询（词条查询）和过滤器将失效。</p>
+</li>
+<li><p>_all字段：它用来存储其他字段中的数据以便于搜索。当要执行简单搜索功能，搜索所有数据（或复制到_all字段的所有字段），又不想考虑字段名称之类的事件，这个字段很有用。它默认是启用的，包含了索此中所有字段的所有数据，这使得索引有点大，且不必要，可以完全禁它或排除某些字段，排除特字字段使用<code>include_in_all</code>属性。要完全关闭_all字段功能，可修改映射文件，如下：</p>
+<pre><code><span class="collection">{
+    <span class="string">"book"</span>:<span class="collection">{
+        <span class="string">"_all"</span>:<span class="collection">{
+            <span class="string">"enabled"</span>:<span class="string">"false"</span>
+        }</span>,
+        <span class="string">"properties"</span>:<span class="collection">{
+            .
+            .
+            .
+        }</span>
+    }</span>
+}</span>
+</code></pre><p>除了<code>enabled</code>属性，_all字段还支持以下属性：<code>store</code>、<code>term_vector</code>、<code>analyzer</code>、<code>index_analyzer</code>、<code>search_analyzer</code>,这些属性的具体意思，可向上参阅。</p>
+</li>
+<li><p>_source字段可以在生成索引的过程中存储发送到Elasticsearch的原始JSON文档。默认情况下，_Source字段会被开启，因为部分ES的功能依赖于这个字段（如局部更新功能）。此外，当字段没有存储时，_source字段可用作高亮功能的数据源。如果不需要，可以禁用。方式如下：</p>
+<pre><code><span class="collection">{
+    <span class="string">"book"</span>:<span class="collection">{
+        <span class="string">"_source"</span>:<span class="collection">{
+            <span class="string">"enabled"</span>:<span class="string">"false"</span>
+        }</span>,
+        <span class="string">"properties"</span>:<span class="collection">{
+            .
+            .
+            .
+        }</span>
+    }</span>
+}</span>
+</code></pre><p>如果只想包含某些字段或排除某些字段，可以使用<code>includes</code>或<code>excludes</code>属性来实现。下面是一个排除的例子：</p>
+<pre><code><span class="collection">{
+    <span class="string">"book"</span>:<span class="collection">{
+        <span class="string">"_source"</span>:<span class="collection">{
+            <span class="string">"excludes"</span>:<span class="collection">[<span class="string">"author.*"</span>]</span>
+        }</span>,
+        <span class="string">"properties"</span>:<span class="collection">{
+            .
+            .
+            .
+        }</span>
+    }</span>
+}</span>
+</code></pre></li>
+<li><p>_index字段:ES允许我们存储文档相关的索引信息，可以通过内部的_index字段做到这一点。它可以帮助我们确定文档源自那个索引。默认情况下，_index字段是禁用的。启用方式如下：</p>
+<pre><code><span class="collection">{
+    <span class="string">"book"</span>:<span class="collection">{
+        <span class="string">"_index"</span>:<span class="collection">{
+            <span class="string">"enabled"</span>:<span class="string">"true"</span>
+        }</span>,
+        <span class="string">"properties"</span>:<span class="collection">{
+            .
+            .
+            .
+        }</span>
+    }</span>
+}</span>
+</code></pre></li>
+<li><p>默认情况下，_size字段未启动，这使我们能够自动索引_source字段的原始大小，与并文件一起存储。下面是一个在映射文件中把_size字段启用并存储的例子：</p>
+<pre><code><span class="collection">{
+    <span class="string">"book"</span>:<span class="collection">{
+        <span class="string">"_size"</span>:<span class="collection">{
+            <span class="string">"enabled"</span>:<span class="string">"true"</span>,
+            <span class="string">"store"</span>:<span class="string">"yes"</span>
+        }</span>,
+        <span class="string">"properties"</span>:<span class="collection">{
+            .
+            .
+            .
+        }</span>
+    }</span>
+}</span>
+</code></pre></li>
+<li>默认情况下，禁用的_timestamp字段允许文档在被索引时存储。默认_timestamp字段未经分析编入索引，不保存。它和普通日期字段一样，因而可以像处理普通字段一样改变它的格式。另外，它还可以添加path属性，并将其设置为某字段的名称来获取日期，而不是在文件检索过程中自动创建_timestamp字段。<pre><code><span class="collection">{
+    <span class="string">"book"</span>:<span class="collection">{
+        <span class="string">"_timestamp"</span>:<span class="collection">{
+            <span class="string">"enabled"</span>:<span class="string">"true"</span>,
+            <span class="string">"path"</span>:<span class="string">"year"</span>,
+            <span class="string">"format"</span>:<span class="string">"YYYY"</span>
+        }</span>,
+        <span class="string">"properties"</span>:<span class="collection">{
+            .
+            .
+            .
+        }</span>
+    }</span>
+}</span>
+</code></pre>如果使用本字段，且让ES自动创建它，则该字段的值会被设置为文档索引的时间。但是，局部文档更新时，该字段也将被更新。</li>
+<li>_ttl（time to live）生存时间，它允许定义文档的生命周期，周期结束之后文档会被自动删除。默认情况上禁用的。启用方式如下：<pre><code><span class="collection">{
+    <span class="string">"book"</span>:<span class="collection">{
+        <span class="string">"_ttl"</span>:<span class="collection">{
+            <span class="string">"enabled"</span>:<span class="string">"true"</span>
+        }</span>,
+        <span class="string">"properties"</span>:<span class="collection">{
+            .
+            .
+            .
+        }</span>
+    }</span>
+}</span>
+</code></pre>若要提供文件的默认过期时间，可作如下设置：<pre><code><span class="collection">{
+    <span class="string">"book"</span>:<span class="collection">{
+        <span class="string">"_ttl"</span>:<span class="collection">{
+            <span class="string">"enabled"</span>:<span class="string">"true"</span>,
+            <span class="string">"default"</span>:<span class="string">"30d"</span>
+        }</span>,
+        <span class="string">"properties"</span>:<span class="collection">{
+            .
+            .
+            .
+        }</span>
+    }</span>
+}</span>
+</code></pre>默认情况下，_ttl值未经分析即存储和索引。可以改变这两个参数，但是记住这两个参数要未经分析才能工作。</li>
+<li>段合并：由于Lucene库及ES中一旦数据被写入，说不再改变。所以删除需要额外记录，以应用到搜索过程中。段合并，就底层的lucene库获取若干段，并在这些信息的基础上创建一个新的段，然后将原来的段在磁盘上删除。这是因为段合并在CPU和I/O的使用方面代价是相当高的，所以要适当的控制这个过程被调用的机率。</li>
+<li><p>段合并策略</p>
+<ul>
+<li>tiered：默认合并策略，合并尺寸大致相似的段，并考虑到每个层允许的最大段数量。</li>
+<li>log_byte_size:随着时间的推移，将产生由索引大小的对数构成的索引，基中存在着一些较大的段及一些合并因子较小的段。</li>
+<li>log_doc:类似log_byte_size,但根据索引中的文档数而非段的实际字节数来操作。</li>
+</ul>
+<p>可使用index.merge.policy.type属性来设置想使用的合并策略。<code>index.merge.policy.type:tiered</code>,当然，这个值在索引创建后无法再修改。</p>
+</li>
+<li>合并调度器指示ES合并过程的方式，有如下两种可能：<ul>
+<li>并发合并调度器，这是默认的合并过程，在独立的线程中执行，定义好的线程数量可以并行合并。</li>
+<li>串行合并调度器：这一合并过程在调用线程（即执行索引的线程）中执行。合并进程会一直阻塞线程直到合并完成。<br>调度器可使用index.merge.scheduler.type参数设置，若要使用串行合并调度器，需设置值为serial;并行为concurrent。<code>index.merge.scheduler.type:concurrent</code></li>
+</ul>
+</li>
+<li><p>合并因子指定了索引过程中段合并的频率。因子较小，搜索的速度更快，占用的内存也更少，但索引的速度会变慢；合并因子大时，则索引速度加快，这是因为发生的合并少，但搜索的速度慢，占用的内存也大。对于log_byte_size和log_doc合并策略，可通过<code>index.merge.policy.merge_factor</code>参数来设置合并因子。它的默认值是10,建议在批量索引时设置更高的值，普通的索引维护则设置较低的属性值。<code>index.merge.policy.merge_factor:10</code></p>
+</li>
+<li><p>调节：由于合并时可能会严重影响性能，所以调节可能会改变这一状况。它即可以限制合并的速度，也可以使用数据存储的所有操作。这个参数可以通过配置文件中配置，也可以动态通过api来设置。它有两个设置：</p>
+<ul>
+<li>indices.store.throttle.type:none,不打开；merge：该值定义调节仅在合并过程中有效；all：该值定义调节在所有数据存储过程中有效。</li>
+<li>indices.store.throttle.max_bytes_per_sec:10mb。限制合并操作为每秒10M。默认情部分下，ES使用merge调节类型，max_bytes_per_sec属性设置为20mb。这意味着所有的合并操作都限于20M/秒。</li>
+</ul>
+</li>
+<li><p>默认情况下，ES会在所有索引的分片中均匀地分配文档，但是，有时为了获取文档，需要查询所有分片并合并结果。如果把数据按照一定的依据来划分，就可以使用一个强大的文档和查询分布控制机制：路由。它允许选择用于索引和搜索数据的分片。</p>
+</li>
+<li>默认索引过程：发送文档旮，ES会计算文档标识符的散列值，以此为基础将文档放置于一个可用的主分片上。然后，这些文档被重新分配置副本。</li>
+<li>默认搜索过程：查询发送到ES的一个节点，ES将会根据搜索类型来搪行查询。它首先查询所有节点得到标识符和匹配文档的得分，接着发送一个内部查询，但仅发送到相关的分片（包含文档的分片），最后获取所需文档来构建响应。</li>
+<li>路由可以控制文档和查询转发的目的分片。可以在索引和查询时都指定路由值。如，索引时使用userId值来设置路由，在搜索时也一样。由于userId值一样，计算出的散列值是相同的，因而特定用户的所有文档将被放置在相同的分片中，这样，在搜索中使用相同的属性值，则只需搜索单个分片而不是整个索引。<br>使用路由时，仍然应该为路由值相同的值添加一个过滤器。因为路由值的数量或许比索引分片的数量多。因此，一些不同的属性值可以指向相同的分片，如果忽略过滤，得到的数据并非是路由的单个值，而是特定分片驻留的所有路由值。</li>
+<li>最简单的方法是使用路由参数来提供路由值。索引或查询时，可以添加路由参数到HTTP，或使用你所选择的客户端来设置。示例如下：<br>添加文档：<pre><code>curl -XPUT <span class="string">'http</span>:<span class="comment">//localhost://9200/posts/post/1?routing=12' -d '{</span>
+    <span class="string">"id"</span>:<span class="number">1</span>,
+    <span class="string">"name"</span>:<span class="string">"Test Document"</span>,
+    <span class="string">"contents"</span>:<span class="string">"Test document"</span>,
+    <span class="string">"userId"</span>:<span class="number">12</span>
+}'
+</code></pre>查询例子：<pre><code><span class="title">curl</span> -XGET <span class="string">'http://localhost:9200/posts/_search?routing=12&amp;q=userId:12'</span>
+</code></pre>可以看到，索引和查询需要使用相同的值。如果指定了多个路由值，并由逗号分隔开来。如果还想在查询中使用section参数来路由，并根据这个参数过滤，查询将会如下所示：<pre><code><span class="title">curl</span> -XGET <span class="string">'http://localhost:9200/posts/_search?routing=12,6654&amp;q=userId:12+AND+section:6654'</span>
+</code></pre>为每个发送到ES的请求指定路由值并不方便。所以在索引过程中，ES允许指定一个字段，用该字段的值作为路由值，这样只需要在查询时提供路由参数。指定示例如下：<pre><code><span class="string">"_routing"</span><span class="symbol">:</span>{
+    <span class="string">"required"</span><span class="symbol">:true</span>,
+    <span class="string">"path"</span><span class="symbol">:userId</span>
+}
+</code></pre>上边意思是说查询时必须提供路由器，否则索引请求将失败。path用来指定文档的那个字段应被设置为路由器。这意味着，每个文档userId都必须定义。但是，使用路由字段时，ES需要一些额外的解析，因此比使用路由参数时慢一些。<br>添加路由部分后的映射文件如下所示：<pre><code><span class="collection">{
+<span class="string">"mappings"</span>:<span class="collection">{
+    <span class="string">"post"</span>:<span class="collection">{
+        <span class="string">"_routing"</span>:<span class="collection">{
+            <span class="string">"required"</span><span class="attribute">:true</span>,
+            <span class="string">"path"</span><span class="attribute">:userId</span>
+        }</span>,
+        “properties”：<span class="collection">{
+            “id”：<span class="collection">{“type”：“long”，“store”：“yes”，“precision_step”：“<span class="number">0</span>”,<span class="string">"postings_format"</span>:<span class="string">"pulsing"</span>}</span>，
+            “name”：<span class="collection">{“type”：“string”，“store”：“yes”，“index”：“analyzed”,<span class="string">"similarity"</span>:<span class="string">"BM25"</span>}</span>，
+            “published”：<span class="collection">{“type”：“date”，“store”：“yes”，“precision_step”：“<span class="number">0</span>”}</span>，
+            “contents”：<span class="collection">{“type”：“long”，“store”：“no”，“index”：“analyzed”,<span class="string">"similarity"</span>:<span class="string">"BM25"</span>}</span>,
+          “votes”：<span class="collection">{“type”：“integer”，<span class="string">"doc_values_format"</span>:<span class="string">"memory"</span>}</span>
+            }</span>
+        }</span>
+  }</span>
+}</span>
+</code></pre>如果想用上述映射来创建Posts索引，可以用下面的命令来为单个测试文档建立索引：<pre><code>curl -XPOST <span class="string">'localhost:9200/posts/post/1'</span> -d <span class="string">'{            
+    "</span>id<span class="string">":1,
+    "</span>name<span class="string">":"</span>Test Document<span class="string">",
+    "</span>contents<span class="string">":"</span>Test document<span class="string">",
+    "</span>userId<span class="string">":12124
+}'</span>
+</code></pre> 12124将作为索引时的路由值。</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/elasticsearch/">elasticsearch</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/08/28/java连接远程HBase/" class="alignleft prev" >上一頁</a>
+    
+    
+    <a href="/2015/08/21/在批处理-bat-中设置java程序的内存参数/" class="alignright next" >下一頁</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/" data-title="《Elasticsearch服务器开发》学习笔记（三）" data-url="http://yoursite.com/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>5</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 John Doe
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

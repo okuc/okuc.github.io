@@ -1,0 +1,344 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>《Elasticsearch服务器开发》学习笔记（一） | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="第1章 入门-知识点本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。
+1.术语
+
+文档document：索引和搜索时使用的主要数据载体，包含一个或多个存有数据的字段。
+字段field：文档的一部分，包含名称和值两部分。
+词term：一个搜索单元，表示文本中的一个词
+标记token：表示在字段文本中出现的词，由这个词的文本、开始和结束偏移量以及类型组成
+
+2.Apache Luncence将所有信息写到一个称为倒排索引Inverted index的结构中。它是面向词而不是文档的。
+3.分词的工作由分析器完成，它由一个分词器tokenizer和0个或多个标记过滤器token filter组成，也可以有0个或多个字符射器character mapper。分词的结果被称为标记流token stream，它是一个接一个的标记，准备被过滤器处理。
+4.Lucene分析器包含零个或多个标记过滤器，用来处理标记流中的标记，如">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="《Elasticsearch服务器开发》学习笔记（一）"/>
+  <meta property="og:site_name" content="Hexo"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-06T07:38:12.000Z"><a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/">2015-08-06</a></time>
+      
+      
+  
+    <h1 class="title">《Elasticsearch服务器开发》学习笔记（一）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第1章_入门-知识点">第1章 入门-知识点</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
+<p>1.术语</p>
+<ul>
+<li>文档document：索引和搜索时使用的主要数据载体，包含一个或多个存有数据的字段。</li>
+<li>字段field：文档的一部分，包含名称和值两部分。</li>
+<li>词term：一个搜索单元，表示文本中的一个词</li>
+<li>标记token：表示在字段文本中出现的词，由这个词的文本、开始和结束偏移量以及类型组成</li>
+</ul>
+<p>2.Apache Luncence将所有信息写到一个称为倒排索引Inverted index的结构中。它是面向词而不是文档的。</p>
+<p>3.分词的工作由分析器完成，它由一个分词器tokenizer和0个或多个标记过滤器token filter组成，也可以有0个或多个字符射器character mapper。分词的结果被称为标记流token stream，它是一个接一个的标记，准备被过滤器处理。</p>
+<p>4.Lucene分析器包含零个或多个标记过滤器，用来处理标记流中的标记，如</p>
+<a id="more"></a>
+<ul>
+<li>小写过滤器:把所有的标记变成小写。</li>
+<li>同义词过滤器:基于基本的同义词规则，把一个标记换成另一个同义的标记。</li>
+<li>多语言词干提取过滤器:减少标记，得到词根或者基本形式，即词干。</li>
+</ul>
+<p>过滤器是一个接一个处理的。所以我们通过使用多个过滤器，几乎可以达到无限的分析可能性。</p>
+<p>字符映射器对未经分析的文本起作用，他们在分词器之前工作，因此，我们可以很容易地从文本的整体部分去除HTML标签而无需担心它们被标记。</p>
+<p>5.建立索引时，Lucene会使用你选择的分析器来处理你的文档内容。不同的字段也可以使用不同的分析器，所以文档的名字字段可以和汇总字段做不同的分析。也可以不分析字段。</p>
+<p>查询时，查询将被分析。但是，你也可以选择不分析。即你查询的词是否还会自动拆分匹配。</p>
+<p>索引和查询词应该匹配，以返回文档。而且在索引和查询分析时，对所用标记过滤器保持相同的顺序，这样被分析出来的词是一样的。</p>
+<p>6.评分:分数是根据文档和查询的匹配度用计分公式计算的结果。默认情况下，Apache Lucene使用TF/IDF(词频/逆向文档频率)评分机制。分数越高，越相关。</p>
+<p>7.索引index是Elasticsearch对逻辑数据的逻辑存储，相当于关系数据库的表。索引的结构是为快速有效的全文索引准备的，特别是它不存储原始值。索引可以放在一台机器或者分散在多台服务器上，每个索引有一个或多个分片shard，每个分片可以有多个副本replica。<strong>感觉把索引理解成关系数据库的表，类型理解为表，文档理解为一行记录，更好！ by2015.08.14</strong></p>
+<p>8.文档document是存储的主要实体，相当于数据库中表的一行记录。在Elasticsearch的文档中，相同字段必须有相同的类型。如所有包含title字段的文档，title字段类型都必须是一样的，比如string。</p>
+<p>文档由多个字段组成，每个字段可能多次出现在一个文档里，这样的字段叫多值字段multivalued。每个字段都有类型：文本、数值和日期等。字段也可以是复杂类型。文档不需要有固定的结构，每个文档可以有不同的字段，在程序开发期间，不必确定有那些字段。每个文档存储在一个索引中并有一个Elasticsearch自动生成的唯一标识符和文档类型。文档需要有对应文档类型的唯一标识符，这意味着在一个索引中，两个不同类型的文档可以有相同的唯一的标识符。</p>
+<p>9.一个索引对象可以存储很多不同用途的对象。如，一个博客程序可以保存文章和评论。文档类型让我们轻易地区分单个索引中的不同对象，每个文档可以有不同的结构，但是实际操作中，将文件按类型区分对数据操作有很大帮助。<strong>在一个索引中，即使文档类型不同，相同的属性不能设置不同的类型</strong></p>
+<p>文档类型对应索引中不同的对象。</p>
+<p>10.映射:文档中的每个字段都必须根据不同类型做相应的分析。Elasticsearch中映射中存储有关字段的信息。每一个文档类型都有自已的映射，即使我们没有明确定义。</p>
+<p>11.几个概念：集群、节点、分片（索引较大时，可以分成较小的片，每个片可以放到不同的服务器上，Elasticrearch可以自动把查询分给不同的片并合并结果，应用程序并不知道片的存在。）、副本（每个片可以有0到多个副本，其中一片会被自动选择去更改索引操作，这种特别的分片叫主分片，其作的片就是完整的备份，叫副本分片。主分片丢失时，会有新的副本分片被推荐成新的主分片）</p>
+<p>12.当发送一个新的文档集群时，你指定一个目标索引并发送给他的任意一个节点。这个节点知道目标索引有多个分片，并能确定那个分片应该存储你的文档。ElasticSearch使用文档的唯一标识符来计算文档应该被存放在那个分片中。索引请求发送一个节点后，该节点会转发文档到持有相关分片的目标节点中。</p>
+<p>建立索引时，副本只作为额外的存储备份来用。查询时，副本会平衡分片和它的副本之前的负载。</p>
+<p>13.与Elasticsearch交互的主要接口是基于HTTP协议和REST的。可以使用浏览器来请求，复杂的可以使用<a href="http://curl.haxx.se/download.html" target="_blank" rel="external">curl</a>来请求。</p>
+<p>14.安装：rpm安装包安装好后，配置文件应该在/etc/sysconfig/elasticsearch。如果操作系统基于红帽，可以使用/etc/init.d/elasticsearch下的init脚本。如果你的操作系统是SUSE Linux，可以使用/bin下的systemctl文件来启动和停止Elasticsearch服务。<br>        deb安装包安装后，配置文件存在/etc/elasticsearch/elasticsearch.yml。/etc/init.d/elasticsearch下的init脚本可以用来启动和停止Elasticsearch。此外，/etc/default/elasticsearch下的文件包含了环境变量。</p>
+<p>15.目录结构：</p>
+<ul>
+<li>bin：运行Elasticsearch实例和插件管理所需的脚本</li>
+<li>config：配置文件所在的目录</li>
+<li>lib：Elasticsarch使用的库</li>
+</ul>
+<p>运行后，会创建以下目录：</p>
+<ul>
+<li>data：Elasticsearch使用的所有数据的存储位置</li>
+<li>logs：关于事件和错误记录的文件</li>
+<li>plugins：存储所安装插件的地方</li>
+<li>work：Elasticsearch使用的临时文件</li>
+</ul>
+<p>16.Elasticsearch的配置下有两个文件elasticsearch.yml(或elasticsearch.json，如果有的话会被用)和logging.yml。第一个文件负责设置服务器的默认配置值，因为一些配置值可以在运行时更改，所以这个文件中的值可能不准确。有两个值不能在运行是更改，分别是<code>cluster.name</code>和<code>node.name</code>。</p>
+<p><code>cluster.name</code>用来定义集群的名字，不同的集群用名字来区分，配置成相同集群名字的各个节点形成一个集群。</p>
+<p><code>node.name</code>是实例的名字，可以不定义此参数，此时会自动生成一个。所以为了自已使用，还是最好自已定义一下。</p>
+<p><code>logging.yml</code>定义了多少信息写入系统日志，定义了日志文件，并定期创建新文件。只有在调整监控、备份方案或系统调试时，才需要修改。</p>
+<p>在建立索引时，尤其是很多分片和副本的情况下，Elasticsearch将创建很多文件，所以系统不能限制打开的文件小于32000个。在linux上，一般在/etc/security/limits.conf中修改，当前的值可以用ulimit命令来查看。如果达到极限，Elasticsearch将无法创建文件，所以合并会失败，索引会失败，新的索引会失败。</p>
+<p>如果在日志文件中发现OutOfMemoryError异常的条目，把ES_HEAP_SIZE变量设置到大于1024.当选择分配给JVM合适内存大小时，记住，通常不应该分配超过50%的系统总内存。</p>
+<p>17.启动Elasticsearch后，一般使用2个端口号：第1个是使用HTTP协议与REST API通信的端口，第2个是传输模块，是用来在集群内以及Java客户端和集群之前通信的端口，前者是9200，后者是9300。<strong>在一个Elasticsearch上启动两次后，会启动两个实例，而且他们检测到端口冲突后，会自动选择新的端口。</strong></p>
+<p>18.关闭集群有三种方法：</p>
+<ul>
+<li>在控制台，直接Ctrl+C</li>
+<li>通过kill命令来杀死</li>
+<li>使用REST API</li>
+</ul>
+<p>19.Elasticsearch作为系统服务。如果是在linux上安装的，则已经自动完成了。如果是解压的，则按以下步骤进行：</p>
+<pre><code><span class="number">1.</span> curl -L <span class="string">http:</span><span class="comment">//github.com/elasticsearch/elasticsearch-servicewrapper/tarball/master | tar -xz</span>
+<span class="number">2.</span> sudo mv *servicewrapper* <span class="regexp">/service/</span>usr<span class="regexp">/local/</span>share<span class="regexp">/elasticsearch/</span>bin<span class="regexp">/          /</span>/将下载的服务封装软件移到elasticsearch的bin目录下
+<span class="number">3.</span> rm -Rf *servicewrapper*    <span class="comment">//移除原有的下载目录</span>
+<span class="number">4.</span> sudo <span class="regexp">/usr/</span>local<span class="regexp">/share/</span>elasticsearch<span class="regexp">/bin/</span>service<span class="regexp">/elasticsearch install    /</span>/通过install命令来安装服务
+<span class="number">5.</span> sudo ln -s ‘readlink -f <span class="regexp">/usr/</span>local<span class="regexp">/share/</span>elasticsearch<span class="regexp">/bin/</span>service<span class="regexp">/elasticsearch’ /</span>usr<span class="regexp">/local/</span>bin<span class="regexp">/rcelasticsearch    /</span>/创建符号链接指向该脚本
+<span class="number">6.</span> <span class="regexp">/etc/</span>init.d<span class="regexp">/elasticsearch start    /</span>/启动Elasticsearch
+</code></pre><p>如果是在windows上安装的，则执行：</p>
+<pre><code><span class="number">1</span>. service<span class="class">.bat</span> install
+<span class="number">2</span>. service<span class="class">.bat</span> start
+</code></pre><p>在命令行直接输入service.bat还可以查看其它的命令</p>
+<p>20.<code>GET</code>用来获得请求对象的当前状态，<code>POST</code>用来改变对象的当前状态<code>，</code>PUT<code>创建一个对象，</code>DELETE<code>销毁对象，</code>head`请求获取对象的基本信息。</p>
+<p>21.默认情况下,Elasticsearch在添加、更改或删除文档时会递增版本号。当然，它也可以使用我们提供给它的版本号。在版本存储在外部系统时，这是必要的。为了告诉elasticsearch我们使用的是外部版本号，需设置：<code>version_type=external</code>参数。</p>
+<p>22.默认情况下，删除的文档在60S内仍然可以查询版本信息，可以通过index.gc_deletes配置参数来更改这个值。</p>
+<p>23.为了搜索一个给定的类型，需要指定一个或多个类型。需要查找任意索引，直接*即可，或忽略索引名称。</p>
+<h2 id="第1章_入门－命令">第1章 入门－命令</h2><ul>
+<li>查看搜索是否就绪：<code>http://127.0.0.1:9200</code></li>
+<li>检查集群健康度：<code>curl -XGET http://127.0.0.1:9200/_cluster/health?pretty</code>,-X是一个参数方法，默认是<code>GET</code>（可忽略），<code>pretty</code>是使返回json串格式化，否则会返回一串。</li>
+<li>关闭整个集群：<code>curl -XPOST http://127.0.0.1:9200/_cluster/nodes/_shutdown</code></li>
+<li>关闭集群某个节点：<code>curl -XPOST http://127.0.0.1:9200/_cluster/nodes/abcdefg/_shutdown</code>,<code>abcdefg</code>为某一节点的标识符。</li>
+<li>查看节点的标识符：<code>curl -XGET http://127.0.0.1:9200/_cluster/nodes/</code></li>
+<li>查看集群中节点信息：<code>curl  -XGET http://127.0.0.1:9200/_cluster/state/nodes/</code></li>
+<li>存一条数据:<code>curl -XPUT http://127.0.0.1:9200/blog/article/1 -d &#39;{&quot;id&quot;:&quot;1&quot;,&quot;title&quot;:&quot;Elasticsearch的新版本发布了！&quot;,&quot;content&quot;:&quot;今天1.0版本发布&quot;,&quot;priority&quot;:10,&quot;tags&quot;:[&quot;发布&quot;,&quot;elasticsearch&quot;,&quot;发布&quot;]}&#39;</code>,如果索引等不存在,会自动创建,这句话创建了一个名为blog的索引,创建了一个名为article的类型,这下面的对象的标识符设置为1,存了进去。-d表示后边是请求的主体。把PUT改为POST，后边的1就可以省略了，会自动生成标识符，这相当于修改了索引。另外，如果后边使用了数据库，标识符则不会自动生成，除非数据库中也存储生成标识符。</li>
+<li>取出刚才存的文档：<code>curl -XGET http://127.0.0.1:9200/blog/article/1</code></li>
+<li><p>更新文档内容:<code>curl -XPOST http://127.0.0.1:9200/blog/article/1/_update -d &#39;{&quot;script&quot;:&quot;ctx._source.content=\&quot;新内容\&quot;&quot;}&#39;</code>,此参数需要配置elasticsearch.yml中的配置文件,才可以使用。而且不同的版本配置参数名不同，我是1.7.1版本，所以配置的参数为：</p>
+<pre><code><span class="keyword">script</span>.inline: <span class="function_start"><span class="keyword">on</span></span>
+<span class="keyword">script</span>.indexed: <span class="function_start"><span class="keyword">on</span></span>
+</code></pre></li>
+</ul>
+<p>具体版本的配置方式参见：(<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting.html" target="_blank" rel="external">https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting.html</a>)</p>
+<ul>
+<li>为已经实体增加一个新字段<code>curl -XPOST http://127.0.0.1:9200/blog/article/1/_update -d &#39;{&quot;script&quot;:&quot; ctx._source.counter = 1 &quot; }&#39;</code> ,下面是一个更复杂的例子:<code>curl -XPOST http://127.0.0.1:9200/blog/article/1/_update -d &#39;{&quot;script&quot;:&quot;if (!ctx._source.counter) {ctx._source.counter = 1};ctx._source.counter  += count&quot;,  &quot;params&quot;: {    &quot;count&quot;: 1  }}&#39;</code></li>
+<li>删除刚才存的文档：<code>curl -XDELETE http://127.0.0.1:9200/blog/article/1</code></li>
+<li>使用外部版本号时,需指定,如:<code>curl -XPUT &#39;localhost:9200/library/book/1?version=123456&#39; -d {...}</code>,在做一些更新操作时,需保证版本号比现有的大,否则会操作失败。</li>
+<li>安装插件：<code>elasticsearch/bin plugin -install mobz/elasticsearch-head</code></li>
+<li>访问已安装插件:<code>http://127.0.0.1:9200/_plugin/head/</code></li>
+</ul>
+<p><strong>一个例子</strong></p>
+<p>1.输入数据：</p>
+<pre><code>curl -XPUT http://<span class="number">127.0.0.1:9200</span>/books/es/<span class="number">1</span> -d '{<span class="string">"title"</span>:<span class="string">"Elasticsearch Server"</span>,<span class="string">"published"</span>:<span class="number">2013</span>}'
+curl -XPUT http://<span class="number">127.0.0.1:9200</span>/books/es/<span class="number">2</span> -d '{<span class="string">"title"</span>:<span class="string">"Mastering Elasticsearch"</span>,<span class="string">"published"</span>:<span class="number">2013</span>}'
+curl -XPUT http://<span class="number">127.0.0.1:9200</span>/books/es/<span class="number">3</span> -d '{<span class="string">"title"</span>:<span class="string">"Apache Solr 4 cookbook"</span>,<span class="string">"published"</span>:<span class="number">2012</span>}'
+</code></pre><p>2.查询：</p>
+<ul>
+<li>在某一索引内查找：<code>curl -XGET &#39;http://127.0.0.1:9200/books/_search?pretty&#39;</code></li>
+<li>在某两个索引内查找：<code>curl -XGET &#39;http://127.0.0.1:9200/books,clients/_search?pretty&#39;</code></li>
+<li>在某索引内某个类型下查找：<code>curl -XGET &#39;http://127.0.0.1:9200/books/es/_search?pretty&#39;</code></li>
+<li>在全部里面搜索：<code>curl -XGET &#39;http://127.0.0.1:9200/_search?pretty&#39;</code></li>
+<li><p>在books索引中title字段包含elasticsearch一词的所有文档：<code>curl -XGET &#39;http://127.0.0.1:9200/books/_search?pretty&amp;q=title:elasticsearch&#39;</code></p>
+<pre><code>{
+  <span class="string">"took"</span> : <span class="number">6</span>,<span class="comment">//花费时间,单位是毫秒</span>
+  <span class="string">"timed_out"</span> : <span class="literal">false</span>,<span class="comment">//有没有超时</span>
+  <span class="string">"_shards"</span> : {<span class="comment">//分片信息</span>
+    <span class="string">"total"</span> : <span class="number">5</span>,
+    <span class="string">"successful"</span> : <span class="number">5</span>,<span class="comment">//成功返回结果的分片数量</span>
+    <span class="string">"failed"</span> : <span class="number">0</span>
+  },
+  <span class="string">"hits"</span> : {
+    <span class="string">"total"</span> : <span class="number">2</span>,<span class="comment">//查询结果总数</span>
+    <span class="string">"max_score"</span> : <span class="number">0.19178301</span>, <span class="comment">//计算最高得分</span>
+    <span class="string">"hits"</span> : [ {<span class="comment">//请求返回结果</span>
+      <span class="string">"_index"</span> : <span class="string">"books"</span>,
+      <span class="string">"_type"</span> : <span class="string">"es"</span>,
+      <span class="string">"_id"</span> : <span class="string">"1"</span>,
+      <span class="string">"_score"</span> : <span class="number">0.19178301</span>,
+      <span class="string">"_source"</span>:{<span class="string">"title"</span>:<span class="string">"Elasticsearch Server"</span>,<span class="string">"published"</span>:<span class="number">2013</span>}
+    }, {
+      <span class="string">"_index"</span> : <span class="string">"books"</span>,
+      <span class="string">"_type"</span> : <span class="string">"es"</span>,
+      <span class="string">"_id"</span> : <span class="string">"2"</span>,
+      <span class="string">"_score"</span> : <span class="number">0.19178301</span>,
+      <span class="string">"_source"</span>:{<span class="string">"title"</span>:<span class="string">"Mastering Elasticsearch"</span>,<span class="string">"published"</span>:<span class="number">2013</span>}
+    } ]
+  }
+}
+</code></pre></li>
+</ul>
+<ul>
+<li><p>查看某一词建立的索引具体是什么:<code>curl -XGET &#39;http://127.0.0.1:9200/books/_analyze?field=title&#39; -d &#39;Elasticsearch Server&#39;</code>，可以看到，分成了两个词。</p>
+</li>
+<li><p>URI查询行为：<code>curl -XGET &#39;http://127.0.0.1:9200/books/_search?pretty&amp;q=published:2013&amp;df=title&amp;explain=true&amp;default_operator=AND&#39;</code>。</p>
+<ul>
+<li>参数q用来指定我们希望查询的条件</li>
+<li>df可以指定在q参数中没有字段时应该默认命名用的字段。默认使用使用_all字段。</li>
+<li>analyzer属性定义用于分析查询的分析器名称。默认情况下，索引阶段对字段内容做分析的分析器将用来分析我们的查询</li>
+<li>default_operator属性可以设置成OR或AND，用来指定用于查询的默认布尔运算符，指定查询条件间的关系。</li>
+<li>explain参数设置为true，将返回更加详细的信息，如文档从那个分片上获取的，得分多少。一般不使用这个参数，很影响性能。</li>
+<li>默认返回的文档中包括索引名称、类型名称、文档标识符、得分和_source字段。如想返回其它字段，可以用fields参数，并指定一个以逗号分隔的字段名称列表。这些字段将在内部存储字段或内部_source字段中检索。默认情况下，字段fields参数值是_source。也可以通过_source=false来禁用在_source中读取。</li>
+<li>结果排序：默认是根据得分排序。可以指定：sort=published:desc；sort=published:asc。如果自定义排序，则不会计算得分。可以通过设定track_scores=true来要求计算。</li>
+<li>默认情况没有超时发生，可以设定一个超时时间，timeout＝5，单位是秒。</li>
+<li>返回指定结果：size:默认是10，它定义了返回文档的最大数量，默认是10；from定义了结果应该从那个记录开始返回，默认为0。如从第11个开始返回5个文档：size=5&amp;from=10</li>
+<li>URI查询允许使用search_type参数指定搜索类型，搜索类型默认为query_then_fetch。它共有dfs_query_then_fetch、dfs_query_and_fetch、query_then_fetch、query_and_fetch、count、scan。</li>
+<li>一些查询使用查询扩展如前辍查询(prefix query)。可以用lowercase_expanded_terms属性来定义扩展词是否应该被转化为小写。默认为true。</li>
+<li>默认情况下，通配符查询和前辍查询不会被分析。如果要分析，可以把analyze_ildcard属性设置为true。</li>
+<li>查询被lucene的查询解析器分为词term和操作符operator。title：book，title:”elasticsearch book”。操作符+表示必须匹配，操作符-表示不包含，没有+-的表示，可以匹配，但非强制性查询。如想找title包含book但description字段不包含cat一词的文档：+title:book -description:cat；也可以用括号来组合多个词title:{crime punishment}。还可以使用^来标识加强该词的相关性：title:book^4。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/elasticsearch/">elasticsearch</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/08/10/Linux折腾记(1)-CentOS7下安装mysql数据库/" class="alignleft prev" >上一頁</a>
+    
+    
+    <a href="/2009/03/19/eclipse插件开发获取路径的几种方式/" class="alignright next" >下一頁</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/" data-title="《Elasticsearch服务器开发》学习笔记（一）" data-url="http://yoursite.com/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>5</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 John Doe
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
