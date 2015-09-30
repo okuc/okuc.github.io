@@ -84,12 +84,19 @@ var _hmt = _hmt || [];
 </code></pre></li>
 <li>在<code>home</code>下创建文件夹<code>test</code>。<pre><code><span class="keyword">mkdir</span> /home/<span class="keyword">test</span>
 </code></pre></li>
-<li>将<code>/etc/samba/smb.conf</code>文件中的内容替换成。<pre><code><span class="string">[global]</span>
-security=share
+<li><p>将<code>/etc/samba/smb.conf</code>文件中的内容替换成。</p>
+<pre><code>[global]
+<span class="constant">security</span>=share
 dos charset=cp936
 unix charset=gb2312
-</code></pre></li>
-</ol>
+
+[mygitback]
+<span class="constant">comment</span> = share
+<span class="constant">path</span> = /home/test
+<span class="constant">browseable</span> = yes
+guest ok = yes
+<span class="constant">writable</span> = yes
+</code></pre>
       
     </div>
     <footer>

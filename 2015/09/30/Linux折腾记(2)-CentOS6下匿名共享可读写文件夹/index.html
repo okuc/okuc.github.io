@@ -12,10 +12,18 @@
 
 在home下创建文件夹test。mkdir /home/test
 
-将/etc/samba/smb.conf文件中的内容替换成。[global]
+将/etc/samba/smb.conf文件中的内容替换成。
+[global]
 security=share
 dos charset=cp936
-unix charset=gb2312">
+unix charset=gb2312
+
+[mygitback]
+comment = share
+path = /home/test
+browseable = yes
+guest ok = yes
+writable = yes">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -94,20 +102,20 @@ var _hmt = _hmt || [];
 </code></pre></li>
 <li>在<code>home</code>下创建文件夹<code>test</code>。<pre><code><span class="keyword">mkdir</span> /home/<span class="keyword">test</span>
 </code></pre></li>
-<li>将<code>/etc/samba/smb.conf</code>文件中的内容替换成。<pre><code><span class="string">[global]</span>
-security=share
+<li><p>将<code>/etc/samba/smb.conf</code>文件中的内容替换成。</p>
+<pre><code>[global]
+<span class="constant">security</span>=share
 dos charset=cp936
 unix charset=gb2312
-</code></pre></li>
-</ol>
-<a id="more"></a>        
-<pre><code>[mygitback]
+
+[mygitback]
 <span class="constant">comment</span> = share
 <span class="constant">path</span> = /home/test
 <span class="constant">browseable</span> = yes
 guest ok = yes
 <span class="constant">writable</span> = yes
-</code></pre><ol>
+</code></pre><a id="more"></a>
+</li>
 <li><p>测试配置是否正确<code>testparm</code>。</p>
 <pre><code>[root@htzh199 ~]# testparm
 <span class="operator"><span class="keyword">Load</span> smb config files <span class="keyword">from</span> /etc/samba/smb.conf
