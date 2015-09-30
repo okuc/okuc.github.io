@@ -62,6 +62,53 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-09-30T14:59:45.000Z"><a href="/2015/09/30/Linux折腾记(2)-CentOS6下匿名共享可读写文件夹/">2015-09-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/09/30/Linux折腾记(2)-CentOS6下匿名共享可读写文件夹/">Linux折腾记(2)-CentOS6下匿名共享可读写文件夹</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>想把windows上的一些资料定时备份到linux，首先想到的就是利用共享文件夹的方式，折腾了一番，最终还是搞成功了。过程如下：</p>
+<ol>
+<li>首先安装<code>samba</code>及<code>samba-client</code>,中间不管提问什么，一路<code>y</code>即可。<pre><code>yum <span class="operator"><span class="keyword">install</span> samba samba-<span class="keyword">client</span></span>
+</code></pre></li>
+<li>在<code>home</code>下创建文件夹<code>test</code>。<pre><code><span class="keyword">mkdir</span> /home/<span class="keyword">test</span>
+</code></pre></li>
+<li>将<code>/etc/samba/smb.conf</code>文件中的内容替换成。<pre><code><span class="string">[global]</span>
+security=share
+dos charset=cp936
+unix charset=gb2312
+</code></pre></li>
+</ol>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/09/30/Linux折腾记(2)-CentOS6下匿名共享可读写文件夹/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -406,53 +453,6 @@ eno1 <span class="number">5f</span>b06bd0-<span class="number">0</span>bb0-<span
         
           <div class="alignleft">
             <a href="/2015/08/16/《Elasticsearch服务器开发》学习笔记（二）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-08-10T14:59:45.000Z"><a href="/2015/08/10/Linux折腾记(2)-CentOS7下匿名共享可读写文件夹/">2015-08-10</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/08/10/Linux折腾记(2)-CentOS7下匿名共享可读写文件夹/">Linux折腾记(1)-CentOS6下安装mysql数据库</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>想把windows上的一些资料定时备份到linux，首先想到的就是利用共享文件夹的方式，折腾了一番，最终还是搞成功了。过程如下：</p>
-<ol>
-<li>首先安装<code>samba</code>及<code>samba-client</code>,中间不管提问什么，一路<code>y</code>即可。<pre><code>yum <span class="operator"><span class="keyword">install</span> samba samba-<span class="keyword">client</span></span>
-</code></pre></li>
-<li>在<code>home</code>下创建文件夹<code>test</code>。<pre><code><span class="keyword">mkdir</span> /home/<span class="keyword">test</span>
-</code></pre></li>
-<li>将<code>/etc/samba/smb.conf</code>文件中的内容替换成。<pre><code><span class="string">[global]</span>
-security=share
-dos charset=cp936
-unix charset=gb2312
-</code></pre></li>
-</ol>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/08/10/Linux折腾记(2)-CentOS7下匿名共享可读写文件夹/#more" class="more-link">阅读更多</a>
           </div>
         
         
