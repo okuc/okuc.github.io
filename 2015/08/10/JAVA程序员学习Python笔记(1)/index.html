@@ -3,17 +3,16 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Elasticsearch中文乱码问题的解决 | 我的后院自留地</title>
+  <title>JAVA程序员学习Python笔记(1) | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
-  <meta name="description" content="最近在研究ES的分词，一直想找一个理想的大全分词方式，如中国人民，希望能全部分开，分成中国、国人、人民、中国人、国人民、中国人民,6个词。也就是说，不管什么词性、词义、同义词什么的，全部按字数进行切割。争取能够实现类似关系数据库中like的效果。
-后来，听人说IK分词能够达到这个效果，于是，开始安装IK插件，不想却遇到了乱码问题。
-具体乱码情况如下：如果输入查询_search，则返回的结果不会乱码。如是查询分词结果_analyze,则会返回乱码。">
+  <meta name="description" content="print “helloworld” ：打印Hello world
+print “hello world” * 5,打印5遍Hello world">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Elasticsearch中文乱码问题的解决"/>
+  <meta property="og:title" content="JAVA程序员学习Python笔记(1)"/>
   <meta property="og:site_name" content="我的后院自留地"/>
 
   
@@ -65,31 +64,27 @@ var _hmt = _hmt || [];
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
   
   <div class="post-content">
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-09-19T14:35:02.000Z"><a href="/2015/09/19/Elasticsearch中文乱码问题的解决/">2015-09-19</a></time>
+        <time datetime="2015-08-10T14:59:45.000Z"><a href="/2015/08/10/JAVA程序员学习Python笔记(1)/">2015-08-10</a></time>
       
       
   
-    <h1 class="title">Elasticsearch中文乱码问题的解决</h1>
+    <h1 class="title">JAVA程序员学习Python笔记(1)</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>最近在研究ES的分词，一直想找一个理想的大全分词方式，如<code>中国人民</code>，希望能全部分开，分成<code>中国</code>、<code>国人</code>、<code>人民</code>、<code>中国人</code>、<code>国人民</code>、<code>中国人民</code>,6个词。也就是说，不管什么词性、词义、同义词什么的，全部按字数进行切割。争取能够实现类似关系数据库中like的效果。</p>
-<p>后来，听人说IK分词能够达到这个效果，于是，开始安装IK插件，不想却遇到了乱码问题。</p>
-<p>具体乱码情况如下：<br>如果输入查询<code>_search</code>，则返回的结果不会乱码。如是查询分词结果<code>_analyze</code>,则会返回乱码。</p>
-<a id="more"></a>
-<p>问遍了百度、谷歌，始终没有找到解决方案。好像只有极少数的人遇到了这个问题。最终，经过坚持不懈，搞到了解决方案，如来如此：<strong>curl发送的是http请求，所以对于中文，最好进行urlencode编码才可以。</strong>就类拟于我们在百度输入汉字，请求时，在url中它自动转变成了一串编码。<br>因此，只需要把请求<code>curl -XPOST  &quot;http://localhost:9200/userinfo/_analyze?analyzer=standard&amp;pretty=true&amp;text=中国人民&quot;</code>改为<code>curl -XPOST  &quot;http://localhost:9200/userinfo/_analyze?analyzer=standard&amp;pretty=true&amp;text=%E4%B8%AD%E5%9B%BD%E4%BA%BA%E6%B0%91&quot;</code>即可！</p>
-<p>至于为什么<code>_search</code>不用转码，而<code>_analyze</code>必须经过转码才可以，就不得而知了。</p>
-<p>顺便再说一句要求的上边的IK分词，还是不行，满足不了我的要求，他的最大化分词效果依然不是直接按字数切割，还是词语有关。看来，偶还是要继续摸索去了。</p>
-<p>最后，给大家提供一个转码的网址，大家直接去这儿转码吧（其实各个语言都有这个），各位攻城狮完全可以自已写个啦！</p>
-<p><a href="http://tool.chinaz.com/Tools/URLEncode.aspx" target="_blank" rel="external">http://tool.chinaz.com/Tools/URLEncode.aspx</a></p>
+        <ul>
+<li>print “helloworld” ：打印Hello world</li>
+<li>print “hello world” * 5,打印5遍Hello world</li>
+<li></li>
+</ul>
 
       
     </div>
@@ -99,7 +94,7 @@ var _hmt = _hmt || [];
         
   
   <div class="tags">
-    <a href="/tags/elasticsearch/">elasticsearch</a>
+    <a href="/tags/linux/">linux</a>
   </div>
 
         
@@ -114,16 +109,16 @@ var _hmt = _hmt || [];
 
 <nav id="pagination" >
     
-    <a href="/2015/09/28/《Elasticsearch服务器开发》学习笔记（五）/" class="alignleft prev" >上一頁</a>
+    <a href="/2015/08/10/Linux折腾记(1)-CentOS7下安装mysql数据库/" class="alignleft prev" >上一頁</a>
     
     
-    <a href="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/" class="alignright next" >下一頁</a>
+    <a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/" class="alignright next" >下一頁</a>
     
     <div class="clearfix"></div>
 </nav>
 
 <!-- ��˵���ۿ� start -->
- <div class="ds-thread" data-thread-key="/2015/09/19/Elasticsearch中文乱码问题的解决/" data-title="Elasticsearch中文乱码问题的解决" data-url="http://www.52brt.com/2015/09/19/Elasticsearch中文乱码问题的解决/"></div>
+ <div class="ds-thread" data-thread-key="/2015/08/10/JAVA程序员学习Python笔记(1)/" data-title="JAVA程序员学习Python笔记(1)" data-url="http://www.52brt.com/2015/08/10/JAVA程序员学习Python笔记(1)/"></div>
 <!-- ��˵���ۿ� end -->
 <!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
 <script type="text/javascript">

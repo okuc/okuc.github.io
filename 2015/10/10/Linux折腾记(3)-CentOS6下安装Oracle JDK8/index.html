@@ -1,0 +1,215 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Linux折腾记(3)-CentOS6下安装Oracle JDK8 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="CentOS6中自带了openJDK1.7，由于XXX原因，一般还是要手动更改成Oracle JDK。本文描述的即是这一过程。
+首先，要查看一下你安装的版本中，是否自动安装了openJDK,如果没有，恭喜你，可以直接进行安装了。查询命令如下：
+[root@okuc6 ~]# java -versio">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Linux折腾记(3)-CentOS6下安装Oracle JDK8"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-10-10T14:59:45.000Z"><a href="/2015/10/10/Linux折腾记(3)-CentOS6下安装Oracle JDK8/">2015-10-10</a></time>
+      
+      
+  
+    <h1 class="title">Linux折腾记(3)-CentOS6下安装Oracle JDK8</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>CentOS6中自带了openJDK1.7，由于XXX原因，一般还是要手动更改成Oracle JDK。本文描述的即是这一过程。</p>
+<p>首先，要查看一下你安装的版本中，是否自动安装了openJDK,如果没有，恭喜你，可以直接进行安装了。查询命令如下：</p>
+<pre><code><span class="attr_selector">[root@okuc6 ~]</span># <span class="tag">java</span> <span class="tag">-version</span>
+<span class="tag">java</span> <span class="tag">version</span> "1<span class="class">.7</span><span class="class">.0_79</span>"
+<span class="tag">OpenJDK</span> <span class="tag">Runtime</span> <span class="tag">Environment</span> (<span class="tag">rhel-2</span><span class="class">.5</span><span class="class">.5</span><span class="class">.4</span><span class="class">.el6-x86_64</span> <span class="tag">u79-b14</span>)
+<span class="tag">OpenJDK</span> 64<span class="tag">-Bit</span> <span class="tag">Server</span> <span class="tag">VM</span> (<span class="tag">build</span> 24<span class="class">.79-b02</span>, <span class="tag">mixed</span> <span class="tag">mode</span>)
+</code></pre><p>如上，如果返回的结果中还了OpenJDK字样，那就先卸载吧。</p>
+<p>###卸载过程</p>
+<ol>
+<li><p>查询系统中安装的OpenJDK具体版本：</p>
+<pre><code>[root@okuc6 ~]<span class="preprocessor"># rpm -qa|grep jdk</span>
+java-<span class="number">1.6</span><span class="number">.0</span>-openjdk-<span class="number">1.6</span><span class="number">.0</span><span class="number">.35</span>-<span class="number">1.13</span><span class="number">.7</span><span class="number">.1</span>.el6_6.x86_64
+java-<span class="number">1.7</span><span class="number">.0</span>-openjdk-<span class="number">1.7</span><span class="number">.0</span><span class="number">.79</span>-<span class="number">2.5</span><span class="number">.5</span><span class="number">.4</span>.el6.x86_64
+</code></pre><p>上述命令可以看到我的系统中安装了2个版本的JDK，依次卸载。</p>
+</li>
+<li><p>使用<code>yum -y rmove</code>命令进行卸载。</p>
+<pre><code><span class="tag">yum</span> <span class="tag">-y</span> <span class="tag">remove</span> <span class="tag">java</span> <span class="tag">java-1</span><span class="class">.6</span><span class="class">.0-openjdk-1</span><span class="class">.6</span><span class="class">.0</span><span class="class">.35-1</span><span class="class">.13</span><span class="class">.7</span><span class="class">.1</span><span class="class">.el6_6</span><span class="class">.x86_64</span>
+<span class="tag">yum</span> <span class="tag">-y</span> <span class="tag">remove</span> <span class="tag">java</span> <span class="tag">java-1</span><span class="class">.7</span><span class="class">.0-openjdk-1</span><span class="class">.7</span><span class="class">.0</span><span class="class">.79-2</span><span class="class">.5</span><span class="class">.5</span><span class="class">.4</span><span class="class">.el6</span><span class="class">.x86_64</span>
+</code></pre></li>
+<li>卸载完成后再次使<code>rpm -qa|grep jdk</code>用查询，已经没有上次返回的结果了。</li>
+</ol>
+<p>###安装过程</p>
+<ol>
+<li>在下载的jdk中目录中，直接执行<code>rpm -ivh jdk-8u60-linux-x64.rpm</code>进行安装。</li>
+<li>配置环境变量<pre><code>vi /etc/profile  <span class="comment">#打开配置文件，在文件的最后三行，添加如下三行：</span>
+<span class="built_in">export</span> JAVA_HOME=E/usr/java/jdk1.<span class="number">8.0</span>_60
+<span class="built_in">export</span> CLASSPATH=.
+<span class="built_in">export</span> PATH = <span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin
+</code></pre></li>
+<li>查询系统中安装的JDK具体版本：<pre><code><span class="list">[<span class="keyword">root@okuc6</span> soft]# java -version
+java version <span class="string">"1.8.0_60"</span>
+Java<span class="list">(<span class="keyword">TM</span>)</span> SE Runtime Environment <span class="list">(<span class="keyword">build</span> <span class="number">1.8</span>.0_60-b27)</span>
+Java HotSpot<span class="list">(<span class="keyword">TM</span>)</span> <span class="number">64</span>-Bit Server VM <span class="list">(<span class="keyword">build</span> <span class="number">25.60</span>-b23, mixed mode)</span></span>
+</code></pre>可以看到，已安装成功。<br>如果还不放心，可以再使用<code>java</code>,<code>javac</code>分别测试一下。</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/linux/">linux</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    
+    <a href="/2015/09/30/Linux折腾记(2)-CentOS6下匿名共享可读写文件夹/" class="alignright next" >下一頁</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/10/10/Linux折腾记(3)-CentOS6下安装Oracle JDK8/" data-title="Linux折腾记(3)-CentOS6下安装Oracle JDK8" data-url="http://www.52brt.com/2015/10/10/Linux折腾记(3)-CentOS6下安装Oracle JDK8/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
