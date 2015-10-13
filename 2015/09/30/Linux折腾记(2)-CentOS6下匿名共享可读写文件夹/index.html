@@ -6,24 +6,7 @@
   <title>Linux折腾记(2)-CentOS6下匿名共享可读写文件夹 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
-  <meta name="description" content="想把windows上的一些资料定时备份到linux，首先想到的就是利用共享文件夹的方式，折腾了一番，最终还是搞成功了。过程如下：
-
-首先安装samba及samba-client,中间不管提问什么，一路y即可。yum install samba samba-client
-
-在home下创建文件夹test。mkdir /home/test
-
-将/etc/samba/smb.conf文件中的内容替换成。
-[global]
-security=share
-dos charset=cp936
-unix charset=gb2312
-
-[mygitback]
-comment = share
-path = /home/test
-browseable = yes
-guest ok = yes
-writable = yes">
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">

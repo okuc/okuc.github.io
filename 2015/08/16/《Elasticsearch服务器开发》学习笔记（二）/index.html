@@ -6,14 +6,7 @@
   <title>《Elasticsearch服务器开发》学习笔记（二） | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
-  <meta name="description" content="第2章 映射配置(一)本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。
-
-Elasticsearch是一个无模式的搜索引警,可以即时算出数据结构,但是自已控制并定义结构是更好的办法。
-Elasticsearch是由一个或多个分片组成，每个分片包含了文档集的一部分。而且这些分片也有副本。在创建索引时，可以规定分片及副本的数量，也可以使用全局配置文件或软件内部的默认值。5个分片，1个副本，就意味着在集群中有10个lucene索引。副本可以随时调整，但是分片，则不能调整。创建好索引后更改分片的唯一图径是创建另外一个索引并重新索引数据。
-直接创建一个索引curl -XPUT http://localhost:9200/blog。不让它自动创建索引是因为有时候要修改分片数目、设置索引结构。因此，可以关闭配置文件中自动创建索引的配置action.auto_create_index:-an*,+a,-*,上面的命令意思是说不允许自动创建以an开头的索引；允许自动创建以a开头的索引，其他的索引也必须手工创建。
-一个手工设置分片及副本数量的例子curl -XPUT http://localhost:9200/blog/ -d &amp;#39;{&amp;quot;settings&amp;quot;:{&amp;quot;number_of_shards&amp;quot;:1,&amp;quot;number_of_replicas&amp;quot;:2}}&amp;#39;
-删除索引curl -XDELETE http://localhost:9200/posts
-映射类似于关系数据库的数据结构。在定义映射时，Elasticsearch可以通过定义的JSON来猜测文档结构。在JSON中，字符串用引号括起来，布尔值用特定的词语定义，数值则是数字。但是，有时ES也会忽略数字类型，全按字符串来处理。可以使用如下命令来强制它进行文本检测。">
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">

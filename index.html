@@ -6,6 +6,8 @@
   <title>我的后院自留地</title>
   <meta name="author" content="okuc">
   
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -93,39 +95,14 @@ tmpfs                  <span class="number">16</span>G   <span class="number">72
 /dev/mapper/vg_htzh199-lv_home
                       <span class="number">1.8</span>T  <span class="number">284</span>G  <span class="number">1.4</span>T  <span class="number">17</span>% /home
 </code></pre><p>由上面的数据可以看出，根目录<code>/</code>只有50G，且已经使用完了。由此也可以推测，没有空间可用的可能性非常大。</p>
-</li>
-<li><p>打开日志文件进行查看。PS：怎么一开始没有想到马上查看日志文件呢？</p>
-<pre><code>vi /<span class="built_in">var</span>/<span class="keyword">log</span>/mysqld<span class="built_in">.</span><span class="keyword">log</span>
-</code></pre><p>从日志文件中，一眼就看到了无可用空间的错误提示，从而找到了问题的具体原因。</p>
-</li>
-</ol>
-<p>###解决问题<br> 那么，该如何解决呢？问了一下有经验的同事，得到了具体的解决方案：</p>
-<ol>
-<li><p>由上面查询磁盘空间可得知，大部分的磁盘都分给了<code>/home</code>目录，因此，可以把数据文件移动到<code>/home</code>下。于是乎，开干吧！</p>
-<pre><code>cp -<span class="constant">R</span> /var/<span class="class"><span class="keyword">lib</span>/<span class="title">mysql</span> /<span class="title">home</span>/<span class="title">mysql_data</span></span>
-vi /etc/my.cnf
-
-[mysqld]
-lower_case_table_names=<span class="number">1</span>
-datadir=<span class="regexp">/home/mysql</span>_data
-socket=<span class="regexp">/home/mysql</span>_data/mysql.sock
-</code></pre></li>
-<li><p>重启一下服务<code>service mysqld restart</code>，发现服务启动不起来，查看日志，报出了以下错误，这是怎么回事？</p>
-<pre><code>151013 08:46:59 mysqld_safe mysqld from pid <span class="keyword">file</span> /<span class="keyword">var</span>/<span class="keyword">run</span>/mysqld/mysqld.pid ended
-151013 08:51:57 mysqld_safe Starting mysqld daemon with databases from /home/mysql_data
-^<span class="keyword">G</span>/usr/libexec/mysqld: Can't find <span class="keyword">file</span>: './mysql/<span class="keyword">plugin</span>.frm' (errno: 13)
-151013  8:51:57 [<span class="keyword">ERROR</span>] Can't <span class="keyword">open</span> the mysql.<span class="keyword">plugin</span> <span class="keyword">table</span>. Please <span class="keyword">run</span> mysql_upgrade to create it.
-</code></pre></li>
-<li><p>原来，我们把mysql的数据移动时，使用的<code>root</code>用户，而<code>mysql</code>运行，使用的是<code>mysql</code>用户，还需要把目录更改为mysql用户所有<code>chown -R mysql /home/mysql_data</code>。</p>
-</li>
-<li>再次重启<code>service mysqld restart</code>,这次，可以顺利的发现自已的数据啦。</li>
-</ol>
-<p>###其它<br>这次安装mysql，也特别顺序，两步直接完成：<br>        yum install mysql-server  #一路y即可<br>        service mysqld start  #启动服务<br>        chkconfig mysqld on #设置为开机启动</p>
-
       
     </div>
     <footer>
       
+        
+          <div class="alignleft">
+            <a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/#more" class="more-link">阅读更多</a>
+          </div>
         
         
       
@@ -159,40 +136,15 @@ socket=<span class="regexp">/home/mysql</span>_data/mysql.sock
 <span class="tag">java</span> <span class="tag">version</span> "1<span class="class">.7</span><span class="class">.0_79</span>"
 <span class="tag">OpenJDK</span> <span class="tag">Runtime</span> <span class="tag">Environment</span> (<span class="tag">rhel-2</span><span class="class">.5</span><span class="class">.5</span><span class="class">.4</span><span class="class">.el6-x86_64</span> <span class="tag">u79-b14</span>)
 <span class="tag">OpenJDK</span> 64<span class="tag">-Bit</span> <span class="tag">Server</span> <span class="tag">VM</span> (<span class="tag">build</span> 24<span class="class">.79-b02</span>, <span class="tag">mixed</span> <span class="tag">mode</span>)
-</code></pre><p>如上，如果返回的结果中还了OpenJDK字样，那就先卸载吧。</p>
-<p>###卸载过程</p>
-<ol>
-<li><p>查询系统中安装的OpenJDK具体版本：</p>
-<pre><code>[root@okuc6 ~]<span class="preprocessor"># rpm -qa|grep jdk</span>
-java-<span class="number">1.6</span><span class="number">.0</span>-openjdk-<span class="number">1.6</span><span class="number">.0</span><span class="number">.35</span>-<span class="number">1.13</span><span class="number">.7</span><span class="number">.1</span>.el6_6.x86_64
-java-<span class="number">1.7</span><span class="number">.0</span>-openjdk-<span class="number">1.7</span><span class="number">.0</span><span class="number">.79</span>-<span class="number">2.5</span><span class="number">.5</span><span class="number">.4</span>.el6.x86_64
-</code></pre><p>上述命令可以看到我的系统中安装了2个版本的JDK，依次卸载。</p>
-</li>
-<li><p>使用<code>yum -y rmove</code>命令进行卸载。</p>
-<pre><code><span class="tag">yum</span> <span class="tag">-y</span> <span class="tag">remove</span> <span class="tag">java</span> <span class="tag">java-1</span><span class="class">.6</span><span class="class">.0-openjdk-1</span><span class="class">.6</span><span class="class">.0</span><span class="class">.35-1</span><span class="class">.13</span><span class="class">.7</span><span class="class">.1</span><span class="class">.el6_6</span><span class="class">.x86_64</span>
-<span class="tag">yum</span> <span class="tag">-y</span> <span class="tag">remove</span> <span class="tag">java</span> <span class="tag">java-1</span><span class="class">.7</span><span class="class">.0-openjdk-1</span><span class="class">.7</span><span class="class">.0</span><span class="class">.79-2</span><span class="class">.5</span><span class="class">.5</span><span class="class">.4</span><span class="class">.el6</span><span class="class">.x86_64</span>
-</code></pre></li>
-<li>卸载完成后再次使<code>rpm -qa|grep jdk</code>用查询，已经没有上次返回的结果了。</li>
-</ol>
-<p>###安装过程</p>
-<ol>
-<li>在下载的jdk中目录中，直接执行<code>rpm -ivh jdk-8u60-linux-x64.rpm</code>进行安装。</li>
-<li>配置环境变量<pre><code>vi /etc/profile  <span class="comment">#打开配置文件，在文件的最后三行，添加如下三行：</span>
-<span class="built_in">export</span> JAVA_HOME=E/usr/java/jdk1.<span class="number">8.0</span>_60
-<span class="built_in">export</span> CLASSPATH=.
-<span class="built_in">export</span> PATH = <span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin
-</code></pre></li>
-<li>查询系统中安装的JDK具体版本：<pre><code><span class="list">[<span class="keyword">root@okuc6</span> soft]# java -version
-java version <span class="string">"1.8.0_60"</span>
-Java<span class="list">(<span class="keyword">TM</span>)</span> SE Runtime Environment <span class="list">(<span class="keyword">build</span> <span class="number">1.8</span>.0_60-b27)</span>
-Java HotSpot<span class="list">(<span class="keyword">TM</span>)</span> <span class="number">64</span>-Bit Server VM <span class="list">(<span class="keyword">build</span> <span class="number">25.60</span>-b23, mixed mode)</span></span>
-</code></pre>可以看到，已安装成功。<br>如果还不放心，可以再使用<code>java</code>,<code>javac</code>分别测试一下。</li>
-</ol>
-
+</code></pre><p>如上，如果返回的结果中还了OpenJDK字样，那就先卸载吧。<br>
       
     </div>
     <footer>
       
+        
+          <div class="alignleft">
+            <a href="/2015/10/10/Linux折腾记(3)-CentOS6下安装Oracle JDK8/#more" class="more-link">阅读更多</a>
+          </div>
         
         
       

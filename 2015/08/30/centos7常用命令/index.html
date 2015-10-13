@@ -6,25 +6,7 @@
   <title>centos7常用命令 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
-  <meta name="description" content="记录centos7下的一些常用命令!
-###网络相关
-
-关闭防火墙：systemctl stop firewalld.service#停止firewall
-systemctl disable firewalld.service#禁止firewall开机启动
-
-配置DNS服务
-
-命令行方式
-1. nmcli connection show #显示当前网络连接
-NAME UUID                                 TYPE           DEVICE
-eno1 5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03 802-3-ethernet eno1
-
-2. nmcli con mod eno1 ipv4.dns &quot;114.114.114.114 8.8.8.8&quot; #修改当前网络连接对应的DNS服务器，这里的网络连接可以用名称或者UUID来标识
-3. nmcli con up eno1#将dns配置生效
-
-
-
-直接修改文件方式">
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">

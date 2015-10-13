@@ -6,10 +6,7 @@
   <title>CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
-  <meta name="description" content="正常运行的mysql，忽然报出了The Table ‘XXX’ is full Query的错误，于是，又开始了一番折腾之旅。下面简单的记录一下：
-###排查原因
-
-对服务进行重启service mysqld stop，结果起不来了。报出的以下错误：Timeout error occurred tr">
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -97,11 +94,9 @@ tmpfs                  <span class="number">16</span>G   <span class="number">72
 /dev/mapper/vg_htzh199-lv_home
                       <span class="number">1.8</span>T  <span class="number">284</span>G  <span class="number">1.4</span>T  <span class="number">17</span>% /home
 </code></pre><p>由上面的数据可以看出，根目录<code>/</code>只有50G，且已经使用完了。由此也可以推测，没有空间可用的可能性非常大。</p>
-</li>
-<li><p>打开日志文件进行查看。PS：怎么一开始没有想到马上查看日志文件呢？</p>
-<pre><code>vi /<span class="built_in">var</span>/<span class="keyword">log</span>/mysqld<span class="built_in">.</span><span class="keyword">log</span>
-</code></pre><p>从日志文件中，一眼就看到了无可用空间的错误提示，从而找到了问题的具体原因。</p>
-</li>
+<a id="more"></a></li>
+<li>打开日志文件进行查看。PS：怎么一开始没有想到马上查看日志文件呢？<pre><code>vi /<span class="built_in">var</span>/<span class="keyword">log</span>/mysqld<span class="built_in">.</span><span class="keyword">log</span>
+</code></pre>从日志文件中，一眼就看到了无可用空间的错误提示，从而找到了问题的具体原因。</li>
 </ol>
 <p>###解决问题<br> 那么，该如何解决呢？问了一下有经验的同事，得到了具体的解决方案：</p>
 <ol>
