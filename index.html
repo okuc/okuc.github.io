@@ -68,6 +68,81 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-10-12T14:59:45.000Z"><a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/">2015-10-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/">CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>正常运行的mysql，忽然报出了<code>The Table ‘XXX’ is full Query</code>的错误，于是，又开始了一番折腾之旅。下面简单的记录一下：</p>
+<p>###排查原因</p>
+<ol>
+<li>对服务进行重启<code>service mysqld stop</code>，结果起不来了。报出的以下错误：<code>Timeout error occurred trying to start MySQL Daemon</code>。</li>
+<li><p>baidu的一番，毫无收获。接下来，经过XXX，顺便到访问到了google，得到了一个可能的答案：磁盘空间不足。第一念头是，不可能呀，这可是2T的硬盘，而且也没有多少数据。念头归念头，还是查询一下，眼见为证：</p>
+<pre><code>[root@htzh199 ~]<span class="preprocessor"># df -lh</span>
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/mapper/vg_htzh199-lv_root
+                       <span class="number">50</span>G   <span class="number">50</span>G   <span class="number">0</span>G  <span class="number">100</span>% /
+tmpfs                  <span class="number">16</span>G   <span class="number">72</span>K   <span class="number">16</span>G   <span class="number">1</span>% /dev/shm
+/dev/sda2             <span class="number">477</span>M   <span class="number">33</span>M  <span class="number">419</span>M   <span class="number">8</span>% /boot
+/dev/sda1             <span class="number">200</span>M  <span class="number">264</span>K  <span class="number">200</span>M   <span class="number">1</span>% /boot/efi
+/dev/mapper/vg_htzh199-lv_home
+                      <span class="number">1.8</span>T  <span class="number">284</span>G  <span class="number">1.4</span>T  <span class="number">17</span>% /home
+</code></pre><p>由上面的数据可以看出，根目录<code>/</code>只有50G，且已经使用完了。由此也可以推测，没有空间可用的可能性非常大。</p>
+</li>
+<li><p>打开日志文件进行查看。PS：怎么一开始没有想到马上查看日志文件呢？</p>
+<pre><code>vi /<span class="built_in">var</span>/<span class="keyword">log</span>/mysqld<span class="built_in">.</span><span class="keyword">log</span>
+</code></pre><p>从日志文件中，一眼就看到了无可用空间的错误提示，从而找到了问题的具体原因。</p>
+</li>
+</ol>
+<p>###解决问题<br> 那么，该如何解决呢？问了一下有经验的同事，得到了具体的解决方案：</p>
+<ol>
+<li><p>由上面查询磁盘空间可得知，大部分的磁盘都分给了<code>/home</code>目录，因此，可以把数据文件移动到<code>/home</code>下。于是乎，开干吧！</p>
+<pre><code>cp -<span class="constant">R</span> /var/<span class="class"><span class="keyword">lib</span>/<span class="title">mysql</span> /<span class="title">home</span>/<span class="title">mysql_data</span></span>
+vi /etc/my.cnf
+
+[mysqld]
+lower_case_table_names=<span class="number">1</span>
+datadir=<span class="regexp">/home/mysql</span>_data
+socket=<span class="regexp">/home/mysql</span>_data/mysql.sock
+</code></pre></li>
+<li><p>重启一下服务<code>service mysqld restart</code>，发现服务启动不起来，查看日志，报出了以下错误，这是怎么回事？</p>
+<pre><code>151013 08:46:59 mysqld_safe mysqld from pid <span class="keyword">file</span> /<span class="keyword">var</span>/<span class="keyword">run</span>/mysqld/mysqld.pid ended
+151013 08:51:57 mysqld_safe Starting mysqld daemon with databases from /home/mysql_data
+^<span class="keyword">G</span>/usr/libexec/mysqld: Can't find <span class="keyword">file</span>: './mysql/<span class="keyword">plugin</span>.frm' (errno: 13)
+151013  8:51:57 [<span class="keyword">ERROR</span>] Can't <span class="keyword">open</span> the mysql.<span class="keyword">plugin</span> <span class="keyword">table</span>. Please <span class="keyword">run</span> mysql_upgrade to create it.
+</code></pre></li>
+<li><p>原来，我们把mysql的数据移动时，使用的<code>root</code>用户，而<code>mysql</code>运行，使用的是<code>mysql</code>用户，还需要把目录更改为mysql用户所有<code>chown -R mysql /home/mysql_data</code>。</p>
+</li>
+<li>再次重启<code>service mysqld restart</code>,这次，可以顺利的发现自已的数据啦。</li>
+</ol>
+<p>###其它<br>这次安装mysql，也特别顺序，两步直接完成：<br>        yum install mysql-server  #一路y即可<br>        service mysqld start  #启动服务<br>        chkconfig mysqld on #设置为开机启动</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-10-10T14:59:45.000Z"><a href="/2015/10/10/Linux折腾记(3)-CentOS6下安装Oracle JDK8/">2015-10-10</a></time>
       
       
@@ -495,50 +570,6 @@ eno1 <span class="number">5f</span>b06bd0-<span class="number">0</span>bb0-<span
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-08-16T15:38:12.000Z"><a href="/2015/08/16/《Elasticsearch服务器开发》学习笔记（二）/">2015-08-16</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/08/16/《Elasticsearch服务器开发》学习笔记（二）/">《Elasticsearch服务器开发》学习笔记（二）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第2章_映射配置(一)">第2章 映射配置(一)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
-<ol>
-<li>Elasticsearch是一个无模式的搜索引警,可以即时算出数据结构,但是自已控制并定义结构是更好的办法。</li>
-<li>Elasticsearch是由一个或多个分片组成，每个分片包含了文档集的一部分。而且这些分片也有副本。在创建索引时，可以规定分片及副本的数量，也可以使用全局配置文件或软件内部的默认值。5个分片，1个副本，就意味着在集群中有10个lucene索引。<strong>副本可以随时调整，但是分片，则不能调整。创建好索引后更改分片的唯一图径是创建另外一个索引并重新索引数据。</strong></li>
-<li>直接创建一个索引<code>curl -XPUT http://localhost:9200/blog</code>。不让它自动创建索引是因为有时候要修改分片数目、设置索引结构。因此，可以关闭配置文件中自动创建索引的配置<code>action.auto_create_index:-an*,+a,-*</code>,上面的命令意思是说不允许自动创建以<code>an</code>开头的索引；允许自动创建以<code>a</code>开头的索引，其他的索引也必须手工创建。</li>
-<li>一个手工设置分片及副本数量的例子<code>curl -XPUT http://localhost:9200/blog/ -d &#39;{&quot;settings&quot;:{&quot;number_of_shards&quot;:1,&quot;number_of_replicas&quot;:2}}&#39;</code></li>
-<li>删除索引<code>curl -XDELETE http://localhost:9200/posts</code></li>
-<li>映射类似于关系数据库的数据结构。在定义映射时，Elasticsearch可以通过定义的JSON来猜测文档结构。在JSON中，字符串用引号括起来，布尔值用特定的词语定义，数值则是数字。但是，有时ES也会忽略数字类型，全按字符串来处理。可以使用如下命令来强制它进行文本检测。</li>
-</ol>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/08/16/《Elasticsearch服务器开发》学习笔记（二）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -563,7 +594,7 @@ eno1 <span class="number">5f</span>b06bd0-<span class="number">0</span>bb0-<span
   
     <li><a href="/tags/java/">java</a><small>1</small></li>
   
-    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+    <li><a href="/tags/linux/">linux</a><small>6</small></li>
   
   </ul>
 </div>
