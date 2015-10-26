@@ -70,6 +70,40 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-08-21T13:26:27.000Z"><a href="/2015/08/21/在批处理-bat-中设置java程序的内存参数/">2015-08-21</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/21/在批处理-bat-中设置java程序的内存参数/">在批处理(bat)中设置java程序的内存参数</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>最近做一个java的桌面程序，竟然内存溢出了。由于是将启动命令<code>java -jar XXX.jar</code>写在了批处理中,所以竟一时想不起来如何设置程序运行参数了。以前是天天在eclipse的开发环境中设置，在tomcat的启动批处理中设置，在各种开源软件的启动脚本中设置，可是要在这么的一个简单命令中设置，竟然失忆了，不会了。。。<br>于是乎，百度了一番，才猛然间想了起来，原来，如此简单，添加后的示例如下，权当记录一下，谨防以后再忘记吧。</p>
+<pre><code>java  -Xms800m -Xmx800m -XX:PermSize=<span class="number">128</span>M -XX:MaxNewSize=<span class="number">256</span>m -XX:MaxPermSize=<span class="number">256</span>m  -jar  XXX.jar
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-08-16T15:38:12.000Z"><a href="/2015/08/16/《Elasticsearch服务器开发》学习笔记（二）/">2015-08-16</a></time>
       
       
@@ -299,7 +333,11 @@ mysql-community-release-el7-<span class="number">5.</span>noarch
   
     <li><a href="/tags/java/">java</a><small>1</small></li>
   
-    <li><a href="/tags/linux/">linux</a><small>6</small></li>
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/linux-mysql/">linux mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/前端-可视化/">前端  可视化</a><small>1</small></li>
   
   </ul>
 </div>

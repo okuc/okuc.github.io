@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>在批处理(bat)中设置java程序的内存参数 | 我的后院自留地</title>
+  <title>svg中节点顺序的替代解决方案 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="在批处理(bat)中设置java程序的内存参数"/>
+  <meta property="og:title" content="svg中节点顺序的替代解决方案"/>
   <meta property="og:site_name" content="我的后院自留地"/>
 
   
@@ -69,19 +69,43 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-08-21T13:26:27.000Z"><a href="/2015/08/21/在批处理-bat-中设置java程序的内存参数/">2015-08-21</a></time>
+        <time datetime="2015-10-26T14:06:32.000Z"><a href="/2015/10/26/svg中节点顺序的替代解决方案/">2015-10-26</a></time>
       
       
   
-    <h1 class="title">在批处理(bat)中设置java程序的内存参数</h1>
+    <h1 class="title">svg中节点顺序的替代解决方案</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>最近做一个java的桌面程序，竟然内存溢出了。由于是将启动命令<code>java -jar XXX.jar</code>写在了批处理中,所以竟一时想不起来如何设置程序运行参数了。以前是天天在eclipse的开发环境中设置，在tomcat的启动批处理中设置，在各种开源软件的启动脚本中设置，可是要在这么的一个简单命令中设置，竟然失忆了，不会了。。。<br>于是乎，百度了一番，才猛然间想了起来，原来，如此简单，添加后的示例如下，权当记录一下，谨防以后再忘记吧。</p>
-<pre><code>java  -Xms800m -Xmx800m -XX:PermSize=<span class="number">128</span>M -XX:MaxNewSize=<span class="number">256</span>m -XX:MaxPermSize=<span class="number">256</span>m  -jar  XXX.jar
-</code></pre>
+        <p>如果你的前端页面图形是使用svg画的，那么有一个问题很有可能遇到的，就是节点间先后顺序的问题。由于svg元素没有z-index属性，画的顺序决定了显示的顺序，所以当你拖拽一个节点时，很容易会发生，该节点与其他节点重合时会跑到其他节点下面的尴尬。</p>
+<p>###raphaeljs下解决方案<br>如果你使用的是<code>raphaeljs</code>，那么恭喜你，这都不是事，<code>raphaeljs</code>中提供了如下方法，直接操作就可以了！</p>
+<pre><code>element.<span class="function"><span class="title">toBack</span><span class="params">()</span></span>
+element.<span class="function"><span class="title">toFront</span><span class="params">()</span></span>
+</code></pre><p>当然，如果你没有使用svg，那么悄悄的把<code>raphaeljs</code>用起来也不错哦。<br> <a id="more"></a></p>
+<p>###原生svg解决方案<br>由于svg是严格按照添加的先后顺序来划分层的，所以，要先控制某元素的顺序，那么把该节点重新进行添加，不失为一种办法。当点击或拖拽某个svg元素时，此时可以获取到该元素，然后将此元素重新添加就可以了。代码如下：</p>
+<pre><code>element<span class="class">.parentNode</span><span class="class">.appendChild</span>(element)
+</code></pre><p>可能这时有个问题，再将此元素重新添加一遍，需不需要删除原来的元素呢？经我验证，无须删除，会自动只保留一个。至于其内部是自动删除掉原来的又重新添加了一个还是直接把原来的元素重新调整到最后，嘿嘿，我也不知道。</p>
+<p>###d3js解决方案<br><code>d3js</code>并没有像<code>raphaeljs</code>那样提供了友好的方法。所以<code>d3js</code>下解决方案基本和原生svg一样。这里之所以把<code>d3js</code>单列，是因为在使用时，经常会配合文字一起使用。这时候，具体思路如下：</p>
+<ol>
+<li>在画图形时，添加一额外元素<code>text</code>，用来记录访图形对应的文字。<pre><code>.attr(<span class="string">"text"</span>,<span class="function"><span class="keyword">function</span><span class="params">(d)</span></span>{
+            <span class="keyword">return</span> d.name;
+        })
+</code></pre></li>
+<li>在画文字元素时，设置该svg元素的id。<pre><code>.attr(<span class="string">"id"</span>,<span class="function"><span class="keyword">function</span><span class="params">(d)</span></span>{
+    <span class="keyword">return</span> d.name;
+})
+</code></pre></li>
+<li><p>捕获拖拽事件，然后作如下处理：</p>
+<pre><code><span class="keyword">this</span>.parentNode.appendChild(<span class="keyword">this</span>);
+var <span class="built_in">text</span> = document.getElementById(<span class="keyword">this</span>.getAttribute(<span class="string">"text"</span>));
+
+<span class="built_in">text</span>.parentNode.appendChild(<span class="built_in">text</span>);
+</code></pre></li>
+</ol>
+<p>ok，成功, 结束！</p>
+
       
     </div>
     <footer>
@@ -90,7 +114,7 @@ var _hmt = _hmt || [];
         
   
   <div class="tags">
-    <a href="/tags/java/">java</a>
+    <a href="/tags/前端-可视化/">前端  可视化</a>
   </div>
 
         
@@ -105,16 +129,14 @@ var _hmt = _hmt || [];
 
 <nav id="pagination" >
     
-    <a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/" class="alignleft prev" >上一頁</a>
     
-    
-    <a href="/2015/08/16/《Elasticsearch服务器开发》学习笔记（二）/" class="alignright next" >下一頁</a>
+    <a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/" class="alignright next" >下一頁</a>
     
     <div class="clearfix"></div>
 </nav>
 
 <!-- ��˵���ۿ� start -->
- <div class="ds-thread" data-thread-key="/2015/08/21/在批处理-bat-中设置java程序的内存参数/" data-title="在批处理(bat)中设置java程序的内存参数" data-url="http://www.52brt.com/2015/08/21/在批处理-bat-中设置java程序的内存参数/"></div>
+ <div class="ds-thread" data-thread-key="/2015/10/26/svg中节点顺序的替代解决方案/" data-title="svg中节点顺序的替代解决方案" data-url="http://www.52brt.com/2015/10/26/svg中节点顺序的替代解决方案/"></div>
 <!-- ��˵���ۿ� end -->
 <!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
 <script type="text/javascript">
