@@ -70,6 +70,60 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-08-22T14:35:02.000Z"><a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/">2015-08-22</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/">《Elasticsearch服务器开发》学习笔记（三）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第2章_映射配置(二)">第2章 映射配置(二)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
+<hr>
+<ol>
+<li>lucene 4.0后，允许修改默认的基于TF/IDF的算法。4.0还附加了相似度模型，允许在文档中使用不同的评分公式。</li>
+<li><p>为每个字段设置不同的相似度模型。如下例子：</p>
+<pre><code><span class="collection">{
+   <span class="string">"mappings"</span>:<span class="collection">{
+       <span class="string">"post"</span>:<span class="collection">{
+           “properties”：<span class="collection">{
+               “id”：<span class="collection">{“type”：“long”，“store”：“yes”，“precision_step”：“<span class="number">0</span>”}</span>，
+               “name”：<span class="collection">{“type”：“string”，“store”：“yes”，“index”：“analyzed”,<span class="string">"similarity"</span>:<span class="string">"BM25"</span>}</span>，
+               “published”：<span class="collection">{“type”：“date”，“store”：“yes”，“precision_step”：“<span class="number">0</span>”}</span>，
+               “contents”：<span class="collection">{“type”：“long”，“store”：“no”，“index”：“analyzed”}</span>,<span class="string">"similarity"</span>:<span class="string">"BM25"</span>
+               }</span>
+           }</span>
+     }</span>
+
+}</span>
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-08-21T13:26:27.000Z"><a href="/2015/08/21/在批处理-bat-中设置java程序的内存参数/">2015-08-21</a></time>
       
       
@@ -177,43 +231,6 @@ mysql-community-release-el7-<span class="number">5.</span>noarch
           <div class="alignleft">
             <a href="/2015/08/10/Linux折腾记(1)-CentOS7下安装mysql数据库/#more" class="more-link">阅读更多</a>
           </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-08-10T14:59:45.000Z"><a href="/2015/08/10/JAVA程序员学习Python笔记(1)/">2015-08-10</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/08/10/JAVA程序员学习Python笔记(1)/">JAVA程序员学习Python笔记(1)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ul>
-<li>print “helloworld” ：打印Hello world</li>
-<li>print “hello world” * 5,打印5遍Hello world</li>
-<li></li>
-</ul>
-
-      
-    </div>
-    <footer>
-      
         
         
       
@@ -333,11 +350,13 @@ mysql-community-release-el7-<span class="number">5.</span>noarch
   
     <li><a href="/tags/java/">java</a><small>1</small></li>
   
-    <li><a href="/tags/linux/">linux</a><small>6</small></li>
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
   
     <li><a href="/tags/前端/">前端</a><small>1</small></li>
+  
+    <li><a href="/tags/前端开发/">前端开发</a><small>1</small></li>
   
     <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
   
