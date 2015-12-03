@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>centos7常用命令 | 我的后院自留地</title>
+  <title>windows下搭建node.js及npm的工作环境（二） | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="centos7常用命令"/>
+  <meta property="og:title" content="windows下搭建node.js及npm的工作环境（二）"/>
   <meta property="og:site_name" content="我的后院自留地"/>
 
   
@@ -69,74 +69,30 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-08-30T01:06:32.000Z"><a href="/2015/08/30/centos7常用命令/">2015-08-30</a></time>
+        <time datetime="2015-12-03T14:06:32.000Z"><a href="/2015/12/03/windows下搭建node.js及npm的工作环境(二)/">2015-12-03</a></time>
       
       
   
-    <h1 class="title">centos7常用命令</h1>
+    <h1 class="title">windows下搭建node.js及npm的工作环境（二）</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>记录centos7下的一些常用命令!</p>
-<p>###网络相关</p>
-<ul>
-<li>关闭防火墙：<pre><code>systemctl stop firewalld.service<span class="comment">#停止firewall</span>
-systemctl <span class="built_in">disable</span> firewalld.service<span class="comment">#禁止firewall开机启动</span>
-</code></pre></li>
-<li><p>配置DNS服务</p>
-<ul>
-<li><p>命令行方式</p>
-<pre><code><span class="number">1.</span> nmcli connection show <span class="preprocessor">#显示当前网络连接</span>
-NAME UUID                                 TYPE           DEVICE
-eno1 <span class="number">5f</span>b06bd0-<span class="number">0</span>bb0-<span class="number">7f</span>fb-<span class="number">45f</span>1-d6edd65f3e03 <span class="number">802</span>-<span class="number">3</span>-ethernet eno1
-
-<span class="number">2.</span> nmcli con mod eno1 ipv4.dns <span class="string">"114.114.114.114 8.8.8.8"</span> <span class="preprocessor">#修改当前网络连接对应的DNS服务器，这里的网络连接可以用名称或者UUID来标识</span>
-<span class="number">3.</span> nmcli con up eno1<span class="preprocessor">#将dns配置生效</span>
-</code></pre></li>
-</ul>
-<ul>
-<li>直接修改文件方式<a id="more"></a>
-<pre><code><span class="number">1.</span> 修改 /etc/NetworkManager/NetworkManager.conf 文件，在main部分添加 “dns=none” 选项：
-    [main]
-    plugins=ifcfg-rh
-    dns=none
-<span class="number">2.</span> NetworkManager重新装载上面修改的配置
-    systemctl restart NetworkManager.service
-<span class="number">3.</span> 手工修改 /etc/resolv.conf
-    nameserver <span class="number">114.114</span><span class="number">.114</span><span class="number">.114</span>
-    nameserver <span class="number">8.8</span><span class="number">.8</span><span class="number">.8</span>
-</code></pre></li>
-</ul>
-</li>
-<li><p>配置网关、IP等</p>
-<pre><code>vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
-
-BOOTPROTO=<span class="string">"static"</span> <span class="preprocessor">#dhcp改为static</span>
-ONBOOT=<span class="string">"yes"</span> <span class="preprocessor">#开机启用本配置</span>
-IPADDR=<span class="number">192.168</span><span class="number">.7</span><span class="number">.106</span> <span class="preprocessor">#静态IP</span>
-GATEWAY=<span class="number">192.168</span><span class="number">.7</span><span class="number">.1</span> <span class="preprocessor">#默认网关</span>
-NETMASK=<span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span> <span class="preprocessor">#子网掩码</span>
-DNS1=<span class="number">192.168</span><span class="number">.7</span><span class="number">.1</span> <span class="preprocessor">#DNS 配置</span>
-
-service network restart <span class="preprocessor">#重启网络服务</span>
-
-ip addr <span class="preprocessor">#查看网络地址信息</span>
-</code></pre><p><strong>注意：文件名称不一定是<code>ifcfg-enp0s3</code>,需要自行去文件目录下查看</strong></p>
-</li>
-<li>修改本地host文件<pre><code>vi /etc/hosts
-<span class="number">192.168</span><span class="number">.90</span><span class="number">.135</span>  www.okuc.xyz
-</code></pre></li>
-</ul>
-<p>###网络相关</p>
-<ul>
-<li>修改机器名：<ul>
-<li>命令行方式<br>hostname 主机名 #临时生效，重启后恢复原来机器名<br>hostnamectl set-hostname <hostname> #永久生效</hostname></li>
-<li>文件方式<br>  vi /etc/sysconfig/network<br>   NETWORKING=yes<br>HOSTNAME=www.okuc.xyz</li>
-</ul>
-</li>
-</ul>
+        <p>曾经在去年写过一篇过于在windos下搭建node.js工作环境的文章（原文详见：<a href="http://www.52brt.com/2014/11/26/windows%E4%B8%8B%E6%90%AD%E5%BB%BAnode.js%E5%8F%8Anpm%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83/">http://www.52brt.com/2014/11/26/windows%E4%B8%8B%E6%90%AD%E5%BB%BAnode.js%E5%8F%8Anpm%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83/</a>），现在看来,可能当时有些地方写得不妥，所以，特意重新编写了此篇。</p>
+<p>下面就把我的一些搭建过程说一下：</p>
+<ol>
+<li>下载node.js。在<a href="https://nodejs.org/en/" target="_blank" rel="external">https://nodejs.org/en/</a>下载最新版的node.exe文件，我下载时是<code>v5.1 stable</code>,直接下载地址如下:<a href="https://nodejs.org/dist/v5.1.0/node-v5.1.0-x64.msi" target="_blank" rel="external">https://nodejs.org/dist/v5.1.0/node-v5.1.0-x64.msi</a>。</li>
+<li>不同于上次，由于本次我们使用的是安装包，上述安装包已经包含了npm，所以，不用再单独下载npm。下载完成后，直接双击进行安装，建议不要安装在C盘下，在这儿，我安装到了F盘<code>nodejs</code>文件夹下。<a id="more"></a></li>
+<li>设置缓存目录和全局模块的存放路径，在<code>nodejs</code>下建立“node global”及“node cache”两个文件夹。同时在<code>F:\nodejs</code>下切换到cmd命令行中，执行如下命令：<pre><code>npm config <span class="built_in">set</span> prefix <span class="string">"D:\nodejs\node global"</span>
+npm config <span class="built_in">set</span> <span class="keyword">cache</span> <span class="string">"D:\nodejs\node cache"</span>
+</code></pre>为了查看是否执行成功，可使用如下命令查看：<code>npm config get prefix</code>。</li>
+<li>设置环境变量，将<code>F:\nodejs</code>和<code>F:\nodejs\node global</code>添加到环境变量<code>path</code>中，并新添环境变量<code>NODE_PATH</code>,它的值为:<code>F:\nodejs\node global\node_modules</code>。</li>
+<li>众所周知的原因，nodejs在国内经常下载包下载不了，那么怎么办呢？最好的办法就是找国内镜像源，一般用taobao的镜像源来替代。安装方法如下：<pre><code>npm config <span class="operator"><span class="keyword">set</span> <span class="keyword">strict</span>-ssl <span class="literal">false</span>
+npm <span class="keyword">install</span> -<span class="keyword">g</span> cnpm <span class="comment">--registry=https://registry.npm.taobao.org/</span></span>
+</code></pre>7、安装完成后，就可以使用cnpm命令代替npm命令了。测试一下，下载个<code>bower</code>。<pre><code>cnpm <span class="operator"><span class="keyword">install</span> -<span class="keyword">g</span> bower</span>
+</code></pre>下载完成后，查看一看<code>bower</code>版本号：<code>bower -v</code>,如果输入了版本号，那么，恭喜你，安装完成！</li>
+</ol>
 
       
     </div>
@@ -146,7 +102,7 @@ ip addr <span class="preprocessor">#查看网络地址信息</span>
         
   
   <div class="tags">
-    <a href="/tags/linux/">linux</a>
+    <a href="/tags/前端/">前端</a>
   </div>
 
         
@@ -161,16 +117,14 @@ ip addr <span class="preprocessor">#查看网络地址信息</span>
 
 <nav id="pagination" >
     
-    <a href="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/" class="alignleft prev" >上一頁</a>
     
-    
-    <a href="/2015/08/28/java连接远程HBase/" class="alignright next" >下一頁</a>
+    <a href="/2015/11/21/Emmet常用缩写简要笔记/" class="alignright next" >下一頁</a>
     
     <div class="clearfix"></div>
 </nav>
 
 <!-- ��˵���ۿ� start -->
- <div class="ds-thread" data-thread-key="/2015/08/30/centos7常用命令/" data-title="centos7常用命令" data-url="http://www.52brt.com/2015/08/30/centos7常用命令/"></div>
+ <div class="ds-thread" data-thread-key="/2015/12/03/windows下搭建node.js及npm的工作环境(二)/" data-title="windows下搭建node.js及npm的工作环境（二）" data-url="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境(二)/"></div>
 <!-- ��˵���ۿ� end -->
 <!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
 <script type="text/javascript">
