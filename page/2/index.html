@@ -288,6 +288,46 @@ mysql-community-release-el7-<span class="number">5.</span>noarch
 
 
 
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-11-21T14:06:32.000Z"><a href="/2014/11/21/svg中节点顺序的替代解决方案/">2014-11-21</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/11/21/svg中节点顺序的替代解决方案/">svg中节点顺序的替代解决方案</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>如果你的前端页面图形是使用svg画的，那么有一个问题很有可能遇到的，就是节点间先后顺序的问题。由于svg元素没有z-index属性，画的顺序决定了显示的顺序，所以当你拖拽一个节点时，很容易会发生，该节点与其他节点重合时会跑到其他节点下面的尴尬。</p>
+<p>###raphaeljs下解决方案<br>如果你使用的是<code>raphaeljs</code>，那么恭喜你，这都不是事，<code>raphaeljs</code>中提供了如下方法，直接操作就可以了！</p>
+<pre><code>element.<span class="function"><span class="title">toBack</span><span class="params">()</span></span>
+element.<span class="function"><span class="title">toFront</span><span class="params">()</span></span>
+</code></pre><p>当然，如果你没有使用svg，那么悄悄的把<code>raphaeljs</code>用起来也不错哦。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/11/21/svg中节点顺序的替代解决方案/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="coding">
   
   <div class="post-content">
@@ -354,11 +394,9 @@ mysql-community-release-el7-<span class="number">5.</span>noarch
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
   
-    <li><a href="/tags/前端/">前端</a><small>1</small></li>
+    <li><a href="/tags/前端/">前端</a><small>3</small></li>
   
-    <li><a href="/tags/前端开发/">前端开发</a><small>1</small></li>
-  
-    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+    <li><a href="/tags/可视化/">可视化</a><small>2</small></li>
   
   </ul>
 </div>
