@@ -131,27 +131,28 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-10-26T14:06:32.000Z"><a href="/2015/10/26/windows下搭建node.js及npm的工作环境/">2015-10-26</a></time>
+        <time datetime="2015-10-21T14:06:32.000Z"><a href="/2015/10/21/svg中节点顺序的替代解决方案/">2015-10-21</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/10/26/windows下搭建node.js及npm的工作环境/">windows下搭建node.js及npm的工作环境</a></h1>
+    <h1 class="title"><a href="/2015/10/21/svg中节点顺序的替代解决方案/">svg中节点顺序的替代解决方案</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>由于工作需要，决定在windows下搭建一个nodejs及npm的工作环境，在网上查了n篇文章，别管是编译源码安装也好，还是使用node.msi格式安装包也好，总是有问题。最终，功夫不负有心人，还是搭建完成了。作为新手，其实我也不知道这样搭建对不对，但是运行’npm install’反正不出错了。</p>
-<p>下面就把我的一些搭建过程说一下：</p>
-<ol>
-<li>下载node.js。在<a href="http://nodejs.org/download/">http://nodejs.org/download/</a>下载最新版的node.exe文件，我下载时是<code>v0.10.33</code>。下载完成后，在F盘新建nodejs文件夹，将node.exe放到该文件夹下。同时将<code>F:\nodejs</code>添加到环境变量的PATH中。<br>2.下载npm。在<a href="http://nodejs.org/dist/npm/">http://nodejs.org/dist/npm/</a>下载最新版的npm。我下载时的版本是<code>npm-1.4.9.zip</code>。下载完成后，解压到nodejs文件夹中，形成了如下目录，同时添加环境变量<code>NODE_PATH</code>,其值为：<code>F:\nodejs\node_modules</code>。
+        <p>如果你的前端页面图形是使用svg画的，那么有一个问题很有可能遇到的，就是节点间先后顺序的问题。由于svg元素没有z-index属性，画的顺序决定了显示的顺序，所以当你拖拽一个节点时，很容易会发生，该节点与其他节点重合时会跑到其他节点下面的尴尬。</p>
+<p>###raphaeljs下解决方案<br>如果你使用的是<code>raphaeljs</code>，那么恭喜你，这都不是事，<code>raphaeljs</code>中提供了如下方法，直接操作就可以了！</p>
+<pre><code>element.<span class="function"><span class="title">toBack</span><span class="params">()</span></span>
+element.<span class="function"><span class="title">toFront</span><span class="params">()</span></span>
+</code></pre><p>当然，如果你没有使用svg，那么悄悄的把<code>raphaeljs</code>用起来也不错哦。<br>
       
     </div>
     <footer>
       
         
           <div class="alignleft">
-            <a href="/2015/10/26/windows下搭建node.js及npm的工作环境/#more" class="more-link">阅读更多</a>
+            <a href="/2015/10/21/svg中节点顺序的替代解决方案/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -564,7 +565,7 @@ eno1 <span class="number">5f</span>b06bd0-<span class="number">0</span>bb0-<span
   
     <li><a href="/tags/前端/">前端</a><small>3</small></li>
   
-    <li><a href="/tags/可视化/">可视化</a><small>2</small></li>
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
   
   </ul>
 </div>
