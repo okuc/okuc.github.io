@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>windows下搭建node.js及npm的工作环境（二） | 我的后院自留地</title>
+  <title>windows下搭建node.js及npm的工作环境（更新版） | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="windows下搭建node.js及npm的工作环境（二）"/>
+  <meta property="og:title" content="windows下搭建node.js及npm的工作环境（更新版）"/>
   <meta property="og:site_name" content="我的后院自留地"/>
 
   
@@ -69,17 +69,17 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-12-03T14:06:32.000Z"><a href="/2015/12/03/windows下搭建node.js及npm的工作环境(二)/">2015-12-03</a></time>
+        <time datetime="2015-12-03T14:06:32.000Z"><a href="/2015/12/03/windows下搭建node.js及npm的工作环境(更新版)/">2015-12-03</a></time>
       
       
   
-    <h1 class="title">windows下搭建node.js及npm的工作环境（二）</h1>
+    <h1 class="title">windows下搭建node.js及npm的工作环境（更新版）</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>曾经在去年写过一篇过于在windos下搭建node.js工作环境的文章（原文详见：<a href="http://www.52brt.com/2014/11/26/windows%E4%B8%8B%E6%90%AD%E5%BB%BAnode.js%E5%8F%8Anpm%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83/">http://www.52brt.com/2014/11/26/windows%E4%B8%8B%E6%90%AD%E5%BB%BAnode.js%E5%8F%8Anpm%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83/</a>），现在看来,可能当时有些地方写得不妥，所以，特意重新编写了此篇。</p>
+        <p>曾经在去年写过一篇过于在windos下搭建node.js工作环境的文章（原文详见：<a href="http://www.52brt.com/2014/11/26/windows%E4%B8%8B%E6%90%AD%E5%BB%BAnode.js%E5%8F%8Anpm%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83/">windows下搭建node.js及npm的工作环境</a>），现在看来,可能当时有些地方写得不妥，所以，特意重新编写了此篇。</p>
 <p>下面就把我的一些搭建过程说一下：</p>
 <ol>
 <li>下载node.js。在<a href="https://nodejs.org/en/" target="_blank" rel="external">https://nodejs.org/en/</a>下载最新版的node.exe文件，我下载时是<code>v5.1 stable</code>,直接下载地址如下:<a href="https://nodejs.org/dist/v5.1.0/node-v5.1.0-x64.msi" target="_blank" rel="external">https://nodejs.org/dist/v5.1.0/node-v5.1.0-x64.msi</a>。</li>
@@ -91,7 +91,7 @@ npm config <span class="built_in">set</span> <span class="keyword">cache</span> 
 <li>众所周知的原因，nodejs在国内经常下载包下载不了，那么怎么办呢？最好的办法就是找国内镜像源，一般用taobao的镜像源来替代。安装方法如下：<pre><code>npm config <span class="operator"><span class="keyword">set</span> <span class="keyword">strict</span>-ssl <span class="literal">false</span>
 npm <span class="keyword">install</span> -<span class="keyword">g</span> cnpm <span class="comment">--registry=https://registry.npm.taobao.org/</span></span>
 </code></pre>7、安装完成后，就可以使用cnpm命令代替npm命令了。测试一下，下载个<code>bower</code>。<pre><code>cnpm <span class="operator"><span class="keyword">install</span> -<span class="keyword">g</span> bower</span>
-</code></pre>下载完成后，查看一看<code>bower</code>版本号：<code>bower -v</code>,如果输入了版本号，那么，恭喜你，安装完成！</li>
+</code></pre>8、如果不想安装cnpm，也可以使用指定源的方式来安装：<code>npm install -g bower --registry=https://registry.npm.taobao.org/</code><br>下载完成后，查看一看<code>bower</code>版本号：<code>bower -v</code>,如果输入了版本号，那么，恭喜你，安装完成！</li>
 </ol>
 
       
@@ -124,7 +124,7 @@ npm <span class="keyword">install</span> -<span class="keyword">g</span> cnpm <s
 </nav>
 
 <!-- ��˵���ۿ� start -->
- <div class="ds-thread" data-thread-key="/2015/12/03/windows下搭建node.js及npm的工作环境(二)/" data-title="windows下搭建node.js及npm的工作环境（二）" data-url="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境(二)/"></div>
+ <div class="ds-thread" data-thread-key="/2015/12/03/windows下搭建node.js及npm的工作环境(更新版)/" data-title="windows下搭建node.js及npm的工作环境（更新版）" data-url="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境(更新版)/"></div>
 <!-- ��˵���ۿ� end -->
 <!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
 <script type="text/javascript">
