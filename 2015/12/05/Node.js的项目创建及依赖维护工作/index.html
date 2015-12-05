@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Node.js的项目创建及依赖维护工作 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Node.js的项目创建及依赖维护工作"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-05T14:06:32.000Z"><a href="/2015/12/05/Node.js的项目创建及依赖维护工作/">2015-12-05</a></time>
+      
+      
+  
+    <h1 class="title">Node.js的项目创建及依赖维护工作</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>要编写nodejs项目，则一般使用向导生成工程样板，然后修改工程样板，达到自已的目地，也有的直接编写各类文件。本人将自已常的生成工程样板的方式在此分享一下，高手请直接飘过。。。。。<br>在此假定我们node及npm环境已经安装配置完成，可以直接使用。</p>
+<p>###使用npm向导创建nodejs样板工程</p>
+<ol>
+<li>创建一目录<code>nodejs-demo</code>，并在命令行中切换到该目录下。输入<code>npm init</code>，按要求输入工程名称、版本号、描述、入口等就可以了。一般直接使用默认就可以，但是有两点，入口现在一般添<code>bin/www</code>,关键词直接输入项目关键字或不输都可以。</li>
+<li>使用命令<code>yum install -g bower</code>安装<code>bower</code>。<a id="more"></a></li>
+<li>安装完成后，在命令行中，使用<code>bower init</code>,如果在使用的root用户，则在使用初始化项目命令时，要添加<code>--allow-root</code>，即命令为：<code>bower init --allow-root</code>,同样输入一系列问题的答案，即可。在选择模块规范时，可以直接使用默认的amd即可。</li>
+<li><code>bower</code>默认把项目依赖放到<code>bower_components</code>下，我们可以把它更改到其它目录下。如更改到依赖的第三方包到<code>public\lib</code>下，在项目根目录创建一文件<code>.bowerrc</code>，内容如下：<pre><code>{
+    "<span class="attribute">directory</span>":<span class="value"><span class="string">"public/lib"</span>
+</span>}
+</code></pre></li>
+<li>在编写前台所依赖的包时，可直接使用<code>bower</code>来安装，如<code>bower install --allow-root --save bootstrap</code>。</li>
+<li>到此就结束了，但是很可惜，你会发现<code>npm init</code>就生成了一个<code>package.json</code>文件，所以，我更常用的，是下一种方式。</li>
+</ol>
+<p>###使用express向导创建nodejs样板工程</p>
+<ol>
+<li>在做web开发时，一般使用<code>express</code>，所以，一般使用<code>express</code>自带的向导来生成样板工程。首先，进行安装<code>express</code>及<code>express-generator</code>两个模块，命令如下：<pre><code>npm <span class="operator"><span class="keyword">install</span> -<span class="keyword">g</span> express
+npm <span class="keyword">install</span> -<span class="keyword">g</span> express-generator</span>
+</code></pre></li>
+<li>使用<code>express example</code>来创建样例工程。</li>
+<li>切换到生成的<code>example</code>工程目录下，使用<code>npm install</code>来下载安装样板工程所依赖的包模块。</li>
+<li>使用<code>node bin/www</code>启动服务，打开浏览器，访问<code>http://localhost:3000</code>,即可成功访问。</li>
+<li>如果要添加后端依赖的模块，如<code>jquery</code>，则直接使用<code>npm</code>安装：<code>npm install -g jquery --save</code>,<code>save</code>参数是为了将该模块添加到<code>package.json</code>配置文件中。</li>
+<li>添加bower，进行前端工程依赖包的管理。首先使用命令<code>yum install -g bower</code>安装<code>bower</code>。</li>
+<li>安装完成后，在命令行中，使用<code>bower init</code>,如果在使用的root用户，则在使用初始化项目命令时，要添加<code>--allow-root</code>，即命令为：<code>bower init --allow-root</code>,同样输入一系列问题的答案，即可。在选择模块规范时，可以直接使用默认的amd即可。</li>
+<li><code>bower</code>默认把项目依赖放到<code>bower_components</code>下，我们可以把它更改到其它目录下。如更改到依赖的第三方包到<code>public\lib</code>下，在项目根目录创建一文件<code>.bowerrc</code>，内容如下：<pre><code>{
+    "<span class="attribute">directory</span>":<span class="value"><span class="string">"public/lib"</span>
+</span>}
+</code></pre></li>
+<li>在编写前台所依赖的包时，可直接使用<code>bower</code>来安装，如<code>bower install --allow-root --save bootstrap</code>。</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/前端/">前端</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    
+    <a href="/2015/12/03/windows下搭建node.js及npm的工作环境(更新版)/" class="alignright next" >下一頁</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/12/05/Node.js的项目创建及依赖维护工作/" data-title="Node.js的项目创建及依赖维护工作" data-url="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>5</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
