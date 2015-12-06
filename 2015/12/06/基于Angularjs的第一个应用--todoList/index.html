@@ -1,0 +1,325 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>基于Angularjs的第一个应用--todoList | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="基于Angularjs的第一个应用--todoList"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-06T14:06:32.000Z"><a href="/2015/12/06/基于Angularjs的第一个应用--todoList/">2015-12-06</a></time>
+      
+      
+  
+    <h1 class="title">基于Angularjs的第一个应用--todoList</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="windows下搭建node.js及npm的工作环境（更新版）">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<ol>
+<li>由于系统需要用到<code>bootstrap</code>、<code>angularjs</code>，首先使用下面命令进行安装<code>bower install bootstrap</code>、<code>bower install angularjs</code>。</li>
+<li><p>新建<code>index.html</code>,修改title并引入使用到的css及js，内容如下：</p>
+<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"./public/bootstrap/dist/css/bootstrap.min.css"</span>&gt;</span><span class="tag">&lt;/<span class="title">link</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"./public/lib/angular/angular.js"</span>&gt;</span><span class="undefined">
+  </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+</code></pre><a id="more"></a>
+<p>3.添加代码，主要为一个<code>input</code>输入框及一个列表，<code>input</code>用来输入任务，而列表用来展示任务，添加完后的代码如下所示：</p>
+<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"./public/bootstrap/dist/css/bootstrap.min.css"</span>&gt;</span><span class="tag">&lt;/<span class="title">link</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"input-group"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">class</span>=<span class="value">"form-control"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"input-group-btn"</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn btn-default"</span>&gt;</span>提交<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">h4</span>&gt;</span>任务列表<span class="tag">&lt;/<span class="title">h4</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"list-group"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"list-group-item"</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">a</span>&gt;</span>删除<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"./public/lib/angular/angular.js"</span>&gt;</span><span class="undefined">
+  </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+</code></pre></li>
+<li>针对<code>input</code>输入框，我们声明一个变量<code>task</code>来绑定；而对于任务列表，则使用数组<code>tasks</code>来绑定。我们首先在js创建一个模块并添加它的控制器，在控制器中对上述变量进行初始化：   <script type="text/javascript">
+   angular.module('todoList',[]).controller('TaskCtrl',function($scope){
+     $scope.task="";
+     $scope.tasks=[];
+   })
+   </script></li>
+<li>我们分别把模块<code>todoList</code>及控制器<code>TaskCtrl</code>的范围边界对应到html元素上:<code>&lt;html lang=&quot;en&quot;  ng-app=&quot;todoList&quot;&gt;</code>、<code>&lt;body ng-controller=&quot;TaskCtrl&quot;&gt;</code></li>
+<li>下进对两个变量进行绑定：<code>&lt;input type=&quot;text&quot;  ng-model=&quot;task&quot;  class=&quot;form-control&quot;&gt;</code>、<code>&lt;li ng-repeat=&quot;item in tasks &quot; class=&quot;list-group-item&quot;&gt;</code>，<code>item in tasks</code>是指<code>tasks</code>中某个元素，后边通过<code></code>将该元素打印了出来，而<code>ng-repeat</code>则会将tasks中的所有变量都打印出来。</li>
+<li>到第6步，我们仅仅绑定了两个变量，我们还需要通过提交按扭将这两个变量关联起来。首先，我们在模块中，添加一个add方法：<br>   <script type="text/javascript"><br>   angular.module(‘todoList’,[]).controller(‘TaskCtrl’,function($scope){<pre><code><span class="variable">$scope</span>.task=<span class="string">""</span>;
+<span class="variable">$scope</span>.tasks=[];
+<span class="variable">$scope</span>.add=<span class="keyword">function</span>(){
+  <span class="variable">$scope</span>.tasks.push(<span class="variable">$scope</span>.task);
+}
+</code></pre>   })<br>   </script><br>将此方法绑定到提交按钮上：<code>&lt;button class=&quot;btn btn-default&quot; ng-click=&quot;add()&quot;&gt;提交&lt;/button&gt;</code>。</li>
+<li><p>到这一步，我们可以预览一下，在输入框中输入任务，点击提交，就会在下边的任务列表中显示出来。完整的html如下：</p>
+<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>  <span class="attribute">ng-app</span>=<span class="value">"todoList"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"./public/bootstrap/dist/css/bootstrap.min.css"</span>&gt;</span><span class="tag">&lt;/<span class="title">link</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">body</span> <span class="attribute">ng-controller</span>=<span class="value">"TaskCtrl"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"input-group"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span>  <span class="attribute">ng-model</span>=<span class="value">"task"</span>  <span class="attribute">class</span>=<span class="value">"form-control"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"input-group-btn"</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn btn-default"</span> <span class="attribute">ng-click</span>=<span class="value">"add()"</span>&gt;</span>提交<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">h4</span>&gt;</span>任务列表<span class="tag">&lt;/<span class="title">h4</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"list-group"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">ng-repeat</span>=<span class="value">"item in tasks "</span> <span class="attribute">class</span>=<span class="value">"list-group-item"</span>&gt;</span><span class="comment"></span>
+      <span class="tag">&lt;<span class="title">a</span>&gt;</span>删除<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"./public/lib/angular/angular.js"</span>&gt;</span><span class="undefined">
+  </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="actionscript">
+  angular.module(<span class="string">'todoList'</span>,[]).controller(<span class="string">'TaskCtrl'</span>,<span class="function"><span class="keyword">function</span><span class="params">($scope)</span></span>{
+    $scope.task=<span class="string">""</span>;
+    $scope.tasks=[];
+    $scope.add=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{
+      $scope.tasks.push($scope.task);
+    }
+  })
+  </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+</code></pre></li>
+<li>如果你多次运行上述代码，很有可能会发现一个问题，任务不允许添加重复的。即如果两个名称相同的任务，是添加不上去了，怎么办呢？解决方法就是使用索引来管理数据，而非名称，将代码按如下修改即可解决该问题：<code>&lt;li ng-repeat=&quot;item in tasks track by $index&quot; class=&quot;list-group-item&quot;&gt;</code>。</li>
+<li>我们可能留意到，还有一个删除按扭没有实现，我们现在把它实现：<code>&lt;a ng-click=&quot;tasks.splice($index,1)&quot;&gt;</code>,当点击删除，按索引删除该元素。</li>
+<li><p>我们再优化一步，当任务为0时，不显示<code>任务列表</code>四个字，有两种实现方式，分别如下：<code>&lt;h4 ng-if=&quot;tasks.length&gt;0&quot;&gt;任务列表&lt;/h4&gt;</code>，<code>&lt;h4 ng-hide=&quot;tasks.length==0&quot;&gt;任务列表&lt;/h4&gt;</code>。到此，我们的这个例子就完成了，全部的代码如下：</p>
+<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span> <span class="attribute">ng-app</span>=<span class="value">"todoList"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"./public/bootstrap/dist/css/bootstrap.min.css"</span>&gt;</span><span class="tag">&lt;/<span class="title">link</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">body</span> <span class="attribute">ng-controller</span>=<span class="value">"TaskCtrl"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"input-group"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">ng-model</span>=<span class="value">"task"</span> <span class="attribute">class</span>=<span class="value">"form-control"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"input-group-btn"</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn btn-default"</span> <span class="attribute">ng-click</span>=<span class="value">"add()"</span>&gt;</span>提交<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">h4</span> <span class="attribute">ng-if</span>=<span class="value">"tasks.length&gt;0"</span>&gt;</span>任务列表<span class="tag">&lt;/<span class="title">h4</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">h4</span> <span class="attribute">ng-hide</span>=<span class="value">"tasks.length==0"</span>&gt;</span>任务列表<span class="tag">&lt;/<span class="title">h4</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"list-group"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">ng-repeat</span>=<span class="value">"item in tasks track by $index"</span> <span class="attribute">class</span>=<span class="value">"list-group-item"</span>&gt;</span><span class="comment"></span>
+      <span class="tag">&lt;<span class="title">a</span> <span class="attribute">ng-click</span>=<span class="value">"tasks.splice($index,1)"</span>&gt;</span>删除<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"./public/lib/angular/angular.js"</span>&gt;</span><span class="undefined">
+  </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="actionscript">
+    angular.module(<span class="string">'todoList'</span>, []).controller(<span class="string">'TaskCtrl'</span>, <span class="function"><span class="keyword">function</span><span class="params">($scope)</span> </span>{
+      $scope.task = <span class="string">""</span>;
+      $scope.tasks = [];
+      $scope.add = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+        $scope.tasks.push($scope.task);
+      }
+    })
+  </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/前端/">前端</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    
+    <a href="/2015/12/05/Node.js的项目创建及依赖维护工作/" class="alignright next" >下一頁</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/12/06/基于Angularjs的第一个应用--todoList/" data-title="基于Angularjs的第一个应用--todoList" data-url="http://www.52brt.com/2015/12/06/基于Angularjs的第一个应用--todoList/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>6</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
