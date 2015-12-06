@@ -128,20 +128,25 @@ var _hmt = _hmt || [];
 
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span>
 </code></pre></li>
-<li>针对<code>input</code>输入框，我们声明一个变量<code>task</code>来绑定；而对于任务列表，则使用数组<code>tasks</code>来绑定。我们首先在js创建一个模块并添加它的控制器，在控制器中对上述变量进行初始化：   <script type="text/javascript">
-   angular.module('todoList',[]).controller('TaskCtrl',function($scope){
-     $scope.task="";
-     $scope.tasks=[];
-   })
-   </script></li>
+<li>针对<code>input</code>输入框，我们声明一个变量<code>task</code>来绑定；而对于任务列表，则使用数组<code>tasks</code>来绑定。我们首先在js创建一个模块并添加它的控制器，在控制器中对上述变量进行初始化：<pre><code>&lt;script type=<span class="string">"text/javascript"</span>&gt;
+angular.module(<span class="string">'todoList'</span>,[]).controller(<span class="string">'TaskCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>){
+  <span class="variable">$scope</span>.task=<span class="string">""</span>;
+  <span class="variable">$scope</span>.tasks=[];
+})
+&lt;/script&gt;
+</code></pre></li>
 <li>我们分别把模块<code>todoList</code>及控制器<code>TaskCtrl</code>的范围边界对应到html元素上:<code>&lt;html lang=&quot;en&quot;  ng-app=&quot;todoList&quot;&gt;</code>、<code>&lt;body ng-controller=&quot;TaskCtrl&quot;&gt;</code></li>
 <li>下进对两个变量进行绑定：<code>&lt;input type=&quot;text&quot;  ng-model=&quot;task&quot;  class=&quot;form-control&quot;&gt;</code>、<code>&lt;li ng-repeat=&quot;item in tasks &quot; class=&quot;list-group-item&quot;&gt;</code>，<code>item in tasks</code>是指<code>tasks</code>中某个元素，后边通过<code></code>将该元素打印了出来，而<code>ng-repeat</code>则会将tasks中的所有变量都打印出来。</li>
-<li>到第6步，我们仅仅绑定了两个变量，我们还需要通过提交按扭将这两个变量关联起来。首先，我们在模块中，添加一个add方法：<br>   <script type="text/javascript"><br>   angular.module(‘todoList’,[]).controller(‘TaskCtrl’,function($scope){<pre><code><span class="variable">$scope</span>.task=<span class="string">""</span>;
-<span class="variable">$scope</span>.tasks=[];
-<span class="variable">$scope</span>.add=<span class="keyword">function</span>(){
-  <span class="variable">$scope</span>.tasks.push(<span class="variable">$scope</span>.task);
-}
-</code></pre>   })<br>   </script><br>将此方法绑定到提交按钮上：<code>&lt;button class=&quot;btn btn-default&quot; ng-click=&quot;add()&quot;&gt;提交&lt;/button&gt;</code>。</li>
+<li>到第6步，我们仅仅绑定了两个变量，我们还需要通过提交按扭将这两个变量关联起来。首先，我们在模块中，添加一个add方法：<pre><code>&lt;script type=<span class="string">"text/javascript"</span>&gt;
+angular.module(<span class="string">'todoList'</span>,[]).controller(<span class="string">'TaskCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>){
+  <span class="variable">$scope</span>.task=<span class="string">""</span>;
+  <span class="variable">$scope</span>.tasks=[];
+  <span class="variable">$scope</span>.add=function(){
+    <span class="variable">$scope</span>.tasks.push(<span class="variable">$scope</span>.task);
+  }
+})
+&lt;/script&gt;
+</code></pre>将此方法绑定到提交按钮上：<code>&lt;button class=&quot;btn btn-default&quot; ng-click=&quot;add()&quot;&gt;提交&lt;/button&gt;</code>。</li>
 <li><p>到这一步，我们可以预览一下，在输入框中输入任务，点击提交，就会在下边的任务列表中显示出来。完整的html如下：</p>
 <pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
 <span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>  <span class="attribute">ng-app</span>=<span class="value">"todoList"</span>&gt;</span>
