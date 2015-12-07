@@ -70,6 +70,44 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-09-19T14:35:02.000Z"><a href="/2015/09/19/Elasticsearch中文乱码问题的解决/">2015-09-19</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/09/19/Elasticsearch中文乱码问题的解决/">Elasticsearch中文乱码问题的解决</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>最近在研究ES的分词，一直想找一个理想的大全分词方式，如<code>中国人民</code>，希望能全部分开，分成<code>中国</code>、<code>国人</code>、<code>人民</code>、<code>中国人</code>、<code>国人民</code>、<code>中国人民</code>,6个词。也就是说，不管什么词性、词义、同义词什么的，全部按字数进行切割。争取能够实现类似关系数据库中like的效果。</p>
+<p>后来，听人说IK分词能够达到这个效果，于是，开始安装IK插件，不想却遇到了乱码问题。</p>
+<p>具体乱码情况如下：<br>如果输入查询<code>_search</code>，则返回的结果不会乱码。如是查询分词结果<code>_analyze</code>,则会返回乱码。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/09/19/Elasticsearch中文乱码问题的解决/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-09-13T14:35:02.000Z"><a href="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/">2015-09-13</a></time>
       
       
@@ -465,49 +503,13 @@ mysql-community-release-el7-<span class="number">5.</span>noarch
 
 
 
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2009-03-19T01:12:53.000Z"><a href="/2009/03/19/eclipse插件开发获取路径的几种方式/">2009-03-19</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2009/03/19/eclipse插件开发获取路径的几种方式/">eclipse插件开发获取路径的几种方式</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>1.得到runtime workspace目录的绝对路径</p>
-<pre><code><span class="type">String</span> file = <span class="type">Platform</span>.getInstanceLocation<span class="literal">()</span>.getURL<span class="literal">()</span>.getPath<span class="literal">()</span>;
-</code></pre><p>2.得到runtime workspace目录下所有的工程</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2009/03/19/eclipse插件开发获取路径的几种方式/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
     <a href="/" class="alignleft prev">上一頁</a>
   
+  
+    <a href="/page/3/" class="alignright next">下一頁</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -519,7 +521,11 @@ mysql-community-release-el7-<span class="number">5.</span>noarch
   <h3 class="title">標籤</h3>
   <ul class="entry">
   
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>2</small></li>
+  
     <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>3</small></li>
   
     <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
   
@@ -531,7 +537,9 @@ mysql-community-release-el7-<span class="number">5.</span>noarch
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
   
-    <li><a href="/tags/前端/">前端</a><small>6</small></li>
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>7</small></li>
   
     <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
   

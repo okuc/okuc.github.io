@@ -1,0 +1,258 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Angularjs中ng-bind、ng-model、大括号的区别 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Angularjs中ng-bind、ng-model、大括号的区别"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-07T14:06:32.000Z"><a href="/2015/12/07/Angularjs中ng-bind、ng-model、大括号的区别/">2015-12-07</a></time>
+      
+      
+  
+    <h1 class="title">Angularjs中ng-bind、ng-model、大括号的区别</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<p>在学习的过程中，遇到了这三个对象，一时把我给搞糊涂了。经过百度，得到了以下答案：</p>
+<ul>
+<li><code>ng-model</code>：用于双向绑定，所以一般用于前台可输入的控件，如<code>input</code>。</li>
+<li><code>ng-bind</code>：只用于前台展示，所以一般和<code>div</code>结合使用。</li>
+<li><code>双大括号</code>：其基本作用类似<code>ng-bind</code>，但不同的是，在<code>angularjs</code>未加载完成时，由于页面未解释，所以很有可能客户会看到大括号，所以一般<code>&lt;div ng-clock class=&quot;ng-clock&quot;&gt;｛{uname}｝&lt;/div&gt;</code>这样使用，这样可使页面先不加载大括号，待全部加载完成后再解释执行。</li>
+</ul>
+<p>除此之外，还有一个用法，就是动态改变页面元素的<code>class</code>,使用方式如下：<code>&lt;div class=&quot;｛{uname}｝&quot;&gt;｛{uname}｝&lt;/div&gt;</code>。</p>
+<p>在文章的最后，放一个例子吧，这个例子也不是我做的，是一个大神做的。这是一个多控制器的例子，由这个例子，我们可以学习到以下几点：</p>
+<ol>
+<li>一个页面中，允许多个<code>controller</code>，每个<code>controller</code>都有自已的控制范围。</li>
+<li>在Angularjs中，js方法是如何执行的。</li>
+</ol>
+<p>下面介绍一下这个例子，这个例子包含三个<code>controller</code>,第一个<code>controller</code>原样显示<code>hello angular</code>,第二个<code>controller</code>则是把输入框中的数据原样输入及倒序输出。第三个则是输入用户名和密码，点击登录，如果用户名输得是<code>admin</code>,密码是<code>123</code>。则弹出<code>登录成功。</code>，否则，则显示<code>用户名或密码错误！</code>。</p>
+<p>源代码分为<code>html</code>和<code>js</code>两部分。依次如下：</p>
+<p>一、<code>html</code>源代码：</p>
+<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"zh-cn"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"./public/lib/bootstrap/dist/css/bootstrap.min.css"</span>&gt;</span><span class="tag">&lt;/<span class="title">link</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">body</span> <span class="attribute">ng-app</span>=<span class="value">"app"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"FirstCtrl"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">h1</span> <span class="attribute">ng-bind</span>=<span class="value">"msg"</span>&gt;</span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"SecondCtrl"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">ng-model</span>=<span class="value">"msg"</span>&gt;</span><span class="tag">&lt;/<span class="title">input</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">h1</span> <span class="attribute">ng-bind</span>=<span class="value">"msg"</span>&gt;</span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span>&gt;</span>｛{reverse()}｝<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"loginCtrl"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">h1</span>&gt;</span>登录示例<span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">ng-model</span>=<span class="value">"user.name"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">ng-model</span>=<span class="value">"user.pwd"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"button"</span> <span class="attribute">ng-click</span>=<span class="value">"login()"</span>&gt;</span>登录<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"alert-box"</span> <span class="attribute">ng-show</span>=<span class="value">"errormsg.length&gt;0"</span>&gt;</span>｛{errormsg}｝<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"./public/lib/angular/angular.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"controller.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+</code></pre><p>二、<code>controller.js</code>源代码：</p>
+<pre><code>angular.module(<span class="string">'app'</span>,[])
+.controller(<span class="string">'FirstCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>){
+    <span class="variable">$scope</span>.msg=<span class="string">"hello angular"</span>;
+})
+.controller(<span class="string">'SecondCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>){
+    <span class="variable">$scope</span>.msg=<span class="string">"hello okuc"</span>;
+    <span class="variable">$scope</span>.reverse=function(){
+      return <span class="variable">$scope</span>.msg.split(<span class="string">""</span>).reverse().join(<span class="string">""</span>);
+    };
+}).controller(<span class="string">'loginCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>){
+    <span class="variable">$scope</span>.msg=<span class="string">""</span>;
+    <span class="variable">$scope</span>.user={uname:<span class="string">''</span>,pwd:<span class="string">''</span>};
+    <span class="variable">$scope</span>.login=function(){
+      if(<span class="variable">$scope</span>.user.name==<span class="string">"admin"</span> &amp;&amp; <span class="variable">$scope</span>.user.pwd==<span class="string">"123"</span>){
+        alert(<span class="string">"登录成功"</span>);
+      }else{
+        <span class="variable">$scope</span>.errormsg=<span class="string">"用户名或密码错误！"</span>
+      }
+    }
+
+})
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/Angularjs/">Angularjs</a>, <a href="/tags/前端/">前端</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    
+    <a href="/2015/12/06/基于Angularjs的第一个应用--todoList/" class="alignright next" >下一頁</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/12/07/Angularjs中ng-bind、ng-model、大括号的区别/" data-title="Angularjs中ng-bind、ng-model、大括号的区别" data-url="http://www.52brt.com/2015/12/07/Angularjs中ng-bind、ng-model、大括号的区别/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>2</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>7</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
