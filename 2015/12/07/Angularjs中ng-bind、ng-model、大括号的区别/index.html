@@ -84,9 +84,9 @@ var _hmt = _hmt || [];
 <ul>
 <li><code>ng-model</code>：用于双向绑定，所以一般用于前台可输入的控件，如<code>input</code>。</li>
 <li><code>ng-bind</code>：只用于前台展示，所以一般和<code>div</code>结合使用。</li>
-<li><code>双大括号</code>：其基本作用类似<code>ng-bind</code>，但不同的是，在<code>angularjs</code>未加载完成时，由于页面未解释，所以很有可能客户会看到大括号，所以一般<code>&lt;div ng-clock class=&quot;ng-clock&quot;&gt;｛{uname}｝&lt;/div&gt;</code>这样使用，这样可使页面先不加载大括号，待全部加载完成后再解释执行。</li>
+<li><code>双大括号</code>：其基本作用类似<code>ng-bind</code>，但不同的是，在<code>angularjs</code>未加载完成时，由于页面未解释，所以很有可能客户会看到大括号，所以一般<code>&lt;div ng-clock class=&quot;ng-clock&quot;&gt;｛{uname}｝&lt;/div&gt;</code>这样使用，这样可使页面先不加载大括号，待全部加载完成后再解释执行。<a id="more"></a>
+除此之外，还有一个用法，就是动态改变页面元素的<code>class</code>,使用方式如下：<code>&lt;div class=&quot;｛{uname}｝&quot;&gt;｛{uname}｝&lt;/div&gt;</code>。</li>
 </ul>
-<p>除此之外，还有一个用法，就是动态改变页面元素的<code>class</code>,使用方式如下：<code>&lt;div class=&quot;｛{uname}｝&quot;&gt;｛{uname}｝&lt;/div&gt;</code>。</p>
 <p>在文章的最后，放一个例子吧，这个例子也不是我做的，是一个大神做的。这是一个多控制器的例子，由这个例子，我们可以学习到以下几点：</p>
 <ol>
 <li>一个页面中，允许多个<code>controller</code>，每个<code>controller</code>都有自已的控制范围。</li>
@@ -172,7 +172,7 @@ var _hmt = _hmt || [];
 <nav id="pagination" >
     
     
-    <a href="/2015/12/06/基于Angularjs的第一个应用--todoList/" class="alignright next" >下一頁</a>
+    <a href="/2015/12/07/Angularjs中几种service的区别/" class="alignright next" >下一頁</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -205,7 +205,7 @@ var duoshuoQuery = {short_name:"okuc"};
   <h3 class="title">標籤</h3>
   <ul class="entry">
   
-    <li><a href="/tags/Angularjs/">Angularjs</a><small>2</small></li>
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>3</small></li>
   
     <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
   
@@ -223,7 +223,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   
-    <li><a href="/tags/前端/">前端</a><small>7</small></li>
+    <li><a href="/tags/前端/">前端</a><small>8</small></li>
   
     <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
   

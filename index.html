@@ -85,74 +85,55 @@ var _hmt = _hmt || [];
 <ul>
 <li><code>ng-model</code>：用于双向绑定，所以一般用于前台可输入的控件，如<code>input</code>。</li>
 <li><code>ng-bind</code>：只用于前台展示，所以一般和<code>div</code>结合使用。</li>
-<li><code>双大括号</code>：其基本作用类似<code>ng-bind</code>，但不同的是，在<code>angularjs</code>未加载完成时，由于页面未解释，所以很有可能客户会看到大括号，所以一般<code>&lt;div ng-clock class=&quot;ng-clock&quot;&gt;｛{uname}｝&lt;/div&gt;</code>这样使用，这样可使页面先不加载大括号，待全部加载完成后再解释执行。</li>
-</ul>
-<p>除此之外，还有一个用法，就是动态改变页面元素的<code>class</code>,使用方式如下：<code>&lt;div class=&quot;｛{uname}｝&quot;&gt;｛{uname}｝&lt;/div&gt;</code>。</p>
-<p>在文章的最后，放一个例子吧，这个例子也不是我做的，是一个大神做的。这是一个多控制器的例子，由这个例子，我们可以学习到以下几点：</p>
-<ol>
-<li>一个页面中，允许多个<code>controller</code>，每个<code>controller</code>都有自已的控制范围。</li>
-<li>在Angularjs中，js方法是如何执行的。</li>
-</ol>
-<p>下面介绍一下这个例子，这个例子包含三个<code>controller</code>,第一个<code>controller</code>原样显示<code>hello angular</code>,第二个<code>controller</code>则是把输入框中的数据原样输入及倒序输出。第三个则是输入用户名和密码，点击登录，如果用户名输得是<code>admin</code>,密码是<code>123</code>。则弹出<code>登录成功。</code>，否则，则显示<code>用户名或密码错误！</code>。</p>
-<p>源代码分为<code>html</code>和<code>js</code>两部分。依次如下：</p>
-<p>一、<code>html</code>源代码：</p>
-<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
-<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"zh-cn"</span>&gt;</span>
-
-<span class="tag">&lt;<span class="title">head</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"./public/lib/bootstrap/dist/css/bootstrap.min.css"</span>&gt;</span><span class="tag">&lt;/<span class="title">link</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
-
-<span class="tag">&lt;<span class="title">body</span> <span class="attribute">ng-app</span>=<span class="value">"app"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"FirstCtrl"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">h1</span> <span class="attribute">ng-bind</span>=<span class="value">"msg"</span>&gt;</span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"SecondCtrl"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">ng-model</span>=<span class="value">"msg"</span>&gt;</span><span class="tag">&lt;/<span class="title">input</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">h1</span> <span class="attribute">ng-bind</span>=<span class="value">"msg"</span>&gt;</span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">div</span>&gt;</span>｛{reverse()}｝<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"loginCtrl"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">h1</span>&gt;</span>登录示例<span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">ng-model</span>=<span class="value">"user.name"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">ng-model</span>=<span class="value">"user.pwd"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"button"</span> <span class="attribute">ng-click</span>=<span class="value">"login()"</span>&gt;</span>登录<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"alert-box"</span> <span class="attribute">ng-show</span>=<span class="value">"errormsg.length&gt;0"</span>&gt;</span>｛{errormsg}｝<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"./public/lib/angular/angular.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"controller.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
-
-<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
-</code></pre><p>二、<code>controller.js</code>源代码：</p>
-<pre><code>angular.module(<span class="string">'app'</span>,[])
-.controller(<span class="string">'FirstCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>){
-    <span class="variable">$scope</span>.msg=<span class="string">"hello angular"</span>;
-})
-.controller(<span class="string">'SecondCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>){
-    <span class="variable">$scope</span>.msg=<span class="string">"hello okuc"</span>;
-    <span class="variable">$scope</span>.reverse=function(){
-      return <span class="variable">$scope</span>.msg.split(<span class="string">""</span>).reverse().join(<span class="string">""</span>);
-    };
-}).controller(<span class="string">'loginCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>){
-    <span class="variable">$scope</span>.msg=<span class="string">""</span>;
-    <span class="variable">$scope</span>.user={uname:<span class="string">''</span>,pwd:<span class="string">''</span>};
-    <span class="variable">$scope</span>.login=function(){
-      if(<span class="variable">$scope</span>.user.name==<span class="string">"admin"</span> &amp;&amp; <span class="variable">$scope</span>.user.pwd==<span class="string">"123"</span>){
-        alert(<span class="string">"登录成功"</span>);
-      }else{
-        <span class="variable">$scope</span>.errormsg=<span class="string">"用户名或密码错误！"</span>
-      }
-    }
-
-})
-</code></pre>
+<li><code>双大括号</code>：其基本作用类似<code>ng-bind</code>，但不同的是，在<code>angularjs</code>未加载完成时，由于页面未解释，所以很有可能客户会看到大括号，所以一般<code>&lt;div ng-clock class=&quot;ng-clock&quot;&gt;｛{uname}｝&lt;/div&gt;</code>这样使用，这样可使页面先不加载大括号，待全部加载完成后再解释执行。
       
     </div>
     <footer>
       
+        
+          <div class="alignleft">
+            <a href="/2015/12/07/Angularjs中ng-bind、ng-model、大括号的区别/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-07T14:06:32.000Z"><a href="/2015/12/07/Angularjs中几种service的区别/">2015-12-07</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/07/Angularjs中几种service的区别/">Angularjs中几种service的区别</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<p>Angularjs有几种自定义服务的方法：<code>value</code>、<code>constant</code>、<code>factory</code>、<code>service</code>、<code>provider</code>,那么他们有什么区别呢？</p>
+<ul>
+<li><code>value</code>:这个方法是用来定义变量的，类似其他编程语言中定义的变量。</li>
+<li><code>constant</code>:这个则是类似其他编程语言中定义的常量，一旦定义，就不能被修改。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/07/Angularjs中几种service的区别/#more" class="more-link">阅读更多</a>
+          </div>
         
         
       
@@ -546,54 +527,6 @@ guest ok = yes
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-09-28T14:35:02.000Z"><a href="/2015/09/28/《Elasticsearch服务器开发》学习笔记（五）/">2015-09-28</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/09/28/《Elasticsearch服务器开发》学习笔记（五）/">《Elasticsearch服务器开发》学习笔记（五）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第3章_搜索(二)">第3章 搜索(二)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
-<hr>
-<ol>
-<li><p>布尔查询：它可以来封装无限数量的查询，并通过下面描述的节点之一使用一个逻辑值来连接他们。</p>
-<ul>
-<li>should:被它封装的布尔查询可能被匹配，也可能不被匹配。被匹配的should节点数目由minimum_should_match参数控制。</li>
-<li>must：被它封装的布尔查询必须被匹配，文档才能返回。</li>
-<li>must_not：被它封装的布尔查询必须不被匹配，文档才能返回。</li>
-</ul>
-<p>上述每个节点都可以在单个布尔查询中出现多次，可以嵌套查询（一个布尔中多含另一个布尔查询）。结果文档的得分将由文档匹配的所有封装后查询得分总和计算得到。<br>还可以在查询主题中添加以下参数控制其行为：</p>
-<ul>
-<li>boost:查询使用的加权值，默认是1.0,加权值越高，匹配文档得到得分越高。</li>
-<li>minimum_should_match：此参数描述了文档被视为匹配时，应该匹配的should子句的最少数量。它可以是个整数值，也可以是个百分比。
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/09/28/《Elasticsearch服务器开发》学习笔记（五）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -610,7 +543,7 @@ guest ok = yes
   <h3 class="title">標籤</h3>
   <ul class="entry">
   
-    <li><a href="/tags/Angularjs/">Angularjs</a><small>2</small></li>
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>3</small></li>
   
     <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
   
@@ -628,7 +561,7 @@ guest ok = yes
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   
-    <li><a href="/tags/前端/">前端</a><small>7</small></li>
+    <li><a href="/tags/前端/">前端</a><small>8</small></li>
   
     <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
   
