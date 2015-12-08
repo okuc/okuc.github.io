@@ -80,167 +80,27 @@ var _hmt = _hmt || [];
     <div class="entry">
       
         <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
-<p>Angularjs有几种自定义服务的方法：<code>value</code>、<code>constant</code>、<code>factory</code>、<code>service</code>、<code>provider</code>,那么他们有什么区别呢？</p>
+<p><code>ng-bind</code>、<code>ng-model</code>、<code>｛{}｝</code>这三个命令如果还不明白，请参考这里<a href="http://www.52brt.com/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">新手学习Angularjs之二：ng-bind、ng-model、大括号的区别</a>,下面，我们重点来看以下几个命令：<code>ng-show/hide</code>、<code>ng-if</code>、<code>ng-submit</code>、<code>ng-disabled</code>、<code>ng-checked</code>、<code>ng-src</code>、<code>ng-href</code>、<code>ng-class</code>、<code>ng-selected</code>、<code>ng-change</code>几个命令。<br><a id="more"></a></p>
 <ul>
-<li><code>value</code>:这个方法是用来定义变量的，类似其他编程语言中定义的变量。</li>
-<li><code>constant</code>:这个则是类似其他编程语言中定义的常量，一旦定义，就不能被修改。<a id="more"></a></li>
-<li><p><code>factory</code>：它是创建service最简单的方式，返回值是一个对像，这个对像包含自已的一些属性及方法，还可以注入services,比如 $http 和 $q等。下面是示例代码：</p>
-<pre><code>angular.module(<span class="string">'myApp.services'</span>)
-.factory(<span class="string">'User'</span>, <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$http</span>)</span> </span>{ <span class="comment">// injectables go here</span>
-  <span class="keyword">var</span> backendUrl = <span class="string">"http://localhost:3000"</span>;  <span class="keyword">var</span> service = {    <span class="comment">// our factory definition</span>
-    user: {},
-    setName: <span class="function"><span class="keyword">function</span><span class="params">(newName)</span> </span>{
-      service.user[<span class="string">'name'</span>] = newName;
-    },
-    setEmail: <span class="function"><span class="keyword">function</span><span class="params">(newEmail)</span> </span>{
-      service.user[<span class="string">'email'</span>] = newEmail;
-    },
-    save: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-      <span class="keyword">return</span> <span class="variable">$http</span>.post(backendUrl + <span class="string">'/users'</span>, {
-        user: service.user
-      });
-    }
-  };  <span class="keyword">return</span> service;
-});
-</code></pre><p>  在应用中，可以直接注入使用：</p>
-<pre><code>angular.module(<span class="string">'myApp'</span>)
-.controller(<span class="string">'MainCtrl'</span>, <span class="keyword">function</span>(<span class="variable">$scope</span>, User) {
-  <span class="variable">$scope</span>.saveUser = User.save;
-});
-</code></pre><p>  当我们仅需要一个方法和数据的集合且业务不复杂的时候，可以使用<code>factory</code>。<strong>需要使用<code>.config()</code>来配置service的时候不能使用<code>factory()</code>方法</strong></p>
-</li>
-<li><p><code>service()</code>：与<code>factory</code>的不同之处就在于<code>service</code>对应的函数类似于构造函数，不用返回，直接拥有该对象。它适合用在功能比较多的地方。示例代码如下：</p>
-<pre><code>angular.module(<span class="string">'myApp.services'</span>)
-.service(<span class="string">'User'</span>, <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$http</span>)</span> </span>{ <span class="comment">// injectables go here</span>
-  <span class="keyword">var</span> <span class="keyword">self</span> = this; <span class="comment">// Save reference</span>
-  this.user = {};
-  this.backendUrl = <span class="string">"http://localhost:3000"</span>;
-  this.setName = <span class="function"><span class="keyword">function</span><span class="params">(newName)</span> </span>{
-    <span class="keyword">self</span>.user[<span class="string">'name'</span>] = newName;
-  }
-  this.setEmail = <span class="function"><span class="keyword">function</span><span class="params">(newEmail)</span> </span>{
-    <span class="keyword">self</span>.user[<span class="string">'email'</span>] = newEmail;
-  }
-  this.save = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-    <span class="keyword">return</span> <span class="variable">$http</span>.post(<span class="keyword">self</span>.backendUrl + <span class="string">'/users'</span>, {
-      user: <span class="keyword">self</span>.user
-    })
-  }
-});
-</code></pre><p>  使用示例和<code>factory</code>一样：</p>
-<pre><code>angular.module(<span class="string">'myApp'</span>)
-  .controller(<span class="string">'MainCtrl'</span>, <span class="keyword">function</span>(<span class="variable">$scope</span>, User) {
-    <span class="variable">$scope</span>.saveUser = User.save;
-  });
-</code></pre><p>  <strong>同<code>factory</code>一样，需要使用<code>.config()</code>来配置service的时候不能使用<code>service()</code>方法</strong></p>
-</li>
-<li><p><code>provider()</code>:是创建service最底层的方式，这也是唯一一个可以使用.config()方法配置创建service的方法不像上面提到的方法那样，我们在定义的this.$get()方法里面进行依赖注入。</p>
-<pre><code>angular.module(<span class="string">'myApp.services'</span>)
-.provider(<span class="string">'User'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-  <span class="keyword">this</span>.backendUrl = <span class="string">"http://localhost:3000"</span>;
-  <span class="keyword">this</span>.setBackendUrl = <span class="function"><span class="keyword">function</span><span class="params">(newUrl)</span> </span>{
-    <span class="keyword">if</span> (url) <span class="keyword">this</span>.backendUrl = newUrl;
-  }
-  <span class="keyword">this</span>.$<span class="keyword">get</span> = <span class="function"><span class="keyword">function</span><span class="params">($http)</span> </span>{ <span class="comment">// injectables go here</span>
-    <span class="keyword">var</span> self = <span class="keyword">this</span>;
-    <span class="keyword">var</span> service = {
-      user: {},
-      setName: <span class="function"><span class="keyword">function</span><span class="params">(newName)</span> </span>{
-        service.user[<span class="string">'name'</span>] = newName;
-      },
-      setEmail: <span class="function"><span class="keyword">function</span><span class="params">(newEmail)</span> </span>{
-        service.user[<span class="string">'email'</span>] = newEmail;
-      },
-      save: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-        <span class="keyword">return</span> $http.post(self.backendUrl + <span class="string">'/users'</span>, {
-          user: service.user
-        })
-      }
-    };
-    <span class="keyword">return</span> service;
-  }
-});
-</code></pre><p>为了给service进行配置，我们可以将provider注入到.config()方法里面:</p>
-<pre><code>angular.<span class="built_in">module</span>(<span class="string">'myApp'</span>)
-.config(<span class="function"><span class="keyword">function</span><span class="params">(UserProvider)</span></span> {
-  UserProvider.setBackendUrl(<span class="string">"http://myApiBackend.com/api"</span>);
-})
-</code></pre><p>  这样，就可以例用这个service了：</p>
-<pre><code>angular.module(<span class="string">'myApp'</span>)
-.controller(<span class="string">'MainCtrl'</span>, <span class="keyword">function</span>(<span class="variable">$scope</span>, User) {
-  <span class="variable">$scope</span>.saveUser = User.save;
-});
-</code></pre><p>  那么，我们什么时候使用<code>provider()</code>呢？一种情况是我们程序需要部署在不同的环境里面如测试、生产、演示使用不同的后端，就可能使用到了。另一种是我们希望通过配置的方式来设置services的时候。</p>
-</li>
+<li><code>ng-show/hide</code>:显示或隐藏某个元素。对应<code>$scope</code>中的一布尔型变量，如<code>&lt;div ng-show=&quot;hello&quot;&gt;this is a welcome message&lt;/div&gt;</code>、<code>&lt;div ng-hide=&quot;hello&quot;&gt;this is a welcome message&lt;/div&gt;</code>,还可以用表达式或直接调用方法<code>&lt;div ng-show=&quot;appState == &#39;goodbye&#39;&quot;&gt;this is a goodbye message&lt;/div&gt;</code>、<code>&lt;div ng-hide=&quot;checkSomething()&quot;&gt;&lt;/div&gt;</code>。</li>
+<li><code>ng-if</code>：和上边的基本相同，不同的是，这个是用于真正的删除元素，而不是隐藏。如<code>&lt;div ng-if=&quot;checked&quot;&gt;content&lt;/div&gt;</code>。</li>
+<li><code>ng-submit</code>：用来触发表单提交时引发的某些动作，即调用<code>scope</code>中的方法。如：<code>&lt;form class=&quot;well span6&quot; style=&quot;margin-top:20px;&quot; ng-submit=&quot;submit(user)&quot; &gt;</code>，此时表单中的元素与<code>user</code>对像中的元素已经绑定，在<code>scope</code>中的<code>submit(user)</code>方法中可直接进行处理。</li>
+<li><code>ng-disabled</code>：有的表单内的页面元素标明是<code>required</code>,则时可设置如果不满足条件则提交按扭不可用。<code>&lt;input type=&quot;submit&quot; ng-disabled=&quot;mainForm.$invalid&quot; /&gt;</code>。或者直接禁用某些元素，设置<code>ng-disabled=&quot;true&quot;</code>。</li>
+<li><code>ng-checked</code>：用于在选择框中，是否选中。如<code>&lt;input type=&quot;checkbox&quot; ng-checked=&quot;isCheck&quot;&gt;&lt;/input&gt;</code>、<code>&lt;input type=&quot;checkbox&quot; ng-checked=&quot;itemName==&#39;张三&#39;&quot;&gt;&lt;/input&gt;</code>，其中，<code>ischeck</code>、<code>itemName</code>对应<code>scope</code>中的元素。对于单选框，也是如此。</li>
+<li><code>ng-src</code>：用在<code>img</code>元素中，示例代码<code>&lt;img ng-src=&quot;｛{currentUrl}｝&quot;/&gt;</code>。</li>
+<li><code>ng-class</code>:用来给元素设置样式。除了之前看到的和绑定一样使用<code>class=｛{classname}｝</code>，还有两种使用方式：<code>&lt;div ng-class=&quot;{true: &#39;active&#39;, false: &#39;inactive&#39;}[isActive]&quot;&gt;</code>,<code>isActive</code>是<code>$scope</code>中的变量，如果它的值为<code>true</code>,则样式为<code>active</code>，如果值为<code>false</code>，则样式为<code>inactive</code>;另外一种使用方式为<code>&lt;div ng-class {&#39;selected&#39;: isSelected, &#39;car&#39;: isCar}&quot;&gt;</code>,<code>isSelected</code>、<code>isCar</code>中，那个变量为<code>true</code>，那个样式就应用，所以，上述示例中可能有四种组合的样式。</li>
+<li><code>ng-selected</code>：用于和<code>select</code>中的元素<code>option</code>绑定。<code>&lt;option value=&quot;m&quot; ng-selected=&quot;sex==&#39;m&#39;&quot;&gt;Male&lt;/option&gt;</code>,<code>sex</code>为<code>scope</code>中的元素。</li>
+<li><code>ng-change</code>:当值改变时调用，一般和<code>scope</code>中的方法配合使用，如值改变量校验值。</li>
 </ul>
-<p>最后，老规则，来个多个<code>controller</code>共享对象的例子，这个例子也可以理解为多个页面共享一个对象的例子：</p>
-<p><code>HTML页面源代码如下：</code></p>
-<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
-<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
+<p>下面来说说<code>ng-repeat</code>,实际上这个也比较简单：</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">ng-controller</span>=<span class="value">"ListCtrl"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">ng-repeat</span>=<span class="value">"item in items"</span>&gt;</span>
+    ｛{item.name}｝
+    <span class="tag">&lt;<span class="title">button</span> <span class="attribute">ng-click</span>=<span class="value">"remove($index)"</span>&gt;</span>remove<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre><p><code>$index</code>为当前循环个数，从0开始，注意，当添加了过滤器时，则<code>$index</code>对应过滤后的索引。<code>$first</code>如果为第一条记录则为<code>true</code>。<code>$last</code>如果为最后一条记录，则为<code>true</code>。</p>
 
-<span class="tag">&lt;<span class="title">head</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"./public/lib/bootstrap/dist/css/bootstrap.css"</span>&gt;</span><span class="tag">&lt;/<span class="title">link</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
-
-<span class="tag">&lt;<span class="title">body</span> <span class="attribute">ng-app</span>=<span class="value">'app'</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">'MyCtrl'</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">h1</span> &gt;</span><span class="comment"></span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
-<span class="tag">&lt;<span class="title">h1</span> &gt;</span><span class="comment"></span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
-<span class="tag">&lt;<span class="title">h1</span> &gt;</span><span class="comment"></span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
-<span class="tag">&lt;<span class="title">h1</span> &gt;</span><span class="comment"></span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
-<span class="tag">&lt;<span class="title">h1</span> &gt;</span><span class="comment"></span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"FCtrl"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">ng-model</span>=<span class="value">"data.firstname"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">h2</span>&gt;</span><span class="comment"></span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"SCtrl"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">ng-model</span>=<span class="value">"data.firstname"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">h2</span>&gt;</span><span class="comment"></span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"./public/lib/angular/angular.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"services.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-
-<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
-</code></pre><p><code>services.js源代码如下：</code></p>
-<pre><code>angular.module(<span class="string">'app'</span>,[])
-.<span class="keyword">value</span>(<span class="string">'realname'</span>,<span class="string">'okuc'</span>)
-.<span class="keyword">value</span>(<span class="string">'realname'</span>,<span class="string">'52brt'</span>)//realname是一个变量
-.constant(<span class="string">'http'</span>,<span class="string">'www.52brt.com'</span>)
-.constant(<span class="string">'http'</span>,<span class="string">'www.okuc.xyz'</span>)
-.factory(<span class="string">'Data'</span>,<span class="keyword">function</span>(){//返回一个对象,这是复杂版的service
-  return {
-    msg:<span class="string">'中国'</span>,
-    setMsg:function(){
-      this.msg=<span class="string">'美国'</span>;
-    }
-  }
-}).service(<span class="string">'User'</span>,<span class="keyword">function</span>(){
-  this.firstname=<span class="string">"你好"</span>;
-  this.lastname=<span class="string">"angular"</span>;
-  this.getName=function(){
-    return this.firstname+this.lastname;
-  }
-})
-.controller(<span class="string">'FCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>,User){
-  <span class="variable">$scope</span>.data=User;
-})
-.controller(<span class="string">'SCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>,User){
-  <span class="variable">$scope</span>.data=User;
-})
-.controller(<span class="string">'MyCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>,realname,http,Data,User){
-  <span class="variable">$scope</span>.msg=<span class="string">'hello'</span>;
-  <span class="variable">$scope</span>.realname=realname;
-  <span class="variable">$scope</span>.http=http;
-  <span class="variable">$scope</span>.data = Data;
-  Data.setMsg();
-  <span class="variable">$scope</span>.uname=User.getName();
-})
-;
-</code></pre>
       
     </div>
     <footer>
