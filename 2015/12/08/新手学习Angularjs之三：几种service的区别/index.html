@@ -1,0 +1,353 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>新手学习Angularjs之三：几种service的区别 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="新手学习Angularjs之三：几种service的区别"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">2015-12-08</a></time>
+      
+      
+  
+    <h1 class="title">新手学习Angularjs之三：几种service的区别</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<p>Angularjs有几种自定义服务的方法：<code>value</code>、<code>constant</code>、<code>factory</code>、<code>service</code>、<code>provider</code>,那么他们有什么区别呢？</p>
+<ul>
+<li><code>value</code>:这个方法是用来定义变量的，类似其他编程语言中定义的变量。</li>
+<li><code>constant</code>:这个则是类似其他编程语言中定义的常量，一旦定义，就不能被修改。<a id="more"></a></li>
+<li><p><code>factory</code>：它是创建service最简单的方式，返回值是一个对像，这个对像包含自已的一些属性及方法，还可以注入services,比如 $http 和 $q等。下面是示例代码：</p>
+<pre><code>angular.module(<span class="string">'myApp.services'</span>)
+.factory(<span class="string">'User'</span>, <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$http</span>)</span> </span>{ <span class="comment">// injectables go here</span>
+  <span class="keyword">var</span> backendUrl = <span class="string">"http://localhost:3000"</span>;  <span class="keyword">var</span> service = {    <span class="comment">// our factory definition</span>
+    user: {},
+    setName: <span class="function"><span class="keyword">function</span><span class="params">(newName)</span> </span>{
+      service.user[<span class="string">'name'</span>] = newName;
+    },
+    setEmail: <span class="function"><span class="keyword">function</span><span class="params">(newEmail)</span> </span>{
+      service.user[<span class="string">'email'</span>] = newEmail;
+    },
+    save: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+      <span class="keyword">return</span> <span class="variable">$http</span>.post(backendUrl + <span class="string">'/users'</span>, {
+        user: service.user
+      });
+    }
+  };  <span class="keyword">return</span> service;
+});
+</code></pre><p>  在应用中，可以直接注入使用：</p>
+<pre><code>angular.module(<span class="string">'myApp'</span>)
+.controller(<span class="string">'MainCtrl'</span>, <span class="keyword">function</span>(<span class="variable">$scope</span>, User) {
+  <span class="variable">$scope</span>.saveUser = User.save;
+});
+</code></pre><p>  当我们仅需要一个方法和数据的集合且业务不复杂的时候，可以使用<code>factory</code>。<strong>需要使用<code>.config()</code>来配置service的时候不能使用<code>factory()</code>方法</strong></p>
+</li>
+<li><p><code>service()</code>：与<code>factory</code>的不同之处就在于<code>service</code>对应的函数类似于构造函数，不用返回，直接拥有该对象。它适合用在功能比较多的地方。示例代码如下：</p>
+<pre><code>angular.module(<span class="string">'myApp.services'</span>)
+.service(<span class="string">'User'</span>, <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$http</span>)</span> </span>{ <span class="comment">// injectables go here</span>
+  <span class="keyword">var</span> <span class="keyword">self</span> = this; <span class="comment">// Save reference</span>
+  this.user = {};
+  this.backendUrl = <span class="string">"http://localhost:3000"</span>;
+  this.setName = <span class="function"><span class="keyword">function</span><span class="params">(newName)</span> </span>{
+    <span class="keyword">self</span>.user[<span class="string">'name'</span>] = newName;
+  }
+  this.setEmail = <span class="function"><span class="keyword">function</span><span class="params">(newEmail)</span> </span>{
+    <span class="keyword">self</span>.user[<span class="string">'email'</span>] = newEmail;
+  }
+  this.save = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> <span class="variable">$http</span>.post(<span class="keyword">self</span>.backendUrl + <span class="string">'/users'</span>, {
+      user: <span class="keyword">self</span>.user
+    })
+  }
+});
+</code></pre><p>  使用示例和<code>factory</code>一样：</p>
+<pre><code>angular.module(<span class="string">'myApp'</span>)
+  .controller(<span class="string">'MainCtrl'</span>, <span class="keyword">function</span>(<span class="variable">$scope</span>, User) {
+    <span class="variable">$scope</span>.saveUser = User.save;
+  });
+</code></pre><p>  <strong>同<code>factory</code>一样，需要使用<code>.config()</code>来配置service的时候不能使用<code>service()</code>方法</strong></p>
+</li>
+<li><p><code>provider()</code>:是创建service最底层的方式，这也是唯一一个可以使用.config()方法配置创建service的方法不像上面提到的方法那样，我们在定义的this.$get()方法里面进行依赖注入。</p>
+<pre><code>angular.module(<span class="string">'myApp.services'</span>)
+.provider(<span class="string">'User'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+  <span class="keyword">this</span>.backendUrl = <span class="string">"http://localhost:3000"</span>;
+  <span class="keyword">this</span>.setBackendUrl = <span class="function"><span class="keyword">function</span><span class="params">(newUrl)</span> </span>{
+    <span class="keyword">if</span> (url) <span class="keyword">this</span>.backendUrl = newUrl;
+  }
+  <span class="keyword">this</span>.$<span class="keyword">get</span> = <span class="function"><span class="keyword">function</span><span class="params">($http)</span> </span>{ <span class="comment">// injectables go here</span>
+    <span class="keyword">var</span> self = <span class="keyword">this</span>;
+    <span class="keyword">var</span> service = {
+      user: {},
+      setName: <span class="function"><span class="keyword">function</span><span class="params">(newName)</span> </span>{
+        service.user[<span class="string">'name'</span>] = newName;
+      },
+      setEmail: <span class="function"><span class="keyword">function</span><span class="params">(newEmail)</span> </span>{
+        service.user[<span class="string">'email'</span>] = newEmail;
+      },
+      save: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> $http.post(self.backendUrl + <span class="string">'/users'</span>, {
+          user: service.user
+        })
+      }
+    };
+    <span class="keyword">return</span> service;
+  }
+});
+</code></pre><p>为了给service进行配置，我们可以将provider注入到.config()方法里面:</p>
+<pre><code>angular.<span class="built_in">module</span>(<span class="string">'myApp'</span>)
+.config(<span class="function"><span class="keyword">function</span><span class="params">(UserProvider)</span></span> {
+  UserProvider.setBackendUrl(<span class="string">"http://myApiBackend.com/api"</span>);
+})
+</code></pre><p>  这样，就可以例用这个service了：</p>
+<pre><code>angular.module(<span class="string">'myApp'</span>)
+.controller(<span class="string">'MainCtrl'</span>, <span class="keyword">function</span>(<span class="variable">$scope</span>, User) {
+  <span class="variable">$scope</span>.saveUser = User.save;
+});
+</code></pre><p>  那么，我们什么时候使用<code>provider()</code>呢？一种情况是我们程序需要部署在不同的环境里面如测试、生产、演示使用不同的后端，就可能使用到了。另一种是我们希望通过配置的方式来设置services的时候。</p>
+</li>
+</ul>
+<p>最后，老规则，来个多个<code>controller</code>共享对象的例子，这个例子也可以理解为多个页面共享一个对象的例子：</p>
+<p><code>HTML页面源代码如下：</code></p>
+<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"./public/lib/bootstrap/dist/css/bootstrap.css"</span>&gt;</span><span class="tag">&lt;/<span class="title">link</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">body</span> <span class="attribute">ng-app</span>=<span class="value">'app'</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">'MyCtrl'</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">h1</span> &gt;</span><span class="comment"></span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+<span class="tag">&lt;<span class="title">h1</span> &gt;</span><span class="comment"></span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+<span class="tag">&lt;<span class="title">h1</span> &gt;</span><span class="comment"></span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+<span class="tag">&lt;<span class="title">h1</span> &gt;</span><span class="comment"></span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+<span class="tag">&lt;<span class="title">h1</span> &gt;</span><span class="comment"></span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"FCtrl"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">ng-model</span>=<span class="value">"data.firstname"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">h2</span>&gt;</span><span class="comment"></span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"SCtrl"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">ng-model</span>=<span class="value">"data.firstname"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">h2</span>&gt;</span><span class="comment"></span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"./public/lib/angular/angular.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"services.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+</code></pre><p><code>services.js源代码如下：</code></p>
+<pre><code>angular.module(<span class="string">'app'</span>,[])
+.<span class="keyword">value</span>(<span class="string">'realname'</span>,<span class="string">'okuc'</span>)
+.<span class="keyword">value</span>(<span class="string">'realname'</span>,<span class="string">'52brt'</span>)//realname是一个变量
+.constant(<span class="string">'http'</span>,<span class="string">'www.52brt.com'</span>)
+.constant(<span class="string">'http'</span>,<span class="string">'www.okuc.xyz'</span>)
+.factory(<span class="string">'Data'</span>,<span class="keyword">function</span>(){//返回一个对象,这是复杂版的service
+  return {
+    msg:<span class="string">'中国'</span>,
+    setMsg:function(){
+      this.msg=<span class="string">'美国'</span>;
+    }
+  }
+}).service(<span class="string">'User'</span>,<span class="keyword">function</span>(){
+  this.firstname=<span class="string">"你好"</span>;
+  this.lastname=<span class="string">"angular"</span>;
+  this.getName=function(){
+    return this.firstname+this.lastname;
+  }
+})
+.controller(<span class="string">'FCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>,User){
+  <span class="variable">$scope</span>.data=User;
+})
+.controller(<span class="string">'SCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>,User){
+  <span class="variable">$scope</span>.data=User;
+})
+.controller(<span class="string">'MyCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>,realname,http,Data,User){
+  <span class="variable">$scope</span>.msg=<span class="string">'hello'</span>;
+  <span class="variable">$scope</span>.realname=realname;
+  <span class="variable">$scope</span>.http=http;
+  <span class="variable">$scope</span>.data = Data;
+  Data.setMsg();
+  <span class="variable">$scope</span>.uname=User.getName();
+})
+;
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/Angularjs/">Angularjs</a>, <a href="/tags/前端/">前端</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/" class="alignleft prev" >上一頁</a>
+    
+    
+    <a href="/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/" class="alignright next" >下一頁</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/12/08/新手学习Angularjs之三：几种service的区别/" data-title="新手学习Angularjs之三：几种service的区别" data-url="http://www.52brt.com/2015/12/08/新手学习Angularjs之三：几种service的区别/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>4</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>9</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

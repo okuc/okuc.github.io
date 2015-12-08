@@ -70,6 +70,52 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-08-06T07:38:12.000Z"><a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/">2015-08-06</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/">《Elasticsearch服务器开发》学习笔记（一）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第1章_入门-知识点">第1章 入门-知识点</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
+<p>1.术语</p>
+<ul>
+<li>文档document：索引和搜索时使用的主要数据载体，包含一个或多个存有数据的字段。</li>
+<li>字段field：文档的一部分，包含名称和值两部分。</li>
+<li>词term：一个搜索单元，表示文本中的一个词</li>
+<li>标记token：表示在字段文本中出现的词，由这个词的文本、开始和结束偏移量以及类型组成</li>
+</ul>
+<p>2.Apache Luncence将所有信息写到一个称为倒排索引Inverted index的结构中。它是面向词而不是文档的。</p>
+<p>3.分词的工作由分析器完成，它由一个分词器tokenizer和0个或多个标记过滤器token filter组成，也可以有0个或多个字符射器character mapper。分词的结果被称为标记流token stream，它是一个接一个的标记，准备被过滤器处理。</p>
+<p>4.Lucene分析器包含零个或多个标记过滤器，用来处理标记流中的标记，如</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-11-26T14:06:32.000Z"><a href="/2014/11/26/windows下搭建node.js及npm的工作环境/">2014-11-26</a></time>
       
       
@@ -157,7 +203,7 @@ var _hmt = _hmt || [];
   <h3 class="title">標籤</h3>
   <ul class="entry">
   
-    <li><a href="/tags/Angularjs/">Angularjs</a><small>3</small></li>
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>4</small></li>
   
     <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
   
@@ -175,7 +221,7 @@ var _hmt = _hmt || [];
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   
-    <li><a href="/tags/前端/">前端</a><small>8</small></li>
+    <li><a href="/tags/前端/">前端</a><small>9</small></li>
   
     <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
   
