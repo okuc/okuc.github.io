@@ -81,7 +81,7 @@ var _hmt = _hmt || [];
     <div class="entry">
       
         <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
-<p><code>ng-bind</code>、<code>ng-model</code>、<code>｛{}｝</code>这三个命令如果还不明白，请参考这里<a href="http://www.52brt.com/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">新手学习Angularjs之二：ng-bind、ng-model、大括号的区别</a>,下面，我们重点来看以下几个命令：<code>ng-show/hide</code>、<code>ng-if</code>、<code>ng-submit</code>、<code>ng-disabled</code>、<code>ng-checked</code>、<code>ng-src</code>、<code>ng-href</code>、<code>ng-class</code>、<code>ng-selected</code>、<code>ng-change</code>几个命令。<br>
+<p><code>ng-bind</code>、<code>ng-model</code>、<code>｛{}｝</code>这三个命令如果还不明白，请参考这里<a href="http://www.52brt.com/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">新手学习Angularjs之二：ng-bind、ng-model、大括号的区别</a>,下面，我们重点来看以下几个命令：<code>ng-show/hide</code>、<code>ng-if</code>、<code>ng-submit</code>、<code>ng-disabled</code>、<code>ng-checked</code>、<code>ng-src</code>、<code>ng-href</code>、<code>ng-class</code>、<code>ng-selected</code>、<code>ng-change</code>几个命令。</p>
       
     </div>
     <footer>
@@ -129,6 +129,44 @@ var _hmt = _hmt || [];
         
           <div class="alignleft">
             <a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之五：$http服务的简单用法/">2015-12-08</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/08/新手学习Angularjs之五：$http服务的简单用法/">新手学习Angularjs之五：$http服务的简单用法</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<p>Angularjs也提交了与后台交互的神器<code>$http</code>,所以，如果你的程序需要与后台交互，那么只需要使用此方法就可以，而无须自已编写<code>XMLHttpRequest</code>程序。</p>
+<p><code>$http</code>也支持两种调用方式：<code>链式调用</code>及<code>普通调用</code>。下面我们来看一看这两种调用方式：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/08/新手学习Angularjs之五：$http服务的简单用法/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -468,48 +506,6 @@ tmpfs                  <span class="number">16</span>G   <span class="number">72
 
 
 
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-10-10T14:59:45.000Z"><a href="/2015/10/10/Linux折腾记(3)-CentOS6下安装Oracle JDK8/">2015-10-10</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/10/10/Linux折腾记(3)-CentOS6下安装Oracle JDK8/">Linux折腾记(3)-CentOS6下安装Oracle JDK8</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>CentOS6中自带了openJDK1.7，由于XXX原因，一般还是要手动更改成Oracle JDK。本文描述的即是这一过程。</p>
-<p>首先，要查看一下你安装的版本中，是否自动安装了openJDK,如果没有，恭喜你，可以直接进行安装了。查询命令如下：</p>
-<pre><code><span class="attr_selector">[root@okuc6 ~]</span># <span class="tag">java</span> <span class="tag">-version</span>
-<span class="tag">java</span> <span class="tag">version</span> "1<span class="class">.7</span><span class="class">.0_79</span>"
-<span class="tag">OpenJDK</span> <span class="tag">Runtime</span> <span class="tag">Environment</span> (<span class="tag">rhel-2</span><span class="class">.5</span><span class="class">.5</span><span class="class">.4</span><span class="class">.el6-x86_64</span> <span class="tag">u79-b14</span>)
-<span class="tag">OpenJDK</span> 64<span class="tag">-Bit</span> <span class="tag">Server</span> <span class="tag">VM</span> (<span class="tag">build</span> 24<span class="class">.79-b02</span>, <span class="tag">mixed</span> <span class="tag">mode</span>)
-</code></pre><p>如上，如果返回的结果中还了OpenJDK字样，那就先卸载吧。<br>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/10/10/Linux折腾记(3)-CentOS6下安装Oracle JDK8/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -526,7 +522,7 @@ tmpfs                  <span class="number">16</span>G   <span class="number">72
   <h3 class="title">標籤</h3>
   <ul class="entry">
   
-    <li><a href="/tags/Angularjs/">Angularjs</a><small>4</small></li>
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>5</small></li>
   
     <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
   
@@ -544,7 +540,7 @@ tmpfs                  <span class="number">16</span>G   <span class="number">72
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   
-    <li><a href="/tags/前端/">前端</a><small>9</small></li>
+    <li><a href="/tags/前端/">前端</a><small>10</small></li>
   
     <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
   
