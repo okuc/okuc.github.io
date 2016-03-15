@@ -83,21 +83,21 @@ var _hmt = _hmt || [];
 <pre><code><span class="type">String</span> file = <span class="type">Platform</span>.getInstanceLocation<span class="literal">()</span>.getURL<span class="literal">()</span>.getPath<span class="literal">()</span>;
 </code></pre><p>2.得到runtime workspace目录下所有的工程</p>
 <a id="more"></a>
-<pre><code>IWorkspace <span class="keyword">workspace</span> = ResourcesPlugin.getWorkspace();
-   IWorkspaceRoot root = <span class="keyword">workspace</span>.getRoot();
+<pre><code>IWorkspace workspace = ResourcesPlugin.getWorkspace();
+   IWorkspaceRoot root = workspace.getRoot();
    IProject[] newProjectHandle = root.getProjects();
 
-<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, <span class="keyword">size</span> = newProjectHandle.length; i &lt; <span class="keyword">size</span>; i++) {
+<span class="keyword">for</span> (int i = <span class="number">0</span>, <span class="built_in">size</span> = newProjectHandle.length; i &lt; <span class="built_in">size</span>; i++) {
     IProject iProject = newProjectHandle[i];
 
     <span class="comment">// 工程名字</span>
 String projectName = iProject.getName();
-IResource[] resources = iProject.members();
-    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>, n = resources.length; j &lt; n; j++) {
-     <span class="keyword">if</span> (resources[j].getType() == IResource.FILE
-       &amp;&amp; resources[j].getFileExtension().equals(<span class="string">"xpdl"</span>)) {
+IResource[] <span class="built_in">resources</span> = iProject.<span class="built_in">members</span>();
+    <span class="keyword">for</span> (int j = <span class="number">0</span>, n = <span class="built_in">resources</span>.length; j &lt; n; j++) {
+     <span class="keyword">if</span> (<span class="built_in">resources</span>[j].getType() == IResource.FILE
+       &amp;&amp; <span class="built_in">resources</span>[j].getFileExtension().equals(<span class="string">"xpdl"</span>)) {
       <span class="comment">// 包:工程下xpdl文件的绝对路径,包路径</span>
-      String xpdlFileFullPath = resources[j].getLocation()
+      String xpdlFileFullPath = <span class="built_in">resources</span>[j].getLocation()
         .toOSString();
       }
      }
@@ -139,7 +139,7 @@ IResource[] resources = iProject.members();
 
 <nav id="pagination" >
     
-    <a href="/2014/11/26/windows下搭建node.js及npm的工作环境/" class="alignleft prev" >上一頁</a>
+    <a href="/2014/11/26/windows下搭建node.js及npm的工作环境/" class="alignleft prev" >Vorherige Seite</a>
     
     
     <div class="clearfix"></div>
@@ -170,34 +170,58 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">標籤</h3>
+  <h3 class="title">Tags</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
   
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
     <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
   
-    <li><a href="/tags/Nodejs/">Nodejs</a><small>3</small></li>
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   
     <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
   
     <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
   
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
     <li><a href="/tags/java/">java</a><small>1</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>5</small></li>
   
-    <li><a href="/tags/mongodb/">mongodb</a><small>1</small></li>
+    <li><a href="/tags/markdown/">markdown</a><small>3</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   
-    <li><a href="/tags/前端/">前端</a><small>11</small></li>
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
   
     <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
   
-    <li><a href="/tags/数据库/">数据库</a><small>1</small></li>
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
   
   </ul>
 </div>
@@ -207,7 +231,7 @@ var duoshuoQuery = {short_name:"okuc"};
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2015 okuc
+  &copy; 2016 okuc
   
 </div>
 <div class="clearfix"></div></footer>

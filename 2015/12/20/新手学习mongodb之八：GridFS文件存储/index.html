@@ -1,0 +1,327 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>新手学习mongodb之：GridFS文件存储 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="新手学习mongodb之：GridFS文件存储"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-20T14:06:32.000Z"><a href="/2015/12/20/新手学习mongodb之八：GridFS文件存储/">2015-12-20</a></time>
+      
+      
+  
+    <h1 class="title">新手学习mongodb之：GridFS文件存储</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li><p>文件系统是操作系统用来组织磁盘文件的方法和数据结构，计算机通过文件系统来存储管理数据。</p>
+<p>典型的系统有<code>UFS(Unix File System)</code>，<code>EXT(Extended file system)</code>及<code>NTFS(New Technology File System)</code>等。</p>
+</li>
+<li><p>分布式文件系统，将固定存储于单台机器上的文件系统，扩展到多台机器上，每个节点负责存储部分数据，众多的存储节点组成一个文件系统网络，各个节点之间通过网络进行信和数据传输。</p>
+<ul>
+<li><code>NFS(Network File System)</code>：相当于<code>RPC Service</code>，使用者可以像使用本地文件系统一样来访问远程的文件。</li>
+<li><code>HDFS(Hadoop File System)</code>:采用<code>master/slave</code>架构设计，可以运行于廉价的普通硬件之上，适合超大数据集的应用程序。</li>
+<li><code>TFS(Taobao File System)</code>：适合海量非结构化的小文件存储，采用HA架构；文件名可以直接映射到物理地址。</li>
+<li><p><code>FastDFS</code>：轻量级的分布式文件系统；采用对等架构设计；可以根据文件ID迅速定位文件。</p>
+<a id="more"></a></li>
+</ul>
+</li>
+<li><p>GridFS是MongoDB提供的二进制数据的存储解决方案，是专门为大数据文件存储提供的存储方案。</p>
+<p>GridFS是MongoDB制定的，如何在数据库中存储大文件的(specification)规范。MongoDB数据库本身并没有实现GridFS的任何代码，具体代码实现交由客户端驱动程序来完成。也就是说，由客户端程序对大文件进行分割存储。</p>
+</li>
+<li><p>默认情况下，使用fs.files存储文件的元数据，包含主要的字段如下：</p>
+<pre><code>{
+    <span class="string">"_id"</span><span class="symbol">:&lt;ObjectId&gt;</span>,<span class="string">"length"</span><span class="symbol">:&lt;num&gt;</span>,<span class="regexp">//</span>文件长度
+    <span class="string">"chunkSize"</span><span class="symbol">:&lt;num&gt;</span>,<span class="regexp">//</span>每个数据块的大小 
+    <span class="string">"uploadDate"</span><span class="symbol">:&lt;timestamp&gt;</span>,<span class="regexp">//</span>上传时间
+    <span class="string">"md5"</span><span class="symbol">:&lt;hash&gt;</span>,
+    <span class="string">"filename"</span>：&lt;string&gt;,
+    <span class="string">"contentType"</span><span class="symbol">:&lt;string&gt;</span>,<span class="regexp">//</span>表示文件的<span class="constant">MIME类</span>型
+    <span class="string">"aliases"</span><span class="symbol">:&lt;string</span> array&gt;,<span class="regexp">//</span>文件别名
+    <span class="string">"metadata"</span><span class="symbol">:&lt;dataObject&gt;//</span>文件额外的辅助信息
+｝
+</code></pre></li>
+<li><p>默认情况下，使用fs.chunks存储以255k进行分割的文件块，包含字段如下：</p>
+</li>
+</ol>
+<pre><code>{
+    <span class="string">"_id"</span><span class="symbol">:&lt;ObjectId&gt;</span>,
+    <span class="string">"files_id"</span><span class="symbol">:&lt;ObjectId&gt;</span>,<span class="regexp">//</span>文件id
+    <span class="string">"n"</span><span class="symbol">:&lt;num&gt;</span>,数据块的序号
+    <span class="string">"data"</span><span class="symbol">:&lt;binary&gt;//</span>实际数据
+｝
+</code></pre><ol>
+<li><p>GridFS主要适用于如下场景：</p>
+<ul>
+<li>存储用户产生的文件且文件数量比较大</li>
+<li>需要文件的自动备份和分布式存储</li>
+<li>需要访问文件的部分内容</li>
+<li><p>存储16MB以上的文件。</p>
+<p>对于大文件的更新，需要先上传新的版本，然后将旧的版本删除掉，以实现对文件了原子控制。</p>
+</li>
+</ul>
+</li>
+<li><p>mongofiles是MongoDB安装包中提供的一个工作，它专门用来存取文件。</p>
+<p>Mongofiles支持的操作包括查询所有文件、查看文件、上传一个文件、获取一个文件、按照<code>_id</code>来获取文件、按照文件名删除文件、按照_id来删除文件。</p>
+</li>
+</ol>
+<pre><code>在命令行中，可以依次敲入以下命令进行测试：
+
+    &gt;mongofiles --<span class="keyword">help</span>
+    &gt;echo <span class="string">"hello MongoDB"</span>&gt;&gt;<span class="keyword">test</span>.txt
+    &gt;mongofiles -<span class="keyword">h</span> localhost:27017 -<span class="keyword">d</span> okuc put <span class="keyword">test</span>.txt  <span class="comment">//okuc为数据库名</span>
+    &gt;Mongo
+    &gt;<span class="keyword">use</span> okuc
+    &gt;show collections
+    &gt;<span class="keyword">db</span>.fs.files.find()
+    &gt;<span class="keyword">db</span>.fs.chunks.find()
+    &gt;<span class="keyword">db</span>.fs.chunks.getIndexes()
+    &gt;<span class="keyword">exit</span>
+    &gt;mongofiles -<span class="keyword">h</span> localhost:27017 -<span class="keyword">d</span> okuc <span class="keyword">list</span>
+    &gt;mongofiles -<span class="keyword">h</span> localhost:27017 -<span class="keyword">d</span> okuc get <span class="keyword">test</span>.txt
+    &gt;mongofiles -<span class="keyword">h</span> localhost:27017 -<span class="keyword">d</span> okuc delete <span class="keyword">test</span>.txt  
+    &gt;mongofiles -<span class="keyword">h</span> localhost:27017 -<span class="keyword">d</span> okuc <span class="keyword">search</span> <span class="keyword">test</span>.txt
+</code></pre><ol>
+<li><p>MongoDB提供了丰富的多种语言的客户端驱动程序，官方支持的包括C、C++、C#、JAVA、Node.js、PHP及Python等十几种，除此之外，还包括社区支持GO(mgo)以及Erlang等。</p>
+</li>
+<li><p>这是一个用java客户端来操作的例子：</p>
+</li>
+</ol>
+<p>首选在<a href="https://docs.mongodb.org/ecosystem/drivers/" target="_blank" rel="external">https://docs.mongodb.org/ecosystem/drivers/</a>找到java版本驱动添加到maven的pom文件中，我找到的地址如下：<a href="http://mongodb.github.io/mongo-java-driver/" target="_blank" rel="external">http://mongodb.github.io/mongo-java-driver/</a>：</p>
+<pre><code><span class="tag">&lt;<span class="title">dependencies</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">dependency</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.mongodb<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>mongodb-driver<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">version</span>&gt;</span>3.2.0<span class="tag">&lt;/<span class="title">version</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">dependency</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">dependencies</span>&gt;</span>
+</code></pre><p>添加完毕后，代码工程如下：</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">class</span> GridFSDemo{
+    String URL = <span class="string">"localhost:27017"</span>;
+    MongoClient mongoClient = <span class="keyword">new</span> MongoClient(URL);
+    DB db = mongoClient.getDB(<span class="string">"okuc"</span>);
+    GridFS gridFS = <span class="keyword">new</span> GridFS(db);
+    <span class="keyword">File</span> <span class="keyword">file</span> = <span class="keyword">new</span> <span class="keyword">File</span>(system.getProperty(<span class="string">"usr.home"</span>)+<span class="string">"/MongoDB-manual.pdf"</span>);
+    FileInputStream fis = <span class="keyword">new</span> FileInputStream(<span class="keyword">file</span>);
+    GridFSInputFile createFile = gridFS.createFile(fis);
+    createFile.put(<span class="string">"filename"</span>,<span class="string">"MongoDB_manual_3.0.pdf"</span>);
+    createFile.put(<span class="string">"contentType"</span>,<span class="string">"application/pdf"</span>);
+    createFile.save();
+
+    GridFSDBFile findOne = gridFS.findOne(<span class="keyword">new</span> BasicDBObject(<span class="string">"_id"</span>,createFile.getId()));
+    system.out.<span class="keyword">println</span>(findOne);
+
+    DBCursor fileList = gridFS.getFileList();
+    <span class="keyword">while</span>(fileList.hasNext()){
+        system.out.<span class="keyword">println</span>(fileList.<span class="keyword">next</span>());
+    }
+
+    gridFS.remove(<span class="keyword">new</span> BasicDBObject(<span class="string">"_id"</span>,createFile.getId()));
+
+    mongoClient.close();
+}
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/mongodb/">mongodb</a>, <a href="/tags/数据库/">数据库</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/12/21/新手学习mongodb之九：聚合管道/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2015/12/19/新手学习mongodb之七：特殊索引/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/12/20/新手学习mongodb之八：GridFS文件存储/" data-title="新手学习mongodb之：GridFS文件存储" data-url="http://www.52brt.com/2015/12/20/新手学习mongodb之八：GridFS文件存储/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>3</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

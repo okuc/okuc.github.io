@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>第 3 頁 | 我的后院自留地</title>
+  <title>Seite 3 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -70,112 +70,167 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-08-21T13:26:27.000Z"><a href="/2015/08/21/在批处理-bat-中设置java程序的内存参数/">2015-08-21</a></time>
+        <time datetime="2015-12-13T14:06:32.000Z"><a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/">2015-12-13</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/08/21/在批处理-bat-中设置java程序的内存参数/">在批处理(bat)中设置java程序的内存参数</a></h1>
+    <h1 class="title"><a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/">新手学习mongodb之二：基本概念及其数据类型</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>最近做一个java的桌面程序，竟然内存溢出了。由于是将启动命令<code>java -jar XXX.jar</code>写在了批处理中,所以竟一时想不起来如何设置程序运行参数了。以前是天天在eclipse的开发环境中设置，在tomcat的启动批处理中设置，在各种开源软件的启动脚本中设置，可是要在这么的一个简单命令中设置，竟然失忆了，不会了。。。<br>于是乎，百度了一番，才猛然间想了起来，原来，如此简单，添加后的示例如下，权当记录一下，谨防以后再忘记吧。</p>
-<pre><code>java  -Xms800m -Xmx800m -XX:PermSize=<span class="number">128</span>M -XX:MaxNewSize=<span class="number">256</span>m -XX:MaxPermSize=<span class="number">256</span>m  -jar  XXX.jar
+        <ol>
+<li><p>MongoDB是面向集合的文档型数据库，文档是MongoDB的核心概念，本质是一种类JSON的BSON格式的数据，BSON在JSON的基础出上添加了一些数据类型，如日期型、int32、int64等。BSON的官方地址如下：<a href="http://bsonspec.org">http://bsonspec.org</a>与传统关系数据库相比，他们的对应关系如下：</p>
+<p> MongoDB | 关系型数据库<br> :—-:|:—-:<br> DataBase|DataBase<br> Collection|Table<br> Document/BSON Document|Record/Row<br> field|Column<br> Index|Index<br> embedded documents/reference|table joins</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-13T14:06:32.000Z"><a href="/2015/12/13/轻松在eclipse中将maven项目布署到tomcat上/">2015-12-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/13/轻松在eclipse中将maven项目布署到tomcat上/">轻松在eclipse中将maven项目布署到tomcat上</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在eclipse中导入已经建好的maven项目后，往往会出现无法布署到tomcat上的情况，此时，该怎么办呢？</p>
+<ol>
+<li><p>右键项目名，选择<code>Properties</code>。在弹出的页面中，左侧选择<code>Project Facets</code>,在右侧的列表中，选中<code>Dynamic Web Module</code>、<code>Java</code>、<code>JavaScript</code>三项，然后点击右下角的<code>Apply</code>按扭。</p>
+</li>
+<li><p>左侧选择<code>Deployment Assembly</code>,在左则，配置好依赖：</p>
+<ul>
+<li><code>/src/main/java</code>–&gt;<code>WEB-INF/classes</code></li>
+<li><code>/src/main/resources</code>–&gt;<code>WEB-INF/classes</code></li>
+<li><code>/src/main/webapp</code>–&gt;<code>/</code></li>
+<li><code>/src/test/java</code>–&gt;<code>WEB-INF/classes</code></li>
+<li><p><code>Maven Dependencies</code>–&gt;<code>WEB-INF/lib</code></p>
+<p>然后点击右下角的<code>Apply</code>按扭。</p>
+</li>
+</ul>
+</li>
+<li><p>点击<code>OK</code>按扭返回，这回，可以直接在项目名上点击右键，选择<code>Run AS</code> -&gt; <code>Run on Server</code>了。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-12T14:06:32.000Z"><a href="/2015/12/12/新手学习mongodb之一：在windows及linux下安装mongodb/">2015-12-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/12/新手学习mongodb之一：在windows及linux下安装mongodb/">新手学习mongodb之一：在windows及linux下安装mongodb</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="Linux下安装mongodb">Linux下安装mongodb</h2><p>我使用的是Centos7，所以首先在官网<a href="https://www.mongodb.org/">https://www.mongodb.org/</a>上找到合适的安装包，对应的下载地址为：<a href="https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-3.2.0.tgz">https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-3.2.0.tgz</a>。接下来，我们开始安装吧！<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/12/新手学习mongodb之一：在windows及linux下安装mongodb/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-10T14:06:32.000Z"><a href="/2015/12/10/新手学习Angularjs之六：使用Directive自定义控件/">2015-12-10</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/10/新手学习Angularjs之六：使用Directive自定义控件/">新手学习Angularjs之六：使用Directive自定义控件</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<h2 id="一、一般自定义组件">一、一般自定义组件</h2><p>首先来一个简单的例子：</p>
+<pre><code><span class="tag">&lt;<span class="title">html</span> <span class="attribute">ng-app</span>=<span class="value">'app'</span>&gt;</span>
+ <span class="tag">&lt;<span class="title">body</span>&gt;</span>
+ <span class="tag">&lt;<span class="title">hello</span>&gt;</span><span class="tag">&lt;/<span class="title">hello</span>&gt;</span>
+ <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+ <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"../angular-1.0.3/angular.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+ <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"HelloDirect.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+
+
+var appModule = angular.module('app', []);
+appModule.directive('hello', function() {
+ return {
+ restrict: 'E',
+ template: '<span class="tag">&lt;<span class="title">div</span>&gt;</span>Hi there<span class="tag">&lt;/<span class="title">div</span>&gt;</span>',
+ replace: true
+ };
+});
 </code></pre>
       
     </div>
     <footer>
       
         
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-08-16T15:38:12.000Z"><a href="/2015/08/16/《Elasticsearch服务器开发》学习笔记（二）/">2015-08-16</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/08/16/《Elasticsearch服务器开发》学习笔记（二）/">《Elasticsearch服务器开发》学习笔记（二）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第2章_映射配置(一)">第2章 映射配置(一)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
-<ol>
-<li>Elasticsearch是一个无模式的搜索引警,可以即时算出数据结构,但是自已控制并定义结构是更好的办法。</li>
-<li>Elasticsearch是由一个或多个分片组成，每个分片包含了文档集的一部分。而且这些分片也有副本。在创建索引时，可以规定分片及副本的数量，也可以使用全局配置文件或软件内部的默认值。5个分片，1个副本，就意味着在集群中有10个lucene索引。<strong>副本可以随时调整，但是分片，则不能调整。创建好索引后更改分片的唯一图径是创建另外一个索引并重新索引数据。</strong></li>
-<li>直接创建一个索引<code>curl -XPUT http://localhost:9200/blog</code>。不让它自动创建索引是因为有时候要修改分片数目、设置索引结构。因此，可以关闭配置文件中自动创建索引的配置<code>action.auto_create_index:-an*,+a,-*</code>,上面的命令意思是说不允许自动创建以<code>an</code>开头的索引；允许自动创建以<code>a</code>开头的索引，其他的索引也必须手工创建。</li>
-<li>一个手工设置分片及副本数量的例子<code>curl -XPUT http://localhost:9200/blog/ -d &#39;{&quot;settings&quot;:{&quot;number_of_shards&quot;:1,&quot;number_of_replicas&quot;:2}}&#39;</code></li>
-<li>删除索引<code>curl -XDELETE http://localhost:9200/posts</code></li>
-<li>映射类似于关系数据库的数据结构。在定义映射时，Elasticsearch可以通过定义的JSON来猜测文档结构。在JSON中，字符串用引号括起来，布尔值用特定的词语定义，数值则是数字。但是，有时ES也会忽略数字类型，全按字符串来处理。可以使用如下命令来强制它进行文本检测。</li>
-</ol>
-      
-    </div>
-    <footer>
-      
-        
           <div class="alignleft">
-            <a href="/2015/08/16/《Elasticsearch服务器开发》学习笔记（二）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-08-10T14:59:45.000Z"><a href="/2015/08/10/Linux折腾记(1)-CentOS7下安装mysql数据库/">2015-08-10</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/08/10/Linux折腾记(1)-CentOS7下安装mysql数据库/">Linux折腾记(1)-CentOS7下安装mysql数据库</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>最近几天在CentOS7下安装mysql数据，折腾了好几天，问遍了度娘和谷歌，发现同样的错误是不少，但解决方案多种多样。很可惜，这么多方案我始终没有调试成功。最终，去官网上扒拉了一番洋文，找到了一种正确的步骤，才得以安装成功，现记录如下：</p>
-<h2 id="#清理">#清理</h2><p>折腾了这么久了，还是先把之前的环境给清理干净吧：</p>
-<ol>
-<li><p>先查询mysql相关的软件包，使用如下命令：</p>
-<pre><code>[root@localhost 桌面]<span class="preprocessor"># rpm -qa|grep mysql</span>
-mysql-community-common-<span class="number">5.6</span><span class="number">.26</span>-<span class="number">2.</span>el7.x86_64  
-mysql-community-release-el7-<span class="number">5.</span>noarch  
-</code></pre></li>
-<li><p>可以看到我的机器上有两个相关的包，使用下面的命令依次删除：</p>
-</li>
-</ol>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/08/10/Linux折腾记(1)-CentOS7下安装mysql数据库/#more" class="more-link">阅读更多</a>
+            <a href="/2015/12/10/新手学习Angularjs之六：使用Directive自定义控件/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -194,34 +249,103 @@ mysql-community-release-el7-<span class="number">5.</span>noarch
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-08-06T07:38:12.000Z"><a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/">2015-08-06</a></time>
+        <time datetime="2015-12-09T14:06:32.000Z"><a href="/2015/12/09/新手学习Angularjs之五：$http服务的简单用法/">2015-12-09</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/">《Elasticsearch服务器开发》学习笔记（一）</a></h1>
+    <h1 class="title"><a href="/2015/12/09/新手学习Angularjs之五：$http服务的简单用法/">新手学习Angularjs之五：$http服务的简单用法</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h2 id="第1章_入门-知识点">第1章 入门-知识点</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
-<p>1.术语</p>
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<p>Angularjs也提交了与后台交互的神器<code>$http</code>,所以，如果你的程序需要与后台交互，那么只需要使用此方法就可以，而无须自已编写<code>XMLHttpRequest</code>程序。</p>
+<p><code>$http</code>也支持两种调用方式：<code>链式调用</code>及<code>普通调用</code>。下面我们来看一看这两种调用方式：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/09/新手学习Angularjs之五：$http服务的简单用法/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/">2015-12-08</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/">新手学习Angularjs之四：常用的绑定命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<p><code>ng-bind</code>、<code>ng-model</code>、<code>｛{}｝</code>这三个命令如果还不明白，请参考这里<a href="http://www.52brt.com/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">新手学习Angularjs之二：ng-bind、ng-model、大括号的区别</a>,下面，我们重点来看以下几个命令：<code>ng-show/hide</code>、<code>ng-if</code>、<code>ng-submit</code>、<code>ng-disabled</code>、<code>ng-checked</code>、<code>ng-src</code>、<code>ng-href</code>、<code>ng-class</code>、<code>ng-selected</code>、<code>ng-change</code>几个命令。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">2015-12-08</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">新手学习Angularjs之三：几种service的区别</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<p>Angularjs有几种自定义服务的方法：<code>value</code>、<code>constant</code>、<code>factory</code>、<code>service</code>、<code>provider</code>,那么他们有什么区别呢？</p>
 <ul>
-<li>文档document：索引和搜索时使用的主要数据载体，包含一个或多个存有数据的字段。</li>
-<li>字段field：文档的一部分，包含名称和值两部分。</li>
-<li>词term：一个搜索单元，表示文本中的一个词</li>
-<li>标记token：表示在字段文本中出现的词，由这个词的文本、开始和结束偏移量以及类型组成</li>
-</ul>
-<p>2.Apache Luncence将所有信息写到一个称为倒排索引Inverted index的结构中。它是面向词而不是文档的。</p>
-<p>3.分词的工作由分析器完成，它由一个分词器tokenizer和0个或多个标记过滤器token filter组成，也可以有0个或多个字符射器character mapper。分词的结果被称为标记流token stream，它是一个接一个的标记，准备被过滤器处理。</p>
-<p>4.Lucene分析器包含零个或多个标记过滤器，用来处理标记流中的标记，如</p>
+<li><code>value</code>:这个方法是用来定义变量的，类似其他编程语言中定义的变量。</li>
+<li><code>constant</code>:这个则是类似其他编程语言中定义的常量，一旦定义，就不能被修改。
       
     </div>
     <footer>
       
         
           <div class="alignleft">
-            <a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/#more" class="more-link">阅读更多</a>
+            <a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -240,27 +364,29 @@ mysql-community-release-el7-<span class="number">5.</span>noarch
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-11-26T14:06:32.000Z"><a href="/2014/11/26/windows下搭建node.js及npm的工作环境/">2014-11-26</a></time>
+        <time datetime="2015-12-07T14:06:32.000Z"><a href="/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">2015-12-07</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/11/26/windows下搭建node.js及npm的工作环境/">windows下搭建node.js及npm的工作环境</a></h1>
+    <h1 class="title"><a href="/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">新手学习Angularjs之二：ng-bind、ng-model、大括号的区别</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>由于工作需要，决定在windows下搭建一个nodejs及npm的工作环境，在网上查了n篇文章，别管是编译源码安装也好，还是使用node.msi格式安装包也好，总是有问题。最终，功夫不负有心人，还是搭建完成了。作为新手，其实我也不知道这样搭建对不对，但是运行’npm install’反正不出错了。</p>
-<p>下面就把我的一些搭建过程说一下：</p>
-<ol>
-<li>下载node.js。在<a href="http://nodejs.org/download/">http://nodejs.org/download/</a>下载最新版的node.exe文件，我下载时是<code>v0.10.33</code>。下载完成后，在F盘新建nodejs文件夹，将node.exe放到该文件夹下。同时将<code>F:\nodejs</code>添加到环境变量的PATH中。<br>2.下载npm。在<a href="http://nodejs.org/dist/npm/">http://nodejs.org/dist/npm/</a>下载最新版的npm。我下载时的版本是<code>npm-1.4.9.zip</code>。下载完成后，解压到nodejs文件夹中，形成了如下目录，同时添加环境变量<code>NODE_PATH</code>,其值为：<code>F:\nodejs\node_modules</code>。
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<p>在学习的过程中，遇到了这三个对象，一时把我给搞糊涂了。经过百度，得到了以下答案：</p>
+<ul>
+<li><code>ng-model</code>：用于双向绑定，所以一般用于前台可输入的控件，如<code>input</code>。</li>
+<li><code>ng-bind</code>：只用于前台展示，所以一般和<code>div</code>结合使用。</li>
+<li><code>双大括号</code>：其基本作用类似<code>ng-bind</code>，但不同的是，在<code>angularjs</code>未加载完成时，由于页面未解释，所以很有可能客户会看到大括号，所以一般<code>&lt;div ng-clock class=&quot;ng-clock&quot;&gt;｛{uname}｝&lt;/div&gt;</code>这样使用，这样可使页面先不加载大括号，待全部加载完成后再解释执行。
       
     </div>
     <footer>
       
         
           <div class="alignleft">
-            <a href="/2014/11/26/windows下搭建node.js及npm的工作环境/#more" class="more-link">阅读更多</a>
+            <a href="/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -273,32 +399,89 @@ mysql-community-release-el7-<span class="number">5.</span>noarch
 
 
 
-  <article class="coding">
+  <article class="post">
   
   <div class="post-content">
     <header>
       
         <div class="icon"></div>
-        <time datetime="2009-03-19T01:12:53.000Z"><a href="/2009/03/19/eclipse插件开发获取路径的几种方式/">2009-03-19</a></time>
+        <time datetime="2015-12-06T14:06:32.000Z"><a href="/2015/12/06/新手学习Angularjs之一：基于Angularjs的第一个应用--todoList/">2015-12-06</a></time>
       
       
   
-    <h1 class="title"><a href="/2009/03/19/eclipse插件开发获取路径的几种方式/">eclipse插件开发获取路径的几种方式</a></h1>
+    <h1 class="title"><a href="/2015/12/06/新手学习Angularjs之一：基于Angularjs的第一个应用--todoList/">新手学习Angularjs之一：基于Angularjs的第一个应用--todoList</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>1.得到runtime workspace目录的绝对路径</p>
-<pre><code><span class="type">String</span> file = <span class="type">Platform</span>.getInstanceLocation<span class="literal">()</span>.getURL<span class="literal">()</span>.getPath<span class="literal">()</span>;
-</code></pre><p>2.得到runtime workspace目录下所有的工程</p>
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<ol>
+<li>由于系统需要用到<code>bootstrap</code>、<code>angularjs</code>，首先使用下面命令进行安装<code>bower install bootstrap</code>、<code>bower install angularjs</code>。</li>
+<li><p>新建<code>index.html</code>,修改title并引入使用到的css及js，内容如下：</p>
+<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"./public/bootstrap/dist/css/bootstrap.min.css"</span>&gt;</span><span class="tag">&lt;/<span class="title">link</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"./public/lib/angular/angular.js"</span>&gt;</span><span class="undefined">
+  </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+</code></pre>
       
     </div>
     <footer>
       
         
           <div class="alignleft">
-            <a href="/2009/03/19/eclipse插件开发获取路径的几种方式/#more" class="more-link">阅读更多</a>
+            <a href="/2015/12/06/新手学习Angularjs之一：基于Angularjs的第一个应用--todoList/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-05T14:06:32.000Z"><a href="/2015/12/05/Node.js的项目创建及依赖维护工作/">2015-12-05</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>要编写nodejs项目，则一般使用向导生成工程样板，然后修改工程样板，达到自已的目地，也有的直接编写各类文件。本人将自已常的生成工程样板的方式在此分享一下，高手请直接飘过。。。。。<br>在此假定我们node及npm环境已经安装配置完成，可以直接使用。</p>
+<p>###使用npm向导创建nodejs样板工程</p>
+<ol>
+<li>创建一目录<code>nodejs-demo</code>，并在命令行中切换到该目录下。输入<code>npm init</code>，按要求输入工程名称、版本号、描述、入口等就可以了。一般直接使用默认就可以，但是有两点，入口现在一般添<code>bin/www</code>,关键词直接输入项目关键字或不输都可以。</li>
+<li>使用命令<code>yum install -g bower</code>安装<code>bower</code>。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/05/Node.js的项目创建及依赖维护工作/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -314,8 +497,10 @@ mysql-community-release-el7-<span class="number">5.</span>noarch
 
 <nav id="pagination">
   
-    <a href="/page/2/" class="alignleft prev">上一頁</a>
+    <a href="/page/2/" class="alignleft prev">Vorherige Seite</a>
   
+  
+    <a href="/page/4/" class="alignright next">Nächste Seite</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -324,34 +509,58 @@ mysql-community-release-el7-<span class="number">5.</span>noarch
 
   
 <div class="widget tag">
-  <h3 class="title">標籤</h3>
+  <h3 class="title">Tags</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
   
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
     <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
   
-    <li><a href="/tags/Nodejs/">Nodejs</a><small>3</small></li>
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   
     <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
   
     <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
   
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
     <li><a href="/tags/java/">java</a><small>1</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>5</small></li>
   
-    <li><a href="/tags/mongodb/">mongodb</a><small>1</small></li>
+    <li><a href="/tags/markdown/">markdown</a><small>3</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   
-    <li><a href="/tags/前端/">前端</a><small>11</small></li>
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
   
     <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
   
-    <li><a href="/tags/数据库/">数据库</a><small>1</small></li>
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
   
   </ul>
 </div>
@@ -361,7 +570,7 @@ mysql-community-release-el7-<span class="number">5.</span>noarch
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2015 okuc
+  &copy; 2016 okuc
   
 </div>
 <div class="clearfix"></div></footer>

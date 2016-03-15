@@ -1,0 +1,394 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>新手学习mongodb之三：数据更新操作 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="新手学习mongodb之三：数据更新操作"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-14T14:06:32.000Z"><a href="/2015/12/14/新手学习mongodb之三：数据更新操作/">2015-12-14</a></time>
+      
+      
+  
+    <h1 class="title">新手学习mongodb之三：数据更新操作</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li><p>MongoDB数据插入，<code>db.集合.insert(obj,opts)</code>函数主要有两个参数:obj为要插入的文档，ops为可选参数，用来设置写安全级别，它的返回值为WriteResult对象。关于<code>insert</code>函数，有以下几点需要注意：</p>
+<ul>
+<li>insert函数只能作用于一个集合。</li>
+<li>如果集合不存在，数据库服务会自动创建目标集合。</li>
+<li>插入文档时，如果没有指定_id字段，数据库服务会自动创建ObjectId对象作为_id的值。</li>
+<li>可以使用<code>save()</code>(如果原来文档不存在通过调用insert实现，存在调用update来实现)、<code>update()</code>、以及<code>findAndModify()</code>插入文档。<a id="more"></a>
+<pre><code>dbService = connect(<span class="string">"localhost:27017"</span>);
+db = dbService.getSiblingDB(<span class="string">"okuc"</span>);//选择集合
+db.insert_test.drop();//清空集合
+//测试文档,无_id字段，会自动生成。
+<span class="keyword">var</span> doc1 = {name:<span class="string">"xiaoli"</span>,age:<span class="number">20</span>,address:{province:<span class="string">"ShangHai"</span>,city:<span class="string">"pudong"</span>}}
+//执行插入操作
+<span class="keyword">var</span> <span class="literal">result</span> = db.insert_test.insert(doc1)
+printjson(<span class="literal">result</span>)//打印函数返回结果
+<span class="keyword">var</span> cursor = db.insert_test.find({})
+printjson(cursor.toAyyay())
+</code></pre></li>
+</ul>
+</li>
+<li><p>Bulk可以将多个数据更新操作（插入、修改和删除等）放到一个待执行的列表中批量来执行。它分为顺序执行和并行执行。顺序执行按照预先定义的操作顺序（向Bulk中添加操作的顺序）来依次执行每一个操作。并行执行则随机顺序执行，而且遇到了问题，其他的仍然继续执行。</p>
+<ol>
+<li>初始化Bulk：<ul>
+<li><code>db.集合名.initializeUnorderedBulkOp()</code> //并行Bulk</li>
+<li><code>db.集合名.initializeOrderedBulkOP()</code> //顺序Bulk</li>
+</ul>
+</li>
+<li>向Bulk中添加数据更新操作<ul>
+<li><code>Bulk.insert()</code>、<code>Bulk.find.update()</code>、<code>Bulk.find.remove()</code>,如：<code>bulk.find({name:&quot;abc&quot;}).remove()</code></li>
+</ul>
+</li>
+<li><p>执行更新操作：调用<code>Bulk.execute()</code></p>
+<pre><code>dbService = connect(<span class="string">"localhost:27017"</span>);
+db = dbService.getSiblingDB(<span class="string">"okuc"</span>);//选择集合
+db.bulk_test.drop();//清空集合
+<span class="keyword">var</span> bulk = db.bulk_test.initializeUnorderedBulkOp();
+//向<span class="type">Bulk</span>中添加操作，支持的操作有：`<span class="type">Bulk</span>.insert()`、`<span class="type">Bulk</span>.find.insert()`、`<span class="type">Bulk</span>.find.update()`、`<span class="type">Bulk</span>,find.updateOne()`、`<span class="type">Bulk</span>.find.remove()`、`<span class="type">Bulk</span>.find.removeOne()`
+
+bulk.insert({_id:<span class="number">1</span>,name:<span class="string">"wangjun"</span>,age:<span class="number">23</span>,sex:<span class="string">"male"</span>});
+bulk.insert({_id:<span class="number">2</span>,name:<span class="string">"lihua"</span>,age:<span class="number">13</span>,sex:<span class="string">"female"</span>});
+bulk.insert({_id:<span class="number">3</span>,name:<span class="string">"zhaosan"</span>,age:<span class="number">23</span>,sex:<span class="string">"male"</span>});
+//执行插入操作
+<span class="keyword">var</span> <span class="literal">result</span> = bulk.execute();
+printjson(<span class="literal">result</span>)//打印函数返回结果，可清晰的表明插入、更新、删除了多少条数据。
+<span class="keyword">var</span> cursor = db.insert_test.find({})
+printjson(cursor.toAyyay())
+
+<span class="keyword">var</span> <span class="literal">result</span> = db.insert_test.remove({name:<span class="string">"xiaomi"</span>})
+printjson(<span class="literal">result</span>)
+<span class="keyword">var</span> cursor = db.insert_test.find({})
+printjson(cursor.toAyyay())
+</code></pre></li>
+</ol>
+</li>
+<li><p><code>db.集合名.remove(query,justOne)</code>,第一个参数是查询条件，如果为空，则为删除所有的文档，如<code>db.student.remove({})</code>。第二个参数为可选参数，使用该参数，只会删除满足条件的一个文档，如：<code>db.student.remove({name:&quot;joe&quot;},1)</code>，这条命令只会删除匹配的第1条数据;返回值为<code>WriteResult({&quot;nRemoved&quot;:12})</code>,上述语名表示删除了12条记录。</p>
+</li>
+<li><p>MMAPV1是默认的内存分配策略，如果一个更新操作超过了文档在磁盘上预分配的空间，MongoDB会重新在磁盘上为其分配一块更大的连续空间。在最新的MongoDB 3.0中，使用<code>2的n次方</code>来分配内存，如：32,64,128…2M,4M,8M。这种方式利于内存的重用，降低系统碎片数量；减少数据移动频次，提高系统数据写效率。</p>
+</li>
+<li><p><code>db.集合名.update(query,obj,upsert,multi)</code>,<code>query</code>查询条件，指明要更新的文档，相当于SQL中的where语句；<code>obj</code>更改的内容，相当于SQL中的set语句；<code>upsert</code>当查询条件query指明的文档不存在时，是否需要插入一条新文档<code>{upsert:true}</code>;<code>multi</code>当查询条件query返回多个文档时，要否需要一次更新所有满足条件的文档<code>{multi:true}</code>。它最终返回的是<code>WriteResult</code>对象，如<code>WriteResult({&quot;nMatched&quot;:1,&quot;nUpserted&quot;:0,&quot;nModified&quot;:1})</code>,第一个参数是匹配到的参数个数，第二个参数当使用{upsert:true}选项时，插入文档的个数，第三个是实际修改的文档个数。</p>
+</li>
+<li><p>更新操作符：</p>
+<ul>
+<li><code>$inc</code>:为文档中的某个字段增加或减少一定的值，只能应用于整数型、长整型、浮点数类型，如果字段不存在，则新增。一次可以更新多个字段。</li>
+<li><code>$mul</code>：为文档中的某个字段乘以一定的值，只能应用于整数型。</li>
+<li><code>$rename</code>：为文档中的字段重命名。</li>
+<li><code>$currentDate</code>：更新文档中的日期类型为当前时间，主要记录操作的时间，支持Date和timestamp两种类型，默认时间用Date类型来给示，也可以通过使用$type操作符来显示的指定日期格式。{$currentDate:{<field>:<typespecification1>}}，它一次可以更新文档的多个字段，如果字段不存在，则创建。下面是三个例子：<pre><code>隐式的：{<span class="variable">$currentDate</span>:{field:true}}//field字段的值会被更新为Date类型的时间
+显式的：{<span class="variable">$currentDate</span>:{<span class="variable">$type</span>:<span class="string">"date"</span>}}或者{<span class="variable">$currentDate</span>:{<span class="variable">$type</span>:<span class="string">"timestamp"</span>}}//field字段的值会被更新为Date类型的时间
+</code></pre></typespecification1></field></li>
+<li><code>$set</code>：修改文档中字段的值。一次可更新多个文档。如果字段不存在的话，则会创建一个。</li>
+<li><code>$unset</code>：删除文档中的字段。</li>
+<li><code>$min</code>：当前更新值小于文档中的值，就将其替换，只能用于整数、长整型、浮点数类型。字段不存在则创建。一次可以更新文档的多个字段。</li>
+<li><p><code>$max</code>：当前更新值大于文档中的值，就将其替换，只能用于整数、长整型、浮点数类型。</p>
+<pre><code> <span class="keyword">var</span> <span class="literal">result</span> = db.update_test.update({name:<span class="string">"xiaomi"</span>},//如果没有更新条件，则默认直接替换原来的文档
+ {$<span class="type">set</span>:{<span class="string">"name"</span>:<span class="string">"xiao_update"</span>,<span class="string">"age"</span>:<span class="number">28</span>});
+
+ printjson(<span class="literal">result</span>);
+ <span class="keyword">var</span> cursor = db.insert_test.find({})
+ printjson(cursor.toAyyay())
+
+ <span class="keyword">var</span> <span class="literal">result</span> = db.update_test.update({_id:<span class="number">1</span>},//如果没有更新条件，则默认直接替换原来的文档
+{ $inc:{<span class="string">"age"</span>:<span class="number">2</span>}});
+
+ printjson(<span class="literal">result</span>);
+ <span class="keyword">var</span> cursor = db.insert_test.find({})
+ printjson(cursor.toAyyay())
+
+<span class="keyword">var</span> <span class="literal">result</span> = db.update_test.update({_id:<span class="number">1</span>},//如果没有更新条件，则默认直接替换原来的文档
+{ $currentDate:{<span class="string">"optime_1"</span>:<span class="literal">true</span>,<span class="string">"optime_2"</span>:{$<span class="keyword">type</span>:<span class="string">"timestamp"</span>}}});
+
+ printjson(<span class="literal">result</span>);
+ <span class="keyword">var</span> cursor = db.insert_test.find({})
+ printjson(cursor.toAyyay())
+</code></pre></li>
+</ul>
+</li>
+<li><p>下面是一个更新子文档的例子</p>
+<pre><code> <span class="keyword">var</span> <span class="literal">result</span> = db.update_test.update({_id:<span class="number">1</span>},//如果没有更新条件，则默认直接替换原来的文档
+{ $<span class="type">set</span>:{<span class="string">"address"</span>:{province:<span class="string">"Beijing"</span>,city:<span class="string">"ChaoYang"</span>}}});
+
+ printjson(<span class="literal">result</span>);
+ <span class="keyword">var</span> cursor = db.insert_test.find({})
+ printjson(cursor.toAyyay())
+
+{ $<span class="type">set</span>:{<span class="string">"address.city"</span>:<span class="string">"jinan"</span>}});
+
+ printjson(<span class="literal">result</span>);
+ <span class="keyword">var</span> cursor = db.insert_test.find({})
+ printjson(cursor.toAyyay())
+</code></pre></li>
+<li><p>针对数组，MongoDB也提供了大量的特定操作符：</p>
+<ul>
+<li><code>$</code>:占位符，定位已经匹配的数组元素并进行更新，用于表示第一个满足query条件的数组元素在数组中的位置索引。</li>
+<li><code>$push</code>：用于向已有的数组末尾添加一个元素</li>
+<li><code>$pop</code>：从数组两端来删除元素，头部为（-1），尾部为(1)</li>
+<li><code>$pull</code>：用于删除指定值的元素(只能指定单个值)</li>
+<li><code>$addToSet</code>：数组中存在相同的元素，则不会插入</li>
+<li><code>$pullAll</code>:用于删除指定值的元素(指定多个值)<br>另外，MongoDB还为$push、$addToSet提供了一组修改器，通过这两者结合使用，可以实现更复杂的功能。</li>
+<li><code>$each</code>:可以一次插入多个数组元素。<code>{$each:[value1,value2,...]}</code></li>
+<li><code>$slice</code>:取数组元素的子集<code>{$each:[value1,value2,...],$slice:&lt;num&gt;}</code>，必须和each一起使用</li>
+<li><code>$sort</code>：对数组元素排序<code>{$each:[value1,value2,...],$sort:&lt;filedName}</code>，必须和each一起使用</li>
+<li><p><code>$position</code>:指定元素的插入位置<code>{$each:[value1,value2,...],$position:&lt;num&gt;}</code></p>
+<p>下面是一个例子：</p>
+<pre><code>dbService = connect(<span class="string">"localhost:27017"</span>);
+db = dbService.getSiblingDB(<span class="string">"okuc"</span>);//选择集合
+db.bulk_test.drop();//清空集合
+<span class="keyword">var</span> bulk = db.bulk_test.initializeUnorderedBulkOp();
+
+bulk.insert({name:<span class="string">"wangjun"</span>,scores:[<span class="number">60</span>,<span class="number">60</span>,<span class="number">61</span>,<span class="number">61</span>]});
+bulk.insert({name:<span class="string">"jack"</span>,scores:[]});
+
+//执行插入操作
+<span class="keyword">var</span> <span class="literal">result</span> = bulk.execute();
+printjson(<span class="literal">result</span>)//打印函数返回结果，可清晰的表明插入、更新、删除了多少条数据。
+<span class="keyword">var</span> cursor = db.bulk_test.find({})
+printjson(cursor.toAyyay())
+
+<span class="keyword">var</span> <span class="literal">result</span> = db.bulk_test.update({name:<span class="string">"wangjun"</span>,scores:<span class="number">60</span>},{$<span class="type">set</span>:{<span class="string">"scores.$"</span>:<span class="number">90</span>}});//把第一个满足要求数组元素分数更新为<span class="number">90</span>
+printjson(<span class="literal">result</span>)
+<span class="keyword">var</span> cursor = db.bulk_test.find({})
+printjson(cursor.toAyyay())
+
+<span class="keyword">var</span> <span class="literal">result</span> = db.bulk_test.update({name:<span class="string">"wangjun"</span>},{$pop:{<span class="string">"scores"</span>:<span class="number">1</span>}});//从符合条件的数组尾部删除一条记录
+printjson(<span class="literal">result</span>)
+<span class="keyword">var</span> cursor = db.bulk_test.find({name:<span class="string">"wangjun"</span>})
+printjson(cursor.toAyyay())
+
+<span class="keyword">var</span> <span class="literal">result</span> = db.bulk_test.update({name:<span class="string">"wangjun"</span>},{$pull:{<span class="string">"scores"</span>:{$get:<span class="number">61</span>}}});//删除数组中大于等于<span class="number">61</span>的元素
+printjson(<span class="literal">result</span>)
+<span class="keyword">var</span> cursor = db.bulk_test.find({name:<span class="string">"wangjun"</span>})
+printjson(cursor.toAyyay())
+
+<span class="keyword">var</span> <span class="literal">result</span> = db.bulk_test.update({name:<span class="string">"wangjun"</span>},{$pullAll:{<span class="string">"scores"</span>:[<span class="number">60</span>,<span class="number">61</span>]}});//删除数组中等于<span class="number">60</span>,<span class="number">61</span>的元素
+printjson(<span class="literal">result</span>)
+<span class="keyword">var</span> cursor = db.insert_test.find({name:<span class="string">"wangjun"</span>})
+printjson(cursor.toAyyay())
+
+<span class="keyword">var</span> <span class="literal">result</span> = db.bulk_test.update({name:<span class="string">"jack"</span>},{$push:{<span class="string">"scores"</span>:[<span class="number">80</span>]}});//字段不存在，则会添加一个同名的数组，存在则放到数组中，如果存在但不是数组类型，则抛出异常。
+printjson(<span class="literal">result</span>)
+<span class="keyword">var</span> cursor = db.bulk_test.find({name:<span class="string">"jack"</span>})
+printjson(cursor.toAyyay())
+
+<span class="keyword">var</span> <span class="literal">result</span> = db.bulk_test.update({name:<span class="string">"jack"</span>},{$push:{<span class="string">"scores"</span>:{$each:[<span class="number">80</span>,<span class="number">90</span>,<span class="number">34</span>],$slice:-<span class="number">4</span>}}});//批量添加三个元素，同时，只保留该数组的后四个元素。如果加上$position:<span class="number">1</span>,则可以指定元素的插入位置
+printjson(<span class="literal">result</span>)
+<span class="keyword">var</span> cursor = db.bulk_test.find({name:<span class="string">"jack"</span>})
+printjson(cursor.toAyyay())
+
+<span class="keyword">var</span> <span class="literal">result</span> = db.bulk_test.update({name:<span class="string">"jack"</span>},{$push:{<span class="string">"scores"</span>:{$each:[{<span class="string">"科目"</span>:<span class="string">"语文"</span>,<span class="string">"成绩"</span>:<span class="number">80</span>},{<span class="string">"科目"</span>:<span class="string">"数学"</span>,<span class="string">"成绩"</span>:<span class="number">90</span>},{<span class="string">"科目"</span>:<span class="string">"外语"</span>,<span class="string">"成绩"</span>:<span class="number">70</span>},{<span class="string">"科目"</span>:<span class="string">"政汉"</span>,<span class="string">"成绩"</span>:<span class="number">60</span>},{<span class="string">"科目"</span>:<span class="string">"计算机"</span>,<span class="string">"成绩"</span>:<span class="number">85</span>}],$sort:{<span class="string">"成绩"</span>:-<span class="number">1</span>},$slice:<span class="number">3</span>}}});//批量添加五个元素，并按成绩进行降序排列，同时，只保留该数组的前三个元素。
+printjson(<span class="literal">result</span>)
+<span class="keyword">var</span> cursor = db.bulk_test.find({name:<span class="string">"jack"</span>})
+printjson(cursor.toAyyay())
+</code></pre></li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/mongodb/">mongodb</a>, <a href="/tags/数据库/">数据库</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/12/15/新手学习mongodb之四：使用find轻松查询数据/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/12/14/新手学习mongodb之三：数据更新操作/" data-title="新手学习mongodb之三：数据更新操作" data-url="http://www.52brt.com/2015/12/14/新手学习mongodb之三：数据更新操作/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>3</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

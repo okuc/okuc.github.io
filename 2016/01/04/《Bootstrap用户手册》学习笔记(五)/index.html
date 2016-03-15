@@ -1,0 +1,505 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>《Bootstrap用户手册》学习笔记(五) | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="《Bootstrap用户手册》学习笔记(五)"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-01-04T14:06:32.000Z"><a href="/2016/01/04/《Bootstrap用户手册》学习笔记(五)/">2016-01-04</a></time>
+      
+      
+  
+    <h1 class="title">《Bootstrap用户手册》学习笔记(五)</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第_4_章Bootstrap支持的JavaScript插件(2)">第 4 章Bootstrap支持的JavaScript插件(2)</h2><ol>
+<li><p><strong>提示条</strong>可以用来给出链接说明或（与标签连用）给出缩写词的的全称。这个插件最初的原型是<code>Jason Frame</code>的<code>jQuery.tipsy</code>插件。但<br>目前这个提示条利用<code>Bootstrap JavaScript API</code>可以不使用图片，而且有<code>CSS</code>动画。</p>
+<p><strong>用法</strong>给<code>&lt;a&gt;</code>元素添加<code>rel=&quot;tooltip&quot;</code>就可以添加提示条，<code>&lt;a&gt;</code>元素的<code>title</code>属性值就是提示条的内容。下面两个例子分别使用<code>Bootstrap Data API</code>和<code>JavaScript</code>来创建提示条：</p>
+<pre><code>&lt;<span class="tag">a</span> href=<span class="string">"#"</span> rel=<span class="string">"tooltip"</span> title=<span class="string">"This is the tooltip"</span>&gt;Tooltip Example&lt;/a&gt;
+$(<span class="string">'#example'</span>).<span class="function"><span class="title">tooltip</span><span class="params">(options)</span></span>
+</code></pre><p><strong>选项</strong>与其他插件一样，提示条也可以通过<code>Data API</code>或 <code>JavaScript</code>来设置。只不过在使用数据属性时，选项名称前面要加上<code>data-</code>，比如<code>title</code>就要变成<code>data-title</code>。</p>
+<a id="more"></a>
+<pre><code>|<span class="string"> 名称 </span>|<span class="string"> 类型 </span>|<span class="string"> 默认值 </span>|<span class="string"> 说明 </span>|
+|<span class="string"> animation </span>|<span class="string"> Boolean </span>|<span class="string"> true </span>|<span class="string"> 为提示条应用`CSS`的淡入淡出过渡 </span>|
+|<span class="string"> html </span>|<span class="string"> Boolean </span>|<span class="string"> false </span>|<span class="string"> 提示条支持插入 HTML 。如果值为false，则会使用 jQuery 的text方法。如果担心 XSS 攻击，那就使用文本吧 </span>|
+|<span class="string"> placement </span>|<span class="string"> String </span>|<span class="string"> Function </span>|<span class="string"> ‘top’ </span>|<span class="string"> 设置提示条的位置： top </span>|<span class="string"> bottom </span>|<span class="string"> left </span>|<span class="string"> right </span>|
+|<span class="string"> selector </span>|<span class="string"> String </span>|<span class="string"> false </span>|<span class="string"> 如果提供了选择符，则将提示条委托给指定的目标 </span>|
+|<span class="string"> title </span>|<span class="string"> String </span>|<span class="string"> Function </span>|<span class="string"> ‘’ </span>|<span class="string"> 如果title属性不存在，则使用这个默认值 </span>|
+|<span class="string"> trigger </span>|<span class="string"> String </span>|<span class="string"> ‘hover focus’ </span>|<span class="string"> 设置如何触发提示条：click </span>|<span class="string"> hover </span>|<span class="string"> focus </span>|<span class="string"> manual。可以传入多个触发方式，以空格分隔即可 </span>|
+|<span class="string"> delay </span>|<span class="string"> Number </span>|<span class="string"> Object </span>|<span class="string"> 0 </span>|<span class="string"> 延迟显示和隐藏提示条的时间（毫秒） —— 手动触发提示条时无效如果只指定一个数值，则隐藏和显示都使用该数值 对象的结构为 delay: { show: 500, hide: 100 } </span>|
+|<span class="string"> container </span>|<span class="string"> String </span>|<span class="string"> false </span>|<span class="string">    将提示条附加到特定元素，如container: ‘body’ </span>|
+</code></pre><p><strong>方法</strong></p>
+<ul>
+<li>给一组元素添加提示条<code>$().tooltip(options)</code></li>
+<li>显示元素的提示条：<code>$(&#39;#element&#39;).tooltip(&#39;show&#39;)</code></li>
+<li>隐藏元素的提示条：<code>$(&#39;#element&#39;).tooltip(&#39;hide&#39;)</code></li>
+<li>开关元素的提示条：<code>$(&#39;#element&#39;).tooltip(&#39;toggle&#39;)</code></li>
+<li>隐藏并销毁元素的提示条：<code>$(&#39;#element&#39;).tooltip(&#39;destroy&#39;)</code></li>
+</ul>
+</li>
+<li><p><strong>弹出层</strong>与提示条非常相似，不仅能显示内容，还可以显示标题。把光标悬停到元素上，就可以激活弹出层。弹出层的内容可以使用<code>Bootstrap Data API</code>来填充，而且要求元素本身包含提示条。弹出层的位置通过<code>data-placement</code>属性来指定，包括<code>top</code>、<code>right</code>、<code>bottom</code>和<code>left</code>。</p>
+<pre><code>&lt;a href=<span class="string">"#"</span> <span class="keyword">class</span>=<span class="string">"btn"</span> rel=<span class="string">"popover"</span> title=<span class="string">"Using Popover"</span>
+<span class="typedef"><span class="keyword">data</span>-content="<span class="type">Just</span> add content to the <span class="keyword">data</span>-content attribute."&gt;<span class="type">Click</span> <span class="type">Me</span>!&lt;/a&gt;</span>
+</code></pre><p><strong>用法</strong>要通过<code>JavaScript</code>打开弹出层，使用<code>.popover()</code>函数，传入需要的选项：</p>
+<pre><code>$(<span class="string">'#example'</span>).<span class="function"><span class="title">popover</span><span class="params">(options)</span></span>
+</code></pre><p><strong>选项</strong>所有选项都可以通过<code>Bootstrap Data API</code>设置，当然也可以通过<code>JavaScript</code>设置。</p>
+<p>|名称 | 类型 | 默认值 | 说明 |<br>| animation | Boolean | true | 为弹出层应用 CSS 的淡入淡出过渡 |<br>| html | Boolean | false | 弹出层支持插入 HTML 。如果值为false，则会使用 jQuery 的text方法。如果担心 XSS 攻击，那就使用文本吧 |<br>| placement | String | Function | ‘top’ | 设置弹出层的位置： top | bottom | left | right/td&gt; |<br>| selector | String | false | 如果提供了选择符，则将弹出层委托给指定的目标 |<br>| trigger | String | ‘hover focus’ | 设置如何触发弹出层：click | hover | focus | manual。可以传入多个触发方式，以空格分隔即可 |<br>| title | String | Function | ‘’ | 如果title属性不存在，则使用这个默认值 |<br>| content | String | Functio | ‘’ | 如果data-content属性不存在，则使用这个默认值 |<br>| delay | Number | Object | 0 | 延迟显示和隐藏弹出层的时间（毫秒） —— 手动触发弹出层时无效<br> 如果只指定一个数值，则隐藏和显示都使用该数值 对象的结构为 delay: { show: 500, hide: 100 } |<br>| container | String | false | 将弹出层附加到特定元素，如container: ‘body’ |</p>
+<p><strong>方法</strong></p>
+<ul>
+<li>给一组元素添加弹出层：<code>$().popover(options)</code></li>
+<li>显示元素的弹出层：<code>$(&#39;#element&#39;).popover(&#39;show&#39;)</code></li>
+<li>隐藏元素的弹出层：<code>$(&#39;#element&#39;).popover(&#39;hide&#39;)</code></li>
+<li>开关元素的弹出层：<code>$(&#39;#element&#39;).popover(&#39;toggle&#39;)</code></li>
+<li>隐藏并销毁元素的弹出层：<code>$(&#39;#element&#39;).popover(&#39;destroy&#39;)</code></li>
+</ul>
+</li>
+<li><p><strong>警示框</strong></p>
+<p><strong>用法</strong>使用<code>JavaScript</code>调用<code>.alert()</code>方法，或者通过在链接或按钮中添加数据属性都可以让警示框具有关闭功能。</p>
+<p>在<code>JavaScript</code>中要这样做：</p>
+<pre><code>$(<span class="string">".alert"</span>).<span class="function"><span class="title">alert</span><span class="params">()</span></span>
+</code></pre><p>通过<code>Data API</code>要这样做：</p>
+<pre><code>&lt;a <span class="type">class</span>=<span class="string">"close"</span> data-dismiss=<span class="string">"alert"</span> href=<span class="string">"#"</span>&gt;&amp;<span class="keyword">times</span>;&lt;/a&gt;
+</code></pre><p><strong>关闭方法</strong>要让所有警示框都具有关闭功能，传入如下选项。要让警示框以动画方式关闭，则要给它们应用<code>.fade</code>和<code>.in</code>类。</p>
+<pre><code>$(<span class="string">".alert"</span>).<span class="function"><span class="title">alert</span><span class="params">(<span class="string">'close'</span>)</span></span>
+</code></pre><p><strong>事件</strong>警示框有两个事件。</p>
+<ul>
+<li><code>close</code> 这个事件在实例方法<code>close</code>被调用后立即触发</li>
+<li><p><code>closed</code> 这个事件在警示框被关闭（ <code>CSS</code> 过渡完成）后触发</p>
+<p>例如，要在警示框关闭后执行操作，可以这样写代码：</p>
+<pre><code>$(‘<span class="built_in">#</span>my-alert’).bind(‘closed’, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
+　<span class="comment">//执行某些操作……</span>
+
+})
+</code></pre></li>
+</ul>
+</li>
+<li><p><strong>按扭</strong>在<code>Bootstrap</code>中，可以让按钮像链接，或者像表单中的按钮。通过这个插件可以为按钮赋予交互功能，比如显示加载状态或组成工具条似的按钮组。</p>
+<p><strong>加载状态</strong>要让按钮显示加载状态,只要给按钮添加<code>data-loading-text=&quot;Loading...&quot;</code>属性即可：</p>
+<pre><code>&lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-primary"</span> data-loading-text=<span class="string">"Loading..."</span>&gt;
+<span class="type">Submit</span>!&lt;/button&gt;
+</code></pre><p>按钮被单击后，会被添加<code>.disabled</code>类，变灰，不再响应单击。</p>
+<p><strong>单选开关</strong>单击带有<code>data-toggle=&quot;button&quot;</code>属性的按钮，会给它添加<code>.active</code>类：</p>
+<pre><code>&lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-primary"</span> data-toggle=<span class="string">"button"</span>&gt;<span class="type">Toggle</span>
+&lt;/button&gt;
+</code></pre><p><strong>复选按扭</strong>按钮也可以像复选框一样，让用户从按钮组中选择多个按钮。要添加这个功能，给<code>.btn-group</code>添加<code>data-toggle=&quot;buttons-checkbox&quot;</code>属性：</p>
+<pre><code>&lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn-group"</span> data-toggle=<span class="string">"buttons-checkbox"</span>&gt;
+  &lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-primary"</span>&gt;<span class="type">Left</span>&lt;/button&gt;
+  &lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-primary"</span>&gt;<span class="type">Middle</span>&lt;/button&gt;
+  &lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-primary"</span>&gt;<span class="type">Right</span>&lt;/button&gt;
+&lt;/div&gt;
+</code></pre><p><strong>单选按钮</strong>与复选按钮的区别就是不允许选择多个，即每次只能选择按钮组中的一个。要在按钮组中添加单选按钮，需要给<code>.btn-group</code>添加<code>data-toggle=&quot;buttons-radio&quot;</code>属性：</p>
+<pre><code>&lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn-group"</span> data-toggle=<span class="string">"buttons-radio"</span>&gt;
+  &lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-primary"</span>&gt;<span class="type">Left</span>&lt;/button&gt;
+  &lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-primary"</span>&gt;<span class="type">Middle</span>&lt;/button&gt;
+  &lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-primary"</span>&gt;<span class="type">Right</span>&lt;/button&gt;
+&lt;/div&gt;
+</code></pre><p><strong>用途</strong>可以对任何类和<code>ID</code>调用<code>.button()</code>方法。比如，要通过<code>JavaScript</code>启用<code>.nav-tabs</code>中的按钮，可以运行以下代码：</p>
+<pre><code>$(<span class="string">'.nav-tabs'</span>).<span class="function"><span class="title">button</span><span class="params">()</span></span> 
+</code></pre><p><strong>方法</strong></p>
+<ul>
+<li>开关，切换状态，让人感觉按钮被按下了：<code>$().button(&#39;toggle&#39;)</code></li>
+<li>加载，加载过程中，按钮是禁用的，显示的文本会变成<code>data-loading-text</code>属性的值：<br><code>&lt;button type=&quot;button&quot; class=&quot;btn&quot; data-loading-text=&quot;loading stuff...&quot; &gt;... &lt;/button&gt;</code></li>
+<li>重置，重置按钮状态，显示原来的文本。适合让按钮显示最初状态的情况：<code>$().button(&#39;reset&#39;)</code></li>
+<li><p>字符串，传入这个参数可以让按钮显示字符串：<code>$().button(&#39;string&#39;)</code></p>
+<p>要重置按钮状态，显示新内容，可以这样：</p>
+<pre><code><span class="tag">&lt;<span class="title">button</span> <span class="attribute">type</span>=<span class="value">"button"</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">data-complete-text</span>=<span class="value">"finished!"</span> &gt;</span>...<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
+  $(<span class="string">'.btn'</span>).button(<span class="string">'complete'</span>)
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre></li>
+</ul>
+</li>
+<li><p><strong>折叠框</strong>，类似抽屉。</p>
+</li>
+</ol>
+<pre><code>    &lt;div class=<span class="string">"accordion"</span> id=<span class="string">"accordion2"</span>&gt;
+      &lt;div class=<span class="string">"accordion-group"</span>&gt;
+        &lt;div class=<span class="string">"accordion-heading"</span>&gt;
+          &lt;<span class="literal">a</span> class=<span class="string">"accordion-toggle"</span> data-toggle=<span class="string">"collapse"</span> data-parent=<span class="string">"#accordion2"</span>
+          href=<span class="string">"#collapseOne"</span>&gt;
+            Collapsible Group Item #<span class="number">1</span>
+          &lt;/<span class="literal">a</span>&gt;
+        &lt;/div&gt;
+        &lt;div id=<span class="string">"collapseOne"</span> class=<span class="string">"accordion-body collapse in"</span>&gt;
+          &lt;div class=<span class="string">"accordion-inner"</span>&gt;
+            Anim pariatur cliche...
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=<span class="string">"accordion-group"</span>&gt;
+        &lt;div class=<span class="string">"accordion-heading"</span>&gt;
+          &lt;<span class="literal">a</span> class=<span class="string">"accordion-toggle"</span> data-toggle=<span class="string">"collapse"</span> data-parent=<span class="string">"#accordion2"</span>
+          href=<span class="string">"#collapseTwo"</span>&gt;
+            Collapsible Group Item #<span class="number">2</span>
+          &lt;/<span class="literal">a</span>&gt;
+        &lt;/div&gt;
+        &lt;div id=<span class="string">"collapseTwo"</span> class=<span class="string">"accordion-body collapse"</span>&gt;
+          &lt;div class=<span class="string">"accordion-inner"</span>&gt;
+            Anim pariatur cliche...
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    ...
+
+可以使用数据属性让所有内容都可以折叠：
+
+    &lt;button type=<span class="string">"button"</span> class=<span class="string">"btn btn-danger"</span> data-toggle=<span class="string">"collapse"</span>
+    data-target=<span class="string">"#demo"</span>&gt;
+      simple collapsible
+    &lt;/button&gt;
+    &lt;div id=<span class="string">"demo"</span> class=<span class="string">"collapse in"</span>&gt; … &lt;/div&gt;
+
+**用法**
+
+**数据属性方式**与使用 Data API 的其他插件一样，一切都可以在标记中搞定。给一个元素添加<span class="escape">`d</span>ata-toggle=<span class="string">"collapse"</span><span class="escape">`和</span><span class="escape">`d</span>ata-target<span class="escape">`属</span>性，就能令其控制相应的可折叠元素。其中，<span class="escape">`d</span>ata-target<span class="escape">`属</span>性的值可以是表示可折叠元素的 CSS 选择符。另外，要给可折叠元素添加<span class="escape">`.</span>collapse<span class="escape">`类</span>。如果默认想打开哪个元素，就再给它添加一个<span class="escape">`.</span>in<span class="escape">`类</span>。要指定类似折叠组的元素，为每个可折叠元素添加<span class="escape">`d</span>ata-parent=<span class="string">"#selector"</span><span class="escape">`。</span>
+
+**JavaScript 方式**通过下面的<span class="escape">`J</span>avaScript<span class="escape">`方</span>法也可以激活可折叠插件：
+
+        $(<span class="string">".collapse"</span>).collapse() 
+
+**选项**
+
+-   <span class="escape">`p</span>arent<span class="escape">`：</span>选择符，默认是<span class="escape">`f</span>alse<span class="escape">`，</span>如果指定了选择符，则所有位于这个指定的父元素之下的可折叠元素都会在父元素可见时折叠起来（类似传统的折叠框）
+-   <span class="escape">`t</span>oggle<span class="escape">`：</span><span class="escape">`B</span>oolean<span class="escape">`，</span>默认是<span class="escape">`t</span>rue<span class="escape">`，</span>切换可折叠元素的状态
+
+    **方法**
+
+-   选项,把元素激活为可折叠元素，接受可选的选项对象： <span class="escape">`.</span>collapse(options)<span class="escape">`
+</span>
+-   开关,切换可折叠元素的状态：
+-   
+        $('#myCollapsible').collapse({
+<span class="label">          toggle:</span> <span class="literal">false</span>
+        })
+        .collapse('toggle')
+
+-   显示,显示可折叠元素：<span class="escape">`.</span>collapse('show')<span class="escape">`
+</span>
+-   隐藏,隐藏可折叠元素：<span class="escape">`.</span>collapse('hide')<span class="escape">`
+</span>
+    **事件**可折叠元素相关的事件有<span class="number">4</span>个。
+
+-   <span class="escape">`s</span>how<span class="escape">` </span>在实例方法<span class="escape">`s</span>how<span class="escape">`被</span>调用后触发
+
+-   <span class="escape">`s</span>hown<span class="escape">` </span>在可折叠元素对用户完全可见（ CSS 过渡完成）后触发
+-   <span class="escape">`h</span>ide<span class="escape">` </span>在实例方法<span class="escape">`h</span>ide<span class="escape">`被</span>调用后触发
+-   <span class="escape">`h</span>idden<span class="escape">` </span>在可折叠元素对用户完全不可见（ CSS 过渡完成）后触发
+
+    在<span class="escape">`&lt;</span>div&gt;<span class="escape">`折</span>叠之后，可以使用以下代码执行其他操作：
+
+        $(‘#myCollapsible’).on(‘hidden’, function () {
+
+        //执行其他操作……
+
+        })
+</code></pre><ol>
+<li><p><strong>传送带</strong><code>Bootstrap</code>的传送带是一个灵活的、响应式的幻灯片切换插件。除可以具有响应性，其内容也可以是图片、子框架、视频，或者其他任何内容。</p>
+<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"myCarousel"</span> <span class="attribute">class</span>=<span class="value">"carousel slide"</span>&gt;</span>
+  <span class="comment">&lt;!-- Carousel items --&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"carousel-inner"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"active item"</span>&gt;</span>…<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"item"</span>&gt;</span>…<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"item"</span>&gt;</span>…<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="comment">&lt;!-- Carousel nav --&gt;</span>
+  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"carousel-control left"</span> <span class="attribute">href</span>=<span class="value">"#myCarousel"</span> <span class="attribute">data-slide</span>=<span class="value">"prev"</span>&gt;</span>&amp;lsaquo;<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"carousel-control right"</span> <span class="attribute">href</span>=<span class="value">"#myCarousel"</span> <span class="attribute">data-slide</span>=<span class="value">"next"</span>&gt;</span>&amp;rsaquo;<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre><p><strong>用法</strong></p>
+<p>要实现传送带效果，需要添加上面所示的标记，不用数据属性，只要添加相应的类即可。在 <code>JavaScript</code>中，可以像下面这样手动调用传送带插件：</p>
+<pre><code>$(<span class="string">'.carousel'</span>).<span class="function"><span class="title">carousel</span><span class="params">()</span></span>
+</code></pre><p><strong>选项</strong>可以通过数据属性设置，也可以通过<code>JavaScript</code>传入。</p>
+<p>-<code>interval</code>,类型是<code>number</code>，默认值是<code>5000</code>。每次自动切换间隔的时间，如果未指定则使用默认时间</p>
+<ul>
+<li><p><code>pause</code>，类型是<code>string</code>，默认值是<code>&quot;hover&quot;</code>，在mouseenter时暂停轮播，在mouseleave时恢复</p>
+<p><strong>方法</strong></p>
+</li>
+<li><p>选项，以可选的选项对象初始化并启动传送带：</p>
+<pre><code><span class="variable">$(</span><span class="string">'.carousel'</span>).carousel({
+  <span class="symbol">interval:</span> <span class="number">2000</span>
+})
+</code></pre></li>
+<li><p>轮播，从左到右轮播传送带中的项：<code>.carousel(&#39;cycle&#39;)</code></p>
+</li>
+<li><p>暂停，传送带的轮播：<code>.carousel(&#39;pause&#39;)</code></p>
+</li>
+<li>数值,把传送带切换到特定的项（类似数组，基于 0 计数）：<code>.carousel(&#39;number&#39;)</code></li>
+<li>前一项,切换到前一项：<code>.carousel(&#39;prev&#39;)</code></li>
+<li><p>后一项,切换到后一项：<code>.carousel(&#39;next&#39;)</code></p>
+<p><strong>事件</strong></p>
+</li>
+<li><p><code>slide</code>在实例方法slide被调用后触发</p>
+</li>
+<li><p><code>slid</code>在传送带完成切换动画之后触发</p>
+</li>
+</ul>
+</li>
+<li><p><strong>预先输入</strong>用这个插件可以创建带预先输入的表单。举个例子，可以在 “ 州 ” 这个字段中预先加载所有州名，或者使用<code>JavaScript</code>通过<code>AJAX</code>调用来搜索结果。</p>
+<p><strong>用法</strong></p>
+<p>使用<code>Data API</code>，可以通过<code>data-source</code>属性添加预先输入的内容。内容的格式可以是 <code>JSON</code>数组，也可以来自函数：</p>
+<pre><code>&lt;<span class="built_in">input</span>
+ <span class="built_in">type</span>=<span class="string">"text"</span>
+ class=<span class="string">"span3"</span>
+ data-provide=<span class="string">"typeahead"</span>
+ data-<span class="built_in">items</span>=<span class="string">"4"</span>
+ data-<span class="keyword">source</span>=<span class="string">"[
+</span>         <span class="string">'Alabama'</span>,
+         <span class="string">'Alaska'</span>,
+         <span class="string">'Arizona'</span>,
+         <span class="string">'Arkansas'</span>,
+         <span class="string">'California'</span>,
+         ...
+         ]"
+</code></pre><p>要通过<code>JavaScript</code>直接调用，使用如下代码：<code>$(&#39;.typeahead&#39;).typeahead()</code></p>
+<p><strong>选项</strong></p>
+<p>|名称 | 类型 | 默认值 | 说明 |<br>| source |  Array,Function | [ ] | 要查询的数据源。可以是字符串数组，也可以是一个函数。如果是函数，则接受两个参数，一个是输入字段中要查询的值query，另一个是回调函     数process。函数可以直接返回数据源，实现同步查询，也可以通过process回调函数进行异步查询 |<br>| items | Number | 8 | 下拉选项列表中最多显示几项 |<br>| minLength | Number | 1 | 触发自动完成建议最少需要几个字符 |<br>| matcher | Function | 不区分大小写 | 用于检测查询是否找到了匹配项，接受一个参数item，用于对比查询。要访问当前查询，使用this.query。如果找到匹配项，返回true |<br>| sorter | Function | 完全匹配 区分大小写 不区分大小写 |    用于排序自动完成建议的方法，接受一个参数items，作用域为当前的预先输入元素。要访问当前查询，使用this.query |<br>| updater | Function | 返回选中项 | 用于返回选中项的方法，接受一个参数item，作用域为当前的预先输入元素 |<br>| highlighter | Function | 突出显示所有  默认匹配项 | 用于突出显示自动完成结果的方法，接受一个参数item，作用域为当前的预先输入元素。应该返回 HTML |</p>
+</li>
+<li><p><strong>粘条</strong><code>affix</code>插件会让一个<code>&lt;div&gt;</code>粘附在页面上某个位置。开始时，粘条出现在页面的某个位置，但当页面滚动一定距离时，它就固定不动了，无论页面如何滚动它都是静止的。</p>
+<p><strong>用法</strong>要实现粘条插件，可以使用数据属性，也可以使用 <code>JavaScript</code>。记住，必须定位相应的元素，以便它能粘附在页面上。定位是通过<code>data-spy</code>属性控制的，这个属性的值可以是：<code>affix</code>、<code>affix-top</code>或<code>affix-bottom</code>。然后，再通过<code>data-offset</code>来设置滚动距离。</p>
+<div data-spy="affix" data-offset-top="200"><br>        …<br></div> 
+
+<p><strong>选项</strong></p>
+<ul>
+<li><code>offset</code>,<code>Number |Function | Object</code>,默认值是<code>10</code>,计算滚动距离时偏移屏幕的像素数。如果只提供了一个数值，则将该数值同时应用给上方和左侧。要检测某一个方向，需要提供一个对象，如：<code>offset: { x: 10 }</code>。在需要动态设置偏移量时，可以提供一个函数（适合响应式设计）</li>
+</ul>
+</li>
+</ol>
+<h2 id="第_5_章_实际使用Bootstrap">第 5 章 实际使用Bootstrap</h2><ol>
+<li>Bootstrap官网：<a href="">https://github.com/twitter/bootstrap.git</a></li>
+<li>在官网可以定制一些组件的样式：<a href="">http://getbootstrap.com/customize/</a></li>
+<li><p>在<code>Bootstrap</code>中使用<code>LESS</code>有几种不同的方式。第一种最简单，就是使用 <code>CodeKit</code>或<code>SimpLESS</code>之类的预处理器。利用这些工具可以查看特定的文件和文件夹。在保存某些文件时，它们会帮你构建主<code>CSS</code>文件。除了使用传统的 <code>CSS</code>技术，还可以使用混入、函数等高级功能，以及通过修改某些变量达到改变站点外观的目的。</p>
+<p><code>LESS</code>是用于编写<code>CSS</code>的一种动态样式表语言，它支持变量、函数和混入功能。<code>Bootstrap</code>的<code>/less/</code>文件夹里包含一些<code>LESS</code>文件。如果想设置全<br> 局变量，需要关注<code>variables.less</code>和<code>mixins.less</code>。在<code>variables.less</code>中，可以找到<code>Bootstrap</code>的所有全局变量。以修改所有链接颜色为例，只要修改<code>LESS</code>变量，重新编译，就可以了。</p>
+<pre><code><span class="comment">/* 修改前 */</span>
+<span class="variable">@linkColor:</span>                     <span class="hexcolor">#08c</span>;
+<span class="variable">@linkColorHover:</span>        <span class="function">darken</span>(<span class="variable">@linkColor</span>, <span class="number">15%</span>);
+<span class="comment">/* 修改后 */</span>
+<span class="variable">@linkColor:</span>                     <span class="hexcolor">#7d00cc</span>;
+<span class="variable">@linkColorHover:</span>        <span class="function">darken</span>(<span class="variable">@linkColor</span>, <span class="number">15%</span>);
+</code></pre><p>这样，所有链接就会变成紫色，网站中所有按钮及其他引用<code>@linkColor</code>的界面元素都会得到更新。</p>
+</li>
+<li><p>要想快速地基于<code>Bootstrap</code>写个网站，建议使用<code>Sublime Text 2</code>和 <code>Bootstrap Snippets</code>插件，后者下载地址为： <a href="">https://github.com/devtellect/sublime-twitter-bootstrap-snippets/</a> ，来自 <code>DEVtellect</code>。这个插件可以让你使用快捷方式添加任意组件。</p>
+</li>
+<li><p><strong>photoshop模板</strong>除了文本片段，还有一些针对<code>Bootstrap</code>元素设计的<code>Photoshop</code>文件。如<a href="">http://gui.repixdesign.com/#bootstrap</a>，</p>
+<p>这个网站中的 Photoshop 模板具有如下特点：</p>
+<ul>
+<li>可调整的颜色</li>
+<li>独立的图层</li>
+<li>基于矢量</li>
+</ul>
+</li>
+</ol>
+<pre><code>模板<span class="escape">`P</span>SD<span class="escape">`文</span>件是免费的，但要求使用者在<span class="escape">`T</span>witter<span class="escape">`上</span>转发。这种免费转发的模式在开源编程领域渐成气候。
+</code></pre><ol>
+<li><p><strong>主题</strong>如果你安装了简单的 Bootstrap ，但后来想添加一些装饰，我向你推荐两个<code>Bootstrap</code>主题网站，其中的主题有的免费，有的收费：一个是<code>{Wrap}Bootstrap</code> <a href="">https://wrapbootstrap.com/</a> ，另一个是 <code>Bootswatch</code><a href="http://bootswatch.com/]。这些主题都有很多选项，通过它们一定能把你的网站设计得新颖别致。" target="_blank" rel="external">[http://bootswatch.com/]。这些主题都有很多选项，通过它们一定能把你的网站设计得新颖别致。</a></p>
+</li>
+<li><p><strong>获得灵感</strong>如果你想得到更多灵感，可以看一看<code>Built With Bootstrap</code><a href="">http://builtwithbootstrap.com/</a>一个由用户提交 <code>Bootstrap</code> 站点截图的轻博客。浏览一下那些使用 Bootstrap 的网站是很有意思的。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/前端/">前端</a>, <a href="/tags/Bootstrap/">Bootstrap</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2016/01/05/TinkerPop3 API 简明笔记（一）/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2016/01/03/《Bootstrap用户手册》学习笔记(四)/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/01/04/《Bootstrap用户手册》学习笔记(五)/" data-title="《Bootstrap用户手册》学习笔记(五)" data-url="http://www.52brt.com/2016/01/04/《Bootstrap用户手册》学习笔记(五)/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>3</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

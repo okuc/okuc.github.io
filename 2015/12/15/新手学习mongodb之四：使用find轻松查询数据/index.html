@@ -1,0 +1,591 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>新手学习mongodb之四：使用find轻松查询数据 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="新手学习mongodb之四：使用find轻松查询数据"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-15T14:06:32.000Z"><a href="/2015/12/15/新手学习mongodb之四：使用find轻松查询数据/">2015-12-15</a></time>
+      
+      
+  
+    <h1 class="title">新手学习mongodb之四：使用find轻松查询数据</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li><p>find参数的原型如下：<code>db.集合名.find(query,fields,limit,skip)</code>,这四个参数的意思如下：</p>
+<ul>
+<li><code>query</code>：指明查询条件，相当于SQL中的where语句，例如：<code>db.std.find({name:&quot;henry&quot;,&quot;ang&quot;:{$lt:22}})</code></li>
+<li><code>fields</code>:用于字段映射，语法格式:<code>{field:0}</code>或<code>{filed:1}</code>用来表示该字段在结果中是否显示。<code>1</code>为显示。如：<code>db.std.find({&quot;age&quot;:{$lt:22}},{&quot;_id&quot;:0,&quot;name&quot;:1})</code>,除<code>_id</code>字段，其它字段必须设置同样的值，要么为<code>0</code>，要么为<code>1</code>。如果<code>_id</code>为<code>1</code>，那么其他字段必须为<code>1</code>；如果<code>_id</code>字段为<code>0</code>，其他字段可同时为<code>0或1</code>。</li>
+<li>limit:限制查询结果集的文档数量，指定查询返回结果数量的上限，例如：<code>db.std.find({name:&quot;henry&quot;},{&quot;name&quot;:1,&quot;age&quot;:1},5)</code></li>
+<li>skip：跳过一定数据量的结果，设置第一条返回文档的偏移量。如<code>db.std.find({name:&quot;henry&quot;},{&quot;name&quot;:1,&quot;age&quot;:1},5,20)</code></li>
+<li><p>返回对象为cursor对象<code>var cursor = db.std.find({name:&quot;joe&quot;})</code></p>
+<p><a id="more"></a></p>
+<p>使用find函数时需要注意以下问题：</p>
+</li>
+<li><p>一次只能查询一个集合，不能针对多个集合</p>
+</li>
+<li><p><code>find</code>参数为空或者查询条件为空查询时，会返回集合中的所有文档。<code>db.std.find()</code>或<code>db.std.find()</code></p>
+</li>
+<li>除了将<code>limit</code>和<code>skip</code>作为<code>find</code>函数的参数外，还可以单独使用<code>limit</code>和<code>skip</code>函数来修饰查询结果。<code>db.std.find({age:{$lt:22}}).limit(5).skip(10)</code></li>
+<li>返回的查询结果默认情况下是无序的，如果需要对结果进行排序，可以使用sort函数。例如：db.std.find().sort({name:1,age:-1})</li>
+<li>db.collection.findOne()只会返回第一条数据</li>
+<li>当查询的集合文档数量很大时，为了加快数据的查询速度可以创建索引</li>
+<li><p>除了使用find函数实现基本查询外，还可以使用聚合框架，用于复杂查询。</p>
+<pre><code>dbService = connect(<span class="string">"localhost:27017"</span>);
+db = dbService.getSiblingDB(<span class="string">"okuc"</span>);
+db.query_test.drop();
+<span class="variable"><span class="keyword">var</span> bulk</span> = db.query_test.initializeUnorderedBulkOp();
+<span class="variable"><span class="keyword">var</span> doc1</span> = {
+            name:<span class="string">"joe"</span>,
+            age:<span class="number">20</span>
+}
+bulk.insert(doc1);
+<span class="variable"><span class="keyword">var</span> doc2</span> = {
+            name:<span class="string">"joe"</span>,
+            age:<span class="number">31</span>
+}
+bulk.insert(doc2);
+<span class="variable"><span class="keyword">var</span> doc3</span> = {
+            name:<span class="string">"henry"</span>,
+            age:<span class="number">21</span>
+}
+bulk.insert(doc3);
+<span class="variable"><span class="keyword">var</span> doc4</span> = {
+            name:<span class="string">"john"</span>,
+            age:<span class="literal">null</span>
+}
+bulk.insert(doc4);
+
+bulk.execute()
+
+<span class="variable"><span class="keyword">var</span> cursor</span> = db.query_test.find(
+        {},<span class="comment">//查询条件</span>
+        {_id:<span class="number">0</span>,age:<span class="number">1</span>},<span class="comment">//字段映射</span>
+        <span class="number">2</span>,<span class="comment">//返回结果条数</span>
+        <span class="number">1</span>).sort({age:<span class="number">1</span>});<span class="comment">//跳过文档条件 结果按照年龄升序排列</span>
+);
+printjson(cursor.toArray())
+
+<span class="variable"><span class="keyword">var</span> cursor</span> = db.query_test.find(
+        {},<span class="comment">//查询条件</span>
+        {_id:<span class="number">0</span>,age:<span class="number">1</span>}).limit(<span class="number">2</span>).skip(<span class="number">1</span>).sort({age:<span class="number">1</span>});
+);
+printjson(cursor.toArray())
+</code></pre></li>
+</ul>
+</li>
+<li><p>比较查询操作符共有以下几种：</p>
+<ul>
+<li><code>$wq / $ne</code>:等于/不等于<code>{&lt;field&gt;:{$eq:&lt;value&gt;}}</code></li>
+<li><code>$gt / $gte</code>:大于/大于等于<code>{&lt;field&gt;:{$gt:&lt;value&gt;}}</code></li>
+<li><code>$lt / $lte</code>:小于/小于等于<code>{&lt;field&gt;:{$lt:&lt;value&gt;}}</code></li>
+<li><code>$in / $nin</code>：包含/不包含<code>{&lt;field&gt;:{$in:[&lt;value1&gt;,&lt;value2&gt;...&lt;valueN&gt;]}}</code></li>
+</ul>
+</li>
+<li><p>利用逻辑查询操作符还可以连接多个查询条件</p>
+<ul>
+<li><code>$and</code>:与<code>{$and:[{&lt;expression1&gt;},&lt;expression2&gt;},...,&lt;expressionN&gt;}]}</code></li>
+<li><code>$or</code>：或<code>{$or:[{&lt;expression1&gt;},&lt;expression2&gt;},...,&lt;expressionN&gt;}]}</code></li>
+<li><code>$nor</code>:非<code>{$nor:[{&lt;expression1&gt;},&lt;expression2&gt;},...,&lt;expressionN&gt;}]}</code></li>
+<li><code>$not</code>：取反<code>{$not:[{&lt;expression1&gt;},&lt;expression2&gt;},...,&lt;expressionN&gt;}]}</code></li>
+</ul>
+</li>
+<li><p>元素查询操作符</p>
+<ul>
+<li><code>$exists</code>:按照字段是否存在来查询文档<code>{field:{$exists:&lt;boolean&gt;}}</code></li>
+<li><p><code>$type</code>:选择字段值为指定BSON数据类型编号的文档<code>{field:{$type:&lt;BSON type&gt;}}</code></p>
+<pre><code>dbService = connect(<span class="string">"localhost:27017"</span>);
+db = dbService.getSiblingDB(<span class="string">"okuc"</span>);
+db.query_test.drop();
+var bulk = db.query_test.initializeUnorderedBulkOp();
+var doc1 = {
+            name:<span class="string">"joe"</span>,
+            age:<span class="number">20</span>
+}
+bulk.<span class="keyword">insert</span>(doc1);
+var doc2 = {
+            name:<span class="string">"joe"</span>,
+            age:<span class="number">31</span>
+}
+bulk.<span class="keyword">insert</span>(doc2);
+var doc3 = {
+            name:<span class="string">"henry"</span>,
+            age:<span class="number">21</span>
+}
+bulk.<span class="keyword">insert</span>(doc3);
+var doc4 = {
+            name:<span class="string">"john"</span>,
+            age:null
+}
+bulk.<span class="keyword">insert</span>(doc4);
+
+bulk.execute()
+
+var cursor = db.query_test.find(
+        {
+    age:{<span class="variable">$eq</span>:<span class="number">20</span>}//也可以写成 age:<span class="number">20</span>
+    //age:<span class="number">20</span>
+    }
+});
+printjson(cursor.toArray())
+
+var cursor = db.query_test.find(
+        {
+        {
+    age:{<span class="variable">$nin</span>:[<span class="number">20</span>,<span class="number">21</span>]}//键值等于<span class="number">20</span>,<span class="number">21</span>的文档
+    //age:<span class="number">20</span>
+    }
+});
+printjson(cursor.toArray())
+
+var cursor = db.query_test.find(
+        {//查询年龄等于<span class="number">19</span>或<span class="number">21</span>且名字等于joe或jack的数据
+    <span class="variable">$and</span>:[{ <span class="variable">$or</span>:[{age:<span class="number">19</span>},age:<span class="number">21</span>]},
+          { <span class="variable">$or</span>:[{name:<span class="string">"joe"</span>},{name:<span class="string">"jack"</span>}]}
+    ]
+    //age:<span class="number">20</span>
+});
+printjson(cursor.toArray())
+
+var cursor = db.query_test.find(
+        {
+    <span class="variable">$nor</span>:[{name:<span class="string">"joe"</span>},{name:<span class="string">"jack"</span>}]//查出姓名不等于joe或jack的人
+});
+printjson(cursor.toArray())
+
+var cursor = db.query_test.find(
+        {
+    age:{<span class="variable">$not</span>:{<span class="variable">$gt</span>:<span class="number">22</span>,<span class="variable">$lte30</span>}}年龄小于等于<span class="number">22</span>，且大于<span class="number">30</span>
+});
+printjson(cursor.toArray())
+
+var cursor = db.query_test.find(
+        {
+    age:{<span class="variable">$exists</span>:true}//存在年龄的人
+});
+printjson(cursor.toArray())
+</code></pre></li>
+</ul>
+</li>
+<li><p>查询操作符介绍及使用–<code>$where</code>查询</p>
+<p><code>$where</code>可以将JavaScript表达式的字符串或JavaScript函数作为查询语句的一部分，在JavaScript表达式和函数中，可以使用this或obj来引用当前操作的文档。<code>db.collection.find({$where:&quot;this.credits == this.debits&quot;})</code>,只有js或函数返回值为true时，才会返回当前文档。</p>
+<p>查询时，<code>$where</code>操作符不能使用索引，每个文档需要从BSON对象转换成JS对象后，才可以通过<code>$where</code>表达式来运行。所以，比一般查询要慢，因此要避免使用。</p>
+<pre><code>dbService = connect(<span class="string">"localhost:27017"</span>);
+db = dbService.getSiblingDB(<span class="string">"okuc"</span>);
+db.query_test.drop();
+<span class="keyword">var</span> bulk = db.query_test.initializeUnorderedBulkOp();
+<span class="keyword">var</span> doc1 = {
+            <span class="string">"apple"</span>:<span class="number">1</span>,<span class="string">"banana"</span>:<span class="number">6</span>,<span class="string">"peach"</span>:<span class="number">4</span>
+}
+bulk.insert(doc1);
+<span class="keyword">var</span> doc2 = {
+            <span class="string">"apple"</span>:<span class="number">3</span>,<span class="string">"banana"</span>:<span class="number">3</span>,<span class="string">"peach"</span>:<span class="number">4</span>
+}
+bulk.insert(doc2);
+
+bulk.execute()
+
+<span class="keyword">var</span> cursor = db.query_test.find(
+        {
+     $where:<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{
+        <span class="keyword">for</span>(<span class="keyword">var</span> current <span class="keyword">in</span> <span class="keyword">this</span>){
+            <span class="keyword">for</span>(<span class="keyword">var</span> other <span class="keyword">in</span> <span class="keyword">this</span>){
+                <span class="keyword">if</span>(current !=other &amp;&amp; <span class="keyword">this</span>[current]==<span class="keyword">this</span>[other]) <span class="keyword">return</span> <span class="literal">true</span>;
+            }
+        }
+    }
+    }
+});
+printjson(cursor.toArray());
+        <span class="keyword">var</span> cursor = db.query_test.find(
+        {
+     $where:<span class="string">"this.apple==1 &amp;&amp; this.banana==6"</span>
+});
+printjson(cursor.toArray());
+</code></pre></li>
+<li><p>内嵌文档查询包括两种情况</p>
+<p>如果是查询整个文档，当内嵌文档键值对的数量以及键值对的顺序都相同时，才会匹配；如果是查询某个字段，需要使用点操作符。</p>
+<pre><code>dbService = connect(<span class="string">"localhost:27017"</span>);
+<span class="keyword">db</span> = dbService.getSiblingDB(<span class="string">"okuc"</span>);
+<span class="keyword">db</span>.query_test.<span class="keyword">drop</span>();
+<span class="keyword">var</span> bulk = <span class="keyword">db</span>.query_test.initializeUnorderedBulkOp();
+<span class="keyword">var</span> doc1 = {
+            <span class="string">"name"</span>:<span class="string">"xiaoli"</span>,<span class="string">"age"</span>:20,<span class="string">"address"</span>:
+{<span class="string">"province"</span>:<span class="string">"GuangDong"</span>,<span class="string">"city"</span>:ShenZhen}
+}
+bulk.insert(doc1);
+<span class="keyword">var</span> doc2 = {
+            <span class="string">"name"</span>:<span class="string">"xiaoqing"</span>,<span class="string">"age"</span>:22,<span class="string">"address"</span>:
+{<span class="string">"city"</span>:ShenZhen,<span class="string">"province"</span>:<span class="string">"GuangDong"</span>}
+}
+bulk.insert(doc2);
+
+bulk.execute()
+
+<span class="keyword">var</span> cursor = <span class="keyword">db</span>.query_embedded.fin({
+    <span class="string">"address"</span>:{
+        <span class="string">"province"</span>:<span class="string">"GuangDong"</span>
+    }
+});
+printjson(cursor.toArray());
+</code></pre></li>
+<li><p>数组查询</p>
+<ul>
+<li><code>$all</code>:查询包含参数数组中所有元素的文档</li>
+<li><code>$elemMatch</code>:多条件查询</li>
+<li><code>$size</code>：查询指定长度的数组</li>
+<li>`&lt;div class=”entry”:返回第一个匹配的数组元素</li>
+<li><code>$elemMatch</code>：按条件返回数组元素的子集</li>
+<li><p><code>$slice</code>：返回连续数组元素的子集</p>
+<pre><code>dbService = connect(<span class="string">"localhost:27017"</span>);
+db = dbService.getSiblingDB(<span class="string">"okuc"</span>);
+db.query_test.drop();
+var bulk = db.query_test.initializeUnorderedBulkOp();
+var doc1 = {_id:<span class="number">5</span>,
+            name:<span class="string">"xiaoli"</span>,
+            age:<span class="number">20</span>,
+            scores:[<span class="number">95</span>,<span class="number">98</span>,<span class="number">99</span>]
+}
+bulk.<span class="keyword">insert</span>(doc1);
+var doc2 = {_id:<span class="number">6</span>,
+            name:<span class="string">"xiaoqiang"</span>,
+            age:<span class="number">22</span>,
+            scores:[<span class="number">95</span>,<span class="number">99</span>]
+}
+bulk.<span class="keyword">insert</span>(doc2);
+var doc3 = {_id:<span class="number">7</span>,
+            name:<span class="string">"xiaoming"</span>,
+            age:<span class="number">22</span>,
+            scores:[<span class="number">99</span>,<span class="number">95</span>,<span class="number">98</span>]
+}
+bulk.<span class="keyword">insert</span>(doc3);                
+bulk.execute()
+
+var cursor = db.query_array.find(//整个数组查询
+    {
+        scores:[<span class="number">95</span>,<span class="number">98</span>,<span class="number">99</span>]
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//整个数组查询
+    {
+        scores:[<span class="number">95</span>,<span class="number">98</span>,<span class="number">99</span>]
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//查询数组包括<span class="number">95</span>的元素
+    {
+        scores:<span class="number">95</span>
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//查询数组第一个元素是<span class="number">95</span>的元素
+    {
+        scores.<span class="number">0</span>:<span class="number">95</span>
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//查询数组包括<span class="number">99</span>,<span class="number">98</span>两个元素的文档，顺序可以不同
+    {
+        scores:{
+            <span class="variable">$all</span>:[<span class="number">99</span>,<span class="number">98</span>]
+        }
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//查询scores数组中有一个元素大于等于<span class="number">95</span>，且小于等于<span class="number">99</span>的元素
+    {
+        scores:{
+            <span class="variable">$elemMatch</span>:{<span class="variable">$gt</span>:<span class="number">95</span>,<span class="variable">$lt</span>:<span class="number">99</span>}
+        }
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//查询scores数组中有一个元素大于等于<span class="number">95</span>，还有一个元素小于等于<span class="number">99</span>的数组
+    {
+        scores:{
+            <span class="variable">$gt</span>:<span class="number">95</span>,<span class="variable">$lt</span>:<span class="number">99</span>
+        }
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//只显示大于等于<span class="number">95</span>且小于等于<span class="number">99</span>的元素
+    { {},//查询条件
+        {scores:{//查询映射
+            <span class="variable">$elemMatch</span>:{<span class="variable">$gt</span>:<span class="number">95</span>,<span class="variable">$lt</span>:<span class="number">99</span>}
+        }
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//查询指定长度的数组
+    { 
+        {scores:{
+            <span class="variable">$size</span>:<span class="number">2</span>
+        }}
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//显示时跳过第一个元素，最多只显示两个元素
+    { {},//查询条件
+        {scores:{//查询映射
+            <span class="variable">$slice</span>:[<span class="number">1</span>,<span class="number">2</span>]
+        }
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//查询数组中分数大于等于<span class="number">94</span>的数组元素
+    { {scores：{<span class="variable">$gt</span>:<span class="number">94</span>}},//查询条件
+        { <span class="string">"scores.$"</span>:<span class="number">1</span>;//只显示第一个元素。这个映射必须出现在查询条件中
+        }
+    }
+);
+printjson(cursor.toArray());
+
+dbService = connect(<span class="string">"localhost:27017"</span>);
+db = dbService.getSiblingDB(<span class="string">"okuc"</span>);
+db.query_test.drop();
+var bulk = db.query_test.initializeUnorderedBulkOp();
+var doc1 = {_id:<span class="number">1</span>,
+            name:<span class="string">"xiaoli"</span>,
+            age:<span class="number">20</span>,
+            scores:[{课程：<span class="string">"语文"</span>，成绩：<span class="number">90</span>},{课程：<span class="string">"数学"</span>，成绩：<span class="number">95</span>}]
+}
+bulk.insert(doc1);
+var doc2 = {id:<span class="number">1</span>,
+            name:<span class="string">"xiaoqiang"</span>,
+            age:<span class="number">22</span>,
+            scores:[{课程：<span class="string">"语文"</span>，成绩：<span class="number">92</span>},{课程：<span class="string">"英语"</span>，成绩：<span class="number">90</span>}]
+}
+bulk.insert(doc2);
+
+bulk.execute()
+
+var cursor = db.array_embedded.find({<span class="string">'scores.成绩'</span>：<span class="number">90</span>});//不使用数组索引，查询数组中成绩为<span class="number">90</span>的元素
+printjson(cursor.toArray());
+
+var cursor = db.array_embedded.find({<span class="string">'scores.1.成绩'</span>：<span class="number">90</span>});//使用数组索引，查询数组第二个元素中成绩为<span class="number">90</span>的元素
+printjson(cursor.toArray());
+
+var cursor = db.array_embedded.find({<span class="string">'scores:{$elemMatch:{"课程":"语文","成绩"：90}}});//查询数组中包含课程为语文，成绩为90的文档
+printjson(cursor.toArray());</span>
+</code></pre></li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/mongodb/">mongodb</a>, <a href="/tags/数据库/">数据库</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/12/16/新手学习mongodb之五：游标及模糊查询/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2015/12/14/新手学习mongodb之三：数据更新操作/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/12/15/新手学习mongodb之四：使用find轻松查询数据/" data-title="新手学习mongodb之四：使用find轻松查询数据" data-url="http://www.52brt.com/2015/12/15/新手学习mongodb之四：使用find轻松查询数据/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>3</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

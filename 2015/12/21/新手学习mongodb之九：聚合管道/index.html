@@ -1,0 +1,501 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>新手学习mongodb之九：聚合管道 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="新手学习mongodb之九：聚合管道"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-21T14:06:32.000Z"><a href="/2015/12/21/新手学习mongodb之九：聚合管道/">2015-12-21</a></time>
+      
+      
+  
+    <h1 class="title">新手学习mongodb之九：聚合管道</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li><p>聚合操作主要秀于批量数据处理，往往将记录按条件进行分组，然后在每组上分别进行一系列操作，如，求最大最小值、平均值、求和等。</p>
+<pre><code>db.orders.aggregate([
+{
+    <span class="variable">$group</span>:{
+    _id:<span class="string">"$cust_id"</span>,
+    total:{<span class="variable">$sum</span>:<span class="string">"$price"</span>}
+},{<span class="variable">$sort</span>:{total:<span class="number">1</span>}}}])
+</code></pre><p>聚合操作能够对记录进行复杂处理，主要用于数理统计和数据挖掘。在MongoDB中，聚合操作的输入是集合中的文档，输出可以是一条或多条文档。</p>
+<p>MongoDB提供了强大的聚合功能，针对聚合操作提供了三种方式：</p>
+<ul>
+<li>聚合管道(Aggregation Pipeline)</li>
+<li>单目的聚合操作(Single Purpose Aggregation Operation)</li>
+<li>MapReduce编程模型 <a id="more"></a></li>
+</ul>
+</li>
+<li><p>聚合管道是MongoDB2.2版本引入的新功能，是一个全新的数据聚合框架(Aggregation FrameWork)。 聚合管道的概念和工作方式类似于Linux中的管道命令操作符。如<code>cat number.txt|awk -F&#39;,&#39; &#39;{print $2}&#39;|sort -n &gt;result</code>，这个命令意思是把<code>number.txt</code>文档中的内容读取出来，然后只保留逗号后边的数字，进行排序，最后输出的结果文档中。</p>
+</li>
+<li><p>聚合管道有<code>阶段(stage)</code>组成，文档在一个阶段处理完毕后，聚合管道会将处理结果传递给下一个阶段。</p>
+<p>每个阶段由阶段操作符(Stage Operators)来对文档进行相应的处理，待处理的文档会流经各个阶段，最终完成计算。计算的结果可以直接输出也可以存储到集合中。</p>
+<p><code>MongoDB Shell</code>使用<code>db.collection.aggregate([{&lt;stage&gt;},...])</code>来构建和使用聚合管道。 例子如下：</p>
+<pre><code>db.orders.aggregate([{<span class="variable">$match</span>:{status:<span class="string">"A"</span>}},//挑选出状态为A的记录
+                     {<span class="variable">$group</span>:{_id:<span class="string">"$cust_id"</span>,total:{<span class="variable">$sum</span>:<span class="string">"$amount"</span>}}},//根据_id进行分组，对amount进行相加赋给total字段
+                    ｛<span class="variable">$out</span>:<span class="string">"Rresult"</span>｝//将结果输出
+])
+</code></pre></li>
+<li><p>聚合管道需要注意以下几个问题：</p>
+<ul>
+<li>在每个阶段，对每个输入的文档不一定都有相应的输出</li>
+<li>聚合管道中，阶段是可以重复的(<code>$out</code> 和 <code>$geoNear</code>除外)</li>
+<li>聚合管道可以在分片集合上使用</li>
+<li><p>聚合管道函数<code>aggregate</code>只能作用于一个集合</p>
+<p>聚合管道的基本功能：</p>
+</li>
+<li><p>对文档进行过滤(filters)筛选符合条件的文档。</p>
+</li>
+<li><p>对文档进行变换(Document Transformations)改变文档输出形式。</p>
+<p>每个阶段的功能使用<strong>阶段操作符(Stage Operators)</strong>定义，在每个阶段操作符中可以使用<strong>表达式操作符(Expression Operators)</strong>计算平均值和拼接字符串等相关操作。</p>
+</li>
+</ul>
+</li>
+<li><p>聚合管道操作</p>
+<ul>
+<li><p><code>{$project:{&lt;spectifications&gt;}}</code>:用于修改文档的结构，可以重命名、增加或删除文档字段。</p>
+<pre><code><span class="tag">db</span><span class="class">.books</span><span class="class">.aggregate</span>([{
+    $<span class="tag">project</span>:{ <span class="tag">_id</span><span class="pseudo">:0</span>,<span class="comment">//不显示id字段</span>
+               <span class="tag">address</span><span class="class">.city</span><span class="pseudo">:1</span>,<span class="comment">//显示此字段</span>
+               <span class="tag">totalViews</span>:{$<span class="attribute">add</span>:[<span class="string">"$pageViews"</span>,<span class="number">10</span>]},<span class="comment">//把pageViews字段加10赋给TotalViews</span>
+               <span class="attribute">newName</span>:<span class="string">"$name"</span>}<span class="comment">//把name重命名</span>
+
+    }])
+</code></pre></li>
+<li><p><code>{$match:{&lt;query&gt;}}</code>:用于过滤文档(与find函数的query参数用法相同)</p>
+<pre><code>db.articles.aggregate([{
+    <span class="variable">$match</span>:{<span class="variable">$or</span>:[ //或操作符
+        {score:{<span class="variable">$gt</span>:<span class="number">70</span>,<span class="variable">$lt</span>:<span class="number">90</span>}},//分数大于<span class="number">70</span>或小于<span class="number">90</span>
+        {views:{<span class="variable">$gte</span>:<span class="number">1000</span>}}//或者views大于等于<span class="number">1000</span>的字段
+
+    ]}}])
+</code></pre><p>关于$match需要注意的几个问题：</p>
+<ul>
+<li>在<code>$match</code>中不能使用<code>$where</code>表达式操作符</li>
+<li>如果<code>$match</code>位于管道中第一阶段的话，可以借助索引加快查询</li>
+<li><code>$match</code>中使用$text操作符时，<code>$match</code>只能位于管道的第一个阶段</li>
+<li><code>$match</code>尽量出现在管道的前面，可以提早过滤文档，减少流经后续阶段的文档数量</li>
+</ul>
+</li>
+<li><p><code>{$group:{_id:&lt;expression&gt;,&lt;field1&gt;:{&lt;accumulator1&gt;:&lt;expressiong1&gt;},...}}</code>:将集合中的文档进行分组。</p>
+<pre><code>db.books.aggregate([{
+    <span class="variable">$group</span>:{ _id:<span class="string">"$author"</span>,//_id是必须的，指明按那个字段分组
+        totalPublish:{<span class="variable">$sum</span>:<span class="string">"$publish"</span>},//同组内的publish相加赋组totalPublish字段
+            books:{<span class="variable">$push</span>:<span class="string">"$title"</span>}}//同组内的title放到books数据中
+
+}]
+)
+</code></pre></li>
+</ul>
+</li>
+</ol>
+<pre><code>    默认情况下，分组只能在内存中进行，这个阶段最大只能使用`<span class="number">100</span>MB`的内存空间。如果处理的数据集比较大时，可以使用**allowDiskUse**选项，在分组时可以供助磁盘空间，将部分数据交换到磁盘上，以处理更大的数据量。
+
+-   `{<span class="variable">$sort</span>:{&lt;field1&gt;:&lt;sort order&gt;,&lt;field2&gt;:&lt;sort order&gt;...}}`:对输入的文档进行排序
+
+        db.books.aggregate([{
+          <span class="variable">$sort</span>:{age:-<span class="number">1</span>,posts:<span class="number">1</span>}
+
+        }]
+        )
+
+    默认情况下，`sort`只能在内存中进行，这个阶段最大只能使用`<span class="number">100</span>MB`的内存空间。如果处理的数据集比较大时，可以使用**allowDiskUse**选项。
+
+-   `{<span class="variable">$limit</span>:&lt;positive integer&gt;}`:限制返回的文档数量
+
+        db.books.aggregate([{
+          <span class="variable">$limit</span>:<span class="number">5</span>
+
+        }]
+        )
+
+-   `{<span class="variable">$skip</span>:&lt;positive integer&gt;}`:跳过指定数量的文档
+
+        db.books.aggregate([{
+          <span class="variable">$skip</span>:<span class="number">5</span>
+
+        }]
+        )
+
+-   `{<span class="variable">$unwind</span>:&lt;file path&gt;}`:将文档按照数组字段拆分成多条文档，每条文档包含数组中的一个元素。
+
+    如原文档：`{<span class="string">"_id"</span>:<span class="number">1</span>,<span class="string">"item"</span>:<span class="string">"ABC"</span>,<span class="string">"sizes"</span>:[<span class="string">"S"</span>、<span class="string">"M"</span>、<span class="string">"L"</span>]}`,执行：`db.test.aggregate([{<span class="variable">$unwind</span>:<span class="string">"$sizes"</span>}])`,如果如下：
+
+        {“_id”:<span class="number">1</span>,”item:”ABC”,”sizes”:”S”}
+         {“_id”:<span class="number">1</span>,”item:”ABC”,”sizes”:”M”}
+         {“_id”:<span class="number">1</span>,”item:”ABC”,”sizes”:”L”}
+
+    关于`<span class="variable">$unwind</span>`需要注意以下问题：
+
+    -   `<span class="variable">$unwind</span>`参数数组字段为空或不存在时，待处理的文档将会被忽略，该条文档将不会产生任何输出。
+    -   `<span class="variable">$unwind</span>`参数不是一个数组类型时，将会产生一个错误
+    -   `<span class="variable">$unwind</span>`所作的修改只用于输出，不会改变原文档的内空。
+-   `{<span class="variable">$geoNear</span>:{&lt;geoNear options&gt;}}`:按照由近到远顺序输出接近某一地理位置的文档。
+
+        db.places.aggregate([{
+            <span class="variable">$geoNear</span>:{near:{type:<span class="string">"point"</span>,coordinates:[-<span class="number">73.99279</span>,<span class="number">40.719296</span>]},//near用来指明要查找的节点类型及坐标值
+                distanceField:<span class="string">"dist.calculated"</span>,//distanceField用来指明存储计算距离结果的字段
+                maxDistance:<span class="number">2</span>,//存储要查询的范围最大距离
+                    query:{type:<span class="string">"public"</span>},//条件过滤，查询满足条件的文档
+                    includeLocs:<span class="string">"dist.location"</span>,//指明计算距离时用到的存储经纬度的具体的字段名
+                    num:<span class="number">5</span>,//限制最多返回<span class="number">5</span>条。
+                    spherical:true }//true表明使用的是球面索引，默认false使用的是<span class="number">2</span>d索引
+        }]
+        )
+
+    关于`<span class="variable">$geoNear</span>`需要注意的几个问题：
+
+    -   `<span class="variable">$geoNear</span>`操作符只能位于管道的第一个阶段
+    -   使用时，必须指定`distanceField`选项，用来存储计算结果
+    -   `<span class="variable">$geoNear</span>`和数据库命令`geoNear`相似，不同之处在于`distanceField`在`<span class="variable">$geoNear</span>`中是必选的，`includeLocs`是string类型；在数据库命令中，`distanceField`是可选的，`includeLocs`是`boolean`类型。
+-   `{<span class="variable">$redact</span>:&lt;expression&gt;}`:限制单条文档内容的显示(可以控制只输出文档的部分内容)
+
+        db.accounts.aggregate([{
+            <span class="variable">$match</span>:{ status:<span class="string">"A"</span>}},//查询条件
+            {<span class="variable">$redact</span>:{//限制输出部分内容
+                <span class="variable">$cond</span>:{//条件
+                if:{<span class="variable">$eq</span>:[<span class="string">"$level"</span>,<span class="number">5</span>]},//如果level字段等于<span class="number">5</span>
+                then:<span class="string">"$PRUNE"</span>,//当前层次及其子文档都不显示
+                else:<span class="string">"$DESCEND"</span>}}//输出当前层次文档的内容，不输出子文档的内容
+
+        }]
+        )
+
+    下面是一个子：
+
+        { _id:<span class="number">1</span>,level:<span class="number">1</span>,acct_id:<span class="string">"xyz123"</span>,
+            cc:{level:<span class="number">5</span>,type:<span class="string">"yy"</span>,
+                num:<span class="number">000000000000</span>,
+                billing_addr:{
+                    level:<span class="number">5</span>,addr1:<span class="string">"123 ABC Street"</span>,
+                    city:<span class="string">"Some City"</span>
+                }
+
+            },
+
+            status:<span class="string">"A"</span>
+
+        ｝
+
+    最后会输出：
+
+        { _id:<span class="number">1</span>,
+          level:<span class="number">1</span>,
+          acct_id:<span class="string">"xyz123"</span>,
+          status:<span class="string">"A"</span>
+
+        ｝
+
+-   `{<span class="variable">$out</span>:<span class="string">"&lt;output-collection&gt;"</span>}`:将聚合结果存入集合中
+
+    如：
+
+          db.orders.aggregate([
+              {<span class="variable">$match</span>:{status:<span class="string">"A"</span>}},
+              {<span class="variable">$group</span>:{_id:<span class="string">"$cust_id"</span>,total:{<span class="variable">$sum</span>:<span class="string">"$amount"</span>}},
+              {<span class="variable">$out</span>:<span class="string">"Result"</span>}     
+          ])
+
+    关于<span class="variable">$out</span>需要注意以下几个问题：
+
+    -   输出集合不能是分片集合和固定集合
+    -   输出集合不存在时，在管道命令执行完毕时，会自动进行创建
+    -   如果输出集合已经存在，会覆盖原集合中的文档。
+</code></pre><ol>
+<li><p>聚合管道表达式</p>
+<ul>
+<li>布尔类型：且或非关系操作，<code>$and</code>,<code>$or</code>,<code>$not</code></li>
+<li>比较类型：等于、大于、小于比较，<code>$eq</code>,<code>$gt</code>,<code>$lt</code>,<code>$ne</code>,<code>$gte</code>,<code>$cmp</code></li>
+<li>算术功能：加、减、乘、除、算术运算，<code>$add</code>,<code>$substract</code>,<code>$mutiply</code>,<code>$divide</code></li>
+<li>字符串类型：字符串拼接、取子集，大小写等，<code>$concat</code>,<code>$substr</code>,<code>toLower</code>,<code>toUpper</code></li>
+<li>累加性质：求最大最小平均值，<code>$sum</code>,<code>$avg</code>,<code>$max</code>,<code>$first</code>,<code>$last</code></li>
+<li>集合操作：集合的交并差运算，<code>$setInterse</code>,<code>$setUnion</code>,<code>$setEquls</code></li>
+<li>日期操作：取年月日时分秒等，<code>$year</code>,<code>$month</code>,<code>$hour</code>,<code>$minute</code>,<code>$week</code></li>
+</ul>
+</li>
+<li><p>优化。</p>
+<p>默认情况，整个集合的所有文档作为聚合管道的输入，为了提高数据的处理效率，可以使用下面向个策略：</p>
+<ul>
+<li>将<code>$match</code>和<code>$sort</code>放于管道开始阶段，这样可以利用集合建立的索引来提高文档的处理效率。</li>
+<li><p>提早过滤，在管道的初始阶段，可以使用<code>$match</code>、<code>$limi</code>t以及<code>$skip</code>提早过滤，可以减少流经后续阶段的文档数量。</p>
+<p>当聚合管道命令执行时，数据库本身也会对各个阶段自动进行优化，主要包括下面几种情况：</p>
+</li>
+<li><p><code>$sort</code> + <code>$match</code>顺序优化：如果<code>$match</code>阶段出现在<code>$Sort</code>阶段之后，优化器会将<code>$match</code>移动到<code>$sort</code>的前面。</p>
+<pre><code>{<span class="variable">$sort</span>:{age:-<span class="number">1</span>}},{<span class="variable">$match</span>:{status:<span class="string">'A'</span>}}//优化前
+{<span class="variable">$match</span>:{status:<span class="string">'A'</span>}},{<span class="variable">$sort</span>:{age:-<span class="number">1</span>}}//优化后
+</code></pre></li>
+</ul>
+</li>
+</ol>
+<pre><code>-   `<span class="variable">$skip</span>`+`<span class="variable">$limit</span>`顺序优化：如果`<span class="variable">$skip</span>`阶段出现在`<span class="variable">$limit</span>`之后，优化器会将`<span class="variable">$limit</span>`移动到`<span class="variable">$skip</span>`的前面，移动后`<span class="variable">$limit</span>`参数的值等于原来的值加上`skip`参数的值。
+
+        ｛{<span class="variable">$skip</span>:<span class="number">10</span>},{<span class="variable">$limit</span>:<span class="number">5</span>}}//优化前
+        ｛{<span class="variable">$limit</span>:<span class="number">15</span>},{<span class="variable">$skip</span>:<span class="number">10</span>}}//优化后
+</code></pre><ol>
+<li><p>使用聚合管道的限制如下：</p>
+<ul>
+<li>返回结果大小：聚合结果返回的是一个文档，不能超过<code>16MB</code>的，从MongoDB2.6版本开始，返回的结果可以是一个游标或者存储到集合中，返回的结果不再受16MB的限制。</li>
+<li>内存： 默认情况下， 聚合管道的每个阶段最大只能使用<code>100MB</code>的内存空间。如果处理的数据集比较大时，可以使用<strong>allowDiskUse</strong>选项。</li>
+</ul>
+</li>
+<li>单目的(Single Purpose Aggregation Operations)聚合命令，常用的主要有三个：<code>count</code>、<code>distinct</code>、<code>group</code>。与聚合管道相比，单目的操作符功能单一，使用简单且频繁。如：</li>
+</ol>
+<pre><code>db.records.count({a:<span class="number">1</span>})//统计
+db.records.<span class="keyword">distinct</span>(<span class="string">"b"</span>)//去重
+db.records.group(
+    {key:{a:<span class="number">1</span>},//分组条件
+    cond:{a:{$lt:<span class="number">3</span>}},//筛选文档
+    reduce:function(cur,<span class="literal">result</span>)//在每组上执行reduce函数，进行累加求合{<span class="literal">result</span>.count +=cur.count},
+    initial:{count:<span class="number">0</span>}
+}
+)
+</code></pre><ol>
+<li><p>这是一个例子，首先下载美国每个城市的邮政编码信息：<a href="http://media.mongodb.org/zips.json" target="_blank" rel="external">http://media.mongodb.org/zips.json</a>,然后导入到数据库中：<code>mongoimport -d okuc -c zipcodes --drop zips.json</code>。</p>
+<p>下载后，我们也可以看到，数据格式如下：</p>
+<p>   {</p>
+<pre><code><span class="string">"_id"</span>:<span class="string">"10280"</span>,<span class="comment">//一个城市会有多个不同的邮政编码</span>
+<span class="string">"city"</span>:<span class="string">"NEW YORK"</span>,<span class="string">"state"</span>:<span class="string">"NY"</span>,
+<span class="string">"pop"</span>:<span class="number">5574</span>，<span class="comment">//地区人口数量</span>
+<span class="string">"loc"</span>:[-<span class="number">74.016323</span>,<span class="number">40.71053</span>]
+</code></pre><p>   }</p>
+<p>   dbService = connect(“localhost:27017”);<br>   db = dbService.getSiblingDB(“okuc”);</p>
+<p>   //人口超过一千万的州</p>
+<p>   var cursor = db.zipcodes.aggregate([</p>
+<pre><code>{<span class="variable">$group</span>:{_id:<span class="string">"$state"</span>,totalPop:{<span class="variable">$sum</span>:<span class="string">"$pop"</span>}}},//按state分组，对pop进行求合
+{<span class="variable">$match</span>:{totalPop:{<span class="variable">$gte</span>:<span class="number">10</span>*<span class="number">1000</span>*<span class="number">1000</span>}}}//筛选出大于<span class="number">1000</span>万的
+</code></pre><p>   ])<br>   printjson(cursor.toArray)</p>
+<p>   //每个州城市拥有的平均人口数<br>   var cursor = db.zipcodes.aggregate([</p>
+<pre><code>{<span class="variable">$group</span>:{_id:{state:<span class="string">"$state"</span>,city:<span class="string">"$city"</span>},//按state、city进行分组
+                pop:{<span class="variable">$sum</span>:<span class="string">"$pop"</span>}}},//对pop进行求合
+{<span class="variable">$group</span>:{_id:<span class="string">"$_id.state"</span>,avgCityPop{<span class="variable">$avg</span>:<span class="string">"$pop"</span>}}}//按州名进行分组，求平均值
+</code></pre><p>   ])<br>   printjson(cursor.toArray)</p>
+<p>   //求所有州的集合<br>   var cursor = db.zipcodes.distinct(“state”);<br>   printjson(cursor)</p>
+<p>   //每个州的人口最多和最少的城市<br>   var cursor = db.zipcodes.aggregate([</p>
+<pre><code>{<span class="variable">$group</span>:{_id:{state:<span class="string">"$state"</span>,city:<span class="string">"$city"</span>},//按state、city进行分组
+                pop:{<span class="variable">$sum</span>:<span class="string">"$pop"</span>}}},//对pop进行求合
+{<span class="variable">$sort</span>:{pop:<span class="number">1</span>}},//根据pop进行排序
+{<span class="variable">$group</span>:{_id:<span class="string">"$_id.state"</span>,//按州名进行分组
+        biggestCity:{<span class="variable">$last</span>:<span class="string">"$_id.city"</span>},//最多的城市
+        biggestPop：{<span class="variable">$last</span>:<span class="string">"$pop"</span>},//取pop
+        smallestCity:{<span class="variable">$first</span>:<span class="string">"$_id.city"</span>},
+        smallestPop:{<span class="variable">$first</span>:<span class="string">"$pop"</span>}
+ }},
+{ <span class="variable">$project</span>://修改文档最后展示出来的结构
+    {
+        _id:<span class="number">0</span>,
+        state:<span class="string">"$_id"</span>,
+        biggestCity:{name:<span class="string">"$biggestCity"</span>,pop:<span class="string">"$biggestPop"</span>},
+        smallestCity:{name:<span class="string">"$smallestCity"</span>,pop:<span class="string">"$smallestPop"</span>}
+    }    
+}
+</code></pre><p>   ])<br>   printjson(cursor.toArray)</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/mongodb/">mongodb</a>, <a href="/tags/数据库/">数据库</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/12/25/新手学习Express4之一 路由 /" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2015/12/20/新手学习mongodb之八：GridFS文件存储/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/12/21/新手学习mongodb之九：聚合管道/" data-title="新手学习mongodb之九：聚合管道" data-url="http://www.52brt.com/2015/12/21/新手学习mongodb之九：聚合管道/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>3</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
