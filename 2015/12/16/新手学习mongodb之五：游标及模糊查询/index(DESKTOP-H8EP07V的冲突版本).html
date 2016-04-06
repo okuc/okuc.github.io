@@ -1,0 +1,487 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>新手学习mongodb之五：游标及模糊查询 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="新手学习mongodb之五：游标及模糊查询"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-16T14:06:32.000Z"><a href="/2015/12/16/新手学习mongodb之五：游标及模糊查询/">2015-12-16</a></time>
+      
+      
+  
+    <h1 class="title">新手学习mongodb之五：游标及模糊查询</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li>使用<code>find</code>函数进行查询时，MongoDB并不是一次返回结果集中的所有文档，而是以多条文档的形式分白费来返回查询结果，返回的文档会缓存到内存中。<br>分批的原则是不超过101个文档或1M的数据，以先达到的标准为主。如果101个文档大于1M，则会减少文档的数量，以小的为准，除第一次外，以后每次可以返回4M的文档。<br>这种批量返回结果的好处是，一方面，它可以减少客户端对服务器连接次数，从而减轻服务器的查询负担；另一方面，当查询结果集很大时，批量返回的结果的方式可以减少客户端的等待时间，提高数据的处理效率。<br>在没有建立索引的字段上进行排序，会把符合条件的全部加载到内存中进行排序，所以，一定要建立索引。 <a id="more"></a></li>
+<li>针对游标，MongoDB提供了许多函数：<ul>
+<li><code>hasNext</code>:判断是否还有更多的文档</li>
+<li><code>next</code>：用来获取下一条文档</li>
+<li><code>toArray</code>：将查询结果放到数组中</li>
+<li><code>count</code>：获取结果集中总的文档数量</li>
+<li><code>limit</code>：限制结果返回数量</li>
+<li><code>skip</code>：跳过指定数目的文档</li>
+<li><code>sort</code>:对查询结果进行排序</li>
+<li><code>objsLeftInBatch</code>:查看当前批次剩余的未被迭代的文档数量。</li>
+<li><code>addOption</code>:为游标设置辅助选项，修改游标的默认行为。</li>
+<li><code>hint</code>:为查询强制使用指定索引</li>
+<li><code>explain</code>：用于获取查询执行过程报告</li>
+<li><code>snapshot</code>：对查询结果使用快照<br>游标对象的每个方法几乎都返回游标对象本身，这可以方便的进行链式函数调用。</li>
+</ul>
+</li>
+<li><p>调用find函数,当真正从cursor中取数据时才会从后台取数据，当取完第一批后，再继续请求第二批数据。所以以上三种写法是等价的：<br> <code>var cursor = db.std.find().sotr({age:1}).limit(2).skip(10)</code><br> <code>var cursor = db.std.find().limit(2).sotr({age:1}).skip(10)</code><br> <code>var cursor = db.std.find().skip(10).limit(2).sotr({age:1})</code></p>
+</li>
+<li><p>MongoDB Shell中使用游标输出文档包含两种情况：</p>
+<ul>
+<li>自动迭代：如果不将find函数返回的游标赋值给一个局部变量进行保存的话，默认情况下游标会自动迭代20次</li>
+<li>手动迭代：将find函数返回的游标赋值给一个局部变量，然后使用游标对象提供的函数进行手动迭代。</li>
+</ul>
+</li>
+<li><p>使用清空后的游标，进行迭代输入时，显示内容为空。游标的生命周期包括创建、使用以及销毁三个阶段。当客户端使用find函数向服务器端发起一次查询请求时，会在服务端创建一个游标，然后就可以使用游标函数来操作查询结果。<br>以下三种情况会让游标销毁：</p>
+<ul>
+<li>游标遍历完成后，或者客户端主动发送终止消息</li>
+<li>客户端保存的游标变量不在作用域内</li>
+<li><p>在服务器端10分钟内未对游标进行操作</p>
+<p>如果希望游标存在时间长一些，避免这种”超时销毁”的行为，可以使用addOption函数为游标添加noTimeout的选项：<br><code>var mycurosr=db.collection.find().addOption(DBQuery.Option.noTimeout)</code></p>
+<p>如果要查询整个游标的生命周期，可以使用<code>serverStatus()函数</code>查看当前系统的游标状态</p>
+<pre><code>db.serverStatus().metrics.cursor{
+ “timedOut”<span class="symbol">:&lt;number&gt;//</span>数据库启来以来，超时的游标个数
+ “open”<span class="symbol">:</span>{&lt;<span class="regexp">/number&gt;</span>
+</code></pre></li>
+</ul>
+</li>
+</ol>
+<pre><code><span class="string">"noTimeout"</span><span class="symbol">:&lt;number&gt;</span>,<span class="regexp">//</span>表示使用notimeout阻止销毁的游标个数
+<span class="string">"pinned"</span><span class="symbol">:&lt;number&gt;</span>,<span class="regexp">//</span>服务器启动以来，超时的游标个数
+<span class="string">"total"</span><span class="symbol">:&lt;number&gt;//</span>打开的游标总数
+
+}
+}
+</code></pre><ol>
+<li><p>在多个客户端操作时，有可能由于数据更新了，导致位置改变了，从而致使有的数据从没取出来，有的会取出多次，也就是说，多个客户端之间有可能产生混乱。解决这个问题的方法是对查询进行快照：<code>db.collection.find().snapshot()</code>,这样，查询就会在_id索引上来遍历执行，这样就可以保证每个文档只会被返回一次，从而保证获取结果的一致性。但是快照会使结果变慢，要谨慎使用。</p>
+<pre><code>dbService = connect(<span class="string">"localhost:27017"</span>);
+<span class="keyword">db</span> = dbService.getSiblingDB(<span class="string">"okuc"</span>);
+<span class="keyword">db</span>.query_cursor.<span class="keyword">drop</span>();<span class="comment">//清空集合</span>
+
+<span class="keyword">for</span>(i=0;i&lt;100;i++){
+    <span class="keyword">db</span>.query_cursor.insert({index:i,text:<span class="string">"Hello MongoDB!"</span>});
+}
+
+<span class="keyword">var</span> cursor = <span class="keyword">db</span>.query_cursor.find({},{_id:0,index:1});<span class="comment">//返回的结果只包含index字段</span>
+
+<span class="keyword">while</span>(cursor.hasNext()){
+    <span class="keyword">var</span> obj = cursor.next();
+    <span class="keyword">print</span>(tojson(obj));
+
+    <span class="keyword">var</span> left = cursor.objsLeftInBatch();<span class="comment">//未被迭代的文档</span>
+    <span class="keyword">print</span>(<span class="string">"Left in bash:"</span>,left);
+}
+
+<span class="keyword">var</span> documentArray = <span class="keyword">db</span>.query_cursor.find().toArray()<span class="comment">//转成数组</span>
+<span class="keyword">if</span>(documentArray.length&gt;10){
+    <span class="keyword">var</span> obj = documentArray[10];
+    printjson(obj)
+}
+
+<span class="keyword">var</span> cursor = <span class="keyword">db</span>.query_cursor.find()
+cursor.<span class="keyword">forEach</span>(function(temp){<span class="comment">//自定义函数对结果进行处理</span>
+    <span class="keyword">if</span>(temp.index==10){
+        <span class="keyword">print</span>(<span class="string">"test.index:"</span>+temp.index)+
+              <span class="string">" test.obj:"</span>+temp.text)
+    }
+});
+</code></pre></li>
+</ol>
+<ol>
+<li><p>MongoDB可以使用正则表达式，从而实现模糊查询的功能。模糊查询可以使用$regex操作符或直接使用正则表达式对象。MongoDB使用PCRE(Perl Compatible Regular Expression)作为正则表达式语言。</p>
+<pre><code>db.student.find({<span class="variable">$name</span>:{<span class="variable">$regex</span>:/joe/}})
+db.student.find({<span class="variable">$name</span>:/joe/})
+</code></pre><p>regex操作符：</p>
+<pre><code>{&lt;field&gt;:{<span class="variable">$regex</span>:/pattern/,<span class="variable">$options</span>:<span class="string">'&lt;options&gt;'</span>}}
+{&lt;field&gt;:{<span class="variable">$regex</span>:<span class="string">'pattern'</span>,<span class="variable">$options</span>:<span class="string">'&lt;options&gt;'</span>}}
+{&lt;field&gt;:{<span class="variable">$regex</span>:/pattern/&lt;options&gt;}}//options为隐式方式
+</code></pre></li>
+</ol>
+<pre><code>正则表达式对象：`{&lt;field&gt;<span class="symbol">:/pattern/&lt;options&gt;</span>}&lt;<span class="regexp">/options&gt;&lt;/field</span>&gt;`
+</code></pre><ol>
+<li><p>$regex与正则表达式对象的区别：</p>
+<ul>
+<li>在$in操作符只能使用正则表达式对象<code>{name:{$in:[/^joe/i,/^jack/]}}</code>,这个例子是查找<code>name</code>以<code>joe</code>开头且不区分大小写或者<code>name</code>以<code>jack</code>开头的元素。</li>
+<li>在使用隐式的<code>$and</code>操作符中，只能使用<code>$regex</code>。<code>{name:{$regex:/^jo/i,$nin:[&#39;john&#39;]}}</code>,这个例子是查找以<code>jo</code>开头且不区分大小写且不等于<code>john</code>的元素</li>
+<li>当<code>option</code>选项中包含<code>x</code>或<code>s</code>选项时，只能使用<code>$regex</code>:<code>{name:{$regex:/m.*line/,$options:&quot;si&quot;}}</code>,这个例子是说配区时为单行模式且忽略大小写</li>
+</ul>
+</li>
+<li><p>$regex操作符中的option选项可以改变正则匹配的默认行为，它主包括i、m、x以及s四个选项，其含义如下：</p>
+<ul>
+<li>i:忽略大小写 {<field>:{$regex:/pattern/i}}。设置i选项后，模式中的字母会进行大小写不敏感匹配</field></li>
+<li>m:多行匹配模式{<field>:{$regex:/pattern/,$options:’m’}},m选项会更改^和$元字符的默认行为，分别使用与行的开头和结尾匹配，而不是与输入字符串的开头和结尾匹配。</field></li>
+<li>x:忽略非转义的空白字符{<field>:{$regex:/pattern/,$options:’x’}},设置x选项后，正则表达式中的非转义的空白字符将被忽略，同时并号(#)被解释为注释的开头，注：只能显式位于option选项中。</field></li>
+<li><p>s:单行匹配模式{<field>:{$regex:/pattern/,$options:’s’}}设置x选项后，会改变模式中的点号(.)元字符的默认行为，它会匹配所有字符，包括换行符(\n)注：只能显示位于option选项中。</field></p>
+<p>需要注意以下几个问题：</p>
+</li>
+<li><p>上面的四个选项可以组合使用{name:{$regex:/j.*k/,$options:”si”}}</p>
+</li>
+<li>在设置索引的字段上进行正则匹配可以提高查询速度，而且当正则表达式使用的是前辍表达式时，查询速度会进一步提高{name:{$regex:/^joe/}}</li>
+</ul>
+</li>
+<li><p>这是一个综合的例子：</p>
+<p>   dbService = connect(“localhost:27017”);<br>   db = dbService.getSiblingDB(“okuc”);</p>
+<p>   db.query_regex.drop();<br>   var bulk = db.query_regex.initializeUnorderedBulkOp();</p>
+<p>   var doc1 = </p>
+<pre><code><span class="rules">{
+    <span class="rule"><span class="attribute">type</span>:<span class="value"><span class="string">"Abc123"</span>,
+    description:<span class="string">"Single line description."</span>
+</span></span></span>}
+</code></pre><p>   bulk.insert(doc1);</p>
+<p>   var doc2 = </p>
+<pre><code><span class="rules">{
+    <span class="rule"><span class="attribute">type</span>:<span class="value"><span class="string">"Abc789"</span>,
+    description:<span class="string">"First line\nSecond line"</span>
+</span></span></span>}
+</code></pre><p>   bulk.insert(doc2);</p>
+<p>   var doc3 = </p>
+<pre><code><span class="rules">{
+    <span class="rule"><span class="attribute">type</span>:<span class="value"><span class="string">"xyz456"</span>,
+    description:<span class="string">"Many spaces before      line"</span>
+</span></span></span>}
+</code></pre><p>   bulk.insert(doc3);</p>
+<p>   var doc4 = </p>
+<pre><code><span class="rules">{
+    <span class="rule"><span class="attribute">type</span>:<span class="value"><span class="string">"xyz789"</span>,
+    description:<span class="string">"Multiple\nline description"</span>
+</span></span></span>}
+</code></pre><p>   bulk.insert(doc4);</p>
+<p>   bulk.execute();</p>
+<p>   var cursor = db.query_regex.find({//查找type字段中以abc开头且不分大小写的元素。</p>
+<pre><code>    <span class="symbol">type:</span>
+    {
+        <span class="variable">$regex</span><span class="symbol">:/^ABC/i</span>
+        }
+});
+</code></pre><p>   printjson(cursor.toarray);</p>
+<p>   var cursor = db.query_regex.find({//查找description字段中以S开头e且启用多行匹配。</p>
+<pre><code>    description:
+    {
+        <span class="variable">$regex</span>:/^S/,<span class="variable">$options</span>:<span class="string">'m'</span>
+        }
+});
+</code></pre><p>   printjson(cursor.toarray);</p>
+<p>   var cursor = db.query_regex.find({//查找description字段中以S开头，它不能匹配多行</p>
+<pre><code>    description:
+    {
+        <span class="variable">$regex</span>:/^S/
+        }
+});
+</code></pre><p>   printjson(cursor.toarray);</p>
+<p>   var cursor = db.query_regex.find({//查找description字段中m和line之间所有字符，包括换行符，s可以点号忽略换行符，i会忽略掉大小写</p>
+<pre><code>    description:
+    {
+        <span class="variable">$regex</span>:/m.*line/,<span class="variable">$options</span>:<span class="string">'si'</span>
+        }
+});
+</code></pre><p>   printjson(cursor.toarray);</p>
+<p>   var pattern = “abc #category conde\n123 #item number”;<br>   var cursor = db.query_regex.find({//查找description字段中不区分大小写的<code>abc 123</code>，由于使用了x，所以会把#到换行符之间作为注释忽略掉，和//$regex:/abc123/,$options:’xi’</p>
+<pre><code>    description:
+    {
+        <span class="variable">$regex</span>:pattern,<span class="variable">$options</span>:<span class="string">'xi'</span>
+        }
+});
+</code></pre><p>   printjson(cursor.toarray);</p>
+</li>
+</ol>
+<ol>
+<li><p><code>findAndModify</code>函数执行分为<code>find</code>和<code>update</code>两步，属于<code>get-and-set</code>式的操作，它的功能强大之处在于可以保证操作的原子性。它对于操作查询以及执行其它需要取值的赋值风格的原子性操作是十分方便的，使用它可以实现一些简单的类事务操作。这个函数有七个参数：</p>
+<ul>
+<li>query:<document>:查询文档，用来指明要更新的条件</document></li>
+<li>sort:<document>:对查询结果排序，默认采用升序</document></li>
+<li>remove:<boolean>:布尔类型，表示是否删除文档</boolean></li>
+<li>update:<document>:对满足query条件的文档进行更新</document></li>
+<li>new:<boolean>:返回更新前的文档还是更新后的文档</boolean></li>
+<li>fields:<document>:投影，设置返回文档需要显示的字段</document></li>
+<li>upsert:<boolean>:与update函数的upsert参数含义相同，更新时如果不存在，就新插入一条。</boolean></li>
+</ul>
+</li>
+<li><p>findAndModify与update函数的比较如下：</p>
+<ul>
+<li>默认情况下，两个操作都只能修改一个文档(update-{multi:true})</li>
+<li>都以原子的方式来更新修改文档</li>
+<li>当多个文档满足条件：<ul>
+<li>findAndModify使用sort选项，对结果排序，选择第一个文档</li>
+<li>update不能选择具体更新那一个文档</li>
+</ul>
+</li>
+<li>返回值不同，findAndModify是具体文档，update是WriteResult对象</li>
+<li>findAndModify无法指定WriteConcern函数</li>
+</ul>
+</li>
+<li><p>下面是一个具体的例子：</p>
+<p>   dbService = connect(“localhost:27017”);<br>   db = dbService.getSiblingDB(“okuc”);</p>
+<p>   db.update_findAndModify.drop();<br>   var bulk = db.update_findAndModify.initializeUnorderedBulkOp();</p>
+<p>   var doc1 = </p>
+<pre><code>{
+    <span class="attribute">_id</span>:<span class="number">1</span>,
+    <span class="attribute">name</span>:<span class="string">"xiaoli"</span>,
+    <span class="attribute">age</span>:<span class="number">20</span>,
+    <span class="attribute">score</span>:<span class="number">90</span>
+}
+</code></pre><p>   bulk.insert(doc1);</p>
+<p>   var doc2 = </p>
+<pre><code>{
+    <span class="attribute">_id</span>:<span class="number">2</span>,
+    <span class="attribute">name</span>:<span class="string">"xiaoli"</span>,
+    <span class="attribute">age</span>:<span class="number">22</span>,
+    <span class="attribute">score</span>:<span class="number">95</span>
+}
+</code></pre><p>   bulk.insert(doc2);</p>
+<p>   bulk.execute();</p>
+<p>   var res = db.update_findAndModify.findAndModify({</p>
+<pre><code><span class="string">query:</span>{<span class="string">name:</span><span class="string">"xiaoli"</span>},
+sort：{<span class="string">age:</span><span class="number">1</span>},
+<span class="string">update:</span>{<span class="string">$inc:</span>{<span class="string">score:</span><span class="number">1</span>}},
+<span class="string">new:</span><span class="literal">true</span>,
+<span class="string">upsert:</span><span class="literal">true</span>
+</code></pre><p>   })<br>   printjson(res)<br>   var cursor = db.update_findAndModify.find();<br>   cursor.forEach(printjson)</p>
+<p>   var res = db.update_findAndModify.findAndModify({</p>
+<pre><code><span class="tag">query</span>:<span class="rules">{<span class="rule"><span class="attribute">name</span>:<span class="value"><span class="string">"xiaoli"</span></span></span></span>},
+<span class="tag">sort</span>：<span class="rules">{<span class="rule"><span class="attribute">age</span>:<span class="value"><span class="number">1</span></span></span></span>},
+<span class="tag">remove</span><span class="pseudo">:true</span>
+</code></pre><p>   })<br>   printjson(res)<br>   var cursor = db.update_findAndModify.find();<br>   cursor.forEach(printjson)</p>
+</li>
+</ol>
+<ol>
+<li><p>MongoDB是为分布式存储而设计，<code>_id</code>主键默认使用的是ObjectId类型的值，它比自增式主键更适合在分布式环境下使用，所以MongoDB默信不支持字段自增功能。利用findAndModify函数的get-and-set的原子特性，来实现<code>_id</code>的自增。</p>
+<p>   dbService = connect(“localhost:27017”);<br>   db = dbService.getSiblingDB(“okuc”);<br>   db.user_test.drop();</p>
+<p>   //初始化，_id为计数器的名字，seq字段为计数器的值。<br>   db.counters.insert({</p>
+<pre><code><span class="label">_id:</span><span class="string">"userid"</span>,
+<span class="label">seq:</span><span class="number">0</span>
+</code></pre><p>   })</p>
+<p>   //用于增加计数器的值，返回自增后的计数器的值<br>   function getNextSequence(name){</p>
+<pre><code>  var ret = db.counters.findAndModify({
+
+  query:{_id:name},
+  update:{<span class="variable">$inc</span>:{seq:<span class="number">1</span>}},
+  new:true,
+  upsert:true
+  });
+<span class="keyword">return</span> ret.seq;
+</code></pre><p>   }</p>
+<p>   //插入五条测试数据</p>
+<p>   for(var i=0;i&lt;5;i++){</p>
+<pre><code><span class="tag">db</span><span class="class">.user_test</span><span class="class">.insert</span>(<span class="rules">{
+    <span class="rule"><span class="attribute">_id</span>:<span class="value"><span class="function">getNextSequence</span>(<span class="string">"userid"</span>),
+    name:<span class="string">"Bob"</span>
+</span></span></span>});
+</code></pre><p>   }</p>
+<p>   var cursor = db.user_test.find();<br>   cursor.forEach(printjson)</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/数据库/">数据库</a>, <a href="/tags/mongodb/">mongodb</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/12/17/新手学习mongodb之六：普通索引/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2015/12/15/新手学习mongodb之四：使用find轻松查询数据/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/12/16/新手学习mongodb之五：游标及模糊查询/" data-title="新手学习mongodb之五：游标及模糊查询" data-url="http://www.52brt.com/2015/12/16/新手学习mongodb之五：游标及模糊查询/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

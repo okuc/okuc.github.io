@@ -1,0 +1,283 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Linux折腾记(2)-CentOS6下匿名共享可读写文件夹 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Linux折腾记(2)-CentOS6下匿名共享可读写文件夹"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-09-30T14:59:45.000Z"><a href="/2015/09/30/Linux折腾记(2)-CentOS6下匿名共享可读写文件夹/">2015-09-30</a></time>
+      
+      
+  
+    <h1 class="title">Linux折腾记(2)-CentOS6下匿名共享可读写文件夹</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>想把windows上的一些资料定时备份到linux，首先想到的就是利用共享文件夹的方式，折腾了一番，最终还是搞成功了。过程如下：</p>
+<ol>
+<li>首先安装<code>samba</code>及<code>samba-client</code>,中间不管提问什么，一路<code>y</code>即可。<pre><code>yum <span class="operator"><span class="keyword">install</span> samba samba-<span class="keyword">client</span></span>
+</code></pre></li>
+<li>在<code>home</code>下创建文件夹<code>test</code>。<pre><code><span class="keyword">mkdir</span> /home/<span class="keyword">test</span>
+</code></pre></li>
+<li><p>将<code>/etc/samba/smb.conf</code>文件中的内容替换成。</p>
+<pre><code>[global]
+<span class="constant">security</span>=share
+dos charset=cp936
+unix charset=gb2312
+
+[mygitback]
+<span class="constant">comment</span> = share
+<span class="constant">path</span> = /home/test
+<span class="constant">browseable</span> = yes
+guest ok = yes
+<span class="constant">writable</span> = yes
+</code></pre><a id="more"></a>
+</li>
+<li><p>测试配置是否正确<code>testparm</code>。</p>
+<pre><code>[root@htzh199 ~]# testparm
+<span class="operator"><span class="keyword">Load</span> smb config files <span class="keyword">from</span> /etc/samba/smb.conf
+rlimit_max: increasing rlimit_max (<span class="number">1024</span>) <span class="keyword">to</span> <span class="keyword">minimum</span> Windows <span class="keyword">limit</span> (<span class="number">16384</span>)
+Processing <span class="keyword">section</span> <span class="string">"[mygitback]"</span>
+<span class="keyword">WARNING</span>: The <span class="keyword">security</span>=<span class="keyword">share</span> <span class="keyword">option</span> <span class="keyword">is</span> deprecated
+Loaded services <span class="keyword">file</span> OK.
+<span class="keyword">Server</span> <span class="keyword">role</span>: ROLE_STANDALONE
+Press enter <span class="keyword">to</span> see a dump <span class="keyword">of</span> your service definitions
+
+[<span class="keyword">global</span>]
+    dos <span class="keyword">charset</span> = cp936
+    unix <span class="keyword">charset</span> = gb2312
+    <span class="keyword">security</span> = <span class="keyword">SHARE</span>
+    idmap config * : backend = tdb
+
+[mygitback]
+    <span class="keyword">comment</span> = <span class="keyword">share</span>
+    <span class="keyword">path</span> = /home/gitback
+    <span class="keyword">read</span> <span class="keyword">only</span> = <span class="keyword">No</span>
+    guest ok = Yes</span>
+</code></pre></li>
+<li>启动服务。<code>service smb restart</code></li>
+<li>此时共享可以访问了，在window下直接<code>\\ip</code>即可。<strong>不要用win10，用win10仍然没有办法访问。</strong>但是使用其它系统，只有读权限，没有写权限，添加写权限：<pre><code>vi /etc/selinux/config
+<span class="preprocessor"># This file controls the state of SELinux on the system.</span>
+<span class="preprocessor"># SELINUX= can take one of these three values:</span>
+<span class="preprocessor">#     enforcing - SELinux security policy is enforced.</span>
+<span class="preprocessor">#     permissive - SELinux prints warnings instead of enforcing.</span>
+<span class="preprocessor">#     disabled - No SELinux policy is loaded.</span>
+SELINUX=disabled  #将这个改为disable
+<span class="preprocessor"># SELINUXTYPE= can take one of these two values:</span>
+<span class="preprocessor">#     targeted - Targeted processes are protected,</span>
+<span class="preprocessor">#     mls - Multi Level Security protection.</span>
+SELINUXTYPE=targeted
+</code></pre></li>
+<li>再次用windows访问，现在能够正常进行读写了。</li>
+<li>如果还提示无写权限，可以使用<code>chmod 777 /home/test</code>进行授权，然后就可以了。</li>
+<li>可以继续配置随系统启动:<code>chkconfig smb on</code></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/linux/">linux</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/10/10/Linux折腾记(3)-CentOS6下安装Oracle JDK8/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2015/09/28/《Elasticsearch服务器开发》学习笔记（五）/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/09/30/Linux折腾记(2)-CentOS6下匿名共享可读写文件夹/" data-title="Linux折腾记(2)-CentOS6下匿名共享可读写文件夹" data-url="http://www.52brt.com/2015/09/30/Linux折腾记(2)-CentOS6下匿名共享可读写文件夹/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

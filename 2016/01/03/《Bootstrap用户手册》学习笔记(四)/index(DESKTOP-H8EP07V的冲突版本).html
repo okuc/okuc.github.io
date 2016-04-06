@@ -1,0 +1,565 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-01-03T14:06:32.000Z"><a href="/2016/01/03/《Bootstrap用户手册》学习笔记(四)/">2016-01-03</a></time>
+      
+      
+  
+    <h1 class="title"></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第3章_Bootstrap内置的布局组件(2)">第3章 Bootstrap内置的布局组件(2)</h2><ol>
+<li><p><strong>标签</strong>：标签非常适合显示计数结果、提示信息等 内容。</p>
+<pre><code><span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label"</span>&gt;</span>Default<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label label-success"</span>&gt;</span>Success<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label label-warning"</span>&gt;</span>Warning<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label label-important"</span>&gt;</span>Important<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label label-info"</span>&gt;</span>Info<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label label-inverse"</span>&gt;</span>Inverse<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+</code></pre></li>
+<li><p><strong>圆标签</strong>与标签类似，主要区别在于它们的两头更圆。它的颜色与标签的颜色是一样的。</p>
+<pre><code><span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge"</span>&gt;</span>1<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge badge-success"</span>&gt;</span>2<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge badge-warning"</span>&gt;</span>4<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge badge-important"</span>&gt;</span>6<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge badge-info"</span>&gt;</span>8<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge badge-inverse"</span>&gt;</span>10<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+</code></pre><a id="more"></a></li>
+<li><p><strong>排版相关的元素</strong></p>
+<ul>
+<li><p><strong>重头消息</strong><code>hero-unit</code>是一个内容区块，这个区块中的标题字号是加大的，而且边距也比较大，适合放在着陆页面。要在页面中放一个重头消息，只要给容器<code>&lt;div&gt;</code>添加<code>.hero-unit</code>类即可。除了<code>&lt;h1&gt;</code>的字号会加大以外，所有文本的<code>font-weight</code>都被减少到了<code>200</code>：</p>
+<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"hero-unit"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">h1</span>&gt;</span>Hello, World!<span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">p</span>&gt;</span>This is a simple hero unit, a simple jumbotron-style component for calling
+  extra attention to featured content or information.<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn btn-primary btn-large"</span>&gt;</span>Learn more<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre></li>
+<li><p><strong>页面标题</strong>会给页面中的标题添加更多的间隙，非常适合区分一个页面中的多个标题。要使用页面标题，把标题都包装在类为<code>.page-header</code>的<code>&lt;div&gt;</code>中即可：</p>
+<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"page-header"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">h1</span>&gt;</span>Example page header <span class="tag">&lt;<span class="title">small</span>&gt;</span>Subtext for header<span class="tag">&lt;/<span class="title">small</span>&gt;</span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre></li>
+</ul>
+</li>
+<li><p><strong>缩略图</strong>：很多网站都需要以网格布局显示图片，<code>Bootstrap</code>为此提供了一种便捷的组件 –缩略图。要创建缩略图，只要给图片加上<code>&lt;a&gt;</code>标签，再给这个标签添加<code>.thumbnail</code>类即可。这样就可以给图片加上 <code>4 像素</code>的内边距和一个<code>灰色边框</code>（见图 3-38 ）。而且，鼠标指针悬停时，图片四周还会出现动态光晕。</p>
+<pre><code>&lt;<span class="tag">a</span> href=<span class="string">"#"</span> class=<span class="string">"thumbnail"</span>&gt;
+  &lt;<span class="tag">img</span> alt=<span class="string">"Kittens!"</span> style=<span class="string">""</span> src=<span class="string">"http://placekitten.com/300/250"</span>&gt;
+&lt;/a&gt;
+</code></pre><p>在这个简单的缩略图基础上，还可以添加标题、按钮、文本，为此，需要把类为<code>.thumbnail</code>的<code>&lt;a&gt;</code>标签换成<code>&lt;div&gt;</code>。在这个<code>&lt;div&gt;</code>中，就可以添加任何内容了。由于此时的容器是<code>&lt;div&gt;</code>，因此可以通过默认的<code>.span*</code>类来设置缩略图大小。如果要显示多个缩略图，那就把它们放到一个无序列表中，每个列表项都会浮动到左侧。</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"thumbnails"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"span4"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"thumbnail"</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">img</span> <span class="attribute">data-src</span>=<span class="value">"holder.js/300x200"</span> <span class="attribute">alt</span>=<span class="value">"300x200"</span> <span class="attribute">style</span>=<span class="value">""</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"caption"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">h3</span>&gt;</span>Meats<span class="tag">&lt;/<span class="title">h3</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">p</span>&gt;</span>Bacon ipsum dolor sit amet sirloin pancetta shoulder tongue doner,
+           shank sausage.<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span> <span class="attribute">class</span>=<span class="value">"btn btn-primary"</span>&gt;</span>Eat now!<span class="tag">&lt;/<span class="title">a</span>&gt;</span> <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>
+           <span class="attribute">class</span>=<span class="value">"btn"</span>&gt;</span>Later...<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+      <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"span4"</span>&gt;</span>
+    ...
+  <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre></li>
+<li><p><strong>警示框</strong>：是一种为用户消息添加样式的组件。默认的警示框效果可以通过给<code>&lt;div&gt;</code>添加<code>.alert</code>类来实现：</p>
+<pre><code>&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"alert"</span>&gt;
+    &lt;a href=<span class="string">"#"</span> <span class="type">class</span>=<span class="string">"close"</span> data-dismiss=<span class="string">"alert"</span>&gt;&amp;<span class="keyword">times</span>;&lt;/a&gt;
+    &lt;strong&gt;Warning!&lt;/strong&gt; Not <span class="keyword">to</span> be alarmist, <span class="keyword">but</span> you have now been alerted.
+&lt;/<span class="keyword">div</span>&gt;
+</code></pre><p>这个<code>.alert</code>使用的是<code>jQuery</code>的警示框插件，要显示关闭警示框按钮，可以创建一个包含<code>data-dismiss=&quot;alert&quot;</code>属性的按钮。移动版<code>Safari</code>和<code>Opera</code>浏览器还需要加上<code>ref=&quot;#&quot;</code>才行。</p>
+<p>如果用户消息太长，可以考虑使用<code>.alert-block</code>类。这个类会给包含消息的容器上、下多添加一些边距，让多行文本看起来更舒服。</p>
+<p>除了浅黄色，还有三种颜色选项，可以帮助我们传达警示的含义。这三种颜色的警示框分别需要额外添加<code>.alert-error</code>(浅红)、<code>.alert-success</code>(浅绿)和<code>.alert-info</code>(浅蓝)类。</p>
+</li>
+<li><p><strong>进度条</strong>：默认的进度条背景为浅灰色，进度条本身为蓝色。进度条背景用类为<code>.progress</code>的<code>&lt;div&gt;</code>创建，进度条用类为<code>.bar</code>的<code>&lt;div&gt;</code>创建。进度条的百分比则是通过在<code>style</code>属性中指定<code>CSS</code>的<code>width值</code>设置的。这里的<code>style=&quot;width: 60%;&quot;</code>表示进度完成了<code>60%</code>：</p>
+<pre><code>&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"progress"</span>&gt;
+  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"bar"</span> style=<span class="string">"width: 60%;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;
+&lt;/<span class="keyword">div</span>&gt;
+</code></pre><p>创建<strong>带条纹的进度条</strong>只需给容器<code>&lt;div&gt;</code>添加<code>.progress-striped</code>类即可,纹式进度条在 IE7 和 IE8 中无效。</p>
+<pre><code>&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"progress progress-striped"</span>&gt;
+  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"bar"</span> style=<span class="string">"width: 20%;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;
+&lt;/<span class="keyword">div</span>&gt;
+</code></pre><p>还可以让<strong>条纹动起来</strong>，像理发店门口的转花筒一样：</p>
+<pre><code>&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"progress progress-striped active"</span>&gt;
+  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"bar"</span> style=<span class="string">"width: 40%;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;
+&lt;/<span class="keyword">div</span>&gt;
+</code></pre><p>除了蓝色进度条之外，还可以有<strong>绿色、黄色和红色进度条</strong>，需要额外添加的类分别是<code>.bar-success</code>、<code>.bar-warning</code>和<code>.bar-danger</code>。还可像下面这样把进度条拼接起来，基于多个元素构成某种图案：</p>
+<pre><code>&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"progress"</span>&gt;
+  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"bar bar-success"</span> style=<span class="string">"width: 35%;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;
+  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"bar bar-warning"</span> style=<span class="string">"width: 20%;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;
+  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"bar bar-danger"</span> style=<span class="string">"width: 10%;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;
+&lt;/<span class="keyword">div</span>&gt;
+</code></pre></li>
+<li><p><strong>媒体对象</strong>类似于微博，<code>Bootstrap</code>把设计和添加样式的自由留给了用户，但为此提供了坚实的基础。与<code>Bootstrap</code>中的其他组件一样，媒体对象的目标（标记少、易扩展）也是通过给一些简单的标记应用类来实现的。有两种媒体对象：<code>.media</code>和<code>.media-list</code>。展示了前一种形式的媒体对象。如果你准备的是一个无序列表，那么就使用<code>.media-list</code>；如果你只有一个<code>&lt;div&gt;</code>元素，那么就使用<code>.media</code>：</p>
+<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"media"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"pull-left"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">img</span> <span class="attribute">class</span>=<span class="value">"media-object"</span> <span class="attribute">data-src</span>=<span class="value">"holder.js/64x64"</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"media-body"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">h4</span> <span class="attribute">class</span>=<span class="value">"media-heading"</span>&gt;</span>Media heading<span class="tag">&lt;/<span class="title">h4</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">p</span>&gt;</span>...<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+    <span class="comment">&lt;!-- 嵌套的媒体对象 --&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"media"</span>&gt;</span>
+      ...
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre><p>要使用媒体列表，把容器<code>&lt;div&gt;</code>改为<code>&lt;ul&gt;</code>，然后添加<code>.media-list</code>类。因为媒体对象可以嵌套，所以很适合展示评论或其他需要以列表展示的信息。</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"media-list"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"media"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"pull-left"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">img</span> <span class="attribute">class</span>=<span class="value">"media-object"</span> <span class="attribute">data-src</span>=<span class="value">"holder.js/64x64"</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"media-body"</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">h4</span> <span class="attribute">class</span>=<span class="value">"media-heading"</span>&gt;</span>Media heading<span class="tag">&lt;/<span class="title">h4</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">p</span>&gt;</span>...<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+      ...
+      <span class="comment">&lt;!-- Nested media object --&gt;</span>
+      <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"media"</span>&gt;</span>
+        ...
+     <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre></li>
+<li><p><strong>洼地</strong>就是一个容器<code>&lt;div&gt;</code>，让其中的内容看起来像是陷入页面一样。我一般用洼地来显示博客的元信息，比如作者、日期和类别。要创建洼地，只要把内容包装在类为<code>.well</code>的<code>&lt;div&gt;</code>中即可：</p>
+<pre><code>&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"well"</span>&gt;
+  ...
+&lt;/<span class="keyword">div</span>&gt;
+</code></pre><p>还有两个类可以与<code>.well</code>同时使用：<code>.well-large</code>和<code>.well-small</code>。这两个类影响内边距，前者会增大内边距，后面会减小内边距。</p>
+<pre><code>&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"well well-large"</span>&gt;
+  Look, I'm <span class="keyword">in</span> a .well-large!
+&lt;/<span class="keyword">div</span>&gt;
+&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"well well-small"</span>&gt;
+  Look, I'm <span class="keyword">in</span> a .well-small!
+&lt;/<span class="keyword">div</span>&gt;
+</code></pre></li>
+<li><p><strong>元素向左浮动</strong>：要想把元素浮动到容器左侧，使用<code>.pull-left</code>类：</p>
+<pre><code>&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"pull-left"</span>&gt;
+  ...
+&lt;/<span class="keyword">div</span>&gt;
+ .pull-left {
+  float: left;
+}
+</code></pre></li>
+<li><p><strong>元素向右浮动</strong>：要想把元素浮动到容器右侧，使用<code>.pull-right</code>类：</p>
+<pre><code>&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"pull-right"</span>&gt;
+  ...
+&lt;/<span class="keyword">div</span>&gt;
+ .pull-right {
+  float: right;
+}
+</code></pre></li>
+<li><p><strong>清除浮动 清除浮动</strong>要清除任何元素的浮动，使用<code>.clearfix</code>类。如果有两个不同大小的元素都向一侧浮动，就需要把那个在代码中位于后面的元素向下推或者说清除之前的内容。使用一个带<code>.clearfix</code>类的空<code>&lt;div&gt;</code>就可以达到这个目的：</p>
+<pre><code>&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"clearfix"</span>&gt;&lt;/<span class="keyword">div</span>&gt;
+ .clearfix {
+  *zoom: <span class="number">1</span>;
+  &amp;:<span class="keyword">before</span>,
+  &amp;:<span class="keyword">after</span> {
+    display: table;
+    content: <span class="string">""</span>;
+  }  &amp;:<span class="keyword">after</span> {
+    clear: both;
+  }
+}
+</code></pre></li>
+</ol>
+<h2 id="第_4_章Bootstrap支持的JavaScript插件">第 4 章Bootstrap支持的JavaScript插件</h2><ol>
+<li><p>通常，最好先检查确认 DOM 已经就绪，然后再执行 JavaScript 调用语句。在 DOM 就绪前执行<code>JavaScript</code>调用的话，浏览器可能还没有准备好要操作的元素。使用<code>jQuery</code>，先选择文档（或整个页面的内容）然后调用<code>.ready()</code>方法就可以了：</p>
+<pre><code>$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        alert(<span class="string">'Page has loaded'</span>);
+        <span class="comment">// 页面加载完成后，才会弹出警告框</span>
+});
+</code></pre><p>如前所述，<code>Bootstrap</code>提供了可以嵌入<code>HTML</code>元素中作为数据属性的<code>Data API</code>。如果想解除对数据属性的绑定，可以使用以下<code>JavaScript</code>代码：</p>
+<pre><code>$(<span class="string">'body'</span>).<span class="function"><span class="title">off</span><span class="params">(<span class="string">'.data-api'</span>)</span></span>
+</code></pre><p>如果你只想禁用某一个插件，可以使用这个插件的命名空间加上data-api命名空间：</p>
+<pre><code>$(<span class="string">'body'</span>).<span class="function"><span class="title">off</span><span class="params">(<span class="string">'.alert.data-api'</span>)</span></span> 
+</code></pre></li>
+<li><p><code>Bootstrap</code>的开发者希望用户通过<code>JavaScript API</code>使用所有插件。所有公开的<code>API</code>都是单个可连缀的方法，返回操作的元素集合：</p>
+<pre><code>$(<span class="string">'.btn.danger'</span>).<span class="function"><span class="title">button</span><span class="params">(<span class="string">'toggle'</span>)</span></span>.<span class="function"><span class="title">addClass</span><span class="params">(<span class="string">'active'</span>)</span></span>
+</code></pre><p>所有方法都可以接受一个可选的选项对象、一个表示要调用的方法的字符串，或者什么参数也不接受（表示初始化插件的默认行为）：</p>
+<pre><code>$(<span class="string">"#myModal"</span>).<span class="function"><span class="title">modal</span><span class="params">()</span></span>   <span class="comment">// 初始化默认功能</span>
+$(<span class="string">"#myModal"</span>).<span class="function"><span class="title">modal</span><span class="params">({ keyboard: false })</span></span>        <span class="comment">// 初始化不支持键盘</span>
+$(<span class="string">"#myModal"</span>).<span class="function"><span class="title">modal</span><span class="params">(<span class="string">'show'</span>)</span></span>        <span class="comment">// 初始化并立即调用show</span>
+</code></pre></li>
+<li><p><strong>模态框</strong></p>
+<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"modal hide fade"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"modal-header"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">button</span> <span class="attribute">type</span>=<span class="value">"button"</span> <span class="attribute">class</span>=<span class="value">"close"</span> <span class="attribute">data-dismiss</span>=<span class="value">"modal"</span> <span class="attribute">aria-hidden</span>=<span class="value">"true"</span>&gt;</span>
+    &amp;times;<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">h3</span>&gt;</span>Modal header<span class="tag">&lt;/<span class="title">h3</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"modal-body"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">p</span>&gt;</span>One fine body…<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"modal-footer"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span> <span class="attribute">class</span>=<span class="value">"btn"</span>&gt;</span>Close<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span> <span class="attribute">class</span>=<span class="value">"btn btn-primary"</span>&gt;</span>Save changes<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre><p>要打开模态框，必须有一个触发装置。我一般会使用按钮或链接，在下面的<code>&lt;a&gt;</code>标签中，<code>href=&quot;myModal&quot;</code>表示你要在页面上加载的模态框。</p>
+<p>关于模态框，重点要关注 3 个类。第一个是<code>.modal</code>，它只用来把一个<code>&lt;div&gt;</code>标注为模态框。第二个是<code>.hide</code>，这个类告诉浏览器先把模态框隐藏起来，在用户单击触发装置时再显示。最后一个是<code>.fade</code>，这个类会导致模态框从无到有或从有到无时，以淡入淡出的效果呈现。</p>
+<pre><code><span class="comment">&lt;!-- 触发模态框的按钮 --&gt;</span>
+<span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#myModal"</span> <span class="attribute">role</span>=<span class="value">"button"</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">data-toggle</span>=<span class="value">"modal"</span>&gt;</span>Launch demo
+modal<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+<span class="comment">&lt;!-- 模态框 --&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"myModal"</span> <span class="attribute">class</span>=<span class="value">"modal hide fade"</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">role</span>=<span class="value">"dialog"</span>
+<span class="attribute">aria-labelledby</span>=<span class="value">"myModalLabel"</span> <span class="attribute">aria-hidden</span>=<span class="value">"true"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"modal-header"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">button</span> <span class="attribute">type</span>=<span class="value">"button"</span> <span class="attribute">class</span>=<span class="value">"close"</span> <span class="attribute">data-dismiss</span>=<span class="value">"modal"</span>
+    <span class="attribute">aria-hidden</span>=<span class="value">"true"</span>&gt;</span>×<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">h3</span> <span class="attribute">id</span>=<span class="value">"myModalLabel"</span>&gt;</span>Modal header<span class="tag">&lt;/<span class="title">h3</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"modal-body"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">p</span>&gt;</span>One fine body…<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"modal-footer"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">data-dismiss</span>=<span class="value">"modal"</span>
+    <span class="attribute">aria-hidden</span>=<span class="value">"true"</span>&gt;</span>Close<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn btn-primary"</span>&gt;</span>Save changes<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span> 
+</code></pre><p>使用<code>Bootstrap</code>的<code>JavaScript Data API</code>，只要设置几个数据属性，就可实现<strong>模态框的调用</strong>。为此，在作为开关的链接或按钮上设置<code>data-toggle=&quot;modal&quot;</code>，再把<code>data-target=&quot;#foo&quot;</code>设置为模态框的<code>ID</code>。</p>
+<p>要通过<code>JavaScript</code>调用<code>id=&quot;myModal&quot;</code>的模态框，只需一行代码：<code>$(&#39;#myModal&#39;).modal(options)</code></p>
+<p><strong>选项</strong>可以通过数据属性传入也可以通过<code>JavaScript</code>传入。要使用数据属性，请在选项名称前加上<code>data-</code>（ 如<code>data-backdrop=&quot;&quot;</code>）。几种选项如下：</p>
+<ul>
+<li><code>backdrop</code>:<code>Boolean</code>型，默认为<code>true</code>包含模态框背板元素。如果不想单击背板关闭模态框，为这个数据属性指定<code>static</code>。</li>
+<li><code>keyboard</code>:<code>Boolean</code>型，默认为<code>true</code>,按<code>Esc</code>键关闭模态框</li>
+<li><code>show</code>:<code>Boolean</code>型，默认为<code>true</code>,初始状态下模态框是否可见</li>
+<li><p><code>remote</code>:<code>URL</code>型，默认为<code>false</code>,如果提供了远程<code>URL</code>，内容将通过<code>jQuery</code>的<code>load</code>方法加载，然后插入<code>.modal-body</code>元素。如果使用的是数据<code>API</code>，可以使用<code>href</code>属性指定远程资源地址，下面是一个例子：<br><code>&lt;a data-toggle=&quot;modal&quot; href=&quot;remote.html&quot; data-target=&quot;#modal&quot;&gt;click me&lt;/a&gt;</code></p>
+<p><strong>模态框相关的几个方法</strong>如下：</p>
+</li>
+<li><p>将内容激活为模态框，接受可选的选项对象。</p>
+<pre><code><span class="variable">$(</span><span class="string">'#myModal'</span>).modal({
+        <span class="symbol">keyboard:</span> <span class="keyword">false</span>
+})
+</code></pre></li>
+<li><p>手动开关模态框。</p>
+<pre><code>$(<span class="string">'#myModal'</span>).<span class="function"><span class="title">modal</span><span class="params">(<span class="string">'toggle'</span>)</span></span>
+</code></pre></li>
+<li><p>手动打开模态框。</p>
+<pre><code>$(<span class="string">'#myModal'</span>).<span class="function"><span class="title">modal</span><span class="params">(<span class="string">'show'</span>)</span></span>
+</code></pre></li>
+<li><p>手动关闭模态框。</p>
+<pre><code>$(<span class="string">'#myModal'</span>).<span class="function"><span class="title">modal</span><span class="params">(<span class="string">'hide'</span>)</span></span> 
+</code></pre><p><strong>模态框的事件</strong></p>
+</li>
+<li><p><code>show</code>:在实例方法show被调用时触发</p>
+</li>
+<li><p><code>shown</code>:在模态框已经对用户可见时（ <code>CSS</code> 过渡完成后）触发</p>
+</li>
+<li><code>hide</code>:在实例方法hide被调用时触发</li>
+<li><p><code>hidden</code>:在模态框已经对用户不可见时（ <code>CSS</code> 过渡完成后）触发</p>
+<pre><code> $(<span class="string">'#myModal'</span>).<span class="keyword">on</span>(<span class="string">'hidden'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> <span class="comment">{
+         alert('Hey girl, I heard you like modals...');
+}</span>)</span>
+</code></pre></li>
+</ul>
+</li>
+<li><p><strong>下拉菜单</strong>要使用下拉菜单，给一个链接或按钮添加<code>data-toggle=&quot;dropdown&quot;</code>属性，以便能够通过它打开下拉菜单。</p>
+<pre><code><span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"dropdown"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span> <span class="attribute">id</span>=<span class="value">"drop"</span> <span class="attribute">role</span>=<span class="value">"button"</span> <span class="attribute">class</span>=<span class="value">"dropdown-toggle"</span>
+     <span class="attribute">data-toggle</span>=<span class="value">"dropdown"</span>&gt;</span>Word <span class="tag">&lt;<span class="title">b</span> <span class="attribute">class</span>=<span class="value">"caret"</span>&gt;</span><span class="tag">&lt;/<span class="title">b</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span> <span class="attribute">role</span>=<span class="value">"menu"</span> <span class="attribute">aria-labelledby</span>=<span class="value">"drop"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>MAKE magazine<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>WordPress DevelopmentS<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Speaking Engagements<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"divider"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Social Media<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+</code></pre><p>如果你想让链接任何时候都可以打开（比如在<code>JavaScript</code>无效时也能打开），就用<code>data-target=&quot;#&quot;</code>代替<code>href=&quot;#&quot;</code>，并给<code>href</code>属性指定链接：</p>
+<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"dropdown"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"dropdown-toggle"</span> <span class="attribute">id</span>=<span class="value">"dLabel"</span> <span class="attribute">role</span>=<span class="value">"button"</span>
+     <span class="attribute">data-toggle</span>=<span class="value">"dropdown"</span> <span class="attribute">data-target</span>=<span class="value">"#"</span> <span class="attribute">href</span>=<span class="value">"/page.html"</span>&gt;</span>
+    Dropdown
+    <span class="tag">&lt;<span class="title">b</span> <span class="attribute">class</span>=<span class="value">"caret"</span>&gt;</span><span class="tag">&lt;/<span class="title">b</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span> <span class="attribute">role</span>=<span class="value">"menu"</span> <span class="attribute">aria-labelledby</span>=<span class="value">"dLabel"</span>&gt;</span>
+    ...
+  <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre><p>使用JS调用下拉菜单，使用如下代码：<code>$(&#39;.dropdown-toggle&#39;).dropdown()</code><br> 有一个简单的方法可以在代码里打开或隐藏下拉菜单，没有选项：<code>$().dropdown(&#39;toggle&#39;)</code></p>
+</li>
+<li><p><strong>Scrollspy 插件</strong>可以根据滚动位置更新导航链接。在静态实现中，可以根据滚动位置给导航条添加<code>.active</code>类。要通过数据属性添加<code>Scrollspy 插件</code>，把<code>data-spy=&quot;scroll&quot;</code>添加给要“监控”的元素（通常是页面主体）把<code>data-arget=&quot;.navbar&quot;</code>设置为要根据滚动改变类的滚动条。另外，被监控的元素中还要有对应的元素，其 <code>ID</code> 与导航条链接的引用目标一致。</p>
+<p>如果要监控页面主体，需要给<code>&lt;body&gt;</code>标签添加<code>data-spy=&quot;scroll&quot;</code>，以及一个<code>data-target=&quot;.navbar&quot;</code>属性，当然这个<code>data-target</code>指向显示导航链接的导航条：</p>
+<pre><code>&lt;<span class="keyword">body </span><span class="preprocessor">data</span>-spy=<span class="string">"scroll"</span> <span class="preprocessor">data</span>-target=<span class="string">".navbar"</span>&gt;...&lt;/<span class="keyword">body&gt;</span>
+</code></pre><p>在导航条中，需要让每个链接都充当页面中锚点（ <code>ID</code> ）的指示器（<code>href</code>）：</p>
+<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"navbar"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"navbar-inner"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"container"</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"brand"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Jake's BBQ<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"nav-collapse"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav"</span>&gt;</span>
+          <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"active"</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Home<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+          <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#pork"</span>&gt;</span>Pork<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+          <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#beef"</span>&gt;</span>Beef<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+          <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#chicken"</span>&gt;</span>Chicken<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+      <span class="tag">&lt;/<span class="title">div</span>&gt;</span><span class="comment">&lt;!-- /.nav-collapse --&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span><span class="comment">&lt;!-- /navbar-inner --&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre><p>如果不是通过数据属性，而是要通过<strong><code>JavaScript</code></strong>来调用滚动监控插件，首先要选择作为指示器的滚动条，然后调用<code>.scrollspy()</code>函数：</p>
+<pre><code>$(<span class="string">'#navbar'</span>).<span class="function"><span class="title">scrollspy</span><span class="params">()</span></span> 
+</code></pre><p>在通过<code>JavaScript</code>调用滚动监控插件时，需要调用<code>.scrollspy(&#39;refresh&#39;)</code>方法更新 <code>DOM</code> 。这样可以反映最新<code>DOM</code>结构。</p>
+<pre><code>$(<span class="string">'[data-spy="scroll"]'</span>).each(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{
+        <span class="keyword">var</span> $spy = $(<span class="keyword">this</span>).scrollspy(<span class="string">'refresh'</span>)
+}); 
+</code></pre><p><strong>选项</strong>可以通过数据属性或<code>JavaScript</code>设置。在使用数据属性时，要给选项名称前面加上<code>data-</code>前缀，比如<code>data-offset=&quot;&quot;</code>。它只有<code>offset</code>一个选项，类型为<code>number</code>，默认值是<code>10</code>,是用来计算滚动位置时距离顶部的偏移量。</p>
+<p>在使用固定导航条的情况下，<code>offset</code>选项是很有用的。为正确计算滚动位置，应该将这个选项设置为<code>50像素</code>左右。</p>
+<p><strong>事件</strong>：<code>activate</code>：滚动监控器激活新项时触发。</p>
+</li>
+<li><p><strong>可切换的标签页</strong>通过组合一些数据属性，很容易创建标签页式界面。为此，先创建一个.nav用于导航，然后再把标签页的内容包装在类为<code>.tab-content</code>的<code>&lt;div&gt;</code>中：</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-tabs"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#home"</span> <span class="attribute">data-toggle</span>=<span class="value">"tab"</span>&gt;</span>Home<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#profile"</span> <span class="attribute">data-toggle</span>=<span class="value">"tab"</span>&gt;</span>Profile<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#messages"</span> <span class="attribute">data-toggle</span>=<span class="value">"tab"</span>&gt;</span>Messages<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#settings"</span> <span class="attribute">data-toggle</span>=<span class="value">"tab"</span>&gt;</span>Settings<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"tab-content"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"tab-pane active"</span> <span class="attribute">id</span>=<span class="value">"home"</span>&gt;</span>...<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"tab-pane"</span> <span class="attribute">id</span>=<span class="value">"profile"</span>&gt;</span>...<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"tab-pane"</span> <span class="attribute">id</span>=<span class="value">"messages"</span>&gt;</span>...<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"tab-pane"</span> <span class="attribute">id</span>=<span class="value">"settings"</span>&gt;</span>...<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre><p><strong>用法</strong>要在页面中启用标签页，可以使用<code>Bootstrap</code>的<code>Data API</code>，也可以直接使用<code>JavaScript</code>。使用<code>Data API</code>的情况下，需要给链接添加<code>data-toggle</code>属性，然后就可以按照链接的<code>href</code>属性，激活带<code>.tab-pane</code>类和相关<code>ID</code>的元素。此外，用<code>data-target=&quot;&quot;</code>取代<code>href=&quot;#&quot;</code>也可以实现同样的功能。</p>
+<p>以下是通过<code>JavaScript</code>激活标签页的代码：</p>
+<pre><code>$(<span class="string">'#myTab a'</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>{
+        e.preventDefault();
+        $(<span class="keyword">this</span>).tab(<span class="string">'show'</span>);
+})
+</code></pre><p>以下是切换到个别标签页的不同方式：</p>
+<pre><code><span class="variable">$(</span><span class="string">'#myTab a[href="#profile"]'</span>).tab(<span class="string">'show'</span>); <span class="regexp">//</span> 按照名称选择标签页
+<span class="variable">$(</span><span class="string">'#myTab a:first'</span>).tab(<span class="string">'show'</span>); <span class="regexp">//</span> 选择第一个标签页
+<span class="variable">$(</span><span class="string">'#myTab a:last'</span>).tab(<span class="string">'show'</span>); <span class="regexp">//</span> 选择最后一个标签页
+<span class="variable">$(</span><span class="string">'#myTab li:eq(2) a'</span>).tab(<span class="string">'show'</span>); <span class="regexp">//</span> 选择第三个标签页（索引<span class="number">0</span>为第一个）
+</code></pre><p><strong>事件</strong>标签页有两个事件：</p>
+<ul>
+<li><code>show</code>在标签显示但显示完之前触发。使用<code>event.target</code>和<code>event.relatedTarget</code>可以取得当前和之前活动的标签页</li>
+<li><code>shown</code>在标签显示且显示完之后触发。使用<code>event.target</code>和<code>event.relatedTarget</code>可以取得当前和之前活动的标签页</li>
+</ul>
+<p>下面是一个例子：</p>
+<pre><code>$(<span class="string">'a[data-toggle="tab"]'</span>).on(<span class="string">'shown'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>{
+        e.target <span class="comment">// 当前活动的标签页</span>
+        e.relatedTarget <span class="comment">// 之前活动标签页</span>
+})
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/前端/">前端</a>, <a href="/tags/Bootstrap/">Bootstrap</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2016/01/04/《Bootstrap用户手册》学习笔记(五)/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2016/01/02/《Bootstrap用户手册》学习笔记(三)/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/01/03/《Bootstrap用户手册》学习笔记(四)/" data-title="" data-url="http://www.52brt.com/2016/01/03/《Bootstrap用户手册》学习笔记(四)/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

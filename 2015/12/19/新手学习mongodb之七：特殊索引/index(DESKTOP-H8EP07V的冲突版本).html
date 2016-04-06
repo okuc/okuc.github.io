@@ -1,0 +1,501 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>新手学习mongodb之七：特殊索引 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="新手学习mongodb之七：特殊索引"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-19T14:06:32.000Z"><a href="/2015/12/19/新手学习mongodb之七：特殊索引/">2015-12-19</a></time>
+      
+      
+  
+    <h1 class="title">新手学习mongodb之七：特殊索引</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li>地理空间索引可以对地理位置数据建立索引条目，Mongo原生支持地理位置索引，可以直接用于位置距离计算和查询。MongoDB对原生支持的查询函数在性能上进行了高度的优化，与其它的数据库相比，具有很高的查询效率。MongoDB支持两种类型的地理空间索引：<ul>
+<li>球面：<code>2dsphere索引</code></li>
+<li>平面：<code>2d索引</code><a id="more"></a></li>
+</ul>
+</li>
+<li><code>2dsphere球面索引</code>在一个类似于地球的球形表面上来计算地理数据，在进行数据查询晨，MongoDB使用的是<code>WGS84</code>地心坐标系。<br> 2dsphere索引支持两种类型的数据格式：<ul>
+<li>GeoJSON对象</li>
+<li>普通坐标对(Legacy Coordinate Pairs)对象<a id="more"></a></li>
+</ul>
+</li>
+<li><p>GeoJSON是一种对各种地理数据结构进行编码的数据格式，使用基于Javascript对象的表示方法，可以用于地理空间信息的交换。</p>
+<p>2dsphere索引使用GeoJSON对象来存储位置数据，GeoJSON对象可以表示地理特征，支持多种几何类型，具体包括：<code>Point(点)</code>、<code>LineString(线)</code>、<code>Polygon(面)</code>、<code>MultiPoint(多点)</code>、<code>MultiLineString(多线)</code>、<code>MultiPolygon(多面)</code>、<code>GeoMetryCollection(几何对象)</code>，后四项是在Mongodb2.6版本以后引用的。</p>
+</li>
+<li><p>GeoJSON对象包含一个type字段和一个coordinates字段，格式如下：</p>
+<pre><code>{&lt;location field&gt;:{
+        <span class="class"><span class="keyword">type</span>:</span><span class="string">"&lt;GeoJson type&gt;"</span>,<span class="comment">//几何图形类型</span>
+        coordinates:&lt;coordinates&gt; <span class="comment">//[经度，纬度]</span>
+    }
+
+}
+</code></pre></li>
+</ol>
+<pre><code>点：`{loc:{type:<span class="string">"Point"</span>,coordinates:[<span class="number">40</span>,<span class="number">5</span>]}}`
+
+线段：`{loc:{type:<span class="string">"LineString"</span>,coordinates:[[<span class="number">40</span>,<span class="number">5</span>],[<span class="number">41</span>,<span class="number">6</span>]]}}`
+
+面：`{loc:{type:<span class="string">"Polygon"</span>,coordinates:[[[<span class="number">0</span>,<span class="number">0</span>],[<span class="number">3</span>,<span class="number">6</span>],[<span class="number">6</span>,<span class="number">1</span>],[<span class="number">0</span>,<span class="number">0</span>]]]}}`，面的点是闭合的，第一个点和最后一个点相同
+</code></pre><ol>
+<li><p>创建球面索引引用createIndex函数，将索引字段设置为2dsphere即可。在创建索引时，可以为其指定<code>2dsphereIndexVersion</code>选项。例如：<code>db.test.createIndex({loc:&quot;2dsphere&quot;,2dsphereIndexVersion:2})</code></p>
+<p>从MongoDB2.6开始，默认情况下使用的是第二版本的球面索引，与第一版的球面索引相比，新版本增加了对多点、多线、多面以及几何集合的支持。</p>
+<p>创建球面索引时，有几个问题需要注意：</p>
+<ul>
+<li>只能在拥有GeoJSON和普通坐标对对象的字段上创建球面索引，而且一旦在某个字段上创建了球面索引，该字段只能用来存储以上两种格式的地理信息数据。</li>
+<li>默认情况下，球面索引是稀疏的，并且会自动忽略掉<code>spare:true</code>选项。</li>
+<li>当复合索引中包含球面索引字段时，只有球面索引可以决定是否引用一条文档。</li>
+<li>在分片集合上，球面索引不能作为片键来使用。</li>
+</ul>
+</li>
+<li><p>与2dsphere索引查询有关的操作符：</p>
+<ul>
+<li><code>$geoWithin</code>:包含关系<ul>
+<li><code>$geoIntersects</code>:相交关系</li>
+<li><code>$near</code>:接近点判断</li>
+<li><code>$nearSpher</code>:接近点判断(球面图形)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>这是一个演示例子：</p>
+<pre><code>dbService = connect(<span class="string">"localhost:27017"</span>);
+db = dbService.getSiblingDB(<span class="string">"okuc"</span>);
+
+db.index_2dsphere.drop();
+var bulk = db.index_2dsphere.initializeUnorderedBulkOp();
+
+var doc1= {
+        <span class="string">"address"</span>:<span class="string">"北京市西城区鼓楼地铁北"</span>，
+        <span class="string">"loc"</span>:{<span class="string">"type"</span>:<span class="string">"point"</span>,<span class="string">"coordinates"</span>:[<span class="number">116.393453</span>,<span class="number">39.962571</span>]}
+}
+bulk.<span class="keyword">insert</span>(doc1);
+
+var doc2= {
+        <span class="string">"address"</span>:<span class="string">"北京市西城区永定门东街"</span>，
+        <span class="string">"loc"</span>:{<span class="string">"type"</span>:<span class="string">"point"</span>,<span class="string">"coordinates"</span>:[<span class="number">116.405738</span>,<span class="number">39.878415</span>]}
+}
+bulk.<span class="keyword">insert</span>(doc2);
+
+var doc3= {
+        <span class="string">"address"</span>:<span class="string">"北京市东城区长安街"</span>，
+        <span class="string">"loc"</span>:{<span class="string">"type"</span>:<span class="string">"point"</span>,<span class="string">"coordinates"</span>:[<span class="number">116.403982</span>,<span class="number">39.915425</span>]}
+}
+bulk.<span class="keyword">insert</span>(doc3);
+
+var doc4= {
+        <span class="string">"address"</span>:<span class="string">"鼓楼-长安街"</span>，
+        <span class="string">"loc"</span>:{<span class="string">"type"</span>:<span class="string">"point"</span>,<span class="string">"coordinates"</span>:[[[<span class="number">116.393453</span>,<span class="number">39.962571</span>],
+                                                                                 [<span class="number">116.403982</span>,<span class="number">39.915425</span>],
+                                                                                  [<span class="number">116.405738</span>,<span class="number">39.878415</span>],
+                                                                                  [<span class="number">116.393453</span>,<span class="number">39.962571</span>]
+        ]]}
+}
+bulk.<span class="keyword">insert</span>(doc4);
+
+bulk.execute();
+
+//建立索引
+var result = db.index_2dsphere.createIndex({loc:<span class="string">"2dsphere"</span>})
+printjson(result)
+
+//genWithin操作符
+var cursor = db.index_2dsphere.find({loc:
+        {
+             <span class="variable">$geoWithin</span>://包含操作符
+                     {
+                        <span class="variable">$geometry</span>://指明形状
+                            {
+                                type:<span class="string">"Polygon"</span>,
+                                coordinates:[[[<span class="number">116.393545</span>,<span class="number">39.982595</span>],
+                                                         [<span class="number">116.481420</span>,<span class="number">39.982014</span>],
+                                                         [<span class="number">116.484214</span>,<span class="number">39.850226</span>],
+                                                         [<span class="number">116.296576</span>,<span class="number">39.837899</span>],
+                                                         [<span class="number">116.393545</span>,<span class="number">39.982595</span>]
+                                ]]
+                            }
+                    }
+        }
+    })
+printjson(cursor.toArray())
+
+//geoIntersects相交操作符(包括包含)
+var cursor = db.index_2dsphere.find({loc:
+        {
+             <span class="variable">$geoIntersects</span>://相交操作符
+                     {
+                        <span class="variable">$geometry</span>://指明形状
+                            {
+                                type:<span class="string">"Polygon"</span>,
+                                coordinates:[[[<span class="number">116.393545</span>,<span class="number">39.982595</span>],
+                                                         [<span class="number">116.481420</span>,<span class="number">39.982014</span>],
+                                                         [<span class="number">116.484214</span>,<span class="number">39.850226</span>],
+                                                         [<span class="number">116.296576</span>,<span class="number">39.837899</span>],
+                                                         [<span class="number">116.393545</span>,<span class="number">39.982595</span>]
+                                ]]
+                            }
+                    }
+        }
+    },{_id:<span class="number">0</span>})
+printjson(cursor.toArray())
+
+//near操作符，查找符近的点
+var cursor = db.index_2dsphere.find({loc:
+        {
+             <span class="variable">$near</span>://附近操作符
+                     {
+                        <span class="variable">$geometry</span>://指明形状
+                            {
+                                type:<span class="string">"Point"</span>,
+                                coordinates:[<span class="number">116.403982</span>,<span class="number">39.915425</span>]
+                            },
+                            <span class="variable">$minDistance</span>:<span class="number">4200</span>,
+                            <span class="variable">$minDistance</span>:<span class="number">6000</span>
+                    }
+        }
+    },{_id:<span class="number">0</span>})
+printjson(cursor.toArray())
+</code></pre></li>
+</ol>
+<ol>
+<li><p>对于非球面的平面，可以使用2d索引代替2dsphere索引，2d索引用于扁平表面的二维坐标平面内。</p>
+<p>2d索引支持在欧向里德空间内计算位置关系，存储的数据只能使用普通坐标对(Legacy Coordinate Pairs)对象。<br> 普通坐标对对象的数据格式如下：<code>{loc:[&lt;longitude&gt;,&lt;latitude&gt;]}</code></p>
+<p>MongoDB使用<strong>geoHash</strong>算法为地图位置数据建立索引，该算法将一个二维坐标值转化为一个简单的可排序可比较的字符串。简单的说，就是将一个长方形均分成四部分，分别用<code>01</code>、<code>11</code>、<code>00</code>、<code>10</code>表示，然后再继续分，如把右上方的继续分成四份，则分别是<code>1101</code>、<code>1111</code>、<code>1100</code>、<code>1110</code>,依次分下去，越来越精细。默认一般进行26次画分，精确度在26厘米左右。</p>
+</li>
+<li><p>创建2d索引使用createIndex函数，语法如下：</p>
+<pre><code>db.<span class="variable">&lt;collection&gt;</span>.createIndex(
+    {<span class="variable">&lt;location field&gt;</span>:<span class="string">"2d"</span>},
+    {<span class="keyword">min</span>:<span class="variable">&lt;lower bound&gt;</span>,<span class="keyword">max</span>:<span class="variable">&lt;upper bound&gt;</span>,bits:<span class="variable">&lt;bit precision&gt;</span>}
+    )
+</code></pre></li>
+</ol>
+<pre><code>第一个参数用来设置索引字段，将平面索引字段的值设置为2d
+ 第二个可选参数有三个选项，分别是：
+
+-<span class="ruby">   <span class="string">`min`</span><span class="symbol">:</span>设置最小的边界，默认为-<span class="number">180</span>
+</span>-<span class="ruby">   <span class="string">`max`</span><span class="symbol">:</span>设置最大的边界，默认为<span class="number">180</span>
+</span>-<span class="ruby">   <span class="string">`bits`</span>：设置精确度，默认情况下，<span class="number">2</span>d索引的精度是<span class="number">26</span>位
+</span>
+    平面索引创建时，需要注意的几个问题如下：
+
+-<span class="ruby">   不能在包含<span class="constant">GeoJSON</span>对象的集合上创建<span class="number">2</span>d索引
+</span>-<span class="ruby">   默认情况下，平面索引是稀疏的，并且会自动忽略<span class="string">`spare:true`</span>选项
+</span>-<span class="ruby">   当复合索引中包含平面索引字段时，第一个字段必须是<span class="number">2</span>d索引键。在查询时，首先会根据<span class="number">2</span>d索引的位置键从集合中选择文档，然后再根据附加的第二个字段来过滤结果
+</span>-<span class="ruby">   在分片集合上，平面索引不能作为片键来使用。</span>
+</code></pre><ol>
+<li><p>2d索引查询有关的操作符如下：</p>
+<ul>
+<li><code>$geoWithin</code>:包含关系</li>
+<li><code>near</code>:接近点判断</li>
+</ul>
+</li>
+<li><p>这是一个例子</p>
+<p>   dbService = connect(“localhost:27017”);<br>   db = dbService.getSiblingDB(“okuc”);</p>
+<p>   db.index_2d.drop();<br>   var bulk = db.index_2d.initializeUnorderedBulkOp();</p>
+<p>   var doc1 = {_id:”A”,position:[0.001,-0.002]}<br>   bulk.insert(doc1);</p>
+<p>   var doc2 = {_id:”B”,position:[0.75,0.75]}<br>   bulk.insert(doc2);</p>
+<p>   var doc3 = {_id:”C”,position:[0.5,0.5]}<br>   bulk.insert(doc3);</p>
+<p>   var doc4 = {_id:”D”,position:[-0.5,-0.5]}<br>   bulk.insert(doc4);</p>
+<p>   bulk.execute()</p>
+<p>   //创建索引<br>   var result = db.index_2d.createIndex({position:”2d”}，{min:-1,max:1});<br>   printjson(result);</p>
+<p>   //geoWithin操作符<br>   var cursor = db.index_2d.find({position:</p>
+<pre><code>    {<span class="variable">$within</span>:
+            {
+                <span class="variable">$box</span>:[[<span class="number">0</span>.<span class="number">25</span>,<span class="number">0</span>.<span class="number">25</span>],[<span class="number">1.0</span>,<span class="number">1.0</span>]] //指明一个距形区域
+            }
+    }
+})
+printjson(cursor.toArray());
+
+//near操作符
+</code></pre><p>   var cursor = db.index_2d.find({position:</p>
+<pre><code>    {<span class="variable">$near</span>:[<span class="number">0</span>,<span class="number">0</span>],
+     <span class="variable">$maxDistance</span>:<span class="number">0</span>.<span class="number">75</span>}
+})
+printjson(cursor.toArray());
+</code></pre></li>
+<li><p>全文索引，用于从大量的文本(文章、博文)中搜索出所需要的内容，它对每一个词建立一个索引，指明该词在整段文本中出现的位置和次数。当用户查询时，检索程序就根据事先建立的索引进行查找。这种技术主要用于搜索引擎，站内搜索等。</p>
+<p>MongoDB2.4版本引入了全文索引的第一个测试版本，从MongoDB2.6版本开始，全文索引告别测试版，提供了许多新的特性，可以用于生产环境。</p>
+<p>全文索引的索引又被称为倒排索引，指一个排序的关键词列表，每个关键词指向和这个关键词相关的文档ID列表。</p>
+<p>全文索引技术将大的段落文本内容进行逐词分解，并针对每个词出现位置和频率进行标记，按照词本身的编码顺序存储为索引文件。</p>
+<p>全文索引的全部工作就是建立索引和在索引中搜索定位，所有的工作都是围绕这两方面来进行。</p>
+<p>全文索引最后生成的倒排索引中，除了包含单词的位置信息外，还包含文档频次和词频两个统计项。</p>
+<p>进行查询时，查询条件也看作是一个文档，对文档与文档之前的相关性进行打争，分数越高相关越强，排名就越靠前。文档中单词的文档频次和词频大小都会影响相关性，除此之外，可以人为的给特定索引字段赋予不现的权重来影响相关性。</p>
+</li>
+<li><p>使用createIndex函数来创建全文索引，可以在文档的一个或多个字段上来创建全文索引，例如<code>db.blog.createIndex({subject:&quot;text&quot;,content:&quot;text&quot;})</code></p>
+<p>除此之外，也可以使用通配符为文档所有的字符串类型的字段都建立全文索引，例如：<code>db.blog.createIndex({&quot;$**&quot;:&quot;text&quot;},{name:&quot;TextIndex&quot;})</code></p>
+<p>创建全文索引时，可以通过第二个参数来指定选项，特有选项包括以下几种：</p>
+<ul>
+<li><p><code>weights权重</code>：默认情况下，每个全文索引字段的权重为1，被查的单词出现一次，结果得分就会加1.如果为某个全文索引字段设置更高权重n(1&lt;n&lt;=99999),那么该字段中被查找的单词出现一次，结果得分将是原来的n倍。例如：</p>
+<p>   db.blog.createIndex({content:”text”,keywords:”text”,about:”text”},{weights:{content:10,keywords:5}})</p>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>-   <span class="escape">`d</span>efault_language<span class="escape">`：</span>默认语言。全文索引和语言种类相关，使用时必须要指定语言类别，默认语言为<span class="escape">`E</span>nglish<span class="escape">`。</span>如果在文档的普通字段和子文档字段上同时建立全文索引且需要使用不同语言进行分词，可以添加<span class="escape">`l</span>anguage字段<span class="escape">`来</span>指明各自分词的语言类型。如下例在original和子文档中的quote字段上建立了索引，并指定的语言
+
+        {
+<span class="label">            language:</span><span class="string">"spanish"</span>,original:<span class="string">"A store protege os audazes."</span>,
+<span class="label">            translation:</span>[
+<span class="label">                {language:</span><span class="string">"english"</span>,quote:<span class="string">"Fortune favors the bold."</span>}，
+<span class="label">                {quote:</span><span class="string">"La suerte protege alos audaces."</span>}//使用默认语言
+            ]
+        }
+
+-   <span class="escape">`t</span>extIndexVersion<span class="escape">` </span>全文索引版本，从Mongodb2.<span class="number">6</span>版本开始默认使用的是第二版本的全文索引，通过使用textIndexVersion选项可以指定全文索引的版本。
+
+<span class="label">        db.blog.createIndex({subject:</span><span class="string">"text"</span>,content:<span class="string">"text"</span>},{textIndexVersion:<span class="number">2</span>})
+
+
+创建全文索引时，需要注意以下几个问题：
+
+-   MongoDB2.<span class="number">4</span>版本开始支持全文检索，目前支持<span class="number">15</span>种语言，不支持中文。
+-   只能在字符串或字符串数组上建立全文索引。
+-   一个集合最多只能有一个text索引。
+-   为提高全文索引的查询效率，全文索引通常会将作为复合索引的一个字段。
+</code></pre><ol>
+<li><p>全文索引使用$text进行查询,$search来指定查询的内容，其基本使用方式如下：<code>db.blog.find({$text:{$search:&quot;MongoDB&quot;}})</code></p>
+<p>全文索引可以查询多个单词，需要将查询的内容在$search中使用空格分隔。如：<code>db.blog.find({$text:{$search:&quot;MongoDB Hadoop&quot;}})</code><br>使用 -号可以移除指定的内容，例如：<code>db.blog.find($text:{$search:&quot;MongoDB-jike&quot;})</code><br>默认情况下返回的结果不会包含相关性得分，可以使用<code>{$meta:&quot;textScore&quot;}</code>来获取文档的得分</p>
+</li>
+<li><p>这是一个例子：</p>
+<p>   dbService = connect(“localhost:27017”);<br>   db = dbService.getSiblingDB(“okuc”);</p>
+<p>   db.index_text.drop();<br>   var bulk = db.index_text.initializeUnorderedBulkOp();</p>
+<p>   var doc1 = {subject:”Hello Boys!”,content:”Welcome to use MongoDB!”}<br>   bulk.insert(doc1);</p>
+<p>   var doc2 = {subject:”okuc MongoDB!”,content:”Use okuc to study!”}<br>   bulk.insert(doc2)<br>   ;<br>   var doc3 = {subject:”MongoDB User Guide!”,content:”How to use Mongodb!”}<br>   bulk.insert(doc3);</p>
+<p>   var doc4 = {subject:”Hadoop:The Definitive Guide!”,content:”How to use Hadoop!”}<br>   bulk.insert(doc4;</p>
+<p>   bulk.execute()</p>
+<p>   //创建索引<br>   var result = db.index_text.createIndex({subject:”text”,content:”text”}，{weights:{content:2},name:”TextIndex”});<br>   printjson(result);</p>
+<p>   //基本查询<br>   var cursor = db.index_text.find({$text:{ $search:”MongoDB”}</p>
+<pre><code>    { score:{ <span class="variable">$meta</span>:<span class="string">"textScore"</span>}
+    }
+}).sort({sore:{<span class="variable">$meta</span>:<span class="string">"textScore"</span>}}) //meta获取相关性得分，并按其排序
+printjson(cursor.toArray());
+
+//多词条查询
+</code></pre><p>   var cursor = db.index_text.find({$text:{ $search:”MongoDB”}</p>
+<pre><code>    { score:{ <span class="variable">$meta</span>:<span class="string">"textScore"</span>}   //meta获取相关性得分，并按其排序
+    }
+}).sort({sore:{<span class="variable">$meta</span>:<span class="string">"textScore"</span>}})
+printjson(cursor.toArray());
+
+//-号查询
+</code></pre><p>   var cursor = db.index_text.find({$text:{ $search:”MongoDB -okuc”}</p>
+<pre><code>    { score:{ <span class="variable">$meta</span>:<span class="string">"textScore"</span>}
+    }
+}).sort({sore:{<span class="variable">$meta</span>:<span class="string">"textScore"</span>}}) //meta获取相关性得分，并按其排序
+printjson(cursor.toArray());
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/数据库/">数据库</a>, <a href="/tags/mongodb/">mongodb</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/12/20/新手学习mongodb之八：GridFS文件存储/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2015/12/17/新手学习mongodb之六：普通索引/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/12/19/新手学习mongodb之七：特殊索引/" data-title="新手学习mongodb之七：特殊索引" data-url="http://www.52brt.com/2015/12/19/新手学习mongodb之七：特殊索引/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

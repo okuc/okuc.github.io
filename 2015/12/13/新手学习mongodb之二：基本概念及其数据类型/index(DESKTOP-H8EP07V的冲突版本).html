@@ -1,0 +1,283 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>新手学习mongodb之二：基本概念及其数据类型 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="新手学习mongodb之二：基本概念及其数据类型"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-13T14:06:32.000Z"><a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/">2015-12-13</a></time>
+      
+      
+  
+    <h1 class="title">新手学习mongodb之二：基本概念及其数据类型</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li><p>MongoDB是面向集合的文档型数据库，文档是MongoDB的核心概念，本质是一种类JSON的BSON格式的数据，BSON在JSON的基础出上添加了一些数据类型，如日期型、int32、int64等。BSON的官方地址如下：<a href="http://bsonspec.org" target="_blank" rel="external">http://bsonspec.org</a>与传统关系数据库相比，他们的对应关系如下：</p>
+<p> MongoDB | 关系型数据库<br> :—-:|:—-:<br> DataBase|DataBase<br> Collection|Table<br> Document/BSON Document|Record/Row<br> field|Column<br> Index|Index<br> embedded documents/reference|table joins</p>
+<a id="more"></a>
+</li>
+<li><p>MongoDB文档的增删改都是原子操作，也就是说，它的原子性操作控制在文档级别。而且，单个文档占用的存储空间不能超过16MB。MongoDB会尽量保持文档被插入时键值对的顺序，但是如果发生了删和改，则有可能会变动。</p>
+</li>
+<li><p>对于文档键的命令，有以下几点需要注意：</p>
+<ul>
+<li>_id是系统默认关键字，也是默认的主键，该值在集合中必须唯一，且不可更改。</li>
+<li>键不能包含\0或空字符，因为这个字符用于表示键的结尾。</li>
+<li>不能以$开头</li>
+<li>不能包含.(点号)</li>
+<li>键是区分大小写的且不能重复，如{foo:1,Foo:1}是没有问题的。</li>
+</ul>
+</li>
+<li><p>与<code>ES</code>类似，多个文档形成一个集合，集合类似于关系数据库中的表。而且，一个集合中的文档可以是字段不同，如<code>{&quot;name&quot;:&quot;jame&quot;}</code>、<code>{&quot;name&quot;:&quot;herry&quot;,&quot;sex&quot;:&quot;male&quot;}</code>可以出现在同一个文档中。另外MongoDB自身也有一些特殊功能的集合：</p>
+<ul>
+<li>capped collection：即保持内容长为一定长度，当内容满了之后，自动覆盖最早的数据。它的效率很高。</li>
+<li>system.indexes：存储索引信息。</li>
+<li>system.namespaces：存储名字空间信息。</li>
+</ul>
+</li>
+<li><p>集合的命名与文档不同，不以下几点需要注意：</p>
+<ul>
+<li>集合名不能是空字符串(“”)</li>
+<li>集合名不能含有\0字符(空字符)，该字符表示集合名的结尾</li>
+<li>集合名不能以”system.”开头，此前辍是系统本身保留的</li>
+<li>集合名不能包含$字符，但是可包含.。</li>
+</ul>
+</li>
+<li><p>在MongoDB中，每个数据库都有独立的权限，还可以放到不同的文件夹中（启动时加directoryperdb选项）。在数据库的命名方面，需要注意以下几点：</p>
+<ul>
+<li>不能是空字符串(“”)</li>
+<li>不能包含$字符</li>
+<li>不能包含.(点号)和空字符串</li>
+<li>数据库名字区分大小写(建议数据库名全部使用小写)</li>
+<li>数据库名长度最多为64个字节。</li>
+<li>不要与系统保留的数据库名相同，这些数据库有admin（root数据库，里面的用户有最大的权限）、local（本地数据库,包括索引、操作日志等）、config(分片集群的配置信息、集群的日志信息)等</li>
+</ul>
+</li>
+<li><p><code>数据库名.集合名</code>就是命名空间。由于点还可以出现在集合名中，所以允许出现<code>okuc.blog.post</code>这样的集子，可以将post看作是一个子集合。</p>
+</li>
+<li><p>MongoDB对每个数据类型都有一个编号，而且还可以根据编号查询：</p>
+<p> 数据类型| 类型编号 | 数据类型 | 类型编号<br> :—-:|:—-:|:—-:|:—-:<br> Double|1|RegularExpression|11<br> String|2|JavaScript|13<br> Object|3|Symbol|14<br> Array|4|JavaScript(Scope)|15<br> Binary data|5|32-bit integer|16<br> Object id|7|Timestamp|17<br> Boolean|8|64-bit integer|18<br> Date|9|Min Key|255<br> Numm|10|Max Key|127</p>
+<p> 如，要查找name类型为String的数据，刚可以这么找<code>db.collection.find({name:{$type:2}})</code>。</p>
+<p> <code>null</code>:表示空值或不存在的字段。<code>db.collection.find({&quot;y&quot;:null})</code><br> <code>布尔</code>：有两个值true或false，例如：{“y”:true}<br> <code>数值类型</code>：支持32-int,64-int以及64-double。<strong>JavaScript只支持64位浮点数</strong>所以，默认存储数字会存为浮点型，要手工指定为int型才可以。依次执行下面四个命令，就会发现这个问题：</p>
+<pre><code><span class="tag">db</span><span class="class">.demo</span><span class="class">.insert</span>(<span class="rules">{<span class="rule"><span class="attribute">y</span>:<span class="value"><span class="number">10</span></span></span></span>});
+<span class="tag">db</span><span class="class">.demo</span><span class="class">.find</span>(<span class="rules">{<span class="rule"><span class="attribute">y</span>:<span class="value">{$type:<span class="number">1</span></span></span></span>}});
+<span class="tag">db</span><span class="class">.demo</span><span class="class">.insert</span>(<span class="rules">{<span class="rule"><span class="attribute">y</span>:<span class="value"><span class="function">NumberInt</span>(<span class="number">12</span>)</span></span></span>});
+<span class="tag">db</span><span class="class">.demo</span><span class="class">.find</span>(<span class="rules">{<span class="rule"><span class="attribute">y</span>:<span class="value">{$type:<span class="number">16</span></span></span></span>}});
+</code></pre><p> <code>字符串</code>:使用<code>UTF-8</code>对字符串进行编码，如<code>{&quot;y&quot;:&quot;Hello okuc&quot;}</code><br> <code>二进制数据</code>：可以保存由任意字节组成的字符串，例如：图片、视频等。<br> <code>正则表达式</code>：主要用于查询，使用正则表达式作为限定条件。如:</p>
+<pre><code><span class="tag">-</span> `<span class="rules">{<span class="rule"><span class="attribute">name</span>:<span class="value">/jame/</span></span></span>}`:用于查询<span class="tag">name</span>字段中含有<span class="tag">jame</span>的文档。
+<span class="tag">-</span> `<span class="rules">{<span class="rule"><span class="attribute">name</span>:<span class="value">/jame/i</span></span></span>}`:用于查询<span class="tag">name</span>字段中含有<span class="tag">jame</span>的文档,不区分大小写。
+<span class="tag">-</span> `<span class="rules">{<span class="rule"><span class="attribute">name</span>:<span class="value">/^jame/i</span></span></span>}`:用于查询<span class="tag">name</span>字段中含有<span class="tag">jame</span>的文档,不区分大小写。
+</code></pre><p>  <code>JavaScript代码</code>：文档中可以包含任意的JavaScript代码。<code>{&quot;func&quot;:function(){}}</code></p>
+</li>
+<li>日期型是一个64位的整数，它代表的是Unix epoch的毫秒数。MongoDB在存储时间时，先转化为UTC时间：<code>北京时间(CST)=UTC+8个小时</code></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/数据库/">数据库</a>, <a href="/tags/mongodb/">mongodb</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/12/13/轻松在eclipse中将maven项目布署到tomcat上/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2015/12/12/新手学习mongodb之一：在windows及linux下安装mongodb/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/" data-title="新手学习mongodb之二：基本概念及其数据类型" data-url="http://www.52brt.com/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

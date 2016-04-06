@@ -1,0 +1,403 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>新手学习Express4之四：数据库集成 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="新手学习Express4之四：数据库集成"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/新手学习Express4之四：数据库集成/">2015-12-31</a></time>
+      
+      
+  
+    <h1 class="title">新手学习Express4之四：数据库集成</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="数据库集成">数据库集成</h2><ol>
+<li><p>为<code>Express</code>应用添加连接数据库的能力，只需要加载相应数据库的<code>Node.js驱动</code>即可。这里会列举一些常用的例子。</p>
+<p>除本章列举的例子外，更多的可在npm官网<a href="">https://www.npmjs.com</a>来查找。</p>
+</li>
+<li><p><code>Cassandra</code>：</p>
+<ul>
+<li>模块: <code>cassandra-driver</code> (<a href="https://github.com/datastax/nodejs-driver" target="_blank" rel="external">https://github.com/datastax/nodejs-driver</a>)</li>
+<li>安装: <code>$ npm install cassandra-driver</code></li>
+<li><p>示例:</p>
+<pre><code><span class="keyword">var</span> cassandra = require('cassandra-driver');
+<span class="keyword">var</span> client = new cassandra.<span class="type">Client</span>({ contactPoints: ['localhost']});
+client.execute('select key <span class="keyword">from</span> system.local', function(err, <span class="literal">result</span>) {
+<span class="keyword">if</span> (err) throw err;
+console.log(<span class="literal">result</span>.rows[<span class="number">0</span>]);
+});
+</code></pre></li>
+</ul>
+<a id="more"></a></li>
+<li><p><code>CouchDB</code></p>
+<ul>
+<li>模块: <code>nano</code> (<a href="https://github.com/dscape/nano" target="_blank" rel="external">https://github.com/dscape/nano</a>)</li>
+<li>安装: <code>$ npm install nano</code></li>
+<li><p>示例:</p>
+<pre><code><span class="keyword">var</span> nano = <span class="built_in">require</span>(<span class="string">'nano'</span>)(<span class="string">'http://localhost:5984'</span>);
+nano.db.create(<span class="string">'books'</span>);
+<span class="keyword">var</span> books = nano.db.use(<span class="string">'books'</span>);
+<span class="comment">//在数据库 books 中插入一条图书记录</span>
+books.insert({name: <span class="string">'The Art of war'</span>}, <span class="literal">null</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, body</span>) </span>{
+<span class="keyword">if</span> (!err){
+<span class="built_in">console</span>.log(body);
+}
+});
+<span class="comment">//返回图书列表</span>
+books.list(<span class="function"><span class="keyword">function</span>(<span class="params">err, body</span>)</span>{
+<span class="built_in">console</span>.log(body.rows);
+}
+</code></pre></li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p><code>LevelDB</code></p>
+<ul>
+<li>模块: <code>levelup</code> (<a href="https://github.com/rvagg/node-levelup" target="_blank" rel="external">https://github.com/rvagg/node-levelup</a>)</li>
+<li>安装: <code>$ npm install level levelup leveldown</code></li>
+<li><p>示例:</p>
+<pre><code><span class="keyword">var</span> levelup = <span class="built_in">require</span>(<span class="string">'levelup'</span>);
+<span class="keyword">var</span> db = levelup(<span class="string">'./mydb'</span>);
+db.put(<span class="string">'name'</span>, <span class="string">'LevelUP'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>{
+<span class="keyword">if</span> (err) <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">'Ooops!'</span>, err);
+db.get(<span class="string">'name'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, value</span>) </span>{
+<span class="keyword">if</span> (err) <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">'Ooops!'</span>, err);<span class="built_in">console</span>.log(<span class="string">'name='</span> + value)
+});
+});
+</code></pre></li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p><code>MySQL</code></p>
+<ul>
+<li>模块: <code>mysql</code> (<a href="https://github.com/felixge/node-mysql/" target="_blank" rel="external">https://github.com/felixge/node-mysql/</a>)</li>
+<li>安装: <code>$ npm install mysql</code></li>
+<li><p>示例:</p>
+<pre><code><span class="keyword">var</span> mysql      = <span class="built_in">require</span>(<span class="string">'mysql'</span>);
+<span class="keyword">var</span> connection = mysql.createConnection({
+host     : <span class="string">'localhost'</span>,
+user     : <span class="string">'dbuser'</span>,
+password : <span class="string">'s3kreee7'</span>
+});
+connection.connect();
+connection.query(<span class="string">'SELECT 1 + 1 AS solution'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, rows, fields</span>) </span>{
+<span class="keyword">if</span> (err) <span class="keyword">throw</span> err;
+<span class="built_in">console</span>.log(<span class="string">'The solution is: '</span>, rows[<span class="number">0</span>].solution);
+});
+connection.end();
+</code></pre></li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p><code>MongoDB</code></p>
+<ul>
+<li>模块: <code>mongoskin</code> (<a href="https://github.com/kissjs/node-mongoskin" target="_blank" rel="external">https://github.com/kissjs/node-mongoskin</a>)</li>
+<li>安装: <code>$ npm install mongoskin</code></li>
+<li><p>示例:</p>
+<pre><code><span class="keyword">var</span> db = require('mongoskin').db('localhost:<span class="number">27017</span>/animals');
+db.collection('mamals').find().toArray(function(err, <span class="literal">result</span>) {
+<span class="keyword">if</span> (err) throw err;console.log(<span class="literal">result</span>);
+});
+</code></pre><p>如果想获取 <code>MongoDB</code> 的对象模型驱动，请参考 Mongoose (<a href="https://github.com/LearnBoost/mongoose" target="_blank" rel="external">https://github.com/LearnBoost/mongoose</a>)</p>
+</li>
+</ul>
+</li>
+<li><p><code>Neo4j</code></p>
+<ul>
+<li>模块: <code>apoc</code> (<a href="https://github.com/hacksparrow/apoc" target="_blank" rel="external">https://github.com/hacksparrow/apoc</a>)</li>
+<li>安装: <code>$ npm install apoc</code></li>
+<li><p>示例:</p>
+<pre><code><span class="keyword">var</span> apoc = <span class="built_in">require</span>(<span class="string">'apoc'</span>);
+apoc.query(<span class="string">'match (n) return n'</span>).exec().then(
+<span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>{
+<span class="built_in">console</span>.log(response);
+},
+<span class="function"><span class="keyword">function</span> (<span class="params">fail</span>) </span>{
+<span class="built_in">console</span>.log(fail);
+}
+);
+</code></pre></li>
+</ul>
+</li>
+<li><p><code>PostgreSQL</code></p>
+<ul>
+<li>模块: <code>pg</code> (<a href="https://github.com/brianc/node-postgres" target="_blank" rel="external">https://github.com/brianc/node-postgres</a>)</li>
+<li>安装: <code>$ npm install pg</code></li>
+<li><p>示例:</p>
+<pre><code><span class="keyword">var</span> pg = require('pg');
+<span class="keyword">var</span> conString = <span class="string">"postgres://username:password@localhost/database"</span>;
+pg.connect(conString, function(err, client, done) {
+<span class="keyword">if</span> (err) {
+<span class="keyword">return</span> console.error('error fetching client <span class="keyword">from</span> pool', err);
+}
+client.query('<span class="type">SELECT</span> $<span class="number">1</span>::<span class="type">int</span> <span class="type">AS</span> number', ['<span class="number">1</span>'], function(err, <span class="literal">result</span>) {done();
+<span class="keyword">if</span> (err) {
+<span class="keyword">return</span> console.error('error running query', err);
+}
+console.log(<span class="literal">result</span>.rows[<span class="number">0</span>].number);
+});
+});
+</code></pre></li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p><code>Redis</code></p>
+<ul>
+<li>模块: <code>redis</code> (<a href="https://github.com/mranney/node_redis" target="_blank" rel="external">https://github.com/mranney/node_redis</a>)</li>
+<li>安装: <code>$ npm install redis</code></li>
+<li><p>示例:</p>
+<pre><code><span class="keyword">var</span> client = <span class="keyword">require</span>(<span class="string">'redis'</span>).createClient();
+client.on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(err)</span> </span>{
+console.log(<span class="string">'Error '</span> + err);
+});
+client.set(<span class="string">'string key'</span>, <span class="string">'string val'</span>, redis.<span class="keyword">print</span>);
+client.hset(<span class="string">'hash key'</span>, <span class="string">'hashtest 1'</span>, <span class="string">'some value'</span>, redis.<span class="keyword">print</span>);
+client.hset([<span class="string">'hash key'</span>, <span class="string">'hashtest 2'</span>, <span class="string">'some other value'</span>], redis.<span class="keyword">print</span>);
+client.hkeys(<span class="string">'hash key'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(err, replies)</span> </span>{
+console.log(replies.length + <span class="string">' replies:'</span>);
+replies.<span class="keyword">forEach</span>(<span class="function"><span class="keyword">function</span> <span class="params">(reply, i)</span> </span>{
+console.log(<span class="string">'    '</span> + i + <span class="string">': '</span> + reply);
+});
+client.quit();
+});
+</code></pre></li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p><code>SQLite</code></p>
+<ul>
+<li>模块: <code>sqlite3</code> (<a href="https://github.com/mapbox/node-sqlite3" target="_blank" rel="external">https://github.com/mapbox/node-sqlite3</a>)</li>
+<li>安装: <code>$ npm install sqlite3</code></li>
+<li><p>示例:</p>
+<p>   var sqlite3 = require(‘sqlite3’).verbose();<br>   var db = new sqlite3.Database(‘:memory:’);<br>   db.serialize(function() {<br>   db.run(‘CREATE TABLE lorem (info TEXT)’);<br>   var stmt = db.prepare(‘INSERT INTO lorem VALUES (?)’);<br>   for (var i = 0; i &lt; 10; i++) {<br>   stmt.run(‘Ipsum ‘ + i);<br>   }<br>   stmt.finalize();<br>   db.each(‘SELECT rowid AS id, info FROM lorem’, function(err, row) {<br>   console.log(row.id + ‘: ‘ + row.info);<br>   });<br>   });<br>   db.close();</p>
+</li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p><code>ElasticSearch</code></p>
+<ul>
+<li>模块: <code>elasticsearch</code> (<a href="https://github.com/elastic/elasticsearch-js" target="_blank" rel="external">https://github.com/elastic/elasticsearch-js</a>)</li>
+<li>安装: <code>$ npm install elasticsearch</code></li>
+<li><p>示例:</p>
+<p>   var elasticsearch = require(‘elasticsearch’);<br>   var client = elasticsearch.Client({<br>   host: ‘localhost:9200’});<br>   client.search({<br>   index: ‘books’,<br>   type: ‘book’,<br>   body: {<br>   query: {<br>   multi_match: {<br>   query: ‘express js’,<br>   fields: [‘title’, ‘description’]<br>   }<br>   }<br>   }<br>   }).then(function(response) {<br>   var hits = reponse.hits.hits;<br>   }, function(error) {<br>   console.trace(error.message);<br>   });</p>
+</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/Nodejs/">Nodejs</a>, <a href="/tags/express/">express</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2015/12/30/新手学习Express4之三：错误处理、调试Express及使用代理 /" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/12/31/新手学习Express4之四：数据库集成/" data-title="新手学习Express4之四：数据库集成" data-url="http://www.52brt.com/2015/12/31/新手学习Express4之四：数据库集成/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

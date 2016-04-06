@@ -84,9 +84,11 @@ var _hmt = _hmt || [];
 <li>安装<code>epel-release</code>，命令如下：｀sudo yum install epel-release｀。</li>
 <li>安装<code>nodejs</code>，命令如下：｀sudo yum install nodejs｀。</li>
 <li>安装<code>npm</code>，命令如下：｀sudo yum install npm｀。</li>
-<li>设置缓存目录和全局模块的存放路径，在<code>/home/okuc/nodejs</code>下建立<code>node global</code>及<code>node cache</code>两个文件夹。同时在终端命令行中，执行如下命令：<pre><code>npm config <span class="built_in">set</span> prefix <span class="string">"/home/okuc/nodejs/node global"</span>
+<li><p>设置缓存目录和全局模块的存放路径，在<code>/home/okuc/nodejs</code>下建立<code>node global</code>及<code>node cache</code>两个文件夹。同时在终端命令行中，执行如下命令：</p>
+<pre><code>npm config <span class="built_in">set</span> prefix <span class="string">"/home/okuc/nodejs/node global"</span>
 npm config <span class="built_in">set</span> <span class="keyword">cache</span> <span class="string">"/home/okuc/nodejs/node cache"</span>
-</code></pre>为了查看是否执行成功，可使用如下命令查看：<code>npm config get prefix</code>。 <a id="more"></a></li>
+</code></pre><p>为了查看是否执行成功，可使用如下命令查看：<code>npm config get prefix</code>。</p>
+</li>
 <li><p>将路径｀/home/okuc/nodejs/node global/｀添加到环境变量中。注意，由于存在空隔，需要加单引号。</p>
 <pre><code>sudo vi /etc/profile
 
@@ -128,7 +130,7 @@ export PATH=<span class="variable">$PATH</span>:<span class="string">'/home/okuc
         
   
   <div class="tags">
-    <a href="/tags/centos/">centos</a>, <a href="/tags/nodejs/">nodejs</a>
+    <a href="/tags/centos/">centos</a>, <a href="/tags/markdown/">markdown</a>
   </div>
 
         
@@ -142,8 +144,6 @@ export PATH=<span class="variable">$PATH</span>:<span class="string">'/home/okuc
 
 
 <nav id="pagination" >
-    
-    <a href="/2016/03/30/docker常用命令/" class="alignleft prev" >Vorherige Seite</a>
     
     
     <a href="/2016/03/10/hexo博客笔记源码恢复记/" class="alignright next" >Nächste Seite</a>
@@ -191,8 +191,6 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
-  
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   
     <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
@@ -207,15 +205,13 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/linux/">linux</a><small>5</small></li>
   
-    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+    <li><a href="/tags/markdown/">markdown</a><small>3</small></li>
   
     <li><a href="/tags/maven/">maven</a><small>1</small></li>
   
     <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
-  
-    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   

@@ -1,0 +1,292 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Emmet常用缩写简要笔记 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Emmet常用缩写简要笔记"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-21T14:35:02.000Z"><a href="/2015/11/21/Emmet常用缩写简要笔记/">2015-11-21</a></time>
+      
+      
+  
+    <h1 class="title">Emmet常用缩写简要笔记</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>emmet可谓前端开发神器，特别是在前端页台和后端服务分离化，restful大肆流行的今天，掌握点emmet还是有必要的。现将一些常用知识点简单记录如下。</p>
+<ol>
+<li><p>初始化文档。</p>
+<ul>
+<li><p><code>html:5</code> 或<code>!</code>：用于HTML5文档类型。生成的代码如下，<strong>注意</strong>,生成后需要把<code>lang=&quot;en&quot;</code>改为<code>lang=&quot;zh-cn&quot;</code>，再把’title’改成相对应的文档标题就可以了。</p>
+<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+</code></pre></li>
+<li><code>html:xt</code>：用于XHTML过渡文档类型。</li>
+<li><code>html:4s</code>：用于HTML4严格文档类型。</li>
+</ul>
+</li>
+<li>子代：<code>&gt;</code>用来表示子代。代码<code>div&gt;ul&gt;li</code>可以生成的代码：<pre><code><span class="tag">&lt;div&gt;</span>
+    <span class="tag">&lt;ul&gt;</span>
+        <span class="tag">&lt;li&gt;</span><span class="tag">&lt;/li&gt;</span>
+    <span class="tag">&lt;/ul&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+</code></pre><a id="more"></a></li>
+<li>兄弟：<code>+</code>用来表示兄弟。代码<code>div+p+bq</code>可以生成的代码：<pre><code><span class="tag">&lt;div&gt;</span><span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;p&gt;</span><span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;blockquote&gt;</span><span class="tag">&lt;/blockquote&gt;</span>
+</code></pre></li>
+<li><p>父代：<code>^</code>用来表示父代。代码<code>div+div&gt;p&gt;span+em^bq</code>可以生成的代码：</p>
+<pre><code><span class="tag">&lt;div&gt;</span><span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;div&gt;</span>
+    <span class="tag">&lt;p&gt;</span><span class="tag">&lt;span&gt;</span><span class="tag">&lt;/span&gt;</span><span class="tag">&lt;em&gt;</span><span class="tag">&lt;/em&gt;</span><span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;blockquote&gt;</span><span class="tag">&lt;/blockquote&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+</code></pre></li>
+<li><p>重复：<code>*</code>用来表示重复。代码<code>ul&gt;li*5</code>可以生成的代码：</p>
+<pre><code><span class="tag">&lt;ul&gt;</span>
+    <span class="tag">&lt;li&gt;</span><span class="tag">&lt;/li&gt;</span>
+    <span class="tag">&lt;li&gt;</span><span class="tag">&lt;/li&gt;</span>
+    <span class="tag">&lt;li&gt;</span><span class="tag">&lt;/li&gt;</span>
+    <span class="tag">&lt;li&gt;</span><span class="tag">&lt;/li&gt;</span>
+    <span class="tag">&lt;li&gt;</span><span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span>
+</code></pre></li>
+<li>成组：<code>()</code>用来表示成组。代码<code>(div&gt;dl&gt;(dt+dd)*3)+footer&gt;p</code>可以生成的代码：<pre><code><span class="tag">&lt;div&gt;</span>
+    <span class="tag">&lt;dl&gt;</span>
+        <span class="tag">&lt;dt&gt;</span><span class="tag">&lt;/dt&gt;</span>
+        <span class="tag">&lt;dd&gt;</span><span class="tag">&lt;/dd&gt;</span>
+        <span class="tag">&lt;dt&gt;</span><span class="tag">&lt;/dt&gt;</span>
+        <span class="tag">&lt;dd&gt;</span><span class="tag">&lt;/dd&gt;</span>
+        <span class="tag">&lt;dt&gt;</span><span class="tag">&lt;/dt&gt;</span>
+        <span class="tag">&lt;dd&gt;</span><span class="tag">&lt;/dd&gt;</span>
+    <span class="tag">&lt;/dl&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;footer&gt;</span>
+    <span class="tag">&lt;p&gt;</span><span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/footer&gt;</span>
+</code></pre></li>
+<li>ID:#  <code>#</code>用来表示ID。代码<code>div#header+div.page+div#footer.class1.class2.class3</code>可以生成的代码：<pre><code>&lt;<span class="keyword">div</span> <span class="property">id</span>=<span class="string">"header"</span>&gt;&lt;/<span class="keyword">div</span>&gt;
+&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"page"</span>&gt;&lt;/<span class="keyword">div</span>&gt;
+&lt;<span class="keyword">div</span> <span class="property">id</span>=<span class="string">"footer"</span> <span class="type">class</span>=<span class="string">"class1 class2 class3"</span>&gt;&lt;/<span class="keyword">div</span>&gt;
+</code></pre></li>
+<li>CLASS:<code>.</code>表示样式，代码示例如上所示。</li>
+<li>属性：<code>[]</code>用来表示ID。代码<code>td[title=&quot;hello world!&quot; colspan=3]</code>可以生成的代码：<pre><code><span class="tag">&lt;<span class="title">td</span> <span class="attribute">title</span>=<span class="value">"hello world!"</span> <span class="attribute">colspan</span>=<span class="value">"3"</span>&gt;</span><span class="tag">&lt;/<span class="title">td</span>&gt;</span>
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/前端/">前端</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2015/10/21/svg中节点顺序的替代解决方案/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/11/21/Emmet常用缩写简要笔记/" data-title="Emmet常用缩写简要笔记" data-url="http://www.52brt.com/2015/11/21/Emmet常用缩写简要笔记/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

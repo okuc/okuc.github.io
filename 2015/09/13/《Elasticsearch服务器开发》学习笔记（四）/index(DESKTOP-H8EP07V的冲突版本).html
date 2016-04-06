@@ -1,0 +1,507 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>《Elasticsearch服务器开发》学习笔记（四） | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="《Elasticsearch服务器开发》学习笔记（四）"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-09-13T14:35:02.000Z"><a href="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/">2015-09-13</a></time>
+      
+      
+  
+    <h1 class="title">《Elasticsearch服务器开发》学习笔记（四）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第3章_搜索(一)">第3章 搜索(一)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
+<hr>
+<ol>
+<li>查询：<code>curl -XGET &#39;localhost:9200/library/book/_search?q=title:crime&amp;pretty=true&#39;</code>，另外一种查询方式：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code></li>
+<li>分页和结果集大小：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;from&quot;:9,&quot;size&quot;:20,&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code><br>from:该属性指定我们希望在结果中返回的起始文档。它的默认值是0，表示想要得到从第一个文档开始的结果。<br>size:该属性指定了一次查询中返回的最大文档数，默认值是10.如果只对切面结果感兴趣，并不关心文档本身，可以把这个参数设置成0。</li>
+<li>ES可以返回版本信息的查询。查询命令如下：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;version&quot;:true,&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code><a id="more"></a></li>
+<li>ES让我们可以根据文档需要满足的最低得分值，来过滤结果。为了用此功能，必须在JSON顶层提供min_score属性和最低得分值。如我们希望查询只返回得分高于0.75的文档，可以按如下方式查询：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;min_score&quot;:0.75,&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code></li>
+<li>在请求主体中使用字段数组，可以定义在响应中包含的字段，当然只能返回那些在用于创建索引的映射中标记为存储的字段，或都使用了_source字段。如，只返回title和year字段，查询如下：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;fields&quot;:{&quot;title&quot;,&quot;year&quot;},&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code>。如果没有定义fields数组，它将用默认值，如果有，就返回_source字段。如果使用_source字段，并且请求一个没有存储的字段，那么这个字段将从_source段中提取。如果想返回所有的存储字段，只需传入星号(*)作为字段名字。从性能的角度讲，返回_source字段比返回多个存储字段更好。</li>
+<li><p>部分字段，通过它可以查询包含或排除某些字段，如：查询以titl开头，且排除以chars开头的字段，如下：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;partial_fields&quot;:{&quot;partial1&quot;:{&quot;include&quot;:[&quot;titl*&quot;],&quot;exclude&quot;:[&quot;chara*&quot;]}},&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code></p>
+</li>
+<li><p>可以在ES中返回脚本计算字段：在JSON的查询对象中加上script_fields部分，添加上每个想返回的脚本值的名字。若要返回一个叫correctYear的值，它用year字段减去1800来计算，方式如下：<br><code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;script_fields&quot;:{&quot;correctYear&quot;:{&quot;script&quot;:&quot;doc[\&quot;year\&quot;].value-1800&quot;}},&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code></p>
+<p> <strong>原书中这儿是错误的，原书中<code>doc[\&quot;year\&quot;]</code>为<code>doc[&#39;year&#39;]</code>,这种写法会报错，执行端错误如下：<code>GroovyScriptExecutionException[NullPointerException[Cannot invoke method minus() on null object]]</code>,服务器端错误如下：<code>Failed to execute fetch phase
+org.elasticsearch.script.groovy.GroovyScriptExecutionException: MissingPropertyException[No such property: year for class:</code></strong></p>
+<p> doc可以让我们捕获了返回结果，从而让脚本执行速度更快，但也导致了更高的内存消耗，并且限制了只能用单个字段的单个值。如果关心内存的使用，或者是使用更复杂的字段值，可以用_source字段，如下所示：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;script_fields&quot;:{&quot;correctYear&quot;:{&quot;script&quot;:&quot;_source.year-1800&quot;}},&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code></p>
+</li>
+<li><p>脚本还可以传入额外的参数，使用一个变量名称来接收，示例如下：<br><code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;script_fields&quot;:{&quot;correctYear&quot;:{&quot;script&quot;:&quot;_source.year-paramYear&quot;,&quot;params&quot;:{&quot;paramYear&quot;:1800}}},&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code></p>
+</li>
+<li><p>ES查询过程：查询先发送到ES的其中一个节点，这时是发散阶段，查询分布到建立索引的所有分片上，如果它建立在5个分片和1个副本基础上，那么，5个分片都会被查询，查询返回文档的标识符及得分，分散查询的节点等所有分片完成任务后，收集结果并进行排序（得分从低到高），之后，将发送一个新的请求来生成搜索结果，这次查询只发送到那些持有响应所需文档的分片上。这一阶段称为收集阶段。<br>ES允许通过指定搜索类型来选择查询在内部如何处理，不同的搜索类型适合不同的情况。可使用<code>search——type</code>请求参数，并将其设置为下列值之一：</p>
+<ul>
+<li>query_then_fetch:第一步，执行查询得到对文档进行排序和分级所需信息，这一步在所有的分片上执行。然后，只在相关分片文档上查询文档的实际内容。不同于query_and_fetch,此查询类型返回结果的最大数量等于size参数的值。这也是默认的搜索类型。</li>
+<li>query_and_fetch：这通常是最快也最简单的搜索类型实现。查询在所有分片上并行执行，所有分片返回等于size值的结果数。返回文档的最大数量等于size的值乘以分片的数量。</li>
+<li>dfs_query_and_fetch：这个和query_and_fetch相似，但比query_and_fetch包含一个额外的阶段，在初始查询中执行分布式词频的计算，以得到返回文件的更精确的得分，从而让查询结果更相关。</li>
+<li>dfs_query_then_fetch：也多一个计算得分阶段。</li>
+<li>count：这是一个特殊的搜索类型，只返回匹配查询的文档数。如果你只需要结果数量，而不关心文档，应该使用这个类型。</li>
+<li><p>scan：这是另外一个类型的搜索类型，只有在要让查询返回大量结果时才用。它跟一般的查询有点不同，因为它在第一次请求后，返回一个滚动标识符，类似于数据库中的游标。所有查询需要在_search/scroll REST端点运行，并需要在请求主体中发送返回的滚动标识符。</p>
+<p>示例命令如下：</p>
+<pre><code>curl -XGET <span class="string">'localhost</span>:<span class="number">9200</span>/library/book/_search?pretty=<span class="keyword">true</span>&amp;search_type=query_and_fetch' -d '{<span class="string">"query"</span>:{<span class="string">"term"</span>:{<span class="string">"title"</span>:<span class="string">"crime"</span>}}}'
+</code></pre></li>
+</ul>
+</li>
+<li><p>除了可以控制查询是如何执行的，也可以控制在那些分片上执行查询。默认情况下，ES使用的分片和副片，既包含我们已经发送请求的可用节点，又包括集群中的其它节点。默认情况下，默认行为是最佳的查询首先方法，若要改变，可设置下面的值：</p>
+<ul>
+<li>_primary:只在主分片上执行搜索，不使用副本。当想使用索引中最近更新的，还没有得制到副本中的信息，这是很有用的。</li>
+<li>_primary_first:如果主分片可用，只在主分片上执行搜索，否则才在其他分片上执行。</li>
+<li>local：在可能的情况下，只在发送请求的节点上的可用分片上执行搜索。</li>
+<li>only_node:node_id:只在提供标识符的节点上执行搜索</li>
+<li>prefer_node:node_id:ES尝试在提供标识符的节点上执行搜索，如果该节点不可用，则使用其他的可用节点。</li>
+<li>shards：1,2：ES将在提供标识符的分片上执行操作。_shards参数可以和其他首选项合并，但_shards标识符必须在前面，比如_shards:1,2;_local</li>
+<li>自定义值：可以传入任何自定义字符串值，具有相同值的请求将在相同的分片上执行。<br>下面是一个例子：<pre><code>curl -XGET <span class="string">'localhost:9200/library/_search?preference=_local'</span> -d <span class="string">'{"</span>query<span class="string">":{"</span>term<span class="string">":{"</span>title<span class="string">":"</span>crime<span class="string">"}}}'</span>
+</code></pre></li>
+</ul>
+</li>
+<li><p>ES搜索分片API允许检查将执行查询的分片，若要查看查询如何执行，示例如下：<br>curl -XGET ‘localhost:9200/library/_search_shards?pretty’ -d ‘{“query”:{“match_all”:{}}’</p>
+</li>
+<li>词条查询：它仅匹配在给定字段中含有该词条的文档，而且是确切的、单个未经分析的词条。<code>{&quot;query&quot;:{&quot;term&quot;:{&quot;title&quot;:&quot;crime&quot;}}}</code>,之所以使用小写开头的<code>crime</code>，是因为Crime在建索引时已经变成了crime。<br>还可以包含加权属性，它影响给定词条的重要程度。5.1会详细讲。下面是一个例子：<code>{&quot;query&quot;:{&quot;term&quot;:{&quot;title&quot;:{&quot;value&quot;:&quot;crime&quot;,&quot;boost&quot;:10.0}}}</code></li>
+<li>多词条查询允许匹配那些在内容中含有某个词条的文档。词条查询允许匹配单个未经分析的词条，多词条查询可以用来匹配多个这样的词条。如想得到在所有在tags字段中含有novel或book的文档，可以使用以下命令：<code>{&quot;query&quot;:{&quot;terms&quot;:{&quot;tags&quot;:[&quot;novel&quot;,&quot;book&quot;],&quot;minimum_match&quot;:1}}}</code><br>由于设置了mininum_match,这意味着至少1个词条应该配置。</li>
+<li><code>match_all</code>可以匹配索引中的所有文档。<code>{&quot;query&quot;:{&quot;match_all&quot;:{}}}</code>,也可以使用加权值，它将赋给所有跟它匹配的文档：<code>{&quot;query&quot;:{&quot;match_all&quot;:{&quot;boost&quot;:2.0}}}</code></li>
+<li><p>常用词查询是在没有使用停用诩的情况下，为了提高常用词的查询相关性和精确性而提供的一个现代解决方案。如’aaaa and bbbb’,这个查询中，aaaa、bbbb两个词非常少见，而and这个词常见，对文档得分的影响低。解决方案就是使用常用词查询，分为两组，第一组从频率高的，不重要的词查询，然后第二组对第一组的结果进行二次查询，提高了性能。例子如下：<code>{&quot;query&quot;:{&quot;common&quot;:{&quot;title&quot;:{&quot;query&quot;:&quot;aaaa and bbbb&quot;,&quot;cutoff_frequency&quot;:0.001}}}}</code><br>查询可使用以下参数：</p>
+<ul>
+<li>query:这个参数定义了实际的查询内容</li>
+<li>cutoff_frequency:定义一个百分比(0.001表示1%)或一个绝对值（当此属性值&gt;=1时）。这个值用来构建高、低频词组。此参数设置为0.001意味着频率&lt;=0.1%的词将出现在低频词组中。</li>
+<li>low_freq_operator:这个参数可以设置为or或and，默认是or。它用来指定低频词组构建查询时用到的布尔运算。如果希望所有的词都在文档中出现才认为是匹配，应该设置为and。</li>
+<li>high_freq_operator:同上，它用来指定高频词组。</li>
+<li>minimum_should_match：不使用上边两个参数的话，可以使用这个参数，它允许指定匹配的文档中应该出现的查询词的最小个数。</li>
+<li>boost：这个参数定义了赋组文档得分的加权值。</li>
+<li>analyzer：这个参数定义了分析查询文本时用到的分析器名称。默认为default_analyzer。</li>
+<li>disable_coord：此参数的值默认为false，它允许启用或禁用分数因子计算，该计算基于文档中包含的所有查询词的分数。把它设置为true，得分不那么精确，但查询稍微会快。<br>不像词条查询和多词条查询，常用词查询是经过ES分析的。</li>
+</ul>
+</li>
+<li><p>match查询把query参数中的值歙的出来，加以分析，然后构建相应的查询。传组match查询的词条将被建立索引时相同的分析器处理。match不支持lucene查询语法。示例如下：它将匹配在title字段所有包含<code>crime</code>,<code>and</code>,<code>punishment</code>词条的文档。<br><code>{&quot;query&quot;:{&quot;match&quot;:{title&quot;:&quot;crime and punishment&quot;}}</code><br>同<code>common</code>查询一样，match查询的也有几种类型</p>
+<ol>
+<li>布尔值匹配查询<ul>
+<li>operator：默认是or，也可以是and。连接创建的布尔条件。</li>
+<li>analyzer：定义了分析查询文本时用到的分析器的名字。默认为default_analyzer。</li>
+<li>fuzziness:可以通过提供此参数的值来构建模精查询，它为字符串类型提供0.0到1.0的值。用来设置相似性。</li>
+<li>prefix_length:控制模糊查询的行为。后边会细讲。</li>
+<li>max_expansions：同上。</li>
+<li>zero_terms_query:指定当所有的词条都被分析器移除时查询的行为。默认为none，也可以设置为all。none，则移除所有查询词条时，没有文档返回，all则返回所有文档。</li>
+<li>cutoff_frequecy:允许将参数分解成两组，一组低频词和一组高频词。<br>下面是一个例子<br><code>{&quot;query&quot;:{&quot;match&quot;:{&quot;title&quot;:{&quot;query&quot;:&quot;aaaa and bbbb&quot;,&quot;operator&quot;:&quot;and&quot;}}}}</code></li>
+</ul>
+</li>
+<li>match_phrase查询：它从分析后的文本中构建短语查询，而不是布尔子句。它的在数如下：<ul>
+<li>slop：该值定义了文本查询中的词条和词条之间可以有多少个未知词条，以被视为跟一个短语匹配。默认值是0。它是个整数值。</li>
+<li>analyzer：定义了分析查询文本时用到的分析器的名字。默认为default_analyzer。<br>它的例子格式和前边基本相同。</li>
+</ul>
+</li>
+<li>match_phrase_prefix查询<br>它和match_phrase查询几乎一样，除此之外，它允许查询文本的最后一个词条只做前缀匹配。它除了match_phrases查询公开的参数，还公开了一个参数max_expansions,这个参数控制有多少前辍将被重写成最后的词条。</li>
+</ol>
+</li>
+<li><p>multi_match：它和match查询一样，不同的是它不是针对单个字段，而是可以能过fields参数针对多个字段查询。它可以使用match中的所有参数。下面是一个例子：<br><code>{&quot;query&quot;:{&quot;multi_match&quot;:{&quot;query&quot;:&quot;aaaa and bbbb&quot;,&quot;fields&quot;:[&quot;title&quot;,&quot;otitle&quot;]}}}</code><br>除了可用match的参数，它还有几个参数：</p>
+<ul>
+<li>use_dis_max:定义一个布尔值，默认是ture，表示使用析取最大分查询，false时，使用布尔查询。</li>
+<li>tie_breaker:只有在use_dis_max为true时才会使用这个上参数，它指定低分数项目最高分数项目之间的平衡。</li>
+</ul>
+</li>
+<li><p>query_string查询：它支持Apache Lucene全部的查询语法。它使用一个查询解析器把提供的文本构建成实际的查询。</p>
+<pre><code>{
+    "<span class="attribute">query</span>":<span class="value">{
+        "<span class="attribute">query_string</span>":<span class="value">{
+        "<span class="attribute">query</span>":<span class="value"><span class="string">"title:crime^10 +title:punishment -otitle:cat +author:{+Fyodor + dostoevsky}"</span></span>,
+        "<span class="attribute">default_field</span>":<span class="value">title
+        </span>}
+    </span>}
+ </span>}
+</code></pre><p>上面这个是说：查询title字段中包含crime词条的文档，并且这些文档应有10的加权。文档在title中还应该包括punishment,而在otitle中不包含cat，author字段中包括Fyodor和dostoevsky的词条。query_string参数如下：</p>
+<ul>
+<li>query：此参数指定查询文本</li>
+<li>default_field:此参数指定默认的查询字段，默认值由index.query.default_field属性指定，默认为_all。</li>
+<li>default_operator:默认是or，也可以设为true。此参数指定默认的逻辑运算符。</li>
+<li>allow_leading_wildcard:此参数指定是否允许通配符作为词条的第一个字符，默认为true。</li>
+<li>lowercase_expand_terms:此参数指定查询重写是否把词条变成小写，默认为ture。</li>
+<li>enable_position_increments:此参数指定查询结果中的位置增量是否打开，默认是true。</li>
+<li>fuzzy_max_expansions：使用模糊查询时，此参数指定模糊查询可被扩展到的最大词条数，默认值是50.</li>
+<li>fuzzy_prefix_length:此参数指定生成的模糊查询中的前辍长度，默认值为0。</li>
+<li>fuzzy_min_sim:此参数指定模糊查询的最小相似度，默认值为0.5。</li>
+<li>phrase_slop:此参数指定短语溢出值，默认值为0。</li>
+<li>boost:此参数指定使用的加权值，默认值为1.0。</li>
+<li>analyze_wildcard:此参数指定是否应该分析通配符查询生成的词条，默认为false，意味着词条不会被分析。</li>
+<li>auto_generate_phrase_queries:此参数指定是否自动生成短语查询，其默认值为false，这意味着不会自动生成。</li>
+<li>minimum_should_match：控制必须有多少生成的Boolean should子句必须与文档匹配，才能认为它是匹配的。可以是百分比50%，意味着必须一半匹配，也可以是整数值，如2，意味着至少2个词条必须匹配。</li>
+<li>leninet：此参数的取值true或false。如果设置为true，格式方面的失败将被忽略。</li>
+</ul>
+</li>
+<li><p>针对多字段的query_string查询：需要在查询主体中提供一个fields，它是个持有字段名称的数组。有两种方法对多个字段运行query_string查询：默认方法是采用布尔查询来构造查询，另一种是使用最大分查询。<br>最大分查询要在查询主体中添加use_dis_max属性并将其设置为true。示例如下：</p>
+<pre><code>{
+    "<span class="attribute">query</span>":<span class="value">{
+        "<span class="attribute">query_string</span>":<span class="value">{
+            "<span class="attribute">query</span>":<span class="value"><span class="string">"crime punishment"</span></span>,
+            "<span class="attribute">fields</span>":<span class="value">[<span class="string">"title"</span>,<span class="string">"otitle"</span>]</span>,
+            "<span class="attribute">use_dis_max</span>":<span class="value"><span class="literal">true</span>
+        </span>}
+    </span>}
+</span>}
+</code></pre></li>
+<li>simple_query_string:它使用lucene最新的查询解析器之一：SimpleQueryParser。类似字符串查询，它接受Lucene查询语法;然而不同的是，它在解析错误时不会抛出异常。它丢弃无效的部分，执行其余部分。<pre><code>{
+    "<span class="attribute">query</span>":<span class="value">{
+        "<span class="attribute">simple_query_string</span>":<span class="value">{
+        "<span class="attribute">query</span>":<span class="value"><span class="string">"title:crime^10 +title:punishment -otitle:cat +author:{+Fyodor + dostoevsky}"</span></span>,
+        "<span class="attribute">default_operator</span>":<span class="value"><span class="string">"and"</span>
+        </span>}
+    </span>}
+ </span>}
+</code></pre></li>
+<li>标识符查询：它仅用提供的标识符来过滤返回的文档。此查询针对内部的_uid字段运行，所以它不需要启用_id字段。例子如下：<code>{&quot;query&quot;:{&quot;ids&quot;:{&quot;values&quot;:[&quot;11&quot;,&quot;12&quot;,&quot;13&quot;,&quot;14&quot;]}}}</code><br>此查询只返回具有values数组中一个标识符的文档，也可以限制文档为特定的类型，如只包括book类型的文档。查询如下：`{“query”:{“ids”:{“type”:”book”,values”:[“11”,”12”,”13”,”14”]}}}</li>
+<li>前辍查询在配置方面和词条查询类似。下面是一个查询以cri开头的例子：<pre><code>{
+    "<span class="attribute">query</span>":<span class="value">{
+        "<span class="attribute">prefix</span>":<span class="value">{
+            "<span class="attribute">title</span>":<span class="value"><span class="string">"cri"</span>
+        </span>}
+    </span>}
+</span>} 
+</code></pre>如果要加权，则可以如下设置：<pre><code>{
+    "<span class="attribute">query</span>":<span class="value">{
+        "<span class="attribute">prefix</span>":<span class="value">{
+            "<span class="attribute">title</span>":<span class="value">{
+            "<span class="attribute">value</span>":<span class="value"><span class="string">"cri"</span></span>,
+            "<span class="attribute">boost</span>":<span class="value"><span class="number">3.0</span>
+            </span>}
+        </span>}
+    </span>}
+</span>}
+</code></pre></li>
+<li>fuzzy_like_this查询类似more_like_this查询。它查找所有与提供的文本类似的文档。与more_like_this的不同点在于它利用模糊字符串并选择生成的最佳差分词条。如在title和otitle字段查询所有类似于crime punishment的文档，示例如下：<pre><code>{
+    "<span class="attribute">query</span>":<span class="value">{
+        "<span class="attribute">fuzzy_like_this</span>":<span class="value">{
+            "<span class="attribute">fields</span>":<span class="value">[<span class="string">"title"</span>,<span class="string">"otitle"</span>]</span>,
+            "<span class="attribute">like_text</span>":<span class="value"><span class="string">"crime punishment"</span>
+        </span>}
+    </span>}
+</span>}
+</code></pre>它支持以下参数：<ul>
+<li>fields：执行查询的字段数组，默信值是_all字段。</li>
+<li>like_text:这是一个必需参数，包含用来跟文档比较的文本。</li>
+<li>ignore_tf:指定在相似度计算期间，是否应忽略词频，默认为false。</li>
+<li>max_query_terms:指定生成的查询中能包括的最大查询词条数，默认值为25。</li>
+<li>min_similarity:指定差分词条应该有的最小相似性，默认址为0.5。</li>
+<li>prefix_length:此参数指定差分词条的公共前缀长度，默认为0。</li>
+<li>boost:使用的加权值，默认值是1.0。</li>
+<li>analyzer:定义分析所提供文本时用到的分析器的名称。</li>
+</ul>
+</li>
+<li>fuzzy_like_this_field查询，它与fuzzy_like_this查询类似，但只能对应单个字段，它不支持多字段属性。fuzzy_like_this属性也可用在本查询中。例子如下:<pre><code>{
+    "<span class="attribute">query</span>":<span class="value">{
+        "<span class="attribute">fuzzy_like_this_field</span>":<span class="value">{
+            "<span class="attribute">title</span>":<span class="value">{
+            "<span class="attribute">like_text</span>":<span class="value"><span class="string">"crime punishment"</span>
+            </span>}
+        </span>}
+    </span>}
+</span>}
+</code></pre></li>
+<li>fuzzy查询是模糊查询中的第三种类型，它基于编辑距离算法来匹配文档。编辑距离的计算基于我们提供的查询词条和被搜索文档。此查询很占用cpu资源，但需要模糊匹配时它很有用。比如有可能一个单词漏掉了一个字母，它仍会设法找到我们想要的内容。<code>{&quot;query&quot;:{&quot;fuzzy&quot;:{&quot;title&quot;:&quot;crme&quot;}}}</code><br>它的可用参数如下:<ul>
+<li>value:实际的查询</li>
+<li>boost:查询的加权值，默认址是1.0。</li>
+<li>min_similarity:指定了一个词条被算作匹配所必须拥有的最小相似度。对于字符串字段来说，这个值区间为[0,1],也就是说，包括0和1。对于数值型字段，这个值可以大于1，比如查询值是20，min_similarity设为3，则可以得到17-23间的值。对于日期，可以设置为1d,2d,1m表示1天，2天，1个月。</li>
+<li>prefix_length:指定差分词条的公共前辍长度，默认为0。</li>
+<li>max_expansions:指定查询可被扩展到的最大词条数，默认无限制。下面是一个例子：<pre><code><span class="collection">{
+    <span class="string">"query"</span>:<span class="collection">{
+        <span class="string">"fuzzy"</span>:<span class="collection">{
+            <span class="string">"title"</span>:<span class="collection">{
+                <span class="string">"value"</span>:<span class="string">"crme"</span>,
+                <span class="string">"min_similarity"</span>：<span class="number">0.2</span>
+            }</span>
+        }</span>
+    }</span>
+}</span>
+</code></pre></li>
+</ul>
+</li>
+<li>通配符查询：*和?:<code>{&quot;query&quot;:{&quot;wildcard&quot;:{&quot;title&quot;:&quot;cr?me&quot;}}}</code>,还可以对它进行加权，方式和上边的加权相同。但是它不注重性有，使用时应尽量避免。</li>
+<li>more_like_this:查询与提供的文本类似的文档。它有如下几个参数：<ul>
+<li>fields：执行查询的字段数组，默信值是_all字段。</li>
+<li>like_text:这是一个必需参数，包含用来跟文档比较的文本。</li>
+<li>percent_terms_to_match:此属性定义了文档需要有多少百分比的词条与查询匹配才认为是类似。默认值是0.3,表示30%。</li>
+<li>min_term_freq:定义了文档中词条的最低词频，低于此频率的词条将被忽略。默认为2。</li>
+<li>max_query_terms:指定生成的查询中能包括的最大查询词条数，默认值为25。值越大，精度越大，性能越低。</li>
+<li>stop_words:定义一个单词数组，当比较文档和查询时，这些单词将被忽略，默认值为空数组。</li>
+<li>min_doc_freq:定义了包含某词条的文档的最小数目，低于此数目时，该词条将被忽略，默认值是5，意味着一个词条至少出现在5个文档中，才不会被忽略。</li>
+<li>max_doc_freq:与上边的相反，高于指定值的将被忽略。</li>
+<li>boost_terms:此参数定义了用于每个词条的加权值，默认值是1。</li>
+<li>boost:查询使用的加权值，默认值是1.0。</li>
+<li>analyzer:定义分析所提供文本时用到的分析器的名称。<br>下面是一个例子：<pre><code>{
+    "<span class="attribute">query</span>":<span class="value">{
+        "<span class="attribute">more_like_this</span>":<span class="value">{
+            "<span class="attribute">fields</span>":<span class="value">[<span class="string">"title"</span>,<span class="string">"otitle"</span>]</span>,
+            "<span class="attribute">like_text</span>":<span class="value"><span class="string">"crime and punishment"</span></span>,
+            "<span class="attribute">min_term_freq</span>":<span class="value"><span class="number">1</span></span>,
+            "<span class="attribute">min_doc_freq</span>":<span class="value"><span class="number">1</span>
+        </span>}
+    </span>}
+</span>}
+</code></pre></li>
+</ul>
+</li>
+<li><p>more_like_this_filed:与more_like_this相似，more_like_this的参数。但是它只能针对单个字段，所以它不支持多字段属性。示例如下：</p>
+<pre><code>{
+    "<span class="attribute">query</span>":<span class="value">{
+        "<span class="attribute">more_like_this_field</span>":<span class="value">{
+            "<span class="attribute">title</span>":<span class="value">{
+            "<span class="attribute">like_text</span>":<span class="value"><span class="string">"crime and punishment"</span></span>,
+            "<span class="attribute">min_term_freq</span>":<span class="value"><span class="number">1</span></span>,
+            "<span class="attribute">min_doc_freq</span>":<span class="value"><span class="number">1</span>
+            </span>}
+        </span>}
+    </span>}
+</span>}
+</code></pre><p>29。 范围查询针对数值型或字符串型，查询一段范围内的值，它只能针对单个字段。它的参数如下:</p>
+<ul>
+<li>gte:匹配大于或等于此参数值的文档。</li>
+<li>gt:匹配大于此参数值的文档。</li>
+<li>lte:匹配小于或等于此参数值的文档。</li>
+<li><p>lt:匹配小于此参数值的文档。</p>
+<pre><code>{
+    "<span class="attribute">query</span>":<span class="value">{
+        "<span class="attribute">range</span>":<span class="value">{
+            "<span class="attribute">year</span>":<span class="value">{
+            "<span class="attribute">gte</span>":<span class="value"><span class="number">1700</span></span>,
+            "<span class="attribute">lte</span>":<span class="value"><span class="number">1900</span>
+            </span>}
+        </span>}
+    </span>}
+</span>}
+</code></pre></li>
+</ul>
+</li>
+<li>最大分查询会生成一个由所有子查询返回的文档组成的并集并将它返回。我们可以控制较低得到的子查询对文档最后得分的影响。<br>文档的最后得分计算过程如下:最高分数的子查询得分之和，加上其余子查询的得分之合乘于tie参数的值，所以可以过tie_breaker参数来控制较低得分的查询对最后得分的影响。设为0.1，则得分为：最高得分+其他得分和*0.1<pre><code><span class="collection">{
+    <span class="string">"query"</span><span class="collection">{
+        <span class="string">"dismax"</span>:<span class="collection">{
+            <span class="string">"tie_breaker"</span>:<span class="number">0.99</span>
+            <span class="string">"boost"</span>:<span class="number">10.0</span>
+            <span class="string">"queries"</span>:<span class="collection">[
+                <span class="collection">{
+                    <span class="string">"match"</span>:<span class="collection">{<span class="string">"title"</span>:<span class="string">"crime"</span>}</span>
+                }</span>，<span class="collection">{
+                    <span class="string">"match"</span>:<span class="collection">{<span class="string">"author"</span>:<span class="string">"fyodor"</span>}</span>
+                }</span>
+            ]</span>
+        }</span>
+    }</span>
+}</span>
+</code></pre></li>
+<li>可以用正则表达多来查询文本，它的性能取决于所选的正则表达式。一般是正则匹配的词条越高，查询越慢。<pre><code>{
+    "<span class="attribute">query</span>":<span class="value">{
+        "<span class="attribute">regexp</span>":<span class="value">{
+            "<span class="attribute">title</span>":<span class="value">{
+            "<span class="attribute">value</span>":<span class="value"><span class="string">"cr.m[ae]"</span></span>,
+            "<span class="attribute">boost</span>":<span class="value"><span class="number">10</span>
+            </span>}
+        </span>}
+    </span>}
+</span>}
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/elasticsearch/">elasticsearch</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/09/19/Elasticsearch中文乱码问题的解决/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2015/08/30/centos7常用命令/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/" data-title="《Elasticsearch服务器开发》学习笔记（四）" data-url="http://www.52brt.com/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

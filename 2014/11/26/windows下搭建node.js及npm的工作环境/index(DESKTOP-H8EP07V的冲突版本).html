@@ -1,0 +1,270 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>windows下搭建node.js及npm的工作环境 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="windows下搭建node.js及npm的工作环境"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-11-26T14:06:32.000Z"><a href="/2014/11/26/windows下搭建node.js及npm的工作环境/">2014-11-26</a></time>
+      
+      
+  
+    <h1 class="title">windows下搭建node.js及npm的工作环境</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>由于工作需要，决定在windows下搭建一个nodejs及npm的工作环境，在网上查了n篇文章，别管是编译源码安装也好，还是使用node.msi格式安装包也好，总是有问题。最终，功夫不负有心人，还是搭建完成了。作为新手，其实我也不知道这样搭建对不对，但是运行’npm install’反正不出错了。</p>
+<p>下面就把我的一些搭建过程说一下：</p>
+<ol>
+<li>下载node.js。在<a href="http://nodejs.org/download/" target="_blank" rel="external">http://nodejs.org/download/</a>下载最新版的node.exe文件，我下载时是<code>v0.10.33</code>。下载完成后，在F盘新建nodejs文件夹，将node.exe放到该文件夹下。同时将<code>F:\nodejs</code>添加到环境变量的PATH中。<br>2.下载npm。在<a href="http://nodejs.org/dist/npm/" target="_blank" rel="external">http://nodejs.org/dist/npm/</a>下载最新版的npm。我下载时的版本是<code>npm-1.4.9.zip</code>。下载完成后，解压到nodejs文件夹中，形成了如下目录，同时添加环境变量<code>NODE_PATH</code>,其值为：<code>F:\nodejs\node_modules</code>。<a id="more"></a></li>
+<li>测试是否安装成功，在命令行中，分别输入<code>node -v</code>、<code>npm -v</code>，看是否输出两者的版本号，如果输出，则表时输出成功</li>
+<li><p>由于XXX原因，使用时会经常遇到下载包下载不下来的情况，所以最好设置npm国内镜像，命令如下：</p>
+<pre><code>npm config <span class="keyword">set</span> <span class="keyword">registry</span> <span class="keyword">http</span>://<span class="keyword">registry</span>.npmjs.vitecho.com
+</code></pre><p>5.测试一下，新建一目录，在该目录下新建一文件<code>package.json</code>，内容如下：</p>
+<pre><code>{
+    "<span class="attribute">name</span>": <span class="value"><span class="string">"d3-project-template-with-grunt"</span></span>,
+    "<span class="attribute">version</span>": <span class="value"><span class="string">"0.0.1"</span></span>,
+    "<span class="attribute">description</span>": <span class="value"><span class="string">"Ready to go d3 data visualization project template with grunt"</span></span>,
+    "<span class="attribute">keywords</span>": <span class="value">[
+        <span class="string">"data visualization"</span>,
+        <span class="string">"d3"</span>
+    ]</span>,
+    "<span class="attribute">homepage</span>": <span class="value"><span class="string">"&lt;project home page&gt;"</span></span>,
+    "<span class="attribute">author</span>": <span class="value">{
+        "<span class="attribute">name</span>": <span class="value"><span class="string">"&lt;your name&gt;"</span></span>,
+        "<span class="attribute">url</span>": <span class="value"><span class="string">"&lt;your url&gt;"</span>
+    </span>}</span>,
+    "<span class="attribute">repository</span>": <span class="value">{
+        "<span class="attribute">type</span>": <span class="value"><span class="string">"git"</span></span>,
+        "<span class="attribute">url</span>": <span class="value"><span class="string">"&lt;source repo url&gt;"</span>
+    </span>}</span>,
+    "<span class="attribute">dependencies</span>": <span class="value">{
+        "<span class="attribute">d3</span>": <span class="value"><span class="string">"3.x"</span>
+    </span>}</span>,
+    "<span class="attribute">devDependencies</span>": <span class="value">{
+        "<span class="attribute">grunt</span>": <span class="value"><span class="string">"~0.4.1"</span></span>,
+        "<span class="attribute">grunt-contrib</span>": <span class="value"><span class="string">"~0.4.0"</span></span>,
+        "<span class="attribute">grunt-contrib-uglify</span>": <span class="value"><span class="string">"~0.2.2"</span></span>,
+        "<span class="attribute">grunt-contrib-concat</span>": <span class="value"><span class="string">"~0.3.0"</span></span>,
+        "<span class="attribute">grunt-contrib-sass</span>": <span class="value"><span class="string">"~0.4.1"</span></span>,
+        "<span class="attribute">grunt-contrib-jasmine</span>": <span class="value"><span class="string">"~0.5.1"</span></span>,
+        "<span class="attribute">grunt-contrib-jshint</span>": <span class="value"><span class="string">"~0.4.0"</span></span>,
+        "<span class="attribute">grunt-template-jasmine-istanbul</span>": <span class="value"><span class="string">"~0.2.5"</span>
+
+    </span>}</span>,
+    "<span class="attribute">scripts</span>": <span class="value">{
+       "<span class="attribute">test</span>": <span class="value"><span class="string">"grunt jasmine"</span>
+    </span>}
+</span>}
+</code></pre></li>
+</ol>
+<p>6.在命令行切换到该目录下，运行<code>npm install</code>，如果会报错，且自动创建了<code>node_modules</code>目录和<code>npm-debug.log</code>文件，并下载了一堆文件，则证明使用完全没有问题。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/前端/">前端</a>, <a href="/tags/Nodejs/">Nodejs</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2009/03/19/eclipse插件开发获取路径的几种方式/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2014/11/26/windows下搭建node.js及npm的工作环境/" data-title="windows下搭建node.js及npm的工作环境" data-url="http://www.52brt.com/2014/11/26/windows下搭建node.js及npm的工作环境/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
