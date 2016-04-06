@@ -70,6 +70,60 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-08-30T01:06:32.000Z"><a href="/2015/08/30/centos7常用命令/">2015-08-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/30/centos7常用命令/">centos7常用命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>记录centos7下的一些常用命令!</p>
+<p>###网络相关</p>
+<ul>
+<li>关闭防火墙：<pre><code>systemctl stop firewalld.service<span class="comment">#停止firewall</span>
+systemctl <span class="built_in">disable</span> firewalld.service<span class="comment">#禁止firewall开机启动</span>
+</code></pre></li>
+<li><p>配置DNS服务</p>
+<ul>
+<li><p>命令行方式</p>
+<pre><code><span class="number">1.</span> nmcli connection show <span class="preprocessor">#显示当前网络连接</span>
+NAME UUID                                 TYPE           DEVICE
+eno1 <span class="number">5f</span>b06bd0-<span class="number">0</span>bb0-<span class="number">7f</span>fb-<span class="number">45f</span>1-d6edd65f3e03 <span class="number">802</span>-<span class="number">3</span>-ethernet eno1
+
+<span class="number">2.</span> nmcli con mod eno1 ipv4.dns <span class="string">"114.114.114.114 8.8.8.8"</span> <span class="preprocessor">#修改当前网络连接对应的DNS服务器，这里的网络连接可以用名称或者UUID来标识</span>
+<span class="number">3.</span> nmcli con up eno1<span class="preprocessor">#将dns配置生效</span>
+</code></pre></li>
+</ul>
+<ul>
+<li>直接修改文件方式
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/08/30/centos7常用命令/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-08-27T17:23:41.000Z"><a href="/2015/08/28/java连接远程HBase/">2015-08-28</a></time>
       
       
@@ -436,6 +490,8 @@ mysql-community-release-el7-<span class="number">5.</span>noarch
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   
     <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
@@ -450,13 +506,15 @@ mysql-community-release-el7-<span class="number">5.</span>noarch
   
     <li><a href="/tags/linux/">linux</a><small>5</small></li>
   
-    <li><a href="/tags/markdown/">markdown</a><small>3</small></li>
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
   
     <li><a href="/tags/maven/">maven</a><small>1</small></li>
   
     <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   

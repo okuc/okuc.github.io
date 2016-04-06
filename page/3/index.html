@@ -70,26 +70,30 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-12-13T14:06:32.000Z"><a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/">2015-12-13</a></time>
+        <time datetime="2015-12-14T14:06:32.000Z"><a href="/2015/12/14/新手学习mongodb之三：数据更新操作/">2015-12-14</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/">新手学习mongodb之二：基本概念及其数据类型</a></h1>
+    <h1 class="title"><a href="/2015/12/14/新手学习mongodb之三：数据更新操作/">新手学习mongodb之三：数据更新操作</a></h1>
   
 
     </header>
     <div class="entry">
       
         <ol>
-<li><p>MongoDB是面向集合的文档型数据库，文档是MongoDB的核心概念，本质是一种类JSON的BSON格式的数据，BSON在JSON的基础出上添加了一些数据类型，如日期型、int32、int64等。BSON的官方地址如下：<a href="http://bsonspec.org">http://bsonspec.org</a>与传统关系数据库相比，他们的对应关系如下：</p>
-<p> MongoDB | 关系型数据库<br> :—-:|:—-:<br> DataBase|DataBase<br> Collection|Table<br> Document/BSON Document|Record/Row<br> field|Column<br> Index|Index<br> embedded documents/reference|table joins</p>
+<li><p>MongoDB数据插入，<code>db.集合.insert(obj,opts)</code>函数主要有两个参数:obj为要插入的文档，ops为可选参数，用来设置写安全级别，它的返回值为WriteResult对象。关于<code>insert</code>函数，有以下几点需要注意：</p>
+<ul>
+<li>insert函数只能作用于一个集合。</li>
+<li>如果集合不存在，数据库服务会自动创建目标集合。</li>
+<li>插入文档时，如果没有指定_id字段，数据库服务会自动创建ObjectId对象作为_id的值。</li>
+<li>可以使用<code>save()</code>(如果原来文档不存在通过调用insert实现，存在调用update来实现)、<code>update()</code>、以及<code>findAndModify()</code>插入文档。
       
     </div>
     <footer>
       
         
           <div class="alignleft">
-            <a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/#more" class="more-link">阅读更多</a>
+            <a href="/2015/12/14/新手学习mongodb之三：数据更新操作/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -141,6 +145,44 @@ var _hmt = _hmt || [];
     </div>
     <footer>
       
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-13T14:06:32.000Z"><a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/">2015-12-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/">新手学习mongodb之二：基本概念及其数据类型</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li><p>MongoDB是面向集合的文档型数据库，文档是MongoDB的核心概念，本质是一种类JSON的BSON格式的数据，BSON在JSON的基础出上添加了一些数据类型，如日期型、int32、int64等。BSON的官方地址如下：<a href="http://bsonspec.org">http://bsonspec.org</a>与传统关系数据库相比，他们的对应关系如下：</p>
+<p> MongoDB | 关系型数据库<br> :—-:|:—-:<br> DataBase|DataBase<br> Collection|Table<br> Document/BSON Document|Record/Row<br> field|Column<br> Index|Index<br> embedded documents/reference|table joins</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/#more" class="more-link">阅读更多</a>
+          </div>
         
         
       
@@ -287,43 +329,6 @@ appModule.directive('hello', function() {
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/">2015-12-08</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/">新手学习Angularjs之四：常用的绑定命令</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
-<p><code>ng-bind</code>、<code>ng-model</code>、<code>｛{}｝</code>这三个命令如果还不明白，请参考这里<a href="http://www.52brt.com/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">新手学习Angularjs之二：ng-bind、ng-model、大括号的区别</a>,下面，我们重点来看以下几个命令：<code>ng-show/hide</code>、<code>ng-if</code>、<code>ng-submit</code>、<code>ng-disabled</code>、<code>ng-checked</code>、<code>ng-src</code>、<code>ng-href</code>、<code>ng-class</code>、<code>ng-selected</code>、<code>ng-change</code>几个命令。</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">2015-12-08</a></time>
       
       
@@ -346,6 +351,43 @@ appModule.directive('hello', function() {
         
           <div class="alignleft">
             <a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/">2015-12-08</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/">新手学习Angularjs之四：常用的绑定命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<p><code>ng-bind</code>、<code>ng-model</code>、<code>｛{}｝</code>这三个命令如果还不明白，请参考这里<a href="http://www.52brt.com/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">新手学习Angularjs之二：ng-bind、ng-model、大括号的区别</a>,下面，我们重点来看以下几个命令：<code>ng-show/hide</code>、<code>ng-if</code>、<code>ng-submit</code>、<code>ng-disabled</code>、<code>ng-checked</code>、<code>ng-src</code>、<code>ng-href</code>、<code>ng-class</code>、<code>ng-selected</code>、<code>ng-change</code>几个命令。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -454,46 +496,6 @@ appModule.directive('hello', function() {
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-05T14:06:32.000Z"><a href="/2015/12/05/Node.js的项目创建及依赖维护工作/">2015-12-05</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>要编写nodejs项目，则一般使用向导生成工程样板，然后修改工程样板，达到自已的目地，也有的直接编写各类文件。本人将自已常的生成工程样板的方式在此分享一下，高手请直接飘过。。。。。<br>在此假定我们node及npm环境已经安装配置完成，可以直接使用。</p>
-<p>###使用npm向导创建nodejs样板工程</p>
-<ol>
-<li>创建一目录<code>nodejs-demo</code>，并在命令行中切换到该目录下。输入<code>npm init</code>，按要求输入工程名称、版本号、描述、入口等就可以了。一般直接使用默认就可以，但是有两点，入口现在一般添<code>bin/www</code>,关键词直接输入项目关键字或不输都可以。</li>
-<li>使用命令<code>yum install -g bower</code>安装<code>bower</code>。
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/05/Node.js的项目创建及依赖维护工作/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -524,6 +526,8 @@ appModule.directive('hello', function() {
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   
     <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
@@ -538,13 +542,15 @@ appModule.directive('hello', function() {
   
     <li><a href="/tags/linux/">linux</a><small>5</small></li>
   
-    <li><a href="/tags/markdown/">markdown</a><small>3</small></li>
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
   
     <li><a href="/tags/maven/">maven</a><small>1</small></li>
   
     <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   

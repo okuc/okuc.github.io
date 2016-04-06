@@ -70,6 +70,50 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-03-30T01:06:32.000Z"><a href="/2016/03/30/docker常用命令/">2016-03-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/30/docker常用命令/">docker常用命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><code>sudo docker images</code>：列出当前docker镜像列表</li>
+<li><code>sudo docker ps</code>：列出正在运行的容器列表</li>
+<li><code>sudo docker ps -a</code>：列出所有的容器列表</li>
+<li><code>sudo docker pull centos:6.6</code>：拉取特定的镜像</li>
+<li><code>sudo docker search centos</code>：查找镜象</li>
+<li><code>vim /etc/sysconfig/docker</code>：修改docker默认配置文件</li>
+<li><code>docker version</code>:查看docker版本</li>
+<li><code>sudo service docker restart</code>重启docker服务
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/03/30/docker常用命令/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-03-12T14:35:02.000Z"><a href="/2016/03/12/Linux折腾记(6)-centos7下快捷搭建nodejs开发环境/">2016-03-12</a></time>
       
       
@@ -85,48 +129,17 @@ var _hmt = _hmt || [];
 <li>安装<code>epel-release</code>，命令如下：｀sudo yum install epel-release｀。</li>
 <li>安装<code>nodejs</code>，命令如下：｀sudo yum install nodejs｀。</li>
 <li>安装<code>npm</code>，命令如下：｀sudo yum install npm｀。</li>
-<li><p>设置缓存目录和全局模块的存放路径，在<code>/home/okuc/nodejs</code>下建立<code>node global</code>及<code>node cache</code>两个文件夹。同时在终端命令行中，执行如下命令：</p>
-<pre><code>npm config <span class="built_in">set</span> prefix <span class="string">"/home/okuc/nodejs/node global"</span>
+<li>设置缓存目录和全局模块的存放路径，在<code>/home/okuc/nodejs</code>下建立<code>node global</code>及<code>node cache</code>两个文件夹。同时在终端命令行中，执行如下命令：<pre><code>npm config <span class="built_in">set</span> prefix <span class="string">"/home/okuc/nodejs/node global"</span>
 npm config <span class="built_in">set</span> <span class="keyword">cache</span> <span class="string">"/home/okuc/nodejs/node cache"</span>
-</code></pre><p>为了查看是否执行成功，可使用如下命令查看：<code>npm config get prefix</code>。</p>
-</li>
-<li><p>将路径｀/home/okuc/nodejs/node global/｀添加到环境变量中。注意，由于存在空隔，需要加单引号。</p>
-<pre><code>sudo vi /etc/profile
-
-export PATH=<span class="variable">$PATH</span>:<span class="string">'/home/okuc/nodejs/node global/bin'</span>
-</code></pre></li>
-<li><p>使用｀n｀来升级<code>nodejs</code>版本。</p>
-<ol>
-<li>安装｀n｀模块：‘npm install -g n’。</li>
-<li>升级<code>nodejs</code>：<code>n stable</code>。<strong>此步需要切换到root用户下</strong></li>
-<li>｀n｀后边也可以加具体的版本号，将｀nodejs｀切换到某个具体版本。如<code>n v0.10.26</code>、<code>n 0.10.26</code>。</li>
-</ol>
-</li>
-<li><p>下面是几个常用的<code>npm</code>命令。</p>
-<pre><code><span class="built_in">npm</span> -v          <span class="comment">#显示版本，检查npm 是否正确安装。</span>
-
-<span class="built_in">npm</span> install express   <span class="comment">#安装express模块</span>
-
-<span class="built_in">npm</span> install -g express  <span class="comment">#全局安装express模块</span>
-
-<span class="built_in">npm</span> list         <span class="comment">#列出已安装模块</span>
-
-<span class="built_in">npm</span> show express     <span class="comment">#显示模块详情</span>
-
-<span class="built_in">npm</span> update        <span class="comment">#升级当前目录下的项目的所有模块</span>
-
-<span class="built_in">npm</span> update express    <span class="comment">#升级当前目录下的项目的指定模块</span>
-
-<span class="built_in">npm</span> update -g express  <span class="comment">#升级全局安装的express模块</span>
-
-<span class="built_in">npm</span> uninstall express  <span class="comment">#删除指定的模块</span>
-</code></pre></li>
-</ol>
-
+</code></pre>为了查看是否执行成功，可使用如下命令查看：<code>npm config get prefix</code>。
       
     </div>
     <footer>
       
+        
+          <div class="alignleft">
+            <a href="/2016/03/12/Linux折腾记(6)-centos7下快捷搭建nodejs开发环境/#more" class="more-link">阅读更多</a>
+          </div>
         
         
       
@@ -156,22 +169,15 @@ export PATH=<span class="variable">$PATH</span>:<span class="string">'/home/okuc
       
         <p>  一直信赖金山快盘，所以当我的旧硬件空间不够时，毫不犹豫的删除掉了本地的博客内容。等我拷贝上新的内容，同步下来文件时，才发现，近两个月的内容，竟然没有同步。强烈谴责某山，太不负责任了，论坛上也没有人管，没有人问。无耐只有自已想法了。试了n种方案，感沉下面这种方案是工作量最小的，现在步骤记录如下：</p>
 <p>1、首先从博客户把编译后的｀index.html｀下载下来。找到属于<code>markdown</code>的一部分。主要是位于<code>&lt;div class=&quot;entry&quot;&gt;...&lt;/div&gt;</code>中，结尾处在<code>&lt;footer&gt;</code>上边。</p>
-<p>2.将上述片断的<code>html代码片断</code>拷到网页<a href="">http://tool.lu/markdown/</a>中，转成<code>markdown</code>。</p>
-<p>3.对转后的文档添加文档头，如：</p>
-<pre><code>layout: coding
-title: hexo博客笔记源码恢复记
-date: <span class="number">2016</span>-<span class="number">03</span>-<span class="number">10</span> <span class="number">22</span>:<span class="number">59</span>:<span class="number">45</span>
-tags: [hexo,markdown,恢复]
----
-</code></pre><ol>
-<li>批量替换，将<code>*</code>替换成<code>-</code>,然后再将<code>*</code>替换成<code>-</code>。</li>
-</ol>
-<p>5.接下来就是细节调整了。主要是针对源代码。由于转成markdown后的源代码会把<code>源码</code>识别为<code>html源码</code>,所以，需要把<code>&#39;&#39;&#39;</code>去掉，并把其间的内容再缩进一格，形成真正的源码格式，就可以了。建议这一步在markdown编辑器中来做。</p>
-
+<p>2.将上述片断的<code>html代码片断</code>拷到网页<a href="">http://tool.lu/markdown/</a>中，转成<code>markdown</code>。<br>
       
     </div>
     <footer>
       
+        
+          <div class="alignleft">
+            <a href="/2016/03/10/hexo博客笔记源码恢复记/#more" class="more-link">阅读更多</a>
+          </div>
         
         
       
@@ -200,32 +206,20 @@ tags: [hexo,markdown,恢复]
     <div class="entry">
       
         <p>安装上了windos10和centos7双系统，想找一款比较不错的<code>markdown</code>双系统，找来找去，最终决定安装<code>haroopad</code>，安装过程如下：</p>
-<p>1.首先是下载。我安装的目前最新版本<code>haroopad-v0.13.1-x64.tar.gz</code>,下载地址如下：<a href="https://bitbucket.org/rhiokim/haroopad-download/downloads/haroopad-v0.13.1-x64.tar.gz" target="_blank" rel="external">haroopad-v0.13.1-x64.tar.gz</a>。<br>  如果想安装其他版本，可以在此查找下载更多的安装包：<a href="https://bitbucket.org/rhiokim/haroopad-download/downloads/" target="_blank" rel="external">https://bitbucket.org/rhiokim/haroopad-download/downloads/</a>。</p>
+<p>1.首先是下载。我安装的目前最新版本<code>haroopad-v0.13.1-x64.tar.gz</code>,下载地址如下：<a href="https://bitbucket.org/rhiokim/haroopad-download/downloads/haroopad-v0.13.1-x64.tar.gz">haroopad-v0.13.1-x64.tar.gz</a>。<br>  如果想安装其他版本，可以在此查找下载更多的安装包：<a href="https://bitbucket.org/rhiokim/haroopad-download/downloads/">https://bitbucket.org/rhiokim/haroopad-download/downloads/</a>。</p>
 <p>2.下载完成后，使用如下命令解压<code>tar -zxvf haroopad-v0.13.1-x64.tar.gz</code>。</p>
 <p>3.下面就解压出来的<code>data.tar.gz</code>进行再次解压，并释放到合适的地方。<strong>注意:下边的几步都需要root权限。</strong></p>
 <pre><code>tar -zxvf data<span class="class">.tar</span><span class="class">.gz</span>
 sudo cp －r ./usr /
-</code></pre><p>4.下面就解压出来的<code>control.tar.gz</code>进行解压并运行。</p>
-<pre><code>tar zxf control<span class="class">.tar</span><span class="class">.gz</span>
-chmod <span class="number">755</span> postinst
-sudo ./postinst
-</code></pre><p>5.运行到这一步，就可以在菜单－编程中看到haroopad了。但是为了让它正确的显示图标，我们还要指定正确的图标位置。编辑如下位置:<code>sudo vi /usr/share/applications/Haroopad.desktop</code>,将文件内容中的<code>Icon</code>，换成正确的图标路径，即可。</p>
-<pre><code><span class="title">[Desktop Entry]</span>
-<span class="setting">Name=<span class="value">haroopad</span></span>
-<span class="setting">Version=<span class="value"><span class="number">0.13</span>.<span class="number">1</span></span></span>
-<span class="setting">Exec=<span class="value">haroopad</span></span>
-<span class="setting">Comment=<span class="value">The Next Document processor based <span class="keyword">on</span> Markdown</span></span>
-<span class="setting">Icon=<span class="value">/usr/share/icons/hicolor/<span class="number">128</span>x128/apps/haroopad.png</span></span>
-<span class="setting">Type=<span class="value">Application</span></span>
-<span class="setting">Terminal=<span class="value"><span class="keyword">false</span></span></span>
-<span class="setting">StartupNotify=<span class="value"><span class="keyword">true</span></span></span>
-<span class="setting">Encoding=<span class="value">UTF-<span class="number">8</span></span></span>
-<span class="setting">Categories=<span class="value">Development;GTK;GNOME;</span></span>
 </code></pre>
       
     </div>
     <footer>
       
+        
+          <div class="alignleft">
+            <a href="/2016/03/10/Linux折腾记(5)-centos7下安装markdown编辑器haroopad-v0.13.1-x64/#more" class="more-link">阅读更多</a>
+          </div>
         
         
       
@@ -492,49 +486,6 @@ $(<span class="string">'#example'</span>).<span class="function"><span class="ti
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">2015-12-31</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">《Bootstrap用户手册》学习笔记(一)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第1章_Bootstrap提供的网站框架">第1章 Bootstrap提供的网站框架</h2><ol>
-<li><p><code>Bootstrap</code>中有几种默认样式需要注意，它们专门针对排版和链接。</p>
-<ul>
-<li>从<code>body</code>中去掉了<code>margin</code>,这样内容就会紧贴浏览器窗口边缘。</li>
-<li>为<code>body</code>应用了<code>background-color:white;</code>。</li>
-<li><code>Bootstrap</code>以<code>@baseFontFamily</code>、<code>@baseFontSize</code>、<code>@baseLineHeight</code>属性作为排版的基准，确保整个网站的标题及其他内容的行高一致。</li>
-<li><p><code>Bootstrap</code>通过<code>@linkColor</code>设置全局链接颜色，只在<code>:hover</code>状态下给链接添加下划线。</p>
-<p>要改变默认颜色，可以直接修改相应<code>.less</code>文件中的全局变量值。要么修改<code>scaffolding.less</code>文件，要么修改你自已的样式表。</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/新手学习Express4之四：数据库集成/">2015-12-31</a></time>
       
       
@@ -609,6 +560,8 @@ console.log(<span class="literal">result</span>.rows[<span class="number">0</spa
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   
     <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
@@ -623,13 +576,15 @@ console.log(<span class="literal">result</span>.rows[<span class="number">0</spa
   
     <li><a href="/tags/linux/">linux</a><small>5</small></li>
   
-    <li><a href="/tags/markdown/">markdown</a><small>3</small></li>
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
   
     <li><a href="/tags/maven/">maven</a><small>1</small></li>
   
     <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   

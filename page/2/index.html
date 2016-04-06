@@ -70,6 +70,49 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">2015-12-31</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">《Bootstrap用户手册》学习笔记(一)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第1章_Bootstrap提供的网站框架">第1章 Bootstrap提供的网站框架</h2><ol>
+<li><p><code>Bootstrap</code>中有几种默认样式需要注意，它们专门针对排版和链接。</p>
+<ul>
+<li>从<code>body</code>中去掉了<code>margin</code>,这样内容就会紧贴浏览器窗口边缘。</li>
+<li>为<code>body</code>应用了<code>background-color:white;</code>。</li>
+<li><code>Bootstrap</code>以<code>@baseFontFamily</code>、<code>@baseFontSize</code>、<code>@baseLineHeight</code>属性作为排版的基准，确保整个网站的标题及其他内容的行高一致。</li>
+<li><p><code>Bootstrap</code>通过<code>@linkColor</code>设置全局链接颜色，只在<code>:hover</code>状态下给链接添加下划线。</p>
+<p>要改变默认颜色，可以直接修改相应<code>.less</code>文件中的全局变量值。要么修改<code>scaffolding.less</code>文件，要么修改你自已的样式表。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-12-30T14:06:32.000Z"><a href="/2015/12/30/新手学习Express4之三：错误处理、调试Express及使用代理 /">2015-12-30</a></time>
       
       
@@ -988,48 +1031,6 @@ printjson(cursor.toArray());</span>
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-14T14:06:32.000Z"><a href="/2015/12/14/新手学习mongodb之三：数据更新操作/">2015-12-14</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/14/新手学习mongodb之三：数据更新操作/">新手学习mongodb之三：数据更新操作</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ol>
-<li><p>MongoDB数据插入，<code>db.集合.insert(obj,opts)</code>函数主要有两个参数:obj为要插入的文档，ops为可选参数，用来设置写安全级别，它的返回值为WriteResult对象。关于<code>insert</code>函数，有以下几点需要注意：</p>
-<ul>
-<li>insert函数只能作用于一个集合。</li>
-<li>如果集合不存在，数据库服务会自动创建目标集合。</li>
-<li>插入文档时，如果没有指定_id字段，数据库服务会自动创建ObjectId对象作为_id的值。</li>
-<li>可以使用<code>save()</code>(如果原来文档不存在通过调用insert实现，存在调用update来实现)、<code>update()</code>、以及<code>findAndModify()</code>插入文档。
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/14/新手学习mongodb之三：数据更新操作/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1060,6 +1061,8 @@ printjson(cursor.toArray());</span>
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   
     <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
@@ -1074,13 +1077,15 @@ printjson(cursor.toArray());</span>
   
     <li><a href="/tags/linux/">linux</a><small>5</small></li>
   
-    <li><a href="/tags/markdown/">markdown</a><small>3</small></li>
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
   
     <li><a href="/tags/maven/">maven</a><small>1</small></li>
   
     <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
   
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   
