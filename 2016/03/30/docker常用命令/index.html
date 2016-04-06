@@ -1,0 +1,283 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>docker常用命令 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="docker常用命令"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-30T01:06:32.000Z"><a href="/2016/03/30/docker常用命令/">2016-03-30</a></time>
+      
+      
+  
+    <h1 class="title">docker常用命令</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><code>sudo docker images</code>：列出当前docker镜像列表</li>
+<li><code>sudo docker ps</code>：列出正在运行的容器列表</li>
+<li><code>sudo docker ps -a</code>：列出所有的容器列表</li>
+<li><code>sudo docker pull centos:6.6</code>：拉取特定的镜像</li>
+<li><code>sudo docker search centos</code>：查找镜象</li>
+<li><code>vim /etc/sysconfig/docker</code>：修改docker默认配置文件</li>
+<li><code>docker version</code>:查看docker版本</li>
+<li><code>sudo service docker restart</code>重启docker服务<a id="more"></a></li>
+<li><code>docker run -it 12c9d795d85a  /bin/bash</code>：以交互式运行docker</li>
+<li><code>docker run --privileged=true --name c6j7 -i -t -v  /home/okuc/e/linux/:/mnt/software/ - 12c9d795d85a  /bin/bash</code>：以交互式运行docker，并将本地目录挂接到容器中</li>
+<li><code>sudo docker commit 12c9d795d85a docker.io/centos6.6-jdk1.7</code>：提交容器为新的镜像</li>
+<li><code>sudo docker ps -l</code></li>
+<li><code>docker inspect c6j7</code>：查看容器详情</li>
+<li><code>docker restart c6j7</code>：重新运行容器</li>
+<li><code>sudo docker attach c6j7</code>：重新链接容器窗口</li>
+<li><code>docker rmi 12c9d795d85a</code>删除一个镜像。</li>
+<li><code>docker rm &lt;CONTAINER_ID&gt;</code>：删除container</li>
+<li><code>docker rm</code>docker ps -a -q`：删除所有容器</li>
+<li><code>docker run -d --name mysql -e MYSQL_ROOT_PASSWORD=pass -e MYSQL_DATABASE=db - mysql:5.6.22</code>:运行mysql容器，以后台运行方式。</li>
+<li><code>docker run -d -P ---link mysql:mysql -e MYSQL_INSTANCE_NAME=db -e MYSQL_USERNAME=root -e - MYSQL_PASSWORD=pass daocloud.io/ghost</code>:运行一个容器，并且挂接上个容器。</li>
+<li>docker可以实现<code>文件系统隔离</code>、<code>进程隔离</code>、<code>网络隔离</code>、<code>资源隔离和分组</code>。</li>
+<li>docker start [-i] 容器名</li>
+<li>守护式容器是指能够长期运行、没有交互式会话、适合运行应用程序和服务的容器。</li>
+<li>Ctrl+p、Ctrl+Q可以以守护的形式运行容器。</li>
+<li>对于在后台运行的守护容器，可以使用如下命令附加到运行中的容器：<code>docker attach 容器名</code></li>
+<li><code>docker run -d 镜像名 [COMMAND] [ARG...]</code>:启动守护式容器。</li>
+<li><code>docker logs [-f] [-t] [--tail] 容器名</code>：<code>-f</code>为实时显示最新的，<code>-t</code>为按时间排列，<code>tail</code>用来指定显示的条数，如果为<code>all</code>，则全部显示。<code>docker logs -tf --tail 10 dc1</code>：显示最新10条日志。</li>
+<li><code>docker top 容器名</code>：查看容器内的进程。</li>
+<li><code>docker exec [-d] [-i] [-t] 容器名 [COMMAND] [ARG]</code>:在运行中的容器内启动新进程。<code>docker exec -i -t c6j7  /bin/bash</code></li>
+<li>停止守护式容器：<code>docker stop 容器名</code>、<code>docker kill 容器名</code>。</li>
+<li>使用Docker帮助文件查询命令：<code>man docker-run</code>、<code>man docker-logs</code>、<code>man docker-top</code>、<code>man docker-exec</code>等等。</li>
+<li>设置端口映射。<code>docker run -P -it centos /bin/bash</code>,<code>-P</code>：默认匹配<code>docker</code>容器的<code>5000</code>端口号到宿主机的<code>49153 to 65535</code>端口。<code>-p &lt;HOT_PORT&gt;:&lt;CONTAINER_PORT&gt;</code>：指定端口号。<code>docker run -p 80 -it centos /bin/bash</code>:映射80端口。<code>docker run -p 8080:80 -it centos /bin/bash</code>。<code>docker run -p 0.0.0.0:80 -it centos /bin/bash</code>。<code>docker run -p 0.0.0.0:8080:80 -it centos /bin/bash</code>。</li>
+<li><code>docker port web</code>:查看端口号映射。<code>web</code>为容器名称。</li>
+<li>docker提供了RESTful风格的API。支持三种方式连接：<ul>
+<li><code>unix:///var/run/docker.sock</code></li>
+<li><code>tcp://host:port</code></li>
+<li><code>fd://socketfdd</code></li>
+</ul>
+</li>
+<li>查看守护进展:<code>ps -ef|grep docker</code>、<code>sudo status docker</code>。</li>
+<li>重启/停止/起动docker:<code>sudo service docker start</code>、<code>sudo service docker stop</code>、<code>sudo service docker restart</code></li>
+<li>启动配置文件<code>/etc/default/docker</code>、<code>/etc/sysconfig/docker</code></li>
+<li><p>构建镜像除了用上述的命令提交外，还可以使用<code>Dockerfile</code>来构建镜像，使用<code>$docker build</code>命令来构建。下面是一个例子：</p>
+<pre><code><span class="comment">#First Dockerfile</span>
+<span class="built_in">FROM</span> centos:<span class="number">6.6</span>
+<span class="built_in">MAINTAINER</span> okuc <span class="string">"okuc@live.cn"</span>
+RUN yum update
+<span class="built_in">RUN</span> <span class="bash">yum install -y nginx
+</span><span class="built_in">EXPOSE</span> <span class="number">80</span>
+</code></pre><p>  然后使用如下命令构建：<code>docker build -t=&#39;okuc/okuc_test&#39; .</code></p>
+</li>
+</ul>
+<h2 id="常见问题">常见问题</h2><ol>
+<li>使用非<code>root</code>用户，不用再加<code>sudo</code>。<ol>
+<li>sudo groupadd docker</li>
+<li>sudo gpasswd -a ${USER} docker</li>
+<li>sudo service docker restart</li>
+</ol>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/docker/">docker</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    
+    <a href="/2016/03/12/Linux折腾记(6)-centos7下快捷搭建nodejs开发环境/" class="alignright next" >Next</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/03/30/docker常用命令/" data-title="docker常用命令" data-url="http://www.52brt.com/2016/03/30/docker常用命令/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
