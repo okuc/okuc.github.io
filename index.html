@@ -1,0 +1,678 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-12T14:35:02.000Z"><a href="/2016/03/12/Linux折腾记(6)-centos7下快捷搭建nodejs开发环境/">2016-03-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/12/Linux折腾记(6)-centos7下快捷搭建nodejs开发环境/">Linux折腾记(6)-centos7下快捷搭建nodejs开发环境</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>闲话少说，直接上步骤。</p>
+<ol>
+<li>安装<code>epel-release</code>，命令如下：｀sudo yum install epel-release｀。</li>
+<li>安装<code>nodejs</code>，命令如下：｀sudo yum install nodejs｀。</li>
+<li>安装<code>npm</code>，命令如下：｀sudo yum install npm｀。</li>
+<li><p>设置缓存目录和全局模块的存放路径，在<code>/home/okuc/nodejs</code>下建立<code>node global</code>及<code>node cache</code>两个文件夹。同时在终端命令行中，执行如下命令：</p>
+<pre><code>npm config <span class="built_in">set</span> prefix <span class="string">"/home/okuc/nodejs/node global"</span>
+npm config <span class="built_in">set</span> <span class="keyword">cache</span> <span class="string">"/home/okuc/nodejs/node cache"</span>
+</code></pre><p>为了查看是否执行成功，可使用如下命令查看：<code>npm config get prefix</code>。</p>
+</li>
+<li><p>将路径｀/home/okuc/nodejs/node global/｀添加到环境变量中。注意，由于存在空隔，需要加单引号。</p>
+<pre><code>sudo vi /etc/profile
+
+export PATH=<span class="variable">$PATH</span>:<span class="string">'/home/okuc/nodejs/node global/bin'</span>
+</code></pre></li>
+<li><p>使用｀n｀来升级<code>nodejs</code>版本。</p>
+<ol>
+<li>安装｀n｀模块：‘npm install -g n’。</li>
+<li>升级<code>nodejs</code>：<code>n stable</code>。<strong>此步需要切换到root用户下</strong></li>
+<li>｀n｀后边也可以加具体的版本号，将｀nodejs｀切换到某个具体版本。如<code>n v0.10.26</code>、<code>n 0.10.26</code>。</li>
+</ol>
+</li>
+<li><p>下面是几个常用的<code>npm</code>命令。</p>
+<pre><code><span class="built_in">npm</span> -v          <span class="comment">#显示版本，检查npm 是否正确安装。</span>
+
+<span class="built_in">npm</span> install express   <span class="comment">#安装express模块</span>
+
+<span class="built_in">npm</span> install -g express  <span class="comment">#全局安装express模块</span>
+
+<span class="built_in">npm</span> list         <span class="comment">#列出已安装模块</span>
+
+<span class="built_in">npm</span> show express     <span class="comment">#显示模块详情</span>
+
+<span class="built_in">npm</span> update        <span class="comment">#升级当前目录下的项目的所有模块</span>
+
+<span class="built_in">npm</span> update express    <span class="comment">#升级当前目录下的项目的指定模块</span>
+
+<span class="built_in">npm</span> update -g express  <span class="comment">#升级全局安装的express模块</span>
+
+<span class="built_in">npm</span> uninstall express  <span class="comment">#删除指定的模块</span>
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-10T14:59:45.000Z"><a href="/2016/03/10/hexo博客笔记源码恢复记/">2016-03-10</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/10/hexo博客笔记源码恢复记/">hexo博客笔记源码恢复记</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>  一直信赖金山快盘，所以当我的旧硬件空间不够时，毫不犹豫的删除掉了本地的博客内容。等我拷贝上新的内容，同步下来文件时，才发现，近两个月的内容，竟然没有同步。强烈谴责某山，太不负责任了，论坛上也没有人管，没有人问。无耐只有自已想法了。试了n种方案，感沉下面这种方案是工作量最小的，现在步骤记录如下：</p>
+<p>1、首先从博客户把编译后的｀index.html｀下载下来。找到属于<code>markdown</code>的一部分。主要是位于<code>&lt;div class=&quot;entry&quot;&gt;...&lt;/div&gt;</code>中，结尾处在<code>&lt;footer&gt;</code>上边。</p>
+<p>2.将上述片断的<code>html代码片断</code>拷到网页<a href="">http://tool.lu/markdown/</a>中，转成<code>markdown</code>。</p>
+<p>3.对转后的文档添加文档头，如：</p>
+<pre><code>layout: coding
+title: hexo博客笔记源码恢复记
+date: <span class="number">2016</span>-<span class="number">03</span>-<span class="number">10</span> <span class="number">22</span>:<span class="number">59</span>:<span class="number">45</span>
+tags: [hexo,markdown,恢复]
+---
+</code></pre><ol>
+<li>批量替换，将<code>*</code>替换成<code>-</code>,然后再将<code>*</code>替换成<code>-</code>。</li>
+</ol>
+<p>5.接下来就是细节调整了。主要是针对源代码。由于转成markdown后的源代码会把<code>源码</code>识别为<code>html源码</code>,所以，需要把<code>&#39;&#39;&#39;</code>去掉，并把其间的内容再缩进一格，形成真正的源码格式，就可以了。建议这一步在markdown编辑器中来做。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-10T14:35:02.000Z"><a href="/2016/03/10/Linux折腾记(5)-centos7下安装markdown编辑器haroopad-v0.13.1-x64/">2016-03-10</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/10/Linux折腾记(5)-centos7下安装markdown编辑器haroopad-v0.13.1-x64/">Linux折腾记(5)-centos7下安装markdown编辑器haroopad-v0.13.1-x64</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>安装上了windos10和centos7双系统，想找一款比较不错的<code>markdown</code>双系统，找来找去，最终决定安装<code>haroopad</code>，安装过程如下：</p>
+<p>1.首先是下载。我安装的目前最新版本<code>haroopad-v0.13.1-x64.tar.gz</code>,下载地址如下：<a href="https://bitbucket.org/rhiokim/haroopad-download/downloads/haroopad-v0.13.1-x64.tar.gz" target="_blank" rel="external">haroopad-v0.13.1-x64.tar.gz</a>。<br>  如果想安装其他版本，可以在此查找下载更多的安装包：<a href="https://bitbucket.org/rhiokim/haroopad-download/downloads/" target="_blank" rel="external">https://bitbucket.org/rhiokim/haroopad-download/downloads/</a>。</p>
+<p>2.下载完成后，使用如下命令解压<code>tar -zxvf haroopad-v0.13.1-x64.tar.gz</code>。</p>
+<p>3.下面就解压出来的<code>data.tar.gz</code>进行再次解压，并释放到合适的地方。<strong>注意:下边的几步都需要root权限。</strong></p>
+<pre><code>tar -zxvf data<span class="class">.tar</span><span class="class">.gz</span>
+sudo cp －r ./usr /
+</code></pre><p>4.下面就解压出来的<code>control.tar.gz</code>进行解压并运行。</p>
+<pre><code>tar zxf control<span class="class">.tar</span><span class="class">.gz</span>
+chmod <span class="number">755</span> postinst
+sudo ./postinst
+</code></pre><p>5.运行到这一步，就可以在菜单－编程中看到haroopad了。但是为了让它正确的显示图标，我们还要指定正确的图标位置。编辑如下位置:<code>sudo vi /usr/share/applications/Haroopad.desktop</code>,将文件内容中的<code>Icon</code>，换成正确的图标路径，即可。</p>
+<pre><code><span class="title">[Desktop Entry]</span>
+<span class="setting">Name=<span class="value">haroopad</span></span>
+<span class="setting">Version=<span class="value"><span class="number">0.13</span>.<span class="number">1</span></span></span>
+<span class="setting">Exec=<span class="value">haroopad</span></span>
+<span class="setting">Comment=<span class="value">The Next Document processor based <span class="keyword">on</span> Markdown</span></span>
+<span class="setting">Icon=<span class="value">/usr/share/icons/hicolor/<span class="number">128</span>x128/apps/haroopad.png</span></span>
+<span class="setting">Type=<span class="value">Application</span></span>
+<span class="setting">Terminal=<span class="value"><span class="keyword">false</span></span></span>
+<span class="setting">StartupNotify=<span class="value"><span class="keyword">true</span></span></span>
+<span class="setting">Encoding=<span class="value">UTF-<span class="number">8</span></span></span>
+<span class="setting">Categories=<span class="value">Development;GTK;GNOME;</span></span>
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-01-05T14:06:32.000Z"><a href="/2016/01/05/TinkerPop3 API 简明笔记（一）/">2016-01-05</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/01/05/TinkerPop3 API 简明笔记（一）/">TinkerPop3 API 简明笔记（一）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li><p><code>Lambda</code>:尽量避免使用，防止死循环。</p>
+<ul>
+<li><code>map</code>：<code>g.V(1).out().map {it.get().value(&#39;name&#39;)}</code> 等同于 <code>g.V(1).out().values(&#39;name&#39;)</code>，查询标识为1的节点所指向的节点的名字。</li>
+<li><code>filter</code>:过滤。<code>g.V().filter {it.get().label() == &#39;person&#39;}</code> 等同于 <code>g.V().hasLabel(&#39;person&#39;)</code>,查找类型（标签）为person的节点。</li>
+<li><code>sideEffect</code>:执行某些操作，并把源数据传递给下一步。<code>g.V().hasLabel(&#39;person&#39;).sideEffect(System.out.&amp;println)</code> 。</li>
+<li><code>branch</code>相当于<code>if</code>操作，<code>g.V().branch(values(&#39;name&#39;)).option(&#39;marko&#39;, values(&#39;age&#39;)). option(none, values(&#39;name&#39;))</code>等同于<code>g.V().choose(has(&#39;name&#39;,&#39;marko&#39;),values(&#39;age&#39;),values(&#39;name&#39;))</code>，如果名称为<code>marko</code>，则获取出年龄，否则执行第二步，获取名字。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/01/05/TinkerPop3 API 简明笔记（一）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-01-04T14:06:32.000Z"><a href="/2016/01/04/《Bootstrap用户手册》学习笔记(五)/">2016-01-04</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/01/04/《Bootstrap用户手册》学习笔记(五)/">《Bootstrap用户手册》学习笔记(五)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第_4_章Bootstrap支持的JavaScript插件(2)">第 4 章Bootstrap支持的JavaScript插件(2)</h2><ol>
+<li><p><strong>提示条</strong>可以用来给出链接说明或（与标签连用）给出缩写词的的全称。这个插件最初的原型是<code>Jason Frame</code>的<code>jQuery.tipsy</code>插件。但<br>目前这个提示条利用<code>Bootstrap JavaScript API</code>可以不使用图片，而且有<code>CSS</code>动画。</p>
+<p><strong>用法</strong>给<code>&lt;a&gt;</code>元素添加<code>rel=&quot;tooltip&quot;</code>就可以添加提示条，<code>&lt;a&gt;</code>元素的<code>title</code>属性值就是提示条的内容。下面两个例子分别使用<code>Bootstrap Data API</code>和<code>JavaScript</code>来创建提示条：</p>
+<pre><code>&lt;<span class="tag">a</span> href=<span class="string">"#"</span> rel=<span class="string">"tooltip"</span> title=<span class="string">"This is the tooltip"</span>&gt;Tooltip Example&lt;/a&gt;
+$(<span class="string">'#example'</span>).<span class="function"><span class="title">tooltip</span><span class="params">(options)</span></span>
+</code></pre><p><strong>选项</strong>与其他插件一样，提示条也可以通过<code>Data API</code>或 <code>JavaScript</code>来设置。只不过在使用数据属性时，选项名称前面要加上<code>data-</code>，比如<code>title</code>就要变成<code>data-title</code>。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/01/04/《Bootstrap用户手册》学习笔记(五)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-01-03T14:06:32.000Z"><a href="/2016/01/03/《Bootstrap用户手册》学习笔记(四)/">2016-01-03</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/01/03/《Bootstrap用户手册》学习笔记(四)/"></a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第3章_Bootstrap内置的布局组件(2)">第3章 Bootstrap内置的布局组件(2)</h2><ol>
+<li><p><strong>标签</strong>：标签非常适合显示计数结果、提示信息等 内容。</p>
+<pre><code><span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label"</span>&gt;</span>Default<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label label-success"</span>&gt;</span>Success<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label label-warning"</span>&gt;</span>Warning<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label label-important"</span>&gt;</span>Important<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label label-info"</span>&gt;</span>Info<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label label-inverse"</span>&gt;</span>Inverse<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+</code></pre></li>
+<li><p><strong>圆标签</strong>与标签类似，主要区别在于它们的两头更圆。它的颜色与标签的颜色是一样的。</p>
+<pre><code><span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge"</span>&gt;</span>1<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge badge-success"</span>&gt;</span>2<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge badge-warning"</span>&gt;</span>4<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge badge-important"</span>&gt;</span>6<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge badge-info"</span>&gt;</span>8<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge badge-inverse"</span>&gt;</span>10<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/01/03/《Bootstrap用户手册》学习笔记(四)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-01-02T14:06:32.000Z"><a href="/2016/01/02/《Bootstrap用户手册》学习笔记(三)/">2016-01-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/01/02/《Bootstrap用户手册》学习笔记(三)/">《Bootstrap用户手册》学习笔记(三)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第3章_Bootstrap内置的布局组件(1)">第3章 Bootstrap内置的布局组件(1)</h2><ol>
+<li><p>除了前一章介绍的标记，<code>Bootstrap</code>还内置了一套灵活的组件，可用于设计用户界面、交互功能，等等。这些组件来自一个独立的 <code>javaScript</code>文件，而这个文件可以通过<code>Bootstrap</code>的自定义构建工具生成，因此可以只包含你需要的组件。一般会选择所有组件，这样就有了最大的灵活性。</p>
+</li>
+<li><p><strong>上下文菜单</strong>：下拉菜单以列表形式呈现一组选项，一般与上下文相关，可用于不同的元素、导航、按钮，等等。</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span> <span class="attribute">role</span>=<span class="value">"menu"</span> <span class="attribute">aria-labelledby</span>=<span class="value">"dropdownMenu"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Another action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Something else here<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"divider"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>//分隔横线
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Separated link<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre><ul>
+<li><p><strong>右对齐</strong>：为<code>.dropdown-menu</code>添加<code>.pull-right</code>类，可以让下拉菜单右边缘与父对象右边缘对齐：</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu pull-right"</span> <span class="attribute">role</span>=<span class="value">"menu"</span> <span class="attribute">aria-labelledby</span>=<span class="value">"dLabel"</span>&gt;</span>
+  ...
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre></li>
+<li><p><strong>子菜单</strong>：只要在当前下拉菜单的任意<code>&lt;li&gt;</code>元素上添加<code>.dropdown-submenu</code>即可实现子菜单。</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span> <span class="attribute">role</span>=<span class="value">"menu"</span> <span class="attribute">aria-labelledby</span>=<span class="value">"dLabel"</span>&gt;</span>
+  ...
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"dropdown-submenu"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>More options<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span>&gt;</span>
+      ...
+    <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/01/02/《Bootstrap用户手册》学习笔记(三)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-01-01T14:06:32.000Z"><a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/">2016-01-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/">《Bootstrap用户手册》学习笔记(二)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第2章_Bootstrap预定义的CSS样式(2)">第2章 Bootstrap预定义的CSS样式(2)</h2><ol>
+<li><p><strong>表单</strong> <code>Bootstrap</code>自带了基本的表单样式，不需要添加任务辅助类。例子如下：</p>
+<pre><code>&lt;<span class="keyword">form</span>&gt;
+    &lt;fieldset&gt;
+         &lt;legend&gt;Legend&lt;/legend&gt;
+             &lt;<span class="keyword">label</span> <span class="keyword">for</span>=<span class="string">"name"</span>&gt;<span class="keyword">Label</span> name&lt;/<span class="keyword">label</span>&gt;
+             &lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"text"</span> id=<span class="string">"name"</span>
+         placeholder=<span class="string">"Type something…"</span>&gt;
+                &lt;span <span class="keyword">class</span>=<span class="string">"help-block"</span>&gt;Example block-level <span class="keyword">help</span> text here.&lt;/span&gt;
+                &lt;<span class="keyword">label</span> <span class="keyword">class</span>=<span class="string">"checkbox"</span> <span class="keyword">for</span>=<span class="string">"checkbox"</span>&gt;
+                    &lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"checkbox"</span> id=<span class="string">"checkbox"</span>&gt;Check me <span class="keyword">out</span>
+                &lt;/<span class="keyword">label</span>&gt;
+            &lt;button <span class="keyword">type</span>=<span class="string">"submit"</span> <span class="keyword">class</span>=<span class="string">"btn"</span>&gt;Submit&lt;/button&gt;
+     &lt;/fieldset&gt;
+&lt;/<span class="keyword">form</span>&gt;
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">2015-12-31</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">《Bootstrap用户手册》学习笔记(一)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第1章_Bootstrap提供的网站框架">第1章 Bootstrap提供的网站框架</h2><ol>
+<li><p><code>Bootstrap</code>中有几种默认样式需要注意，它们专门针对排版和链接。</p>
+<ul>
+<li>从<code>body</code>中去掉了<code>margin</code>,这样内容就会紧贴浏览器窗口边缘。</li>
+<li>为<code>body</code>应用了<code>background-color:white;</code>。</li>
+<li><code>Bootstrap</code>以<code>@baseFontFamily</code>、<code>@baseFontSize</code>、<code>@baseLineHeight</code>属性作为排版的基准，确保整个网站的标题及其他内容的行高一致。</li>
+<li><p><code>Bootstrap</code>通过<code>@linkColor</code>设置全局链接颜色，只在<code>:hover</code>状态下给链接添加下划线。</p>
+<p>要改变默认颜色，可以直接修改相应<code>.less</code>文件中的全局变量值。要么修改<code>scaffolding.less</code>文件，要么修改你自已的样式表。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/新手学习Express4之四：数据库集成/">2015-12-31</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/31/新手学习Express4之四：数据库集成/">新手学习Express4之四：数据库集成</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="数据库集成">数据库集成</h2><ol>
+<li><p>为<code>Express</code>应用添加连接数据库的能力，只需要加载相应数据库的<code>Node.js驱动</code>即可。这里会列举一些常用的例子。</p>
+<p>除本章列举的例子外，更多的可在npm官网<a href="">https://www.npmjs.com</a>来查找。</p>
+</li>
+<li><p><code>Cassandra</code>：</p>
+<ul>
+<li>模块: <code>cassandra-driver</code> (<a href="https://github.com/datastax/nodejs-driver">https://github.com/datastax/nodejs-driver</a>)</li>
+<li>安装: <code>$ npm install cassandra-driver</code></li>
+<li><p>示例:</p>
+<pre><code><span class="keyword">var</span> cassandra = require('cassandra-driver');
+<span class="keyword">var</span> client = new cassandra.<span class="type">Client</span>({ contactPoints: ['localhost']});
+client.execute('select key <span class="keyword">from</span> system.local', function(err, <span class="literal">result</span>) {
+<span class="keyword">if</span> (err) throw err;
+console.log(<span class="literal">result</span>.rows[<span class="number">0</span>]);
+});
+</code></pre></li>
+</ul>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/31/新手学习Express4之四：数据库集成/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+  
+    <a href="/page/2/" class="alignright next">Nächste Seite</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>3</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

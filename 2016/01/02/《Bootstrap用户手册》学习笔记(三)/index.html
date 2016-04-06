@@ -1,0 +1,482 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>《Bootstrap用户手册》学习笔记(三) | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="《Bootstrap用户手册》学习笔记(三)"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-01-02T14:06:32.000Z"><a href="/2016/01/02/《Bootstrap用户手册》学习笔记(三)/">2016-01-02</a></time>
+      
+      
+  
+    <h1 class="title">《Bootstrap用户手册》学习笔记(三)</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第3章_Bootstrap内置的布局组件(1)">第3章 Bootstrap内置的布局组件(1)</h2><ol>
+<li><p>除了前一章介绍的标记，<code>Bootstrap</code>还内置了一套灵活的组件，可用于设计用户界面、交互功能，等等。这些组件来自一个独立的 <code>javaScript</code>文件，而这个文件可以通过<code>Bootstrap</code>的自定义构建工具生成，因此可以只包含你需要的组件。一般会选择所有组件，这样就有了最大的灵活性。</p>
+</li>
+<li><p><strong>上下文菜单</strong>：下拉菜单以列表形式呈现一组选项，一般与上下文相关，可用于不同的元素、导航、按钮，等等。</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span> <span class="attribute">role</span>=<span class="value">"menu"</span> <span class="attribute">aria-labelledby</span>=<span class="value">"dropdownMenu"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Another action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Something else here<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"divider"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>//分隔横线
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Separated link<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre><ul>
+<li><p><strong>右对齐</strong>：为<code>.dropdown-menu</code>添加<code>.pull-right</code>类，可以让下拉菜单右边缘与父对象右边缘对齐：</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu pull-right"</span> <span class="attribute">role</span>=<span class="value">"menu"</span> <span class="attribute">aria-labelledby</span>=<span class="value">"dLabel"</span>&gt;</span>
+  ...
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre></li>
+<li><p><strong>子菜单</strong>：只要在当前下拉菜单的任意<code>&lt;li&gt;</code>元素上添加<code>.dropdown-submenu</code>即可实现子菜单。</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span> <span class="attribute">role</span>=<span class="value">"menu"</span> <span class="attribute">aria-labelledby</span>=<span class="value">"dLabel"</span>&gt;</span>
+  ...
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"dropdown-submenu"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>More options<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span>&gt;</span>
+      ...
+    <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre><a id="more"></a></li>
+</ul>
+</li>
+<li><p><strong>按扭组</strong>可以把多个按纽紧密的排列在一起。要创建按钮组，只需要把按扭放在类为<code>.btn-group</code>的<code>&lt;div&gt;</code>中即可。</p>
+<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-group"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn"</span>&gt;</span>Left<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn"</span>&gt;</span>Middle<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn"</span>&gt;</span>Right<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre><p>如果想把多个按钮组放到一行上，可以用类为<code>.btn-toolbar</code>的<code>&lt;div&gt;</code>来包装这些按钮组：</p>
+<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-toolbar"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-group"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-align-left"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-align-center"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-align-right"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-align-justify"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-group"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-italic"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-bold"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-font"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-text-height"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-text-width"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-group"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-indent-left"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-indent-right"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre><p>要想把按钮垂直堆叠起来,可以在<code>.btn-group</code>后面再添加一个<code>.btn-group-vertical</code>类：</p>
+<pre><code>&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"btn-group btn-group-vertical"</span>&gt;
+  ...
+&lt;/<span class="keyword">div</span>&gt;
+</code></pre></li>
+</ol>
+<pre><code>要在下拉菜单中使用按钮，必须把按钮放在<span class="escape">`.</span>btn-toolbar<span class="escape">`中</span>独立的<span class="escape">`.</span>btn-group<span class="escape">`中</span>。
+</code></pre><ol>
+<li><p>要为<strong>按钮添加下拉菜单</strong>，只需把按钮和下拉菜单包装在一个<code>.btn-group</code>中即可。再加上一个<code>&lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;</code>，就可以从视觉上告诉人们按钮包含下拉菜单：</p>
+<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-group"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn btn-danger dropdown-toggle"</span> <span class="attribute">data-toggle</span>=<span class="value">"dropdown"</span>&gt;</span>
+     Danger
+    <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"caret"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Another action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Something else here<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"divider"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Separated link<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre><p>下拉菜单可以配合任意按钮大小：<code>.btn-large</code>、<code>.btn</code>、<code>.btn-small</code>或<code>.btn-mini</code>。</p>
+<ul>
+<li><p><strong>分隔式按钮下拉菜单</strong>与按钮下拉菜单的样式相同，但有分隔线隔开左边的主操作按钮和右边的下拉菜单开关按钮。</p>
+<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-group"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn"</span>&gt;</span>Action<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn dropdown-toggle"</span> <span class="attribute">data-toggle</span>=<span class="value">"dropdown"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"caret"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span>&gt;</span>
+    <span class="comment">&lt;!-- dropdown menu links --&gt;</span>
+  <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre></li>
+<li><p><strong>上拉菜单</strong>,要把默认的下拉改成上拉，只要在<code>.btn-group</code>容器中再加一个<code>.dropup</code>类就行了。另外，如果还想让上拉菜单与开关按钮右侧对齐，则需要在<code>.dropdown-menu</code>中再加一个<code>.pull-right</code>类：</p>
+<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-group dropup"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn"</span>&gt;</span>Dropup<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn dropdown-toggle"</span> <span class="attribute">data-toggle</span>=<span class="value">"dropdown"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"caret"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span>&gt;</span>
+    <span class="comment">&lt;!-- dropdown menu links --&gt;</span>
+  <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre></li>
+</ul>
+</li>
+<li><p><strong>标签形导航</strong>：要创建标签形导航，只要给一个无序列表添加基本的<code>.nav</code>和<code>.nav-tabs</code>类即可：</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-tabs"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"active"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Home<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Profile<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Messages<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre></li>
+<li><p><strong>并排形导航</strong>，这是比较常见的网页上方导航，用<code>.nav-pills</code>代替<code>.nav-tabs</code>类即可：</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-pills"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"active"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Home<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Profile<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Messages<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre><p><strong>禁用导航</strong>：要想禁用某个链接，只要给它加上<code>.disabled</code>类，就可以让它在任何情况下（包括<code>:hover</code>状态下）都变为灰色</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-pills"</span>&gt;</span>
+  ...
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"disabled"</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Home<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  ...
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre></li>
+<li><p><strong>垂直堆叠的导航</strong>：标签形和胶囊形导航元素默认都是水平排列的。要让它们垂直堆叠起来，只要再添加一个<code>.nav-stacked</code>类即可。</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-tabs nav-stacked"</span>&gt;</span>
+  ...
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-pills nav-stacked"</span>&gt;</span>
+  ...
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre></li>
+</ol>
+<ol>
+<li><p><strong>导航下拉菜单</strong>：导航菜单与下拉菜单的语法类似。默认情况下，给一个列表项添加.dropdown类，然后给嵌套在这个列表项中的链接添<br>加<code>.dropdown-toggle</code>类和<code>data-toggle=&quot;dropdown&quot;</code>属性，再给嵌套在这个列表项中的无序列表元素添加<code>.dropdown-menu</code>类即可：</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-tabs"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"dropdown"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"dropdown-toggle"</span>
+                  <span class="attribute">data-toggle</span>=<span class="value">"dropdown"</span>
+                  <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>
+                  Dropdown
+                  <span class="tag">&lt;<span class="title">b</span> <span class="attribute">class</span>=<span class="value">"caret"</span>&gt;</span><span class="tag">&lt;/<span class="title">b</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Another action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Something else here<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"divider"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Separated link<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre><p>同样，如果想得到带下拉菜单的胶囊形导航，只要把<code>.nav-tabs</code>类替换成<code>.nav-pills</code>即可：</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-pills"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"dropdown"</span>&gt;</span>
+                <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"dropdown-toggle"</span> <span class="attribute">data-toggle</span>=<span class="value">"dropdown"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>
+                        Dropdown
+                        <span class="tag">&lt;<span class="title">b</span> <span class="attribute">class</span>=<span class="value">"caret"</span>&gt;</span><span class="tag">&lt;/<span class="title">b</span>&gt;</span>
+                <span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+                <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span>&gt;</span>
+                        <span class="comment">&lt;!--links--&gt;</span>
+                <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre></li>
+<li><p><strong>导航列表</strong>可用于显示一组导航链接，在后台管理界面中的导航区比较常见。<code>Bootstrap</code>项目的文档也使用了这种导航列表。与我们迄今为止讨论的导航相似，导航列表也是带<code>.nav</code>类的无序列表，再给它添加一个<code>.nav-list</code>类，就可以把它变成导航列表：</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-list"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"nav-header"</span>&gt;</span>List Header<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"active"</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/"</span>&gt;</span>Home<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Library<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Applications<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"nav-header"</span>&gt;</span>Another List Header<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Profile<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Settings<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"divider"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Help<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre></li>
+</ol>
+<pre><code><span class="keyword">*</span><span class="keyword">*</span>水平分隔线<span class="keyword">*</span><span class="keyword">*</span>，使用带`.divider`类的空的
+</code></pre><ol>
+<li><p>元素即可：</p>
+   <ul class="nav-menu"><br>       …<br>           <li class="divider"></li><br>           ….<br>   </ul>
+</li>
+<li><p><strong>可切换的标签导航</strong>：除了可以创建标签形导航元素，还可以借助 <code>JavaScript</code>插件添加交互功能，打开不同的标签页。一定要分别为每个标签页<code>.tab-pane</code>定义一个唯一的<code>ID</code>,并把它们包装在<code>.tab-content</code>元素中：</p>
+   <div class="tabbable"><br>       <ul class="nav nav-tabs"><br>          <li class="active"><a href="#tab1" data-toggle="tab">Meats</a></li><br>          <li><a href="#tab2" data-toggle="tab">More Meat</a></li><br>       </ul><br>       <div class="tab-content"><br>          <div class="tab-pane active" id="tab1"><br>              <p>Bacon ipsum dolor sit amet jerky flank…</p><br>          </div><br>          <div class="tab-pane" id="tab2"><br>              <p>Beef ribs, turducken ham hock…</p><br>          </div><br>       </div><br>   </div>
+
+<p>如果想让标签切换时带有淡入淡出动画，只要给每个<code>.tab-pane</code>加上<code>.fade</code>类即可。</p>
+<ul>
+<li><p><strong>标签位于底部</strong>：<code>.tab-content</code>和<code>.nav-tabs</code>的位置也要互换。</p>
+   <div class="tabbable tabs-below"><br>     <div class="tab-content"><br>       <div class="tab-pane active" id="tab1"><br>         <p>I’m in Section A.</p><br>       </div><br>       <div class="tab-pane" id="tab2"><br>         <p>I’m in Section B.</p><br>       </div>    <div class="tab-pane" id="tab3"><br>         <p>I’m in Section C.</p><br>       </div><br>     </div><br>     <ul class="nav nav-tabs"><br>       <li class="active"><a href="#tab1" data-toggle="tab">Section A</a></li><br>       <li><a href="#tab2" data-toggle="tab">Section B</a></li><br>       <li><a href="#tab3" data-toggle="tab">Section C</a></li><br>     </ul><br>   </div>
+</li>
+<li><p><strong>标签位于左侧</strong>：添加<code>.tabs-left</code>类。</p>
+   <div class="tabbable tabs-left"><br>     <ul class="nav nav-tabs"><br>       <li class="active"><a href="#tab1" data-toggle="tab">Section A</a></li><br>       <li><a href="#tab2" data-toggle="tab">Section B</a></li><br>       <li><a href="#tab3" data-toggle="tab">Section C</a></li><br>     </ul><br>     <div class="tab-content"><br>       <div class="tab-pane active" id="tab1"><br>         <p>I’m in Section A.</p><br>       </div><br>       <div class="tab-pane" id="tab2"><br>         <p>I’m in Section B.</p><br>       </div><br>       <div class="tab-pane" id="tab3"><br>         <p>I’m in Section C.</p><br>       </div><br>     </div><br>   </div>
+</li>
+<li><p><strong>标签位于右侧</strong>：添加<code>.tabs-right</code>类。</p>
+   <div class="tabbable tabs-right"><br>     <ul class="nav nav-tabs"><br>       <li class="active"><a href="#tab1" data-toggle="tab">Section A</a></li><br>       <li><a href="#tab2" data-toggle="tab">Section B</a></li><br>       <li><a href="#tab3" data-toggle="tab">Section C</a></li><br>     </ul><br>     <div class="tab-content"><br>       <div class="tab-pane active" id="tab1"><br>         <p>I’m in section A.</p><br>       </div><br>       <div class="tab-pane" id="tab2"><br>         <p>I’m in section B.</p><br>       </div><br>       <div class="tab-pane" id="tab3"><br>         <p>I’m in section C.</p><br>       </div><br>     </div><br>   </div>
+
+</li>
+</ul>
+<p>利用可切换标签导航，还可以用来控制导航和子导航，当点击导航时，改变子导航菜单，显示不同的链接。</p>
+</li>
+<li><p><strong>导航条</strong>。基本的导航条包含了站点名和几个导航链接。可以对基本的导航条加以扩展，添加表单控件和下拉菜单。为保证导航条与页面同宽，可以把它放在类为<code>.span12</code>或者<code>.container</code>的容器元素中。</p>
+   <div class="navbar"><br>     <div class="navbar-inner"><br>       <a class="brand" href="#">Title</a><br>       <ul class="nav"><br>         <li class="active"><a href="#">Home</a></li><br>         <li><a href="#">Link</a></li><br>         <li><a href="#">Link</a></li><br>       </ul><br>     </div><br>   </div>
+
+<p>注意代码中的<code>.brand</code>类，这个类会把文本的<code>font-weight</code>设置得更细一些，把<code>font-size</code>设置得更大一些。</p>
+<p>   <a class="brand" href="#">Project name</a></p>
+<ul>
+<li><p><strong>导航条链接</strong>：给导航条添加链接很简单，就是在导航条代码中嵌入无序列表，并为它添加<code>.nav</code>类。如果想在链接间添加分隔线，就添加一个类为<code>.divider-vertical</code>的空列表项即可：</p>
+   <ul class="nav"><br>     <li class="active"><a href="#">Home</a></li><br>     <li><a href="#">First Link</a></li><br>     <li><a href="#">Second Link</a></li><br>     <li class="divider-vertical"></li><br>     <li><a href="#">Third Link</a></li><br>   </ul>
+</li>
+<li><p><strong>表单</strong>：在导航条中嵌入表单要使用<code>.navbar-form</code>类，这样才能保证表单的外边距合适，而且与导航样式一致。另外，<code>.pull-left</code>和<code>.pull-right</code>辅助类可以把表单定位到导航条左侧或右侧：</p>
+   <form class="navbar-form pull-left"><br>           <input type="text" class="span2" id="fname"><br>           <button type="submit" class="btn"><br>   </button></form>
+
+<p>想要<code>iOS</code>设备中的那种圆头输入框,用<code>.navbar-search</code>类代替<code>.navbar-form</code>类：</p>
+   <form class="navbar-search" accept-charset="utf-8"><br>           <input type="text" class="search-query" placeholder="Search"><br>   </form>
+
+</li>
+</ul>
+<p><strong>导航条菜单</strong></p>
+<ul>
+<li><p><strong>固顶导航条</strong>:如果想让导航条固定在页面顶部，在<code>.navbar</code>类后面再增加一个<code>.navbar-fixed-top</code>类即可。为防止导航挡住页面中的其他元素，至少要给<code>&lt;body&gt;</code>标签添加 <code>40像素</code>的内边距：</p>
+   <div class="navbar navbar-fixed-top"><br>     <div class="navbar-inner"><br>       <a class="brand" href="#">Title</a><br>       <ul class="nav">      <li class="active"><a href="#">Home</a></li><br>         <li><a href="#">Link</a></li><br>         <li><a href="#">Link</a></li><br>       </ul><br>     </div><br>   </div>
+</li>
+<li><p><strong>固底导航条</strong>:要让导航条粘附于页面底部，只要<code>.navbar-fixed-top</code>类改为<code>.navbar-fixed-bottom</code>类即可。同样，为防止导航条与其他元素重叠，至少要给<code>&lt;body&gt;</code>添加<code>40像素</code>的内边距：</p>
+   <div class="navbar navbar-fixed-bottom"><br>    <div class="navbar-inner"><br>       <a class="brand" href="#">Title</a><br>       <ul class="nav"><br>         <li class="active"><a href="#">Home</a></li><br>         <li><a href="#">Link</a></li><br>         <li><a href="#">Link</a></li><br>       </ul><br>     </div><br>   </div>
+</li>
+<li><p><strong>静态滚动导航条</strong>:要创建一个能随页面滚动的导航条，给<code>.navbar</code>后面添加<code>.navbar-static-top</code>类。使用这个类的时候，不要求给<code>&lt;body&gt;</code>添加内边距：</p>
+   <div class="navbar navbar-static-top"><br>     <div class="navbar-inner"><br>       <a class="brand" href="#">Title</a><br>       <ul class="nav"><br>         <li class="active"><a href="#">Home</a></li><br>         <li><a href="#">Link</a></li><br>         <li><a href="#">Link</a></li><br>       </ul><br>     </div><br>   </div>
+</li>
+<li><p><strong>响应式导航条</strong>：想让导航条具有响应能力，请把需要隐藏的内容包装到类为<code>.nav-collapse.collapse</code>的<code>&lt;div&gt;</code>中。显示隐藏内容的按钮（链接）要有一个<code>.btn-navbar</code>类和两个<code>data-*</code>属性：<code>data-toggle</code>会告诉<code>JavaScript</code>这个按钮要做什么，<code>data-target</code>表示要切换的元素。三个类为<code>.icon-bar</code>的<code>&lt;span&gt;</code>可以创建 “ 汉堡式按钮 ”(类似<code>chrome</code>里面的菜单按钮),用于切换类为<code>.nav-collapse</code>的<code>&lt;div&gt;</code>中的元素。要实现响应式导航条，还必须包含<code>bootstrap-responsive.css</code>和 <code>collapse.js</code>或完整的<code>bootstrap.js</code>文件。</p>
+   <div class="header"><br>     <div class="navbar-inner"><br>       <div class="container"><br>         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><br>           <span class="icon-bar"></span><br>           <span class="icon-bar"></span><br>           <span class="icon-bar"></span><br>         </a><br>         <!-- 始终显示导航条的名字 --><br>         <a href="#" class="brand">Project Name</a><br>         <!-- 把所有需要隐藏的项目添加到这里 --><br>         <div class="nav-collapse collapse"><br>           <!-- .nav、.navbar-search等等 --><br>         </div>    </div><br>     </div><br>   </div>
+</li>
+<li><p><strong>反色导航条</strong>：要创建反色导航条，即黑底白字的导航条，只要在<code>.navbar</code>类后面添加<code>.navbar-inverse</code>类即可：</p>
+   <div class="navbar navbar-inverse"><br>           …<br>   </div>
+</li>
+</ul>
+</li>
+<li><p><strong>面包屑式导航</strong>非常适合展示站点的层级关系（见图 3-28 ）。以博客为例，面包屑式导航可以展示发表日期、类别或标签。 <code>Bootstrap</code>中的面包屑式导航就是一个类为<code>.breadcrumb</code>的无序列表。还有一个辅助类<code>.divider</code>能减淡颜色、减小字号，利用这个类可以让斜杠、箭头等符号变成分隔符。注意，从标记来看，面包屑式导航中的分隔符与导航条中的不太一样。它类拟于在页面中展示当前所在页面位置：</p>
+   <ul class="breadcrumb"><br>       <li><a href="#">Home</a> <span class="divider">/</span></li><br>           <li><a href="#">2012</a> <span class="divider">/</span></li><br>           <li><a href="#">December</a> <span class="divider">/</span></li><br>           <li><a href="#">5</a></li><br>   </ul><br>   <ul class="breadcrumb"><br>     <li><a href="#">Home</a> <span class="divider">&rarr;</span></li><br>     <li><a href="#">Dinner Menu</a> <span class="divider">&rarr;</span></li><br>     <li><a href="#">Specials</a> <span class="divider">&rarr;</span></li><br>     <li><a href="#">Steaks</a></li><br>   </ul><br>   <ul class="breadcrumb"><br>     <li><a href="#">Home</a> <span class="divider">&raquo;</span></li><br>     <li><a href="#">Electronics</a> <span class="divider">&raquo;</span></li><br>     <li><a href="#">Raspberry Pi</a></li><br>   </ul>
+</li>
+<li><p><strong>分页导航</strong>使用的界面元素同样是无序列表，而且这个无序列表同样包含在以一个特殊的类匹别于其他元素的<code>&lt;div&gt;</code>中。最简单的情况下，给<code>&lt;div&gt;</code>添加<code>.pagination</code>类，就可以创建一行带边框的链接。无序列表中的每个列表项都可以使用<code>.disabled</code>或<code>.active</code>类进一步修饰。</p>
+   <div class="pagination"><br>     <ul><br>       <li><a href="#">&laquo;</a></li><br>       <li><a href="#">1</a></li><br>       <li><a href="#">2</a></li><br>       <li><a href="#">3</a></li><br>       <li><a href="#">4</a></li><br>       <li><a href="#">5</a></li><br>       <li><a href="#">&raquo;</a></li><br>     </ul><br>   </div>
+
+<p>   //以下是使用辅助类进一步修饰后的分页导航：</p>
+   <div class="pagination pagination-centered"><br>     <ul><br>       <li class="disabled"><a href="#">«</a></li><br>       <li class="active"><a href="#">1</a></li><br>       <li><a href="#">2</a></li><br>       <li><a href="#">3</a></li><br>       <li><a href="#">4</a></li><br>       <li><a href="#">5</a></li><br>       <li><a href="#">»</a></li><br>     </ul><br>   </div>
+
+<p>除了给列表项添加<code>.active</code>和<code>.disabled</code>类，还可以给它们的容器<code>&lt;div&gt;</code>添加<code>.pagination-centered</code>类，从而使<strong>分页导航居中</strong>。类似地，要使分页导航与容器右对齐，则使用<code>.pagination-right</code>类。此外，还可以调整<strong>分页导航的大小</strong>，用于调整大小的类有 3 个：<code>.pagination-large</code>、<code>.pagination-small</code>和<code>.pagination-mini</code>，代码如下：</p>
+   <div class="pagination pagination-large"><br>     <ul><br>       …<br>     </ul><br>   </div><br>   <div class="pagination"><br>     <ul><br>       …<br>     </ul><br>   </div><br>   <div class="pagination pagination-small"><br>     <ul><br>       …<br>     </ul><br>   </div><br>   <div class="pagination pagination-mini"><br>     <ul><br>       …<br>     </ul><br>   </div>
+
+<p>如果你想创建更简单的分页导航，可以使用<strong>前后页导航</strong>。前后页导航与分页导航类似，也需要把一个无序列表包装在一个<code>&lt;div&gt;</code>中。默认情况下，前后页导航链接是居中的</p>
+   <ul class="pager"><br>     <li><a href="#">Previous</a></li><br>     <li><a href="#">Next</a></li><br>   </ul>
+
+<p>要让导航链接与页面<strong>左对齐</strong>或<strong>右对齐</strong>，需要给相应的列表项添加<code>.previous</code>和<code>.next</code>类。也可以通过添加<code>.disabled</code>类创建灰色禁用按钮的效果。</p>
+   <ul class="pager"><br>     <li class="previous"><br>       <a href="#">&larr; Older</a><br>     </li><br>     <li class="next"><br>       <a href="#">Newer &rarr;</a><br>     </li><br>   </ul>
+
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/前端/">前端</a>, <a href="/tags/Bootstrap/">Bootstrap</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2016/01/03/《Bootstrap用户手册》学习笔记(四)/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/01/02/《Bootstrap用户手册》学习笔记(三)/" data-title="《Bootstrap用户手册》学习笔记(三)" data-url="http://www.52brt.com/2016/01/02/《Bootstrap用户手册》学习笔记(三)/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>3</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

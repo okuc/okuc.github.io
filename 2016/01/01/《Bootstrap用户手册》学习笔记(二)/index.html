@@ -1,0 +1,522 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>《Bootstrap用户手册》学习笔记(二) | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="《Bootstrap用户手册》学习笔记(二)"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-01-01T14:06:32.000Z"><a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/">2016-01-01</a></time>
+      
+      
+  
+    <h1 class="title">《Bootstrap用户手册》学习笔记(二)</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第2章_Bootstrap预定义的CSS样式(2)">第2章 Bootstrap预定义的CSS样式(2)</h2><ol>
+<li><p><strong>表单</strong> <code>Bootstrap</code>自带了基本的表单样式，不需要添加任务辅助类。例子如下：</p>
+<pre><code>&lt;<span class="keyword">form</span>&gt;
+    &lt;fieldset&gt;
+         &lt;legend&gt;Legend&lt;/legend&gt;
+             &lt;<span class="keyword">label</span> <span class="keyword">for</span>=<span class="string">"name"</span>&gt;<span class="keyword">Label</span> name&lt;/<span class="keyword">label</span>&gt;
+             &lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"text"</span> id=<span class="string">"name"</span>
+         placeholder=<span class="string">"Type something…"</span>&gt;
+                &lt;span <span class="keyword">class</span>=<span class="string">"help-block"</span>&gt;Example block-level <span class="keyword">help</span> text here.&lt;/span&gt;
+                &lt;<span class="keyword">label</span> <span class="keyword">class</span>=<span class="string">"checkbox"</span> <span class="keyword">for</span>=<span class="string">"checkbox"</span>&gt;
+                    &lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"checkbox"</span> id=<span class="string">"checkbox"</span>&gt;Check me <span class="keyword">out</span>
+                &lt;/<span class="keyword">label</span>&gt;
+            &lt;button <span class="keyword">type</span>=<span class="string">"submit"</span> <span class="keyword">class</span>=<span class="string">"btn"</span>&gt;Submit&lt;/button&gt;
+     &lt;/fieldset&gt;
+&lt;/<span class="keyword">form</span>&gt;
+</code></pre><a id="more"></a>
+</li>
+<li><p><strong>搜索表单</strong>：通过一些辅助类，可以动态更新表单的布局。<code>Bootstrap</code>为常用的表单布局预定义了样式。为<code>&lt;form&gt;</code>标签添加<code>.form-search</code>类，再给<code>&lt;input&gt;</code>添加<code>.search-query</code>类，然后就可以创建一个圆角输入框加一个行内提交按钮的搜索表单，如：</p>
+<pre><code>&lt;form <span class="class"><span class="keyword">class</span>=</span><span class="string">"form-search"</span>&gt;
+  &lt;input <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"input-medium search-query"</span>&gt;
+  &lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"submit"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn"</span>&gt;<span class="type">Search</span>&lt;/button&gt;
+&lt;/form&gt;
+</code></pre></li>
+<li><p><strong>单行表单</strong>：要让所有表单元素都出现在一行，而且标签也都显示在旁边，给<code>&lt;form&gt;</code>标签添加<code>.form-inline</code>类:</p>
+<pre><code>&lt;form <span class="class"><span class="keyword">class</span>=</span><span class="string">"form-inline"</span>&gt;
+        &lt;input <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"input-small"</span> placeholder=<span class="string">"Email"</span>&gt;
+        &lt;input <span class="class"><span class="keyword">type</span>=</span><span class="string">"password"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"input-small"</span> placeholder=<span class="string">"Password"</span>&gt;
+        &lt;label <span class="class"><span class="keyword">class</span>=</span><span class="string">"checkbox"</span>&gt;
+                &lt;input <span class="class"><span class="keyword">type</span>=</span><span class="string">"checkbox"</span>&gt; <span class="type">Remember</span> me
+        &lt;/label&gt;
+        &lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"submit"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn"</span>&gt;<span class="type">Sign</span> in&lt;/button&gt;
+&lt;/form&gt;
+</code></pre></li>
+<li><p><strong>横向表单</strong>：要创建横向表单(常用表单)，需遵循如下步骤:</p>
+<ol>
+<li>为<code>&lt;form&gt;</code>元素添加<code>.form-horizontal</code>类；</li>
+<li>把成对的标签和控件包装在类为<code>.control-group</code>的<code>&lt;div&gt;</code>中；</li>
+<li>为其中每个标签添加<code>.control-label</code>类；</li>
+<li><p>把其中每个控件包装在一个类为<code>.controls</code>的<code>&lt;div&gt;</code>中，以便对齐。</p>
+<p>示例代码如下：</p>
+<pre><code>&lt;form <span class="class"><span class="keyword">class</span>=</span><span class="string">"form-horizontal"</span>&gt;
+  &lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"control-group"</span>&gt;
+    &lt;label <span class="class"><span class="keyword">class</span>=</span><span class="string">"control-label"</span> <span class="keyword">for</span>=<span class="string">"inputEmail"</span>&gt;<span class="type">Email</span>&lt;/label&gt;
+    &lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"controls"</span>&gt;
+      &lt;input <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> id=<span class="string">"inputEmail"</span> placeholder=<span class="string">"Email"</span>&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"control-group"</span>&gt;
+    &lt;label <span class="class"><span class="keyword">class</span>=</span><span class="string">"control-label"</span> <span class="keyword">for</span>=<span class="string">"inputPassword"</span>&gt;<span class="type">Password</span>&lt;/label&gt;
+    &lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"controls"</span>&gt;
+      &lt;input <span class="class"><span class="keyword">type</span>=</span><span class="string">"password"</span> id=<span class="string">"inputPassword"</span> placeholder=<span class="string">"Password"</span>&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"control-group"</span>&gt;
+    &lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"controls"</span>&gt;
+      &lt;label <span class="class"><span class="keyword">class</span>=</span><span class="string">"checkbox"</span>&gt;
+        &lt;input <span class="class"><span class="keyword">type</span>=</span><span class="string">"checkbox"</span>&gt; <span class="type">Remember</span> me
+      &lt;/label&gt;
+      &lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"submit"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn"</span>&gt;<span class="type">Sign</span> in&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+</code></pre></li>
+</ol>
+</li>
+<li><p><strong>输入框</strong>：<code>Bootstrap</code>支持HTML5规范定义的所有原生输入类：<code>text</code>、<code>password</code>、<code>datetime</code>、<code>datetime-local</code>、<code>date</code>、<code>month</code>、<code>time</code>、<code>week</code>、<code>number</code>、<code>email</code>、<code>url</code>、<code>search</code>、<code>tel</code>和<code>color</code>。下面是一个例子：</p>
+<pre><code>&lt;input <span class="class"><span class="keyword">type</span></span>=<span class="string">"text"</span> placeholder=<span class="string">"Text input"</span>&gt;
+</code></pre><p>输入框和文本区在:active状态默认都带有蓝色光晕。</p>
+</li>
+<li><p><strong>文本区</strong>：文本区用于输入多行文本，使用文本区时，最经常做得就是修改其rows，控制预留行数(行数少，占地方少；行数多，占地方大):<code>&lt;textarea rows=&quot;3&quot;&gt;&lt;/textarea&gt;</code>。</p>
+</li>
+<li><p><strong>复选框和单选按钮</strong>，示例如下：</p>
+<pre><code>&lt;<span class="keyword">label</span> <span class="keyword">class</span>=<span class="string">"checkbox"</span>&gt;
+  &lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"checkbox"</span> value=<span class="string">""</span>&gt;
+  Option <span class="keyword">one</span> is this and that—be sure to <span class="keyword">include</span> why it's great.
+&lt;/<span class="keyword">label</span>&gt;
+&lt;<span class="keyword">label</span> <span class="keyword">class</span>=<span class="string">"radio"</span>&gt;
+  &lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"radio"</span> name=<span class="string">"optionsRadios"</span> id=<span class="string">"optionsRadios1"</span> value=<span class="string">"option1"</span>
+  checked&gt;
+  Option <span class="keyword">one</span> is this and that—be sure to <span class="keyword">include</span> why it's great.
+&lt;/<span class="keyword">label</span>&gt;
+&lt;<span class="keyword">label</span> <span class="keyword">class</span>=<span class="string">"radio"</span>&gt;
+  &lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"radio"</span> name=<span class="string">"optionsRadios"</span> id=<span class="string">"optionsRadios2"</span> value=<span class="string">"option2"</span>&gt;
+  Option <span class="keyword">two</span> can be something <span class="keyword">else</span>, and selecting it will deselect option <span class="keyword">one</span>
+&lt;/<span class="keyword">label</span>&gt;
+</code></pre><p>如果想让多个复选框或单选按钮出现在一行，那么就给它们添加<code>.inline</code>类</p>
+<pre><code>&lt;<span class="keyword">label</span> <span class="keyword">for</span>=<span class="string">"option1"</span> <span class="keyword">class</span>=<span class="string">"checkbox inline"</span>&gt;
+  &lt;<span class="keyword">input</span> id=<span class="string">"option1"</span> <span class="keyword">type</span>=<span class="string">"checkbox"</span> id=<span class="string">"inlineCheckbox1"</span> value=<span class="string">"option1"</span>&gt; 1
+&lt;/<span class="keyword">label</span>&gt;
+&lt;<span class="keyword">label</span> <span class="keyword">for</span>=<span class="string">"option2"</span> <span class="keyword">class</span>=<span class="string">"checkbox inline"</span>&gt;
+  &lt;<span class="keyword">input</span> id=<span class="string">"option2"</span> <span class="keyword">type</span>=<span class="string">"checkbox"</span> id=<span class="string">"inlineCheckbox2"</span> value=<span class="string">"option2"</span>&gt; 2
+&lt;/<span class="keyword">label</span>&gt;
+&lt;<span class="keyword">label</span> <span class="keyword">for</span>=<span class="string">"option3"</span> <span class="keyword">class</span>=<span class="string">"checkbox inline"</span>&gt;
+  &lt;<span class="keyword">input</span> id=<span class="string">"option3"</span> <span class="keyword">type</span>=<span class="string">"checkbox"</span> id=<span class="string">"inlineCheckbox3"</span> value=<span class="string">"option3"</span>&gt; 3
+&lt;/<span class="keyword">label</span>&gt;
+</code></pre></li>
+<li><p><strong>选项列表</strong>,选项列表适合让用户选择多项，但默认只允许选择一项。要让用户选择多项，可使用<code>multiple=&quot;multiple&quot;</code>。</p>
+<pre><code><span class="tag">&lt;<span class="title">select</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">option</span>&gt;</span>1<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">option</span>&gt;</span>2<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">option</span>&gt;</span>3<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">option</span>&gt;</span>4<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">option</span>&gt;</span>5<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">select</span>&gt;</span>
+<span class="tag">&lt;<span class="title">select</span> <span class="attribute">multiple</span>=<span class="value">"multiple"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">option</span>&gt;</span>1<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">option</span>&gt;</span>2<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">option</span>&gt;</span>3<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">option</span>&gt;</span>4<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">option</span>&gt;</span>5<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">select</span>&gt;</span>
+</code></pre></li>
+<li><p><strong>输入框的前置和后置组件</strong>，利用输入框的前置和后置组件，可以添加用户输入中的公共部分。例如，可以为输入框前置美元符号、 <code>Twitter</code> 用户名的 <code>@</code> 符号，或应用界面中其他公共的部分。要在输入框前面或后面添加内容，首先写一个类为<code>.input-prepend</code>或<code>.input-append</code>的<code>&lt;div&gt;</code>。然后就在这个<code>&lt;div&gt;</code>中，把要前置或后置的内容放到一个类为<code>.add-on</code>的<code>&lt;span&gt;</code>中，再把这个<code>&lt;span&gt;</code>放到相应的<code>&lt;input&gt;</code>元素前面或后面：</p>
+<pre><code>&lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"input-prepend"</span>&gt;
+  &lt;span <span class="class"><span class="keyword">class</span>=</span><span class="string">"add-on"</span>&gt;@&lt;/span&gt;
+  &lt;input <span class="class"><span class="keyword">class</span>=</span><span class="string">"span2"</span> id=<span class="string">"prependedInput"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> placeholder=<span class="string">"Username"</span>&gt;
+&lt;/div&gt;
+&lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"input-append"</span>&gt;
+  &lt;input <span class="class"><span class="keyword">class</span>=</span><span class="string">"span2"</span> id=<span class="string">"appendedInput"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span>&gt;
+  &lt;span <span class="class"><span class="keyword">class</span>=</span><span class="string">"add-on"</span>&gt;<span class="number">.00</span>&lt;/span&gt;
+&lt;/div&gt;
+</code></pre><p>如果既想前置内容又想后置内容，那就在父<code>&lt;div&gt;</code>中同时添加<code>.input-prepend</code>和<code>.input-append</code>类</p>
+<pre><code>&lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"input-prepend input-append"</span>&gt;
+  &lt;span <span class="class"><span class="keyword">class</span>=</span><span class="string">"add-on"</span>&gt;$&lt;/span&gt;
+  &lt;input <span class="class"><span class="keyword">class</span>=</span><span class="string">"span2"</span> id=<span class="string">"appendedPrependedInput"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span>&gt;
+  &lt;span <span class="class"><span class="keyword">class</span>=</span><span class="string">"add-on"</span>&gt;<span class="number">.00</span>&lt;/span&gt;
+&lt;/div&gt;
+</code></pre><p>此外，还可以使用带<code>.btn</code>类的<code>&lt;button&gt;</code>代替<code>&lt;span&gt;</code>，在输入框前面或后面添加按钮。</p>
+<pre><code>&lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"input-append"</span>&gt;
+  &lt;input <span class="class"><span class="keyword">class</span>=</span><span class="string">"span2"</span> id=<span class="string">"appendedInputButtons"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span>&gt;
+  &lt;button <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span>&gt;<span class="type">Search</span>&lt;/button&gt;
+  &lt;button <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span>&gt;<span class="type">Options</span>&lt;/button&gt;
+&lt;/div&gt;
+</code></pre><p>要是给搜索表单后置这么一个按钮，那么按钮也会像文本框一样带有圆弧。</p>
+<pre><code>&lt;form <span class="class"><span class="keyword">class</span>=</span><span class="string">"form-search"</span>&gt;
+  &lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"input-append"</span>&gt;
+    &lt;input <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"span2 search-query"</span>&gt;
+    &lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"submit"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn"</span>&gt;<span class="type">Search</span>&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"input-prepend"</span>&gt;
+    &lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"submit"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn"</span>&gt;<span class="type">Search</span>&lt;/button&gt;
+    &lt;input <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"span2 search-query"</span>&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+</code></pre></li>
+<li><p><strong>设置控件大小</strong>在继承 <code>Bootstrap</code> 默认网格系统的基础上，可以使用<code>.span*</code>来设置控件大小。除了这种方式，还可以使用一些类来相对地控制控件大小。如果想让输入框像块级元素一样占满容器，可以为它添加：<code>.input-block-level</code>类，<code>&lt;input class=&quot;input-block-level&quot; type=&quot;text&quot; placeholder=&quot;.input-block-level&quot;&gt;</code>，</p>
+<ol>
+<li><p><strong>输入控件的相对大小</strong> 此外，还有如下一些类名：</p>
+<pre><code>&lt;input <span class="class"><span class="keyword">class</span>=</span><span class="string">"input-mini"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> placeholder=<span class="string">".input-mini"</span>&gt;
+&lt;input <span class="class"><span class="keyword">class</span>=</span><span class="string">"input-small"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> placeholder=<span class="string">".input-small"</span>&gt;
+&lt;input <span class="class"><span class="keyword">class</span>=</span><span class="string">"input-medium"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> placeholder=<span class="string">".input-medium"</span>&gt;
+&lt;input <span class="class"><span class="keyword">class</span>=</span><span class="string">"input-large"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> placeholder=<span class="string">".input-large"</span>&gt;
+&lt;input <span class="class"><span class="keyword">class</span>=</span><span class="string">"input-xlarge"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> placeholder=<span class="string">".input-xlarge"</span>&gt;
+&lt;input <span class="class"><span class="keyword">class</span>=</span><span class="string">"input-xxlarge"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> placeholder=<span class="string">".input-xxlarge"</span>&gt;
+</code></pre></li>
+<li><p>还可以使用<code>.span1</code>到<code>.span12</code>来<strong>基于网格设置控件大小</strong></p>
+<pre><code>&lt;input <span class="keyword">class</span>=<span class="string">"span1"</span> type=<span class="string">"text"</span> placeholder=<span class="string">".span1"</span>&gt;
+&lt;input <span class="keyword">class</span>=<span class="string">"span2"</span> type=<span class="string">"text"</span> placeholder=<span class="string">".span2"</span>&gt;
+&lt;input <span class="keyword">class</span>=<span class="string">"span3"</span> type=<span class="string">"text"</span> placeholder=<span class="string">".span3"</span>&gt;
+&lt;<span class="keyword">select</span> <span class="keyword">class</span>=<span class="string">"span1"</span>&gt;
+  ...
+&lt;/<span class="keyword">select</span>&gt;
+&lt;<span class="keyword">select</span> <span class="keyword">class</span>=<span class="string">"span2"</span>&gt;
+  ...
+&lt;/<span class="keyword">select</span>&gt;
+&lt;<span class="keyword">select</span> <span class="keyword">class</span>=<span class="string">"span3"</span>&gt;
+  ...
+&lt;/<span class="keyword">select</span>&gt;
+</code></pre><p>如果想让<strong>多个输入控件位列同一行</strong>，可以添加<code>.controls-row</code>类，以产生适当间距。这样 <code>Bootstrap</code> 就会浮动控件，设置间距，并像添加<code>.row</code>类一样清除浮动：</p>
+<pre><code>&lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"controls"</span>&gt;
+  &lt;input <span class="class"><span class="keyword">class</span>=</span><span class="string">"span5"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> placeholder=<span class="string">".span5"</span>&gt;
+&lt;/div&gt;
+&lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"controls controls-row"</span>&gt;
+  &lt;input <span class="class"><span class="keyword">class</span>=</span><span class="string">"span4"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> placeholder=<span class="string">".span4"</span>&gt;
+  &lt;input <span class="class"><span class="keyword">class</span>=</span><span class="string">"span1"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> placeholder=<span class="string">".span1"</span>&gt;
+&lt;/div&gt;
+</code></pre></li>
+<li><p><strong>不可编辑文本</strong>，添加<code>.uneditable-input</code>类</p>
+<pre><code>&lt;span <span class="keyword">class</span>=<span class="string">"input-xlarge uneditable-input"</span>&gt;Some <span class="keyword">value</span> here&lt;/span&gt;
+</code></pre></li>
+<li><p><strong>表单动作</strong>如果在<code>.form-horizontal</code>最后放上几个<code>.form-actions</code>（也就是按钮），那么这些按钮会自动与表单控件对齐。</p>
+<pre><code>&lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"form-actions"</span>&gt;
+  &lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"submit"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-primary"</span>&gt;<span class="type">Save</span> changes&lt;/button&gt;
+  &lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn"</span>&gt;<span class="type">Cancel</span>&lt;/button&gt;
+&lt;/div&gt;
+</code></pre></li>
+<li><p><strong>帮助文本</strong>：<code>Bootstrap</code>中的表单控件可以带有块级或行内文本作为帮助。</p>
+<pre><code>&lt;input <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span>&gt;&lt;span <span class="class"><span class="keyword">class</span>=</span><span class="string">"help-inline"</span>&gt;<span class="type">Inline</span> help text&lt;/span&gt;
+</code></pre><p>要添加块级帮助，为<code>&lt;input&gt;</code>后面的标签添加<code>.help-block</code>类。</p>
+<pre><code>&lt;input type=<span class="string">"text"</span>&gt;&lt;span <span class="type">class</span>=<span class="string">"help-block"</span>&gt;A longer block <span class="keyword">of</span> help <span class="type">text</span> <span class="keyword">that</span>
+</code></pre><p>breaks onto a new line and may extend beyond one line.</p>
+</li>
+</ol>
+</li>
+<li><p><strong>表单控件的状态</strong></p>
+<ol>
+<li><p><strong>输入框获得焦点</strong>：输入控件获得焦点(用户点击了或按Tab键切换到输入框)，输入框默认的外轮廓样式消失，代之以box-shadow样式。</p>
+<pre><code>&lt;input <span class="class"><span class="keyword">class</span>=</span><span class="string">"input-xlarge"</span> id=<span class="string">"focusedInput"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span>        value=<span class="string">"This is focused..."</span>&gt; 
+</code></pre></li>
+<li><p><strong>禁用状态的输入框</strong>：<code>&lt;input class=&quot;input-xlarge&quot; id=&quot;disabledInput&quot; type=&quot;text&quot; placeholder=&quot;Disabled input here...&quot; disabled&gt;</code></p>
+</li>
+<li><p><strong>验证输入状态</strong>：<code>Bootstrap</code> 提供的验证样式包括<code>error</code>（错误）、<code>warning</code>（警告）、<code>info</code>（信息）和<code>success</code>（成功）。要应用这些样式，只要<br>把相应的类添加给<code>.control-group</code>元素即可：</p>
+<pre><code>&lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"control-group warning"</span>&gt;
+  &lt;label <span class="class"><span class="keyword">class</span>=</span><span class="string">"control-label"</span> <span class="keyword">for</span>=<span class="string">"inputWarning"</span>&gt;<span class="type">Input</span> <span class="keyword">with</span> warning&lt;/label&gt;
+  &lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"controls"</span>&gt;
+    &lt;input <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> id=<span class="string">"inputWarning"</span>&gt;
+    &lt;span <span class="class"><span class="keyword">class</span>=</span><span class="string">"help-inline"</span>&gt;<span class="type">Something</span> may have gone wrong&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"control-group error"</span>&gt;
+  &lt;label <span class="class"><span class="keyword">class</span>=</span><span class="string">"control-label"</span> <span class="keyword">for</span>=<span class="string">"inputError"</span>&gt;<span class="type">Input</span> <span class="keyword">with</span> error&lt;/label&gt;
+  &lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"controls"</span>&gt;
+    &lt;input <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> id=<span class="string">"inputError"</span>&gt;
+    &lt;span <span class="class"><span class="keyword">class</span>=</span><span class="string">"help-inline"</span>&gt;<span class="type">Please</span> correct the error&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"control-group success"</span>&gt;
+  &lt;label <span class="class"><span class="keyword">class</span>=</span><span class="string">"control-label"</span> <span class="keyword">for</span>=<span class="string">"inputSuccess"</span>&gt;<span class="type">Input</span> <span class="keyword">with</span> success&lt;/label&gt;
+  &lt;div <span class="class"><span class="keyword">class</span>=</span><span class="string">"controls"</span>&gt;
+    &lt;input <span class="class"><span class="keyword">type</span>=</span><span class="string">"text"</span> id=<span class="string">"inputSuccess"</span>&gt;
+    &lt;span <span class="class"><span class="keyword">class</span>=</span><span class="string">"help-inline"</span>&gt;<span class="type">Woohoo</span>!&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre></li>
+</ol>
+</li>
+<li><p><strong>按扭</strong>，现在，按钮和链接在 <code>Bootstrap</code> 中的外观很像。任何带<code>.btn</code>类的元素都会继承灰色圆角按钮的样式。不过，使用其他类是可以给按钮加上颜色的。</p>
+<ul>
+<li><code>btn</code>:带渐变的灰色标准按钮</li>
+<li><code>btn btn-primary</code>:表示按钮的操作相对比较重要</li>
+<li><code>btn btn-info</code>:用于代替默认的标准按钮</li>
+<li><code>btn btn-success</code>:表示成功或积极的操作</li>
+<li><code>btn btn-warning</code>:表示对相应操作要格外小心</li>
+<li><code>btn btn-danger</code>:表示危险或消极的操作</li>
+<li><code>btn btn-inverse</code>:用于代替深灰色按钮，无关语义</li>
+<li><code>btn btn-link</code>:让按钮看起来像链接，同时还具备按钮的行为</li>
+</ul>
+<p><strong>由于 IE9 不能剪切掉圆角处的背景渐变，因此 IE9 中删除了渐变效果。 IE 在显示被禁用的按钮时也有问题，比如文本是灰色，而且还带有难看的文本阴影。</strong></p>
+<ul>
+<li><p><strong>按钮大小</strong>如果你希望按钮大一些或小一些，可以给链接或按钮添加<code>.btn-large</code>、<code>.btn-small</code>或<code>.btn-mini</code>类。</p>
+<pre><code>&lt;p&gt;
+  &lt;button <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-large btn-primary"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span>&gt;<span class="type">Large</span> button&lt;/button&gt;
+  &lt;button <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-large"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span>&gt;<span class="type">Large</span> button&lt;/button&gt;
+&lt;/p&gt;
+&lt;p&gt;
+  &lt;button <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-primary"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span>&gt;<span class="type">Default</span> button&lt;/button&gt;
+  &lt;button <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span>&gt;<span class="type">Default</span> button&lt;/button&gt;
+&lt;/p&gt;
+&lt;p&gt;
+  &lt;button <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-small btn-primary"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span>&gt;<span class="type">Small</span> button&lt;/button&gt;
+  &lt;button <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-small"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span>&gt;<span class="type">Small</span> button&lt;/button&gt;
+&lt;/p&gt;
+&lt;p&gt;
+  &lt;button <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-mini btn-primary"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span>&gt;<span class="type">Mini</span> button&lt;/button&gt;
+  &lt;button <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-mini"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span>&gt;<span class="type">Mini</span> button&lt;/button&gt;
+&lt;/p&gt;
+</code></pre><p>如果想创建一个 <strong>“ 块级 ” 按钮</strong>，也没问题，添加<code>.btn-block</code>类。此时的按钮宽度是 100% ：</p>
+<pre><code>&lt;button <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-large btn-block btn-primary"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span>&gt;<span class="type">Block</span>-level button&lt;/button&gt;
+&lt;button <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-large btn-block"</span> <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span>&gt;<span class="type">Block</span>-level button&lt;/button&gt;
+</code></pre></li>
+<li><p><strong>禁用按钮的样式</strong>，对于链接，只要添加<code>.disabled</code>类就可以实现颜色变浅、褪掉渐变的效果：</p>
+<pre><code><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span> <span class="attribute">class</span>=<span class="value">"btn btn-large btn-primary disabled"</span>&gt;</span>Primary link<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+<span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span> <span class="attribute">class</span>=<span class="value">"btn btn-large disabled"</span>&gt;</span>Link<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+</code></pre><p>注意，<code>.disabled</code>类的用法与<code>.active</code>类很相似。也就是说，不需要<code>.btn</code>前缀，但要记住这只会影响样式。如果你真要禁用链接，还得让 <code>JavaScript</code> 帮忙。<br> 对于按钮，添加<code>disabled</code>属性就行了。这样就会禁用按钮，用不着 <code>JavaScript</code> ：</p>
+<pre><code>&lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-large btn-primary disabled"</span>disabled=<span class="string">"disabled"</span>&gt;<span class="type">Primary</span> button&lt;/button&gt;
+&lt;button <span class="class"><span class="keyword">type</span>=</span><span class="string">"button"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"btn btn-large"</span> disabled&gt;<span class="type">Button</span>&lt;/button&gt;
+</code></pre></li>
+</ul>
+</li>
+<li><p><strong>图片</strong>：与图片相关的类有 3 个，可用于为图片应用一些简单的样式：<code>.img-rounded</code>为图片的四角添加<code>border-radius:6px</code>、<code>.img-circle</code>通过添加<code>border-radius:500px</code>使图片变成圆形、<code>.img-polaroid</code>会添加一点内边距和一条灰色边框：</p>
+<pre><code>&lt;img src=<span class="string">"..."</span> <span class="keyword">class</span>=<span class="string">"img-rounded"</span>&gt;
+&lt;img src=<span class="string">"..."</span> <span class="keyword">class</span>=<span class="string">"img-circle"</span>&gt;
+&lt;img src=<span class="string">"..."</span> <span class="keyword">class</span>=<span class="string">"img-polaroid"</span>&gt;
+</code></pre></li>
+<li><p><code>Bootstrap</code> 附带了一张 <code>140</code> 个图标的精灵图(<code>sprite</code>)，这些图标可用于按钮、链接、导航和表单字段。这些图标由<code>GLYPHICONS</code>提供。具体图标详见：<a href="">http://v2.bootcss.com/base-css.html#images</a></p>
+<p>作为 Bootstrap 的用户，我们很幸运能免费使用<code>GLYPHICONS</code><a href="">http://glyphicons.com/</a>提供的图标。请各位开发人员在适当的情况下，声明图标来源于<code>GLYPHICONS</code>。</p>
+<p>要使用图标，给<code>&lt;i&gt;</code>标签添加以<code>.icon-</code>为前缀的类即可。例如，要使用编辑图标，给<code>&lt;i&gt;</code>标签添加<code>.icon-edit</code>类：</p>
+<pre><code><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-edit"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span>
+</code></pre><p>如果想使用白色图标，再补充一个<code>.icon-white</code>类即可。</p>
+<pre><code><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-edit icon-white"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span>
+</code></pre><ul>
+<li><p>同时使用按钮组和图标，可以用最少的标记设计出漂亮的界面。如左对齐，右对齐等。</p>
+<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-toolbar"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-group"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-align-left"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-align-center"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-align-right"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-align-justify"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre></li>
+<li><p>在把图标放到文本旁边时，注意在图标和文本间留出适当空白</p>
+<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-list"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"active"</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-home icon-white"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span>Home<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-book"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span> Library<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-pencil"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span> Applications<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"i"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span> Misc<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre></li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/前端/">前端</a>, <a href="/tags/Bootstrap/">Bootstrap</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2016/01/02/《Bootstrap用户手册》学习笔记(三)/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/" data-title="《Bootstrap用户手册》学习笔记(二)" data-url="http://www.52brt.com/2016/01/01/《Bootstrap用户手册》学习笔记(二)/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>3</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

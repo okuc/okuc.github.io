@@ -1,0 +1,278 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>centos7常用命令 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="centos7常用命令"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-30T01:06:32.000Z"><a href="/2015/08/30/centos7常用命令/">2015-08-30</a></time>
+      
+      
+  
+    <h1 class="title">centos7常用命令</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>记录centos7下的一些常用命令!</p>
+<p>###网络相关</p>
+<ul>
+<li>关闭防火墙：<pre><code>systemctl stop firewalld.service<span class="comment">#停止firewall</span>
+systemctl <span class="built_in">disable</span> firewalld.service<span class="comment">#禁止firewall开机启动</span>
+</code></pre></li>
+<li><p>配置DNS服务</p>
+<ul>
+<li><p>命令行方式</p>
+<pre><code><span class="number">1.</span> nmcli connection show <span class="preprocessor">#显示当前网络连接</span>
+NAME UUID                                 TYPE           DEVICE
+eno1 <span class="number">5f</span>b06bd0-<span class="number">0</span>bb0-<span class="number">7f</span>fb-<span class="number">45f</span>1-d6edd65f3e03 <span class="number">802</span>-<span class="number">3</span>-ethernet eno1
+
+<span class="number">2.</span> nmcli con mod eno1 ipv4.dns <span class="string">"114.114.114.114 8.8.8.8"</span> <span class="preprocessor">#修改当前网络连接对应的DNS服务器，这里的网络连接可以用名称或者UUID来标识</span>
+<span class="number">3.</span> nmcli con up eno1<span class="preprocessor">#将dns配置生效</span>
+</code></pre></li>
+</ul>
+<ul>
+<li>直接修改文件方式<a id="more"></a>
+<pre><code><span class="number">1.</span> 修改 /etc/NetworkManager/NetworkManager.conf 文件，在main部分添加 “dns=none” 选项：
+    [main]
+    plugins=ifcfg-rh
+    dns=none
+<span class="number">2.</span> NetworkManager重新装载上面修改的配置
+    systemctl restart NetworkManager.service
+<span class="number">3.</span> 手工修改 /etc/resolv.conf
+    nameserver <span class="number">114.114</span><span class="number">.114</span><span class="number">.114</span>
+    nameserver <span class="number">8.8</span><span class="number">.8</span><span class="number">.8</span>
+</code></pre></li>
+</ul>
+</li>
+<li><p>配置网关、IP等</p>
+<pre><code>vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
+
+BOOTPROTO=<span class="string">"static"</span> <span class="preprocessor">#dhcp改为static</span>
+ONBOOT=<span class="string">"yes"</span> <span class="preprocessor">#开机启用本配置</span>
+IPADDR=<span class="number">192.168</span><span class="number">.7</span><span class="number">.106</span> <span class="preprocessor">#静态IP</span>
+GATEWAY=<span class="number">192.168</span><span class="number">.7</span><span class="number">.1</span> <span class="preprocessor">#默认网关</span>
+NETMASK=<span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span> <span class="preprocessor">#子网掩码</span>
+DNS1=<span class="number">192.168</span><span class="number">.7</span><span class="number">.1</span> <span class="preprocessor">#DNS 配置</span>
+
+service network restart <span class="preprocessor">#重启网络服务</span>
+
+ip addr <span class="preprocessor">#查看网络地址信息</span>
+</code></pre><p><strong>注意：文件名称不一定是<code>ifcfg-enp0s3</code>,需要自行去文件目录下查看</strong></p>
+</li>
+<li>修改本地host文件<pre><code>vi /etc/hosts
+<span class="number">192.168</span><span class="number">.90</span><span class="number">.135</span>  www.okuc.xyz
+</code></pre></li>
+</ul>
+<p>###网络相关</p>
+<ul>
+<li>修改机器名：<ul>
+<li>命令行方式<br>hostname 主机名 #临时生效，重启后恢复原来机器名<br>hostnamectl set-hostname <hostname> #永久生效</hostname></li>
+<li>文件方式<br>  vi /etc/sysconfig/network<br>   NETWORKING=yes<br>HOSTNAME=www.okuc.xyz</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/linux/">linux</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2015/08/28/java连接远程HBase/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2015/08/30/centos7常用命令/" data-title="centos7常用命令" data-url="http://www.52brt.com/2015/08/30/centos7常用命令/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>3</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
