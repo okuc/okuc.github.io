@@ -486,31 +486,40 @@ $(<span class="string">'#example'</span>).<span class="function"><span class="ti
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">2015-12-31</a></time>
+        <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/新手学习Express4之四：数据库集成/">2015-12-31</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">《Bootstrap用户手册》学习笔记(一)</a></h1>
+    <h1 class="title"><a href="/2015/12/31/新手学习Express4之四：数据库集成/">新手学习Express4之四：数据库集成</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h2 id="第1章_Bootstrap提供的网站框架">第1章 Bootstrap提供的网站框架</h2><ol>
-<li><p><code>Bootstrap</code>中有几种默认样式需要注意，它们专门针对排版和链接。</p>
+        <h2 id="数据库集成">数据库集成</h2><ol>
+<li><p>为<code>Express</code>应用添加连接数据库的能力，只需要加载相应数据库的<code>Node.js驱动</code>即可。这里会列举一些常用的例子。</p>
+<p>除本章列举的例子外，更多的可在npm官网<a href="">https://www.npmjs.com</a>来查找。</p>
+</li>
+<li><p><code>Cassandra</code>：</p>
 <ul>
-<li>从<code>body</code>中去掉了<code>margin</code>,这样内容就会紧贴浏览器窗口边缘。</li>
-<li>为<code>body</code>应用了<code>background-color:white;</code>。</li>
-<li><code>Bootstrap</code>以<code>@baseFontFamily</code>、<code>@baseFontSize</code>、<code>@baseLineHeight</code>属性作为排版的基准，确保整个网站的标题及其他内容的行高一致。</li>
-<li><p><code>Bootstrap</code>通过<code>@linkColor</code>设置全局链接颜色，只在<code>:hover</code>状态下给链接添加下划线。</p>
-<p>要改变默认颜色，可以直接修改相应<code>.less</code>文件中的全局变量值。要么修改<code>scaffolding.less</code>文件，要么修改你自已的样式表。</p>
+<li>模块: <code>cassandra-driver</code> (<a href="https://github.com/datastax/nodejs-driver">https://github.com/datastax/nodejs-driver</a>)</li>
+<li>安装: <code>$ npm install cassandra-driver</code></li>
+<li><p>示例:</p>
+<pre><code><span class="keyword">var</span> cassandra = require('cassandra-driver');
+<span class="keyword">var</span> client = new cassandra.<span class="type">Client</span>({ contactPoints: ['localhost']});
+client.execute('select key <span class="keyword">from</span> system.local', function(err, <span class="literal">result</span>) {
+<span class="keyword">if</span> (err) throw err;
+console.log(<span class="literal">result</span>.rows[<span class="number">0</span>]);
+});
+</code></pre></li>
+</ul>
       
     </div>
     <footer>
       
         
           <div class="alignleft">
-            <a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/#more" class="more-link">阅读更多</a>
+            <a href="/2015/12/31/新手学习Express4之四：数据库集成/#more" class="more-link">阅读更多</a>
           </div>
         
         
