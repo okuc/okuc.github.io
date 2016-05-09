@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -84,13 +84,13 @@ var _hmt = _hmt || [];
 <li>安装<code>epel-release</code>，命令如下：｀sudo yum install epel-release｀。</li>
 <li>安装<code>nodejs</code>，命令如下：｀sudo yum install nodejs｀。</li>
 <li>安装<code>npm</code>，命令如下：｀sudo yum install npm｀。</li>
-<li>设置缓存目录和全局模块的存放路径，在<code>/home/okuc/nodejs</code>下建立<code>node global</code>及<code>node cache</code>两个文件夹。同时在终端命令行中，执行如下命令：<pre><code>npm config <span class="built_in">set</span> prefix <span class="string">"/home/okuc/nodejs/node global"</span>
-npm config <span class="built_in">set</span> <span class="keyword">cache</span> <span class="string">"/home/okuc/nodejs/node cache"</span>
+<li>设置缓存目录和全局模块的存放路径，在<code>/home/okuc/nodejs</code>下建立<code>node global</code>及<code>node cache</code>两个文件夹。同时在终端命令行中，执行如下命令：<pre><code>npm config set prefix &quot;/home/okuc/nodejs/node global&quot;
+npm config set cache &quot;/home/okuc/nodejs/node cache&quot;
 </code></pre>为了查看是否执行成功，可使用如下命令查看：<code>npm config get prefix</code>。 <a id="more"></a></li>
 <li><p>将路径｀/home/okuc/nodejs/node global/｀添加到环境变量中。注意，由于存在空隔，需要加单引号。</p>
 <pre><code>sudo vi /etc/profile
 
-export PATH=<span class="variable">$PATH</span>:<span class="string">'/home/okuc/nodejs/node global/bin'</span>
+export PATH=$PATH:&apos;/home/okuc/nodejs/node global/bin&apos;
 </code></pre></li>
 <li><p>使用｀n｀来升级<code>nodejs</code>版本。</p>
 <ol>
@@ -100,23 +100,23 @@ export PATH=<span class="variable">$PATH</span>:<span class="string">'/home/okuc
 </ol>
 </li>
 <li><p>下面是几个常用的<code>npm</code>命令。</p>
-<pre><code><span class="built_in">npm</span> -v          <span class="comment">#显示版本，检查npm 是否正确安装。</span>
+<pre><code>npm -v          #显示版本，检查npm 是否正确安装。
 
-<span class="built_in">npm</span> install express   <span class="comment">#安装express模块</span>
+npm install express   #安装express模块
 
-<span class="built_in">npm</span> install -g express  <span class="comment">#全局安装express模块</span>
+npm install -g express  #全局安装express模块
 
-<span class="built_in">npm</span> list         <span class="comment">#列出已安装模块</span>
+npm list         #列出已安装模块
 
-<span class="built_in">npm</span> show express     <span class="comment">#显示模块详情</span>
+npm show express     #显示模块详情
 
-<span class="built_in">npm</span> update        <span class="comment">#升级当前目录下的项目的所有模块</span>
+npm update        #升级当前目录下的项目的所有模块
 
-<span class="built_in">npm</span> update express    <span class="comment">#升级当前目录下的项目的指定模块</span>
+npm update express    #升级当前目录下的项目的指定模块
 
-<span class="built_in">npm</span> update -g express  <span class="comment">#升级全局安装的express模块</span>
+npm update -g express  #升级全局安装的express模块
 
-<span class="built_in">npm</span> uninstall express  <span class="comment">#删除指定的模块</span>
+npm uninstall express  #删除指定的模块
 </code></pre></li>
 </ol>
 
@@ -143,10 +143,10 @@ export PATH=<span class="variable">$PATH</span>:<span class="string">'/home/okuc
 
 <nav id="pagination" >
     
-    <a href="/2016/03/30/docker常用命令/" class="alignleft prev" >Prev</a>
+    <a href="/2016/03/30/docker常用命令/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2016/03/10/hexo博客笔记源码恢复记/" class="alignright next" >Next</a>
+    <a href="/2016/03/10/hexo博客笔记源码恢复记/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -176,7 +176,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -191,7 +191,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

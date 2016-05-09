@@ -1,0 +1,332 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>docker网络学习 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="docker网络学习"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="//archives">归档</a></li>
+    
+      <li><a href="//coding">编程技术</a></li>
+    
+      <li><a href="//bigData">大数据技术</a></li>
+    
+      <li><a href="//dataV">数据可视化</a></li>
+    
+      <li><a href="//about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-11T01:06:32.000Z"><a href="/2016/05/11/docker网络学习/">2016-05-11</a></time>
+      
+      
+  
+    <h1 class="title">docker网络学习</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><code>Docker</code>容器的跨主机连接，有三种方式：<ul>
+<li>使用网桥实现跨主机容器连接</li>
+<li>使用<code>Open vSwitch</code>实现跨主机容器连接</li>
+<li>使用<code>weave</code>实现跨主机容器连接<a id="more"></a>
+使用网桥实现跨主机容器连接</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>网格方式需要安装网桥管理工具：<code>apt-get install bridge-utils</code></li>
+<li><p>修改主机<code>/etc/network/interfaces</code>文件</p>
+<pre><code>auto lo
+iface lo inet loopback
+
+auto br0
+iface br0 inet static
+address 10.211.55.3
+netmask 255.255.255.0
+gateway 10.211.55.1
+bridge_ports eth0
+</code></pre></li>
+<li><p>修改完上述文见后，修改<code>/etc/default/docker</code> 文件</p>
+<pre><code>DOCKER_OPTS=&quot;-b=br0 --fixed-cidr=&apos;10.211.55.64/26&apos;&quot;
+</code></pre><ul>
+<li><code>-b</code> 指定使用自定义网桥，<code>-b=br0</code></li>
+<li><code>--fixed-cidr</code> 限制ip地址分配范围。<br>IP地址划分：<br><code>Host1：10.211.55.64/26</code><pre><code>地址范围：`10.211.55.65~10.211.55.126`
+</code></pre><code>Host2：10.211.55.128/26</code><pre><code>地址范围：`10.211.55.129~10.211.55.190`  
+</code></pre></li>
+</ul>
+</li>
+<li><p>设定完毕后可以用<code>ifconfig</code>、<code>ps -ef|grep docker</code>来查看。在其他的主机上也作同样的地址配置就可以实现不同物理主机间的docker连接了。</p>
+</li>
+</ul>
+<h2 id="使用Open-vSwitch实现跨主机容器连接-ovs简介"><a href="#使用Open-vSwitch实现跨主机容器连接-ovs简介" class="headerlink" title="使用Open vSwitch实现跨主机容器连接-ovs简介"></a>使用Open vSwitch实现跨主机容器连接-ovs简介</h2><ul>
+<li><code>Open vSwitch</code>是一个高质量的、多层虚拟交换机，使用开源<code>Apache2.0</code>许可协议，由<code>Nicira Networks</code>开发，主要实现代码为可移植的C代码。它的目的是让大规模网络自动化可以通过编辑扩展，同时仍然支持标准的管理接口和协议(例如NetFlow,sFlow,SPAN,RSPAN,CLI,LACP,802.1ag)</li>
+<li>GRE隧道：通用路由协议封装。隧道技术是一种通过使用互联网络的基础设施在网络之间传递数据的方式。使用隧道传递的数据（或负载）可以是不同协议的数据帧或包。隧道协议将其它协议的数据帧或包重新封装然后通过隧道发送。新的帧头提供路由信息，以便通过互联网传递被封装的负载数据。</li>
+<li>要实现这种方式的链接，要具备以下条件：<ul>
+<li>双网卡，<code>Host-Only &amp; NAT</code></li>
+<li>安装<code>Open vSwitch：apt-get install openvswitch-switch</code></li>
+<li>安装网桥管理工具：<code>apt-get install bridge-utils</code><br>-操作步骤如下：</li>
+</ul>
+<ol>
+<li>建立ovs网桥</li>
+<li>添加gre连接</li>
+<li>配置docker 容器虚拟网桥</li>
+<li>为虚拟网桥添加ovs接口</li>
+<li>添加不同docker容器网段路由</li>
+</ol>
+</li>
+<li><p>具体执行的一些命令如下：</p>
+<pre><code>sudo ovs-vsctl show
+sudo ovs-vsctl add-br obr0
+sudo ovs-vsctl add-port obr0 gre0
+sudo ovs-vsctl set interface gre0 type=gre options:remote_ip=192.168.59.104
+sudo ovs-vsctl show
+
+sudo brctl addbr br0
+sudo ifconfig br0 192.168.1.1 netmask 255.255.255.0
+sudo brctl addif br0 obr0
+sudo brctl show
+
+route
+sudo ip route add 192.168.2.0/24 via 192.168.59.104 dev eth0
+</code></pre><h2 id="使用weave实现跨主机容器连接-weave简介"><a href="#使用weave实现跨主机容器连接-weave简介" class="headerlink" title="  使用weave实现跨主机容器连接-weave简介"></a>  使用weave实现跨主机容器连接-weave简介</h2><ul>
+<li>建立一个虚拟的网络，用于将运行在不同主机的Docker容器连接起来。参考地址<a href="http://weave.works" target="_blank" rel="external"></a>、<a href="https://github.com/weaveworks/weave#readme" target="_blank" rel="external"></a></li>
+<li>要实现这种方式的连接，要具备以下条件：双网卡，Host-only &amp; NAT</li>
+<li>操作步骤如下：<ol>
+<li>安装weave</li>
+<li>启动weave: <code>$weave launch</code></li>
+<li>连接不同主机</li>
+<li>通过weave启动容器<br>sudo wget -O /usr/bin/weave <a href="https://raw.githubusercontent.com/zettio/weave/master/weave" target="_blank" rel="external">https://raw.githubusercontent.com/zettio/weave/master/weave</a><br>sudo chmod a+x /usr/bin/weave<br>weave launch<br>docker ps -l<br>weave launch 192.168.59.103</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Docker容器的网络基础–docker0"><a href="#Docker容器的网络基础–docker0" class="headerlink" title="Docker容器的网络基础–docker0"></a>Docker容器的网络基础–docker0</h2><ul>
+<li>网桥位于数据链路层，linux虚拟网桥可以设置IP地址，相当于拥有一个隐藏的虚拟网卡</li>
+<li>docker0的地址划分：<ul>
+<li><code>ip</code>：<code>172.17.42.1</code> 子网掩码：<code>255.255.0.0</code></li>
+<li><code>MAC</code>：<code>02:42:ac:11:00:00</code> 到 <code>02:42:ac:11:ff:ff</code></li>
+<li>总共提供了65535个地址</li>
+</ul>
+</li>
+<li>自定义docker0<ul>
+<li>修改docker0地址：<code>sudo ifconfig docker0 192.168.200.1 netmask 255.255.255.0</code></li>
+<li>添加虚拟网桥： <code>sudo brctl addbr br0</code>、<code>sudo ifconfig br0 192.168.100.1 netmask 255.255.255.0</code></li>
+<li>更改docker守护进程的启动配置：<code>/etc/default/docker</code> 中添加DOCKER_OPS值：<code>-b=br0</code></li>
+<li>重启docker服务：<code>sudo service docker restart</code></li>
+</ul>
+</li>
+<li>Docker容器的互联：允许所有容器互联、拒绝容器间互联、允许特定容器间的连接<ul>
+<li>–icc=true 默认，允许所有容器互联</li>
+<li>–link，依赖另外一个容器。 <code>docker run --link=[CONTAINER_NAME]:[ALIAS] [IMAGE] [COMMOND]</code>,如:<code>docker run -it --name cct3 --link=cct1:webtest dormancypress/cct</code></li>
+<li><code>env</code>可以输出环境变量。</li>
+<li>–icc=false，拒绝所有容器间互联。</li>
+<li><code>--icc =false --iptables=true</code>、<code>--link</code>允许特定容器间的连接。</li>
+</ul>
+</li>
+<li><code>ip-forward=true</code>、<code>sysctl net.ipv4.conf.all.forwarding</code></li>
+<li><code>iptabels</code>：它是与Linux内核集成的包过滤防火墙系统，几乎所有的linux发行版本都会包含<code>iptables</code>的功能。<ul>
+<li>表（<code>table</code>）</li>
+<li>链（<code>chain</code>）</li>
+<li>规则（<code>rule</code>）：<code>ACCEPT</code>、<code>REJECT</code>、<code>DROP</code>。</li>
+<li>filter表中包含的链：<code>INPUT</code>、<code>FORWARD</code>、<code>OUTPUT</code>。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/docker/">docker</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    
+    <a href="/2016/04/21/dockerfile指令学习/" class="alignright next" >Siguiente</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/05/11/docker网络学习/" data-title="docker网络学习" data-url="http://www.52brt.com/2016/05/11/docker网络学习/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Etiquetas</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

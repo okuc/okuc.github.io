@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -64,6 +64,96 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-11T01:06:32.000Z"><a href="/2016/05/11/docker网络学习/">2016-05-11</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/11/docker网络学习/">docker网络学习</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><code>Docker</code>容器的跨主机连接，有三种方式：<ul>
+<li>使用网桥实现跨主机容器连接</li>
+<li>使用<code>Open vSwitch</code>实现跨主机容器连接</li>
+<li>使用<code>weave</code>实现跨主机容器连接
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/11/docker网络学习/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-04-21T01:06:32.000Z"><a href="/2016/04/21/dockerfile指令学习/">2016-04-21</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/04/21/dockerfile指令学习/">dockerfile指令学习</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><code>FROM</code>：它必须针对已经存在的镜像，且是基础镜像来操作。而且它必须是第一条非注释指令。</li>
+<li>第一个<code>dockfile</code>文件，文件名必须为：<code>Dockerfile</code>,内容如下,然后使用<code>docker build -t okuc/okuc_test .</code>命令执行：<pre><code>#First Dockerfile
+FROM centos:6.6
+MAINTAINER okuc &quot;okuc@live.cn&quot;
+RUN yum install -y java
+EXPOSE 80
+</code></pre></li>
+<li><code>MAINTAINER &lt;name&gt;</code>:指定镜像的作者信息，包含镜像的所有者和联系信息。</li>
+<li><code>RUN</code>指定当前镜像中运行的命令。<ul>
+<li>RUN <command> (shell模式)<pre><code>/bin/sh -c command
+RUN echo hello
+</code></pre></li>
+<li>RUN [“executable”,”param1”,”param2”] (exec模式)<pre><code>RUN[&quot;/bin/bash&quot;,&quot;-c&quot;,&quot;echo hello&quot;]
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/04/21/dockerfile指令学习/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -129,8 +219,8 @@ var _hmt = _hmt || [];
 <li>安装<code>epel-release</code>，命令如下：｀sudo yum install epel-release｀。</li>
 <li>安装<code>nodejs</code>，命令如下：｀sudo yum install nodejs｀。</li>
 <li>安装<code>npm</code>，命令如下：｀sudo yum install npm｀。</li>
-<li>设置缓存目录和全局模块的存放路径，在<code>/home/okuc/nodejs</code>下建立<code>node global</code>及<code>node cache</code>两个文件夹。同时在终端命令行中，执行如下命令：<pre><code>npm config <span class="built_in">set</span> prefix <span class="string">"/home/okuc/nodejs/node global"</span>
-npm config <span class="built_in">set</span> <span class="keyword">cache</span> <span class="string">"/home/okuc/nodejs/node cache"</span>
+<li>设置缓存目录和全局模块的存放路径，在<code>/home/okuc/nodejs</code>下建立<code>node global</code>及<code>node cache</code>两个文件夹。同时在终端命令行中，执行如下命令：<pre><code>npm config set prefix &quot;/home/okuc/nodejs/node global&quot;
+npm config set cache &quot;/home/okuc/nodejs/node cache&quot;
 </code></pre>为了查看是否执行成功，可使用如下命令查看：<code>npm config get prefix</code>。
       
     </div>
@@ -209,7 +299,7 @@ npm config <span class="built_in">set</span> <span class="keyword">cache</span> 
 <p>1.首先是下载。我安装的目前最新版本<code>haroopad-v0.13.1-x64.tar.gz</code>,下载地址如下：<a href="https://bitbucket.org/rhiokim/haroopad-download/downloads/haroopad-v0.13.1-x64.tar.gz">haroopad-v0.13.1-x64.tar.gz</a>。<br>  如果想安装其他版本，可以在此查找下载更多的安装包：<a href="https://bitbucket.org/rhiokim/haroopad-download/downloads/">https://bitbucket.org/rhiokim/haroopad-download/downloads/</a>。</p>
 <p>2.下载完成后，使用如下命令解压<code>tar -zxvf haroopad-v0.13.1-x64.tar.gz</code>。</p>
 <p>3.下面就解压出来的<code>data.tar.gz</code>进行再次解压，并释放到合适的地方。<strong>注意:下边的几步都需要root权限。</strong></p>
-<pre><code>tar -zxvf data<span class="class">.tar</span><span class="class">.gz</span>
+<pre><code>tar -zxvf data.tar.gz
 sudo cp －r ./usr /
 </code></pre>
       
@@ -289,11 +379,11 @@ sudo cp －r ./usr /
     </header>
     <div class="entry">
       
-        <h2 id="第_4_章Bootstrap支持的JavaScript插件(2)">第 4 章Bootstrap支持的JavaScript插件(2)</h2><ol>
+        <h2 id="第-4-章Bootstrap支持的JavaScript插件-2"><a href="#第-4-章Bootstrap支持的JavaScript插件-2" class="headerlink" title="第 4 章Bootstrap支持的JavaScript插件(2)"></a>第 4 章Bootstrap支持的JavaScript插件(2)</h2><ol>
 <li><p><strong>提示条</strong>可以用来给出链接说明或（与标签连用）给出缩写词的的全称。这个插件最初的原型是<code>Jason Frame</code>的<code>jQuery.tipsy</code>插件。但<br>目前这个提示条利用<code>Bootstrap JavaScript API</code>可以不使用图片，而且有<code>CSS</code>动画。</p>
 <p><strong>用法</strong>给<code>&lt;a&gt;</code>元素添加<code>rel=&quot;tooltip&quot;</code>就可以添加提示条，<code>&lt;a&gt;</code>元素的<code>title</code>属性值就是提示条的内容。下面两个例子分别使用<code>Bootstrap Data API</code>和<code>JavaScript</code>来创建提示条：</p>
-<pre><code>&lt;<span class="tag">a</span> href=<span class="string">"#"</span> rel=<span class="string">"tooltip"</span> title=<span class="string">"This is the tooltip"</span>&gt;Tooltip Example&lt;/a&gt;
-$(<span class="string">'#example'</span>).<span class="function"><span class="title">tooltip</span><span class="params">(options)</span></span>
+<pre><code>&lt;a href=&quot;#&quot; rel=&quot;tooltip&quot; title=&quot;This is the tooltip&quot;&gt;Tooltip Example&lt;/a&gt;
+$(&apos;#example&apos;).tooltip(options)
 </code></pre><p><strong>选项</strong>与其他插件一样，提示条也可以通过<code>Data API</code>或 <code>JavaScript</code>来设置。只不过在使用数据属性时，选项名称前面要加上<code>data-</code>，比如<code>title</code>就要变成<code>data-title</code>。</p>
       
     </div>
@@ -330,22 +420,22 @@ $(<span class="string">'#example'</span>).<span class="function"><span class="ti
     </header>
     <div class="entry">
       
-        <h2 id="第3章_Bootstrap内置的布局组件(2)">第3章 Bootstrap内置的布局组件(2)</h2><ol>
+        <h2 id="第3章-Bootstrap内置的布局组件-2"><a href="#第3章-Bootstrap内置的布局组件-2" class="headerlink" title="第3章 Bootstrap内置的布局组件(2)"></a>第3章 Bootstrap内置的布局组件(2)</h2><ol>
 <li><p><strong>标签</strong>：标签非常适合显示计数结果、提示信息等 内容。</p>
-<pre><code><span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label"</span>&gt;</span>Default<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
-<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label label-success"</span>&gt;</span>Success<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
-<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label label-warning"</span>&gt;</span>Warning<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
-<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label label-important"</span>&gt;</span>Important<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
-<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label label-info"</span>&gt;</span>Info<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
-<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"label label-inverse"</span>&gt;</span>Inverse<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<pre><code>&lt;span class=&quot;label&quot;&gt;Default&lt;/span&gt;
+&lt;span class=&quot;label label-success&quot;&gt;Success&lt;/span&gt;
+&lt;span class=&quot;label label-warning&quot;&gt;Warning&lt;/span&gt;
+&lt;span class=&quot;label label-important&quot;&gt;Important&lt;/span&gt;
+&lt;span class=&quot;label label-info&quot;&gt;Info&lt;/span&gt;
+&lt;span class=&quot;label label-inverse&quot;&gt;Inverse&lt;/span&gt;
 </code></pre></li>
 <li><p><strong>圆标签</strong>与标签类似，主要区别在于它们的两头更圆。它的颜色与标签的颜色是一样的。</p>
-<pre><code><span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge"</span>&gt;</span>1<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
-<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge badge-success"</span>&gt;</span>2<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
-<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge badge-warning"</span>&gt;</span>4<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
-<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge badge-important"</span>&gt;</span>6<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
-<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge badge-info"</span>&gt;</span>8<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
-<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"badge badge-inverse"</span>&gt;</span>10<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<pre><code>&lt;span class=&quot;badge&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;badge badge-success&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;badge badge-warning&quot;&gt;4&lt;/span&gt;
+&lt;span class=&quot;badge badge-important&quot;&gt;6&lt;/span&gt;
+&lt;span class=&quot;badge badge-info&quot;&gt;8&lt;/span&gt;
+&lt;span class=&quot;badge badge-inverse&quot;&gt;10&lt;/span&gt;
 </code></pre>
       
     </div>
@@ -382,33 +472,33 @@ $(<span class="string">'#example'</span>).<span class="function"><span class="ti
     </header>
     <div class="entry">
       
-        <h2 id="第3章_Bootstrap内置的布局组件(1)">第3章 Bootstrap内置的布局组件(1)</h2><ol>
+        <h2 id="第3章-Bootstrap内置的布局组件-1"><a href="#第3章-Bootstrap内置的布局组件-1" class="headerlink" title="第3章 Bootstrap内置的布局组件(1)"></a>第3章 Bootstrap内置的布局组件(1)</h2><ol>
 <li><p>除了前一章介绍的标记，<code>Bootstrap</code>还内置了一套灵活的组件，可用于设计用户界面、交互功能，等等。这些组件来自一个独立的 <code>javaScript</code>文件，而这个文件可以通过<code>Bootstrap</code>的自定义构建工具生成，因此可以只包含你需要的组件。一般会选择所有组件，这样就有了最大的灵活性。</p>
 </li>
 <li><p><strong>上下文菜单</strong>：下拉菜单以列表形式呈现一组选项，一般与上下文相关，可用于不同的元素、导航、按钮，等等。</p>
-<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span> <span class="attribute">role</span>=<span class="value">"menu"</span> <span class="attribute">aria-labelledby</span>=<span class="value">"dropdownMenu"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Another action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Something else here<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"divider"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>//分隔横线
-  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Separated link<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+<pre><code>&lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;dropdownMenu&quot;&gt;
+  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;//分隔横线
+  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </code></pre><ul>
 <li><p><strong>右对齐</strong>：为<code>.dropdown-menu</code>添加<code>.pull-right</code>类，可以让下拉菜单右边缘与父对象右边缘对齐：</p>
-<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu pull-right"</span> <span class="attribute">role</span>=<span class="value">"menu"</span> <span class="attribute">aria-labelledby</span>=<span class="value">"dLabel"</span>&gt;</span>
+<pre><code>&lt;ul class=&quot;dropdown-menu pull-right&quot; role=&quot;menu&quot; aria-labelledby=&quot;dLabel&quot;&gt;
   ...
-<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+&lt;/ul&gt;
 </code></pre></li>
 <li><p><strong>子菜单</strong>：只要在当前下拉菜单的任意<code>&lt;li&gt;</code>元素上添加<code>.dropdown-submenu</code>即可实现子菜单。</p>
-<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span> <span class="attribute">role</span>=<span class="value">"menu"</span> <span class="attribute">aria-labelledby</span>=<span class="value">"dLabel"</span>&gt;</span>
+<pre><code>&lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;dLabel&quot;&gt;
   ...
-  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"dropdown-submenu"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>More options<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span>&gt;</span>
+  &lt;li class=&quot;dropdown-submenu&quot;&gt;
+    &lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;More options&lt;/a&gt;
+    &lt;ul class=&quot;dropdown-menu&quot;&gt;
       ...
-    <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 </code></pre>
       
     </div>
@@ -429,105 +519,11 @@ $(<span class="string">'#example'</span>).<span class="function"><span class="ti
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-01-01T14:06:32.000Z"><a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/">2016-01-01</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/">《Bootstrap用户手册》学习笔记(二)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第2章_Bootstrap预定义的CSS样式(2)">第2章 Bootstrap预定义的CSS样式(2)</h2><ol>
-<li><p><strong>表单</strong> <code>Bootstrap</code>自带了基本的表单样式，不需要添加任务辅助类。例子如下：</p>
-<pre><code>&lt;<span class="keyword">form</span>&gt;
-    &lt;fieldset&gt;
-         &lt;legend&gt;Legend&lt;/legend&gt;
-             &lt;<span class="keyword">label</span> <span class="keyword">for</span>=<span class="string">"name"</span>&gt;<span class="keyword">Label</span> name&lt;/<span class="keyword">label</span>&gt;
-             &lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"text"</span> id=<span class="string">"name"</span>
-         placeholder=<span class="string">"Type something…"</span>&gt;
-                &lt;span <span class="keyword">class</span>=<span class="string">"help-block"</span>&gt;Example block-level <span class="keyword">help</span> text here.&lt;/span&gt;
-                &lt;<span class="keyword">label</span> <span class="keyword">class</span>=<span class="string">"checkbox"</span> <span class="keyword">for</span>=<span class="string">"checkbox"</span>&gt;
-                    &lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"checkbox"</span> id=<span class="string">"checkbox"</span>&gt;Check me <span class="keyword">out</span>
-                &lt;/<span class="keyword">label</span>&gt;
-            &lt;button <span class="keyword">type</span>=<span class="string">"submit"</span> <span class="keyword">class</span>=<span class="string">"btn"</span>&gt;Submit&lt;/button&gt;
-     &lt;/fieldset&gt;
-&lt;/<span class="keyword">form</span>&gt;
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">2015-12-31</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">《Bootstrap用户手册》学习笔记(一)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第1章_Bootstrap提供的网站框架">第1章 Bootstrap提供的网站框架</h2><ol>
-<li><p><code>Bootstrap</code>中有几种默认样式需要注意，它们专门针对排版和链接。</p>
-<ul>
-<li>从<code>body</code>中去掉了<code>margin</code>,这样内容就会紧贴浏览器窗口边缘。</li>
-<li>为<code>body</code>应用了<code>background-color:white;</code>。</li>
-<li><code>Bootstrap</code>以<code>@baseFontFamily</code>、<code>@baseFontSize</code>、<code>@baseLineHeight</code>属性作为排版的基准，确保整个网站的标题及其他内容的行高一致。</li>
-<li><p><code>Bootstrap</code>通过<code>@linkColor</code>设置全局链接颜色，只在<code>:hover</code>状态下给链接添加下划线。</p>
-<p>要改变默认颜色，可以直接修改相应<code>.less</code>文件中的全局变量值。要么修改<code>scaffolding.less</code>文件，要么修改你自已的样式表。</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
   
-    <a href="/page/2/" class="alignright next">Next</a>
+    <a href="/page/2/" class="alignright next">Siguiente</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -536,7 +532,7 @@ $(<span class="string">'#example'</span>).<span class="function"><span class="ti
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -551,7 +547,7 @@ $(<span class="string">'#example'</span>).<span class="function"><span class="ti
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

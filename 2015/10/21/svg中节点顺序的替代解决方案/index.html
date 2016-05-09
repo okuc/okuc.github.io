@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -81,27 +81,27 @@ var _hmt = _hmt || [];
       
         <p>如果你的前端页面图形是使用svg画的，那么有一个问题很有可能遇到的，就是节点间先后顺序的问题。由于svg元素没有z-index属性，画的顺序决定了显示的顺序，所以当你拖拽一个节点时，很容易会发生，该节点与其他节点重合时会跑到其他节点下面的尴尬。</p>
 <p>###raphaeljs下解决方案<br>如果你使用的是<code>raphaeljs</code>，那么恭喜你，这都不是事，<code>raphaeljs</code>中提供了如下方法，直接操作就可以了！</p>
-<pre><code>element.<span class="function"><span class="title">toBack</span><span class="params">()</span></span>
-element.<span class="function"><span class="title">toFront</span><span class="params">()</span></span>
+<pre><code>element.toBack()
+element.toFront()
 </code></pre><p>当然，如果你没有使用svg，那么悄悄的把<code>raphaeljs</code>用起来也不错哦。<br> <a id="more"></a></p>
 <p>###原生svg解决方案<br>由于svg是严格按照添加的先后顺序来划分层的，所以，要先控制某元素的顺序，那么把该节点重新进行添加，不失为一种办法。当点击或拖拽某个svg元素时，此时可以获取到该元素，然后将此元素重新添加就可以了。代码如下：</p>
-<pre><code>element<span class="class">.parentNode</span><span class="class">.appendChild</span>(element)
+<pre><code>element.parentNode.appendChild(element)
 </code></pre><p>可能这时有个问题，再将此元素重新添加一遍，需不需要删除原来的元素呢？经我验证，无须删除，会自动只保留一个。至于其内部是自动删除掉原来的又重新添加了一个还是直接把原来的元素重新调整到最后，嘿嘿，我也不知道。</p>
 <p>###d3js解决方案<br><code>d3js</code>并没有像<code>raphaeljs</code>那样提供了友好的方法。所以<code>d3js</code>下解决方案基本和原生svg一样。这里之所以把<code>d3js</code>单列，是因为在使用时，经常会配合文字一起使用。这时候，具体思路如下：</p>
 <ol>
-<li>在画图形时，添加一额外元素<code>text</code>，用来记录访图形对应的文字。<pre><code>.attr(<span class="string">"text"</span>,<span class="function"><span class="keyword">function</span><span class="params">(d)</span></span>{
-            <span class="keyword">return</span> d.name;
+<li>在画图形时，添加一额外元素<code>text</code>，用来记录访图形对应的文字。<pre><code>.attr(&quot;text&quot;,function(d){
+            return d.name;
         })
 </code></pre></li>
-<li>在画文字元素时，设置该svg元素的id。<pre><code>.attr(<span class="string">"id"</span>,<span class="function"><span class="keyword">function</span><span class="params">(d)</span></span>{
-    <span class="keyword">return</span> d.name;
+<li>在画文字元素时，设置该svg元素的id。<pre><code>.attr(&quot;id&quot;,function(d){
+    return d.name;
 })
 </code></pre></li>
 <li><p>捕获拖拽事件，然后作如下处理：</p>
-<pre><code><span class="keyword">this</span>.parentNode.appendChild(<span class="keyword">this</span>);
-var <span class="built_in">text</span> = document.getElementById(<span class="keyword">this</span>.getAttribute(<span class="string">"text"</span>));
+<pre><code>this.parentNode.appendChild(this);
+var text = document.getElementById(this.getAttribute(&quot;text&quot;));
 
-<span class="built_in">text</span>.parentNode.appendChild(<span class="built_in">text</span>);
+text.parentNode.appendChild(text);
 </code></pre></li>
 </ol>
 <p>ok，成功, 结束！</p>
@@ -129,10 +129,10 @@ var <span class="built_in">text</span> = document.getElementById(<span class="ke
 
 <nav id="pagination" >
     
-    <a href="/2015/11/21/Emmet常用缩写简要笔记/" class="alignleft prev" >Prev</a>
+    <a href="/2015/11/21/Emmet常用缩写简要笔记/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/" class="alignright next" >Next</a>
+    <a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -162,7 +162,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -177,7 +177,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

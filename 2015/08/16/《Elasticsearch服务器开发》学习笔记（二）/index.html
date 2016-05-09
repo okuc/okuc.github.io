@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -79,7 +79,7 @@ var _hmt = _hmt || [];
     </header>
     <div class="entry">
       
-        <h2 id="第2章_映射配置(一)">第2章 映射配置(一)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
+        <h2 id="第2章-映射配置-一"><a href="#第2章-映射配置-一" class="headerlink" title="第2章 映射配置(一)"></a>第2章 映射配置(一)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
 <ol>
 <li>Elasticsearch是一个无模式的搜索引警,可以即时算出数据结构,但是自已控制并定义结构是更好的办法。</li>
 <li>Elasticsearch是由一个或多个分片组成，每个分片包含了文档集的一部分。而且这些分片也有副本。在创建索引时，可以规定分片及副本的数量，也可以使用全局配置文件或软件内部的默认值。5个分片，1个副本，就意味着在集群中有10个lucene索引。<strong>副本可以随时调整，但是分片，则不能调整。创建好索引后更改分片的唯一图径是创建另外一个索引并重新索引数据。</strong></li>
@@ -89,10 +89,10 @@ var _hmt = _hmt || [];
 <li>映射类似于关系数据库的数据结构。在定义映射时，Elasticsearch可以通过定义的JSON来猜测文档结构。在JSON中，字符串用引号括起来，布尔值用特定的词语定义，数值则是数字。但是，有时ES也会忽略数字类型，全按字符串来处理。可以使用如下命令来强制它进行文本检测。</li>
 </ol>
 <a id="more"></a>
-<pre><code>    curl -XPUT http:<span class="comment">//localhost:9200/blog/ -d '{</span>
-        <span class="string">"mappings"</span>:{
-            <span class="string">"article"</span>:{
-                “numberic_detection”:<span class="constant">true</span>
+<pre><code>    curl -XPUT http://localhost:9200/blog/ -d &apos;{
+        &quot;mappings&quot;:{
+            &quot;article&quot;:{
+                “numberic_detection”:true
                 }
           }
      }
@@ -100,46 +100,46 @@ var _hmt = _hmt || [];
 但是，此时仍然不能猜出布尔型。在这种情况下，如果无法改变数据格式，只能在映射中定义字段。
 还有日期类型，ES设法识别被提供的时间戳或与日期格式匹配的字符串，还可以使用dynamic_date_formats属性定义可被识别的日期格式列表，该属性允许指定一个数组，如下：
 
-    curl -XPUT http:<span class="comment">//localhost:9200/blog/ -d '{</span>
-        <span class="string">"mappings"</span>:{
-            <span class="string">"article"</span>:{
-                “dynamic_date_formate”:[<span class="string">"yyyy-MM-dd hh:mm"</span>]
+    curl -XPUT http://localhost:9200/blog/ -d &apos;{
+        &quot;mappings&quot;:{
+            &quot;article&quot;:{
+                “dynamic_date_formate”:[&quot;yyyy-MM-dd hh:mm&quot;]
                 }
           }
      }
 
-上面这段定义了一个叫<span class="string">`blog`</span>的索引，它包括一个名为<span class="string">`article`</span>的类型，它是日期型的，只识别固定的格式。ES使用<span class="string">`joda-time`</span>库定义日期格式
+上面这段定义了一个叫`blog`的索引，它包括一个名为`article`的类型，它是日期型的，只识别固定的格式。ES使用`joda-time`库定义日期格式
 
 为了避免不必要的错误，最好关闭自动识别类型。如同一类型，一个是整型，一个是浮点数，如果先接触到整型，则可能猜成整型，后面的就会丢失小数部分。关闭命令如下：
 
-    curl -XPUT http:<span class="comment">//localhost:9200/blog/ -d '{</span>
-        <span class="string">"mappings"</span>:{
-            <span class="string">"article"</span>:{
-                “dynamic”:“<span class="constant">false</span>”，
+    curl -XPUT http://localhost:9200/blog/ -d &apos;{
+        &quot;mappings&quot;:{
+            &quot;article&quot;:{
+                “dynamic”:“false”，
                 “properties”：{
-                    “id”：{“<span class="keyword">type</span>”：“<span class="typename">string</span>”}，
-                    “content”：{“<span class="keyword">type</span>”：“<span class="typename">string</span>”}，
-                    “author”：{“<span class="keyword">type</span>”：“<span class="typename">string</span>”}
+                    “id”：{“type”：“string”}，
+                    “content”：{“type”：“string”}，
+                    “author”：{“type”：“string”}
                     }
                 }
           }
-     }<span class="string">'
+     }&apos;
 
-properties即为定义的字段，**如果传入数据时，还传入了其它字段，则ES会自动忽略。**</span>
+properties即为定义的字段，**如果传入数据时，还传入了其它字段，则ES会自动忽略。**
 </code></pre><ol>
 <li><p>在ES中，映射可以定义在文件中，以JSON对象的方式传送。新建一A.json文件，内容如下：</p>
-<pre><code><span class="collection">{
-   <span class="string">"mappings"</span>:<span class="collection">{
-       <span class="string">"post"</span>:<span class="collection">{
-           “properties”：<span class="collection">{
-               “id”：<span class="collection">{“type”：“long”，“store”：“yes”，“precision_step”：“<span class="number">0</span>”}</span>，
-               “name”：<span class="collection">{“type”：“string”，“store”：“yes”，“index”：“analyzed”}</span>，
-               “published”：<span class="collection">{“type”：“date”，“store”：“yes”，“precision_step”：“<span class="number">0</span>”}</span>，
-               “contents”：<span class="collection">{“type”：“long”，“store”：“no”，“index”：“analyzed”}</span>
-               }</span>
-           }</span>
-     }</span>
-}</span>
+<pre><code>{
+   &quot;mappings&quot;:{
+       &quot;post&quot;:{
+           “properties”：{
+               “id”：{“type”：“long”，“store”：“yes”，“precision_step”：“0”}，
+               “name”：{“type”：“string”，“store”：“yes”，“index”：“analyzed”}，
+               “published”：{“type”：“date”，“store”：“yes”，“precision_step”：“0”}，
+               “contents”：{“type”：“long”，“store”：“no”，“index”：“analyzed”}
+               }
+           }
+     }
+}
 </code></pre><p> 建立好文件后，就可以执行了：<code>curl -XPOST &#39;http://localhost:9200/posts&#39; -d @A.json</code></p>
 </li>
 <li><p>每个字段类型可以指定为ES提供的一个特定核心类型型。ES有以下特定核心类型</p>
@@ -204,10 +204,10 @@ properties即为定义的字段，**如果传入数据时，还传入了其它�
 </ul>
 </li>
 <li><p>多字段：有时候希望两个字段中有相同的字段值，如一个用来搜索，一个用于排序或一个经语言分析器分析、一个只基于空白字符分析。ES允许加入多字段对象来实现。下面是一个例子：</p>
-<pre><code><span class="string">"name"</span>:{
-    <span class="string">"type"</span>:<span class="string">"string"</span>,
-        <span class="string">"fields"</span>：{
-          <span class="string">"facet"</span>:{<span class="string">"type"</span>:<span class="string">"string"</span>,<span class="string">"index"</span>:<span class="string">"not_analyzed"</span>}
+<pre><code>&quot;name&quot;:{
+    &quot;type&quot;:&quot;string&quot;,
+        &quot;fields&quot;：{
+          &quot;facet&quot;:{&quot;type&quot;:&quot;string&quot;,&quot;index&quot;:&quot;not_analyzed&quot;}
         }
   }
 </code></pre><p>上面的代码创建了两个字段一个是”name”,一个是”name.facet”。在索引中不必指定两个字段，只指定一个name就够了。ES会自动将该字段的数值复制到多字段定义的所有字段中。</p>
@@ -232,100 +232,100 @@ properties即为定义的字段，**如果传入数据时，还传入了其它�
 </ul>
 </li>
 <li><p>自定义分析器。ES允话自定义分析器，无需编写java代码。自定义分析器需要在配置文件中新增setting节点，示例代码如下：</p>
-<pre><code><span class="string">"settings"</span>:{
-    <span class="string">"index"</span>:{
-        <span class="string">"analysis"</span>:{
-          <span class="string">"analyzer"</span>:{
-            <span class="string">"en"</span>:{
-                <span class="string">"tokenizer"</span>:“standard”，
-                <span class="string">"filter"</span>：[
-                  <span class="string">"asciifolding"</span>,
-                  <span class="string">"lowercase"</span>,
-                  <span class="string">"ourEnglishFilter"</span>
+<pre><code>&quot;settings&quot;:{
+    &quot;index&quot;:{
+        &quot;analysis&quot;:{
+          &quot;analyzer&quot;:{
+            &quot;en&quot;:{
+                &quot;tokenizer&quot;:“standard”，
+                &quot;filter&quot;：[
+                  &quot;asciifolding&quot;,
+                  &quot;lowercase&quot;,
+                  &quot;ourEnglishFilter&quot;
                   ]
                 }
             },
-            <span class="string">"filter"</span>：{
-              <span class="string">"ourEnglishFilter"</span>:{
-                <span class="string">"type"</span>:<span class="string">"kstem"</span>
+            &quot;filter&quot;：{
+              &quot;ourEnglishFilter&quot;:{
+                &quot;type&quot;:&quot;kstem&quot;
               }
           }
       }
  }
 </code></pre><p>上例中指定一个新的名为<code>en</code>的分析器。每个分析器由一个分词器和多个过滤器构成。默认过滤器和分词器完整列表参见官方文档。我们的<code>en</code>分析器包括standard分词器和三个过滤器：默认情况下可用asciifolding、lowercase，以及一个自定义的ourEnglishFilter。要想自定义过滤器，需要提供它的名称、类型以及该过滤器类型所需要的任意数量的附加参数。所以最终版本如下：</p>
-<pre><code> <span class="collection">{
- <span class="string">"settings"</span>:<span class="collection">{
-     <span class="string">"index"</span>:<span class="collection">{
-         <span class="string">"analysis"</span>:<span class="collection">{
-           <span class="string">"analyzer"</span>:<span class="collection">{
-             <span class="string">"en"</span>:<span class="collection">{
-                 <span class="string">"tokenizer"</span>:“standard”，
-                 <span class="string">"filter"</span>：<span class="collection">[
-                   <span class="string">"asciifolding"</span>,
-                   <span class="string">"lowercase"</span>,
-                   <span class="string">"ourEnglishFilter"</span>
-                   ]</span>
-                 }</span>
-             }</span>,
-             <span class="string">"filter"</span>：<span class="collection">{
-               <span class="string">"ourEnglishFilter"</span>:<span class="collection">{
-                 <span class="string">"type"</span>:<span class="string">"kstem"</span>
-               }</span>
-           }</span>
-       }</span>
-  }</span>
-}</span>,
-<span class="string">"mappings"</span>：<span class="collection">{
-  <span class="string">"post"</span>:<span class="collection">{
-    <span class="string">"properties"</span>:<span class="collection">{
-      <span class="string">"id"</span>:<span class="collection">{<span class="string">"type"</span>:<span class="string">"long"</span>,<span class="string">"store"</span>:<span class="string">"yes"</span>,<span class="string">"precision_step"</span>:<span class="string">"0"</span>}</span>,
-      <span class="string">"name"</span>:<span class="collection">{<span class="string">"type"</span>:<span class="string">"string"</span>,<span class="string">"store"</span>:<span class="string">"yes"</span>,<span class="string">"index"</span>:<span class="string">"analyzed"</span>,<span class="string">"analyzer"</span>:<span class="string">"en"</span>}</span>
-    }</span>
-  }</span>
-}</span></span>
+<pre><code> {
+ &quot;settings&quot;:{
+     &quot;index&quot;:{
+         &quot;analysis&quot;:{
+           &quot;analyzer&quot;:{
+             &quot;en&quot;:{
+                 &quot;tokenizer&quot;:“standard”，
+                 &quot;filter&quot;：[
+                   &quot;asciifolding&quot;,
+                   &quot;lowercase&quot;,
+                   &quot;ourEnglishFilter&quot;
+                   ]
+                 }
+             },
+             &quot;filter&quot;：{
+               &quot;ourEnglishFilter&quot;:{
+                 &quot;type&quot;:&quot;kstem&quot;
+               }
+           }
+       }
+  }
+},
+&quot;mappings&quot;：{
+  &quot;post&quot;:{
+    &quot;properties&quot;:{
+      &quot;id&quot;:{&quot;type&quot;:&quot;long&quot;,&quot;store&quot;:&quot;yes&quot;,&quot;precision_step&quot;:&quot;0&quot;},
+      &quot;name&quot;:{&quot;type&quot;:&quot;string&quot;,&quot;store&quot;:&quot;yes&quot;,&quot;index&quot;:&quot;analyzed&quot;,&quot;analyzer&quot;:&quot;en&quot;}
+    }
+  }
+}
 </code></pre></li>
 <li><p>要求ES展示为Post类型和它的name字段定义的分析器对指定短语的分析内容：<code>curl -XGET &#39;localhost:9200/posts/_analyze?pretty&amp;field=post.name&#39; -d &#39;robots cars&#39;</code></p>
 </li>
 <li><p>分析器字段：可以用分析器字段(_analyzer)来指定一个字段，该字段的值将作为字段所属文档的分析器名称。应该定义一个与下列language字段中提供的值一样的分析器，否则会索引失败。示例如下：</p>
 <pre><code>{
-  "<span class="attribute">mappings</span>":<span class="value">{
-    "<span class="attribute">post</span>":<span class="value">{
-      "<span class="attribute">_analyzer</span>":<span class="value">{
-          "<span class="attribute">path</span>":<span class="value">“language”
-          </span>}，
-          <span class="string">"properties"</span>：{
-            "<span class="attribute">id</span>":<span class="value">{"<span class="attribute">type</span>":<span class="value"><span class="string">"long"</span></span>,"<span class="attribute">store</span>":<span class="value"><span class="string">"yes"</span></span>,"<span class="attribute">precision_step</span>":<span class="value"><span class="string">"0"</span></span>}</span>,
-            "<span class="attribute">name</span>":<span class="value">{"<span class="attribute">type</span>":<span class="value"><span class="string">"string"</span></span>,"<span class="attribute">store</span>":<span class="value"><span class="string">"yes"</span></span>,"<span class="attribute">index</span>":<span class="value"><span class="string">"analyzed"</span></span>}</span>,
-            "<span class="attribute">language</span>":<span class="value">{"<span class="attribute">type</span>":<span class="value"><span class="string">"string"</span></span>,"<span class="attribute">store</span>":<span class="value"><span class="string">"yes"</span></span>,"<span class="attribute">index</span>":<span class="value"><span class="string">"not_analyzed"</span></span>}
-             </span>}
-          </span>}
-      </span>}
-</span>}
+  &quot;mappings&quot;:{
+    &quot;post&quot;:{
+      &quot;_analyzer&quot;:{
+          &quot;path&quot;:“language”
+          }，
+          &quot;properties&quot;：{
+            &quot;id&quot;:{&quot;type&quot;:&quot;long&quot;,&quot;store&quot;:&quot;yes&quot;,&quot;precision_step&quot;:&quot;0&quot;},
+            &quot;name&quot;:{&quot;type&quot;:&quot;string&quot;,&quot;store&quot;:&quot;yes&quot;,&quot;index&quot;:&quot;analyzed&quot;},
+            &quot;language&quot;:{&quot;type&quot;:&quot;string&quot;,&quot;store&quot;:&quot;yes&quot;,&quot;index&quot;:&quot;not_analyzed&quot;}
+             }
+          }
+      }
+}
 </code></pre></li>
 <li><p>在没有定义分析器的情况下，应指定在默认情况下使用的分析器。这与在眏射文件中的setting部分配置自定义分析器的方式相同，但应使用default关键字来命令。因此，为了把前面的自定义分析器作为默认的分析器，可以将en分析器修改为下面这样：</p>
-<pre><code><span class="collection">{
-<span class="string">"settings"</span>:<span class="collection">{
-    <span class="string">"index"</span>:<span class="collection">{
-        <span class="string">"analysis"</span>:<span class="collection">{
-          <span class="string">"analyzer"</span>:<span class="collection">{
-            <span class="string">"default"</span>:<span class="collection">{
-                <span class="string">"tokenizer"</span>:“standard”，
-                <span class="string">"filter"</span>：<span class="collection">[
-                  <span class="string">"asciifolding"</span>,
-                  <span class="string">"lowercase"</span>,
-                  <span class="string">"ourEnglishFilter"</span>
-                  ]</span>
-                }</span>
-            }</span>,
-            <span class="string">"filter"</span>：<span class="collection">{
-              <span class="string">"ourEnglishFilter"</span>:<span class="collection">{
-                <span class="string">"type"</span>:<span class="string">"kstem"</span>
-               }</span>
-            }</span>
-        }</span>
-      }</span>
-   }</span>
-}</span>
+<pre><code>{
+&quot;settings&quot;:{
+    &quot;index&quot;:{
+        &quot;analysis&quot;:{
+          &quot;analyzer&quot;:{
+            &quot;default&quot;:{
+                &quot;tokenizer&quot;:“standard”，
+                &quot;filter&quot;：[
+                  &quot;asciifolding&quot;,
+                  &quot;lowercase&quot;,
+                  &quot;ourEnglishFilter&quot;
+                  ]
+                }
+            },
+            &quot;filter&quot;：{
+              &quot;ourEnglishFilter&quot;:{
+                &quot;type&quot;:&quot;kstem&quot;
+               }
+            }
+        }
+      }
+   }
+}
 </code></pre></li>
 </ol>
 
@@ -352,10 +352,10 @@ properties即为定义的字段，**如果传入数据时，还传入了其它�
 
 <nav id="pagination" >
     
-    <a href="/2015/08/21/在批处理-bat-中设置java程序的内存参数/" class="alignleft prev" >Prev</a>
+    <a href="/2015/08/21/在批处理-bat-中设置java程序的内存参数/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/08/10/Linux折腾记(1)-CentOS7下安装mysql数据库/" class="alignright next" >Next</a>
+    <a href="/2015/08/10/Linux折腾记(1)-CentOS7下安装mysql数据库/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -385,7 +385,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -400,7 +400,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

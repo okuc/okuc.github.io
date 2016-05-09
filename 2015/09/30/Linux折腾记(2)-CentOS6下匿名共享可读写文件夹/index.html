@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -81,57 +81,57 @@ var _hmt = _hmt || [];
       
         <p>想把windows上的一些资料定时备份到linux，首先想到的就是利用共享文件夹的方式，折腾了一番，最终还是搞成功了。过程如下：</p>
 <ol>
-<li>首先安装<code>samba</code>及<code>samba-client</code>,中间不管提问什么，一路<code>y</code>即可。<pre><code>yum <span class="operator"><span class="keyword">install</span> samba samba-<span class="keyword">client</span></span>
+<li>首先安装<code>samba</code>及<code>samba-client</code>,中间不管提问什么，一路<code>y</code>即可。<pre><code>yum install samba samba-client
 </code></pre></li>
-<li>在<code>home</code>下创建文件夹<code>test</code>。<pre><code><span class="keyword">mkdir</span> /home/<span class="keyword">test</span>
+<li>在<code>home</code>下创建文件夹<code>test</code>。<pre><code>mkdir /home/test
 </code></pre></li>
 <li><p>将<code>/etc/samba/smb.conf</code>文件中的内容替换成。</p>
 <pre><code>[global]
-<span class="constant">security</span>=share
+security=share
 dos charset=cp936
 unix charset=gb2312
 
 [mygitback]
-<span class="constant">comment</span> = share
-<span class="constant">path</span> = /home/test
-<span class="constant">browseable</span> = yes
+comment = share
+path = /home/test
+browseable = yes
 guest ok = yes
-<span class="constant">writable</span> = yes
+writable = yes
 </code></pre><a id="more"></a>
 </li>
 <li><p>测试配置是否正确<code>testparm</code>。</p>
 <pre><code>[root@htzh199 ~]# testparm
-<span class="operator"><span class="keyword">Load</span> smb config files <span class="keyword">from</span> /etc/samba/smb.conf
-rlimit_max: increasing rlimit_max (<span class="number">1024</span>) <span class="keyword">to</span> <span class="keyword">minimum</span> Windows <span class="keyword">limit</span> (<span class="number">16384</span>)
-Processing <span class="keyword">section</span> <span class="string">"[mygitback]"</span>
-<span class="keyword">WARNING</span>: The <span class="keyword">security</span>=<span class="keyword">share</span> <span class="keyword">option</span> <span class="keyword">is</span> deprecated
-Loaded services <span class="keyword">file</span> OK.
-<span class="keyword">Server</span> <span class="keyword">role</span>: ROLE_STANDALONE
-Press enter <span class="keyword">to</span> see a dump <span class="keyword">of</span> your service definitions
+Load smb config files from /etc/samba/smb.conf
+rlimit_max: increasing rlimit_max (1024) to minimum Windows limit (16384)
+Processing section &quot;[mygitback]&quot;
+WARNING: The security=share option is deprecated
+Loaded services file OK.
+Server role: ROLE_STANDALONE
+Press enter to see a dump of your service definitions
 
-[<span class="keyword">global</span>]
-    dos <span class="keyword">charset</span> = cp936
-    unix <span class="keyword">charset</span> = gb2312
-    <span class="keyword">security</span> = <span class="keyword">SHARE</span>
+[global]
+    dos charset = cp936
+    unix charset = gb2312
+    security = SHARE
     idmap config * : backend = tdb
 
 [mygitback]
-    <span class="keyword">comment</span> = <span class="keyword">share</span>
-    <span class="keyword">path</span> = /home/gitback
-    <span class="keyword">read</span> <span class="keyword">only</span> = <span class="keyword">No</span>
-    guest ok = Yes</span>
+    comment = share
+    path = /home/gitback
+    read only = No
+    guest ok = Yes
 </code></pre></li>
 <li>启动服务。<code>service smb restart</code></li>
 <li>此时共享可以访问了，在window下直接<code>\\ip</code>即可。<strong>不要用win10，用win10仍然没有办法访问。</strong>但是使用其它系统，只有读权限，没有写权限，添加写权限：<pre><code>vi /etc/selinux/config
-<span class="preprocessor"># This file controls the state of SELinux on the system.</span>
-<span class="preprocessor"># SELINUX= can take one of these three values:</span>
-<span class="preprocessor">#     enforcing - SELinux security policy is enforced.</span>
-<span class="preprocessor">#     permissive - SELinux prints warnings instead of enforcing.</span>
-<span class="preprocessor">#     disabled - No SELinux policy is loaded.</span>
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
 SELINUX=disabled  #将这个改为disable
-<span class="preprocessor"># SELINUXTYPE= can take one of these two values:</span>
-<span class="preprocessor">#     targeted - Targeted processes are protected,</span>
-<span class="preprocessor">#     mls - Multi Level Security protection.</span>
+# SELINUXTYPE= can take one of these two values:
+#     targeted - Targeted processes are protected,
+#     mls - Multi Level Security protection.
 SELINUXTYPE=targeted
 </code></pre></li>
 <li>再次用windows访问，现在能够正常进行读写了。</li>
@@ -162,10 +162,10 @@ SELINUXTYPE=targeted
 
 <nav id="pagination" >
     
-    <a href="/2015/10/10/Linux折腾记(3)-CentOS6下安装Oracle JDK8/" class="alignleft prev" >Prev</a>
+    <a href="/2015/10/10/Linux折腾记(3)-CentOS6下安装Oracle JDK8/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/09/28/《Elasticsearch服务器开发》学习笔记（五）/" class="alignright next" >Next</a>
+    <a href="/2015/09/28/《Elasticsearch服务器开发》学习笔记（五）/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -195,7 +195,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -210,7 +210,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

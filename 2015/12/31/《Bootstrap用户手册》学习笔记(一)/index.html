@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -79,7 +79,7 @@ var _hmt = _hmt || [];
     </header>
     <div class="entry">
       
-        <h2 id="第1章_Bootstrap提供的网站框架">第1章 Bootstrap提供的网站框架</h2><ol>
+        <h2 id="第1章-Bootstrap提供的网站框架"><a href="#第1章-Bootstrap提供的网站框架" class="headerlink" title="第1章 Bootstrap提供的网站框架"></a>第1章 Bootstrap提供的网站框架</h2><ol>
 <li><p><code>Bootstrap</code>中有几种默认样式需要注意，它们专门针对排版和链接。</p>
 <ul>
 <li>从<code>body</code>中去掉了<code>margin</code>,这样内容就会紧贴浏览器窗口边缘。</li>
@@ -93,61 +93,61 @@ var _hmt = _hmt || [];
 <li><p><code>Bootstrap</code>默认的网格布局包含<code>12列</code>，<code>940像素宽</code>，不支持响应式布局。加载响应式CSS文件后，网格布局会根据视口(viewport)宽度在<code>724像素</code>之间伸缩。视口宽度<code>小于767像素</code>时，说明是平板电脑或更小的设备，布局中的列会垂直堆叠起来。<code>默认宽度下，每个列宽60像素，且向左移20像素</code>。</p>
 </li>
 <li><p><code>Bootstrap</code>中，表示行的<code>div</code>样式为<code>.row</code>,作为列的<code>div</code>添加横跨多少列的<code>.span*</code>类。因为共<code>12</code>列，所以<code>.span*</code>中的<code>*</code>加起来必须等于<code>12</code>。这样，可以设计出：<code>3-6-3</code>，<code>4-8</code>，<code>3-5-4</code>，<code>2-8-2</code>等布局。下面是一个例子：</p>
-<pre><code>&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"row"</span>&gt;
-  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"span8"</span>&gt;...&lt;/<span class="keyword">div</span>&gt;
-  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"span4"</span>&gt;...&lt;/<span class="keyword">div</span>&gt;
-&lt;/<span class="keyword">div</span>&gt;
+<pre><code>&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;span8&quot;&gt;...&lt;/div&gt;
+  &lt;div class=&quot;span4&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;
 </code></pre></li>
 <li><p>使用<code>.offset*</code>可以向右平移列，<code>*</code>用于指定平移的列数。如，向右平移<code>2</code>列：</p>
-<pre><code>&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"row"</span>&gt;
-  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"span2"</span>&gt;...&lt;/<span class="keyword">div</span>&gt;
-  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"span7 offset2"</span>&gt;...&lt;/<span class="keyword">div</span>&gt;
-&lt;/<span class="keyword">div</span>&gt;
+<pre><code>&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;span2&quot;&gt;...&lt;/div&gt;
+  &lt;div class=&quot;span7 offset2&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;
 </code></pre></li>
 <li><p>嵌套列，只要在相应的<code>.span*</code>中再增加一个<code>.row</code>，然后在其中包含与父容器列数相等的<code>.span*</code>即可。</p>
-<pre><code>&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"row"</span>&gt;
-  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"span9"</span>&gt;
-    Level <span class="number">1</span> <span class="keyword">of</span> column
-    &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"row"</span>&gt;
-      &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"span6"</span>&gt;Level <span class="number">2</span>&lt;/<span class="keyword">div</span>&gt;
-      &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"span3"</span>&gt;Level <span class="number">2</span>&lt;/<span class="keyword">div</span>&gt;
-    &lt;/<span class="keyword">div</span>&gt;
-  &lt;/<span class="keyword">div</span>&gt;
-&lt;/<span class="keyword">div</span>&gt;
+<pre><code>&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;span9&quot;&gt;
+    Level 1 of column
+    &lt;div class=&quot;row&quot;&gt;
+      &lt;div class=&quot;span6&quot;&gt;Level 2&lt;/div&gt;
+      &lt;div class=&quot;span3&quot;&gt;Level 2&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
 </code></pre></li>
 <li><p>流式网格系统的列宽定义使用百分比，而不是像素。把行的样式<code>.row</code>改为<code>.row-fluid</code>，这一行就会成为流式的。下面是两个例子：</p>
-<pre><code>&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"row-fluid"</span>&gt;
-  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"span4"</span>&gt;...&lt;/<span class="keyword">div</span>&gt;
-  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"span8"</span>&gt;...&lt;/<span class="keyword">div</span>&gt;
-&lt;/<span class="keyword">div</span>&gt;
-&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"row-fluid"</span>&gt;
-  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"span4"</span>&gt;...&lt;/<span class="keyword">div</span>&gt;
-  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"span4 offset2"</span>&gt;...&lt;/<span class="keyword">div</span>&gt;
-&lt;/<span class="keyword">div</span>&gt;
+<pre><code>&lt;div class=&quot;row-fluid&quot;&gt;
+  &lt;div class=&quot;span4&quot;&gt;...&lt;/div&gt;
+  &lt;div class=&quot;span8&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;row-fluid&quot;&gt;
+  &lt;div class=&quot;span4&quot;&gt;...&lt;/div&gt;
+  &lt;div class=&quot;span4 offset2&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;
 </code></pre></li>
 </ol>
-<pre><code>流式网格中的嵌套有点不一样，原因是在使用百分比的情况下，每个`.row`都会把列数重置为`<span class="number">12</span>`.举个例子，要想在一个`.span8`中嵌套两个等宽的列，不能使用两个`.span4`,而应该使用两个类为`.span6`的`<span class="keyword">div</span>`。这是为保证内容具有响应性，因为我们希望内容`<span class="number">100</span>%`填满容器：
+<pre><code>流式网格中的嵌套有点不一样，原因是在使用百分比的情况下，每个`.row`都会把列数重置为`12`.举个例子，要想在一个`.span8`中嵌套两个等宽的列，不能使用两个`.span4`,而应该使用两个类为`.span6`的`div`。这是为保证内容具有响应性，因为我们希望内容`100%`填满容器：
 
-    &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"row-fluid"</span>&gt;
-      &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"span8"</span>&gt;
-                    &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"row"</span>&gt;
-                            &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"span6"</span>&gt;...&lt;/<span class="keyword">div</span>&gt;
-                            &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"span6"</span>&gt;...&lt;/<span class="keyword">div</span>&gt;
-                    &lt;/<span class="keyword">div</span>&gt;
-      &lt;/<span class="keyword">div</span>&gt;
-    &lt;/<span class="keyword">div</span>&gt;
+    &lt;div class=&quot;row-fluid&quot;&gt;
+      &lt;div class=&quot;span8&quot;&gt;
+                    &lt;div class=&quot;row&quot;&gt;
+                            &lt;div class=&quot;span6&quot;&gt;...&lt;/div&gt;
+                            &lt;div class=&quot;span6&quot;&gt;...&lt;/div&gt;
+                    &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
 </code></pre><ol>
 <li><p>要在页面中实理固定宽度、居中的布局，只要把内容统统收到<code>&lt;div class=&quot;container&quot;&gt;...&lt;/div&gt;</code>中即可。既想实现流式布局，又想把所有内容都封装到一个容器里，可以使用<code>&lt;div class=&quot;container-fluid&quot;&gt;...&lt;/div&gt;</code>。流式布局适合很多应用、管理界面及其他项目。</p>
 </li>
 <li><p>要让<code>Bootstrap</code>支持响应式布局，必须在<code>&lt;head&gt;</code>标签中添加一个<code>&lt;meta&gt;</code>标签。另外，如果你下载的文件中没有<code>响应式css文件</code>，也要单独下载。例子如下：</p>
-<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
-<span class="tag">&lt;<span class="title">html</span>&gt;</span>
-        <span class="tag">&lt;<span class="title">head</span>&gt;</span>
-              <span class="tag">&lt;<span class="title">title</span>&gt;</span>My amazing Bootstrap site!<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
-              <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">"viewport"</span> <span class="attribute">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span>&gt;</span>
-              <span class="tag">&lt;<span class="title">link</span> <span class="attribute">href</span>=<span class="value">"/css/bootstrap.css"</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span>&gt;</span>
-              <span class="tag">&lt;<span class="title">link</span> <span class="attribute">href</span>=<span class="value">"/css/bootstrap-responsive.css"</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span>&gt;</span>
-        <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+        &lt;head&gt;
+              &lt;title&gt;My amazing Bootstrap site!&lt;/title&gt;
+              &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+              &lt;link href=&quot;/css/bootstrap.css&quot; rel=&quot;stylesheet&quot;&gt;
+              &lt;link href=&quot;/css/bootstrap-responsive.css&quot; rel=&quot;stylesheet&quot;&gt;
+        &lt;/head&gt;
 </code></pre></li>
 </ol>
 <ol>
@@ -162,20 +162,20 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 <li><p>要根据媒体查询添加自定义的 <code>CSS</code> ，可以像下面这样把所有规则写到一个 <code>CSS</code> 文件中，也可以单写一个 <code>CSS</code> 文件：</p>
-<pre><code><span class="comment">/* 大屏幕 */</span>
-<span class="at_rule">@media</span> (<span class="attribute">min-width</span>: <span class="number">1200px</span>) { ... }
-<span class="comment">/* 平板竖屏到横屏到常规屏幕 */</span>
-<span class="at_rule">@media</span> (<span class="attribute">min-width</span>: <span class="number">768px</span>) and (<span class="attribute">max-width</span>: <span class="number">979px</span>) { ... }
-<span class="comment">/* 手机横屏到平板竖屏 */</span>
-<span class="at_rule">@media</span> (<span class="attribute">max-width</span>: <span class="number">767px</span>) { ... }
-<span class="comment">/* 手机横屏及更小屏幕 */</span>
-<span class="at_rule">@media</span> (<span class="attribute">max-width</span>: <span class="number">480px</span>) { ... }
+<pre><code>/* 大屏幕 */
+@media (min-width: 1200px) { ... }
+/* 平板竖屏到横屏到常规屏幕 */
+@media (min-width: 768px) and (max-width: 979px) { ... }
+/* 手机横屏到平板竖屏 */
+@media (max-width: 767px) { ... }
+/* 手机横屏及更小屏幕 */
+@media (max-width: 480px) { ... }
 </code></pre></li>
 </ol>
 <ol>
 <li><p>对于大型网站，应该把不同的媒体查询分别保存在单独的 <code>CSS</code> 文件中。而在 <code>HTML</code>的<code>&lt;link&gt;</code>标签中，可以根据条件加载它们。这样可以保证加载的文件相对小，但在响应式布局中会增加 <code>HTTP</code> 请示。如果你使用 <code>LESS</code> 编译 <code>CSS</code> ，可以把它们都放到一个文件中：</p>
 <p>   <link rel="stylesheet" href="base.css"><br>   <link rel="stylesheet" media="(min-width: 1200px)" href="large.css"><br>   &lt;link rel=”stylesheet” media=”(min-width: 768px) and (max-width: 979px)”</p>
-<pre><code><span class="setting">href=<span class="value"><span class="string">"tablet.css"</span> /&gt;</span></span>
+<pre><code>href=&quot;tablet.css&quot; /&gt;
 </code></pre><p>   <link rel="stylesheet" media="(max-width: 767px)" href="tablet.css"></p>
    <link rel="stylesheet" media="(max-width: 480px)" href="phone.css">
 </li>
@@ -185,22 +185,22 @@ var _hmt = _hmt || [];
 <li><p>响应式开发有两种主要的思路。当前备受推崇的方法是从移动版本做起，最后才是桌面网站。 Bootstrap 的思路刚好相反，你可以用它来搭建一个 “ 差不多各平台都能用 ”的桌面网站。</p>
 </li>
 </ol>
-<h2 id="第2章_Bootstrap预定义的CSS样式(1)">第2章 Bootstrap预定义的CSS样式(1)</h2><ol>
+<h2 id="第2章-Bootstrap预定义的CSS样式-1"><a href="#第2章-Bootstrap预定义的CSS样式-1" class="headerlink" title="第2章 Bootstrap预定义的CSS样式(1)"></a>第2章 Bootstrap预定义的CSS样式(1)</h2><ol>
 <li>对页面排版，BootStrap默认字体为<code>Helvetica Neue</code>,<code>Helvetica</code>,<code>Arial</code>,<code>sans-serif;</code>。这些字段也是主流操作系统默认支持的标准字体。如果字体不存在，那么<code>sans-serif</code>会告诉浏览器使用默认的字体。页面正文的<code>font-size</code>是<code>14象素</code>，<code>line-height</code>是<code>20象素</code>。所有段落的<code>margin-bottom</code>是<code>10像素</code>,也就是<code>line-height</code>的一半。</li>
 <li><p><strong>标题</strong>：<code>Bootstrap</code>为所有6个级别的标题都定义了样式，其中 <code>&lt;h1&gt;</code>是<code>36像素</code>高，<code>&lt;h6&gt;</code>是<code>12像素</code>高。如果想给这些标题添加行内级的子标题 ，可以使用<code>&lt;small&gt;</code>，结果文本会稍小一些，颜色也会浅一些。以<code>&lt;h1&gt;</code>为例，它的子标题的文本是<code>24像素</code>高，不加精，而且是灰色：</p>
-<pre><code><span class="tag">h1</span> <span class="tag">small</span> {
-    <span class="attribute">font-size</span>:<span class="number">24px</span>;
-    <span class="attribute">font-weight</span>:normal;
-    <span class="attribute">line-height</span>:<span class="number">1</span>;
-    <span class="attribute">color</span>:<span class="hexcolor">#999</span>;
+<pre><code>h1 small {
+    font-size:24px;
+    font-weight:normal;
+    line-height:1;
+    color:#999;
     ｝
 </code></pre></li>
 <li><p><strong>正文</strong>:强调段落内的文本，可以加上class=”lead”,这会导致段落内文本稍稍变大、变细，行高也变高。例子如下：</p>
-<pre><code>&lt;p class=<span class="string">"lead"</span>&gt;<span class="keyword">Bacon </span>ipsum dolor sit amet tri-tip pork loin <span class="keyword">ball </span>tip frankfurter
-<span class="keyword">swine </span><span class="keyword">boudin </span>meatloaf shoulder short ribs cow drumstick <span class="keyword">beef </span>jowl.
-<span class="label">Meatball</span> chicken sausage tail, kielbasa <span class="keyword">strip </span>steak turducken venison prosciutto.
-<span class="label">Chuck</span> filet mignon tri-tip ribeye, flank <span class="keyword">brisket </span>leberkas. <span class="keyword">Swine
-</span><span class="label">turducken</span> turkey shank, hamburger <span class="keyword">beef </span>ribs <span class="keyword">bresaola </span>pastrami venison rump.&lt;/p&gt;
+<pre><code>&lt;p class=&quot;lead&quot;&gt;Bacon ipsum dolor sit amet tri-tip pork loin ball tip frankfurter
+swine boudin meatloaf shoulder short ribs cow drumstick beef jowl.
+Meatball chicken sausage tail, kielbasa strip steak turducken venison prosciutto.
+Chuck filet mignon tri-tip ribeye, flank brisket leberkas. Swine
+turducken turkey shank, hamburger beef ribs bresaola pastrami venison rump.&lt;/p&gt;
 </code></pre><p>在正文中也可以使用<code>&lt;small&gt;</code>，这样文本会缩小到原来大小的<code>85%</code>。</p>
 </li>
 <li><p><strong>粗体</strong>:使用<code>&lt;strong&gt;</code>标签，这样会给相应的文本应用<code>font-weight:bold;</code>。</p>
@@ -208,44 +208,44 @@ var _hmt = _hmt || [];
 <li><p><strong>斜体</strong>:使用<code>&lt;em&gt;</code>标签，它一般用来在文本中强调某些内容。</p>
 </li>
 <li><p><strong>强调相关的类</strong>：除了上述的<code>&lt;strong&gt;</code>、<code>&lt;em&gt;</code>，Bootstrap还提供了一些表示强调的类，这些类可以应用组<code>&lt;p&gt;</code>或<code>&lt;span&gt;</code>,它们是一些颜色上的变化。</p>
-<pre><code>&lt;<span class="tag">p</span> class=<span class="string">"muted"</span>&gt;This <span class="attribute">content</span> is muted&lt;/p&gt;
-&lt;<span class="tag">p</span> class=<span class="string">"text-warning"</span>&gt;This <span class="attribute">content</span> carries <span class="tag">a</span> warning class&lt;/p&gt;
-&lt;<span class="tag">p</span> class=<span class="string">"text-error"</span>&gt;This <span class="attribute">content</span> carries an error class&lt;/p&gt;
-&lt;<span class="tag">p</span> class=<span class="string">"text-info"</span>&gt;This <span class="attribute">content</span> carries an info class&lt;/p&gt;
-&lt;<span class="tag">p</span> class=<span class="string">"text-success"</span>&gt;This <span class="attribute">content</span> carries <span class="tag">a</span> success class&lt;/p&gt;
-&lt;p&gt;This <span class="attribute">content</span> has &lt;em&gt;emphasis&lt;/em&gt;, and can be &lt;strong&gt;bold&lt;/strong&gt;&lt;/p&gt;
+<pre><code>&lt;p class=&quot;muted&quot;&gt;This content is muted&lt;/p&gt;
+&lt;p class=&quot;text-warning&quot;&gt;This content carries a warning class&lt;/p&gt;
+&lt;p class=&quot;text-error&quot;&gt;This content carries an error class&lt;/p&gt;
+&lt;p class=&quot;text-info&quot;&gt;This content carries an info class&lt;/p&gt;
+&lt;p class=&quot;text-success&quot;&gt;This content carries a success class&lt;/p&gt;
+&lt;p&gt;This content has &lt;em&gt;emphasis&lt;/em&gt;, and can be &lt;strong&gt;bold&lt;/strong&gt;&lt;/p&gt;
 </code></pre></li>
 </ol>
 <ol>
 <li><p><strong>缩写词</strong>：<code>HTML</code>的<code>&lt;abbr&gt;</code>元素用于标记缩写词或首字母缩小，如<code>WWW</code>、<code>HTTP</code>。标记了缩写词之后，浏览器、拼写检查器、翻译系统或搜索引擎都据以得知文本的性质。<code>Bootstrap</code>会在<code>&lt;abbr&gt;</code>元素下方添加一条浅色的虚线，并在光标悬停时显示完整的文本内容。</p>
-<pre><code><span class="tag">&lt;<span class="title">abbr</span> <span class="attribute">title</span>=<span class="value">"Real Simple Syndication"</span>&gt;</span>RSS<span class="tag">&lt;/<span class="title">abbr</span>&gt;</span>
+<pre><code>&lt;abbr title=&quot;Real Simple Syndication&quot;&gt;RSS&lt;/abbr&gt;
 </code></pre><p>为<abbr>添加.initialism类可以得到稍小一些的提示文本。如：</abbr></p>
-<pre><code>That joke had me <span class="tag">&lt;<span class="title">abbr</span> <span class="attribute">title</span>=<span class="value">"rolling on the floor,laughing out loud"</span> &gt;</span>ROTFLOL<span class="tag">&lt;/<span class="title">abbr</span>&gt;</span>
+<pre><code>That joke had me &lt;abbr title=&quot;rolling on the floor,laughing out loud&quot; &gt;ROTFLOL&lt;/abbr&gt;
 </code></pre></li>
 <li><p><strong>地址</strong>:在页面中使用<code>&lt;address&gt;</code>元素可以让屏幕阅读器和搜索引擎找到地址或电话号码。这个标签也可以标记电子邮件地址。<code>&lt;address&gt;</code>默认是<code>display:block;</code>，因此必要时可以用<code>&lt;br&gt;</code>标签来换行（例如把城市与街道分开）：</p>
-<pre><code><span class="tag">&lt;<span class="title">address</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">strong</span>&gt;</span>O'Reilly Media, Inc.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
-  1005 Gravenstein HWY North<span class="tag">&lt;<span class="title">br</span>&gt;</span>
-  Sebastopol, CA 95472<span class="tag">&lt;<span class="title">br</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">abbr</span> <span class="attribute">title</span>=<span class="value">"Phone"</span>&gt;</span>P:<span class="tag">&lt;/<span class="title">abbr</span>&gt;</span> 
-  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"tel:+17078277000"</span>&gt;</span>(707) 827-7000<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">address</span>&gt;</span>
-<span class="tag">&lt;<span class="title">address</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">strong</span>&gt;</span>Jake Spurlock<span class="tag">&lt;/<span class="title">strong</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"mailto:#"</span>&gt;</span>flast@oreilly.com<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">address</span>&gt;</span>
+<pre><code>&lt;address&gt;
+  &lt;strong&gt;O&apos;Reilly Media, Inc.&lt;/strong&gt;&lt;br&gt;
+  1005 Gravenstein HWY North&lt;br&gt;
+  Sebastopol, CA 95472&lt;br&gt;
+  &lt;abbr title=&quot;Phone&quot;&gt;P:&lt;/abbr&gt; 
+  &lt;a href=&quot;tel:+17078277000&quot;&gt;(707) 827-7000&lt;/a&gt;
+&lt;/address&gt;
+&lt;address&gt;
+  &lt;strong&gt;Jake Spurlock&lt;/strong&gt;&lt;br&gt;
+  &lt;a href=&quot;mailto:#&quot;&gt;flast@oreilly.com&lt;/a&gt;
+&lt;/address&gt;
 </code></pre></li>
 <li><p><strong>引用</strong>:要在页面中标记引用或名人名言的文本块，使用<code>&lt;blockquote&gt;</code>标签。为了保证效果，必要时可以添加<code>&lt;br&gt;</code>换行，用<code>&lt;p&gt;</code>分段。 <code>Bootstrap</code> 默认会缩进引用的文本，并在左侧加一条粗边框。标记引用来源可以用<code>&lt;small&gt;</code>标签，人名可以用<code>&lt;cite&gt;</code>标签：</p>
 <pre><code>&lt;blockquote&gt;
-        &lt;p&gt;That this <span class="keyword">is</span> needed, desperately needed, <span class="keyword">is</span> indicated <span class="keyword">by</span> <span class="keyword">the</span> incredible uptake <span class="keyword">of</span> Bootstrap. I use <span class="keyword">it</span> <span class="keyword">in</span> all <span class="keyword">the</span> server software I'm working <span class="function_start"><span class="keyword">on</span>.</span> And <span class="keyword">it</span> 
-shows <span class="keyword">through</span> <span class="keyword">in</span> <span class="keyword">the</span> templating language I'm developing, so everyone who uses <span class="keyword">it</span> will find <span class="keyword">it</span>'s <span class="string">"just there"</span> <span class="keyword">and</span> works, any <span class="property">time</span> you want <span class="keyword">to</span> do a Bootstrap 
-technique. Nothing <span class="keyword">to</span> do,no libraries <span class="keyword">to</span> include. It's <span class="keyword">as</span> <span class="keyword">if</span> <span class="keyword">it</span> were part <span class="keyword">of</span> <span class="keyword">the</span> hardware. Same approach <span class="keyword">that</span> Apple took <span class="keyword">with</span> <span class="keyword">the</span> Mac OS <span class="keyword">in</span> <span class="number">1984.</span>&lt;/p&gt;
-        &lt;small&gt;Developer <span class="keyword">of</span> RSS, &lt;cite title=<span class="string">"Source Title"</span>&gt;Dave Winer&lt;/cite&gt;
+        &lt;p&gt;That this is needed, desperately needed, is indicated by the incredible uptake of Bootstrap. I use it in all the server software I&apos;m working on. And it 
+shows through in the templating language I&apos;m developing, so everyone who uses it will find it&apos;s &quot;just there&quot; and works, any time you want to do a Bootstrap 
+technique. Nothing to do,no libraries to include. It&apos;s as if it were part of the hardware. Same approach that Apple took with the Mac OS in 1984.&lt;/p&gt;
+        &lt;small&gt;Developer of RSS, &lt;cite title=&quot;Source Title&quot;&gt;Dave Winer&lt;/cite&gt;
     &lt;/small&gt;
 &lt;/blockquote&gt;
 </code></pre></li>
 </ol>
-<pre><code>要想让引用右对齐，可以组<span class="escape">`&lt;</span>blockquote&gt;<span class="escape">`添</span>加<span class="escape">`.</span>pull-right<span class="escape">`类</span>。添加这个类后，不光是文本会右对齐，整个引用块都会浮动到右边。
+<pre><code>要想让引用右对齐，可以组`&lt;blockquote&gt;`添加`.pull-right`类。添加这个类后，不光是文本会右对齐，整个引用块都会浮动到右边。
 </code></pre><ol>
 <li><p><strong>列表</strong>:Bootstrap支持三种列表：有序列表、无序列表和定义列表。</p>
 <ul>
@@ -285,19 +285,19 @@ technique. Nothing <span class="keyword">to</span> do,no libraries <span class="
 
 </li>
 </ol>
-<pre><code>除了基本的<span class="escape">`.</span>table<span class="escape">`类</span>，<span class="escape">`B</span>ootstrap<span class="escape">`还</span>提供了<span class="number">4</span>个不同的样式，分别是：<span class="escape">`.</span>table-striped<span class="escape">`、</span><span class="escape">`.</span>table-bordered<span class="escape">`、</span><span class="escape">`.</span>table-hover<span class="escape">`和</span><span class="escape">`.</span>table-condensed<span class="escape">`。</span>
+<pre><code>除了基本的`.table`类，`Bootstrap`还提供了4个不同的样式，分别是：`.table-striped`、`.table-bordered`、`.table-hover`和`.table-condensed`。
 
-<span class="label">-   `.table-striped`，为中的表格行加上条纹背景。这是通过`:</span>nth-child<span class="escape">`选</span>择符实现的，但是不支持IE7及IE8。
--   <span class="escape">`.</span>table-bordered<span class="escape">`类</span>，可以为所有单元格加上边框，为整个表格加上圆角。
-<span class="label">-   `.table-hover`:</span>光标悬停的行会带有浅灰色背景。
--   <span class="escape">`.</span>table-condensed<span class="escape">`：</span>，会减少一半的内边距（每行高度），以紧缩表格。这种样式适合信息密集的情况。
+-   `.table-striped`，为中的表格行加上条纹背景。这是通过`:nth-child`选择符实现的，但是不支持IE7及IE8。
+-   `.table-bordered`类，可以为所有单元格加上边框，为整个表格加上圆角。
+-   `.table-hover`:光标悬停的行会带有浅灰色背景。
+-   `.table-condensed`：，会减少一半的内边距（每行高度），以紧缩表格。这种样式适合信息密集的情况。
 
 可以添加给表格行的类，用于改变特定的颜色：
 
--   <span class="escape">`.</span>success<span class="escape">`：</span>表示成功或积极的情形，绿色。
--   <span class="escape">`.</span>error<span class="escape">`：</span>表示危险或消极的情形，红色。
--   <span class="escape">`.</span>warning<span class="escape">`：</span>表示警告，黄色。
--   <span class="escape">`.</span>info<span class="escape">`：</span>表示代替默认样式，蓝色。
+-   `.success`：表示成功或积极的情形，绿色。
+-   `.error`：表示危险或消极的情形，红色。
+-   `.warning`：表示警告，黄色。
+-   `.info`：表示代替默认样式，蓝色。
 </code></pre>
       
     </div>
@@ -322,10 +322,10 @@ technique. Nothing <span class="keyword">to</span> do,no libraries <span class="
 
 <nav id="pagination" >
     
-    <a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/" class="alignleft prev" >Prev</a>
+    <a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/12/31/新手学习Express4之四：数据库集成/" class="alignright next" >Next</a>
+    <a href="/2015/12/31/新手学习Express4之四：数据库集成/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -355,7 +355,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -370,7 +370,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

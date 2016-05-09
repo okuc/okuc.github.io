@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -85,43 +85,43 @@ var _hmt = _hmt || [];
 <li>下载node.js。在<a href="http://nodejs.org/download/" target="_blank" rel="external">http://nodejs.org/download/</a>下载最新版的node.exe文件，我下载时是<code>v0.10.33</code>。下载完成后，在F盘新建nodejs文件夹，将node.exe放到该文件夹下。同时将<code>F:\nodejs</code>添加到环境变量的PATH中。<br>2.下载npm。在<a href="http://nodejs.org/dist/npm/" target="_blank" rel="external">http://nodejs.org/dist/npm/</a>下载最新版的npm。我下载时的版本是<code>npm-1.4.9.zip</code>。下载完成后，解压到nodejs文件夹中，形成了如下目录，同时添加环境变量<code>NODE_PATH</code>,其值为：<code>F:\nodejs\node_modules</code>。<a id="more"></a></li>
 <li>测试是否安装成功，在命令行中，分别输入<code>node -v</code>、<code>npm -v</code>，看是否输出两者的版本号，如果输出，则表时输出成功</li>
 <li><p>由于XXX原因，使用时会经常遇到下载包下载不下来的情况，所以最好设置npm国内镜像，命令如下：</p>
-<pre><code>npm config <span class="keyword">set</span> <span class="keyword">registry</span> <span class="keyword">http</span>://<span class="keyword">registry</span>.npmjs.vitecho.com
+<pre><code>npm config set registry http://registry.npmjs.vitecho.com
 </code></pre><p>5.测试一下，新建一目录，在该目录下新建一文件<code>package.json</code>，内容如下：</p>
 <pre><code>{
-    "<span class="attribute">name</span>": <span class="value"><span class="string">"d3-project-template-with-grunt"</span></span>,
-    "<span class="attribute">version</span>": <span class="value"><span class="string">"0.0.1"</span></span>,
-    "<span class="attribute">description</span>": <span class="value"><span class="string">"Ready to go d3 data visualization project template with grunt"</span></span>,
-    "<span class="attribute">keywords</span>": <span class="value">[
-        <span class="string">"data visualization"</span>,
-        <span class="string">"d3"</span>
-    ]</span>,
-    "<span class="attribute">homepage</span>": <span class="value"><span class="string">"&lt;project home page&gt;"</span></span>,
-    "<span class="attribute">author</span>": <span class="value">{
-        "<span class="attribute">name</span>": <span class="value"><span class="string">"&lt;your name&gt;"</span></span>,
-        "<span class="attribute">url</span>": <span class="value"><span class="string">"&lt;your url&gt;"</span>
-    </span>}</span>,
-    "<span class="attribute">repository</span>": <span class="value">{
-        "<span class="attribute">type</span>": <span class="value"><span class="string">"git"</span></span>,
-        "<span class="attribute">url</span>": <span class="value"><span class="string">"&lt;source repo url&gt;"</span>
-    </span>}</span>,
-    "<span class="attribute">dependencies</span>": <span class="value">{
-        "<span class="attribute">d3</span>": <span class="value"><span class="string">"3.x"</span>
-    </span>}</span>,
-    "<span class="attribute">devDependencies</span>": <span class="value">{
-        "<span class="attribute">grunt</span>": <span class="value"><span class="string">"~0.4.1"</span></span>,
-        "<span class="attribute">grunt-contrib</span>": <span class="value"><span class="string">"~0.4.0"</span></span>,
-        "<span class="attribute">grunt-contrib-uglify</span>": <span class="value"><span class="string">"~0.2.2"</span></span>,
-        "<span class="attribute">grunt-contrib-concat</span>": <span class="value"><span class="string">"~0.3.0"</span></span>,
-        "<span class="attribute">grunt-contrib-sass</span>": <span class="value"><span class="string">"~0.4.1"</span></span>,
-        "<span class="attribute">grunt-contrib-jasmine</span>": <span class="value"><span class="string">"~0.5.1"</span></span>,
-        "<span class="attribute">grunt-contrib-jshint</span>": <span class="value"><span class="string">"~0.4.0"</span></span>,
-        "<span class="attribute">grunt-template-jasmine-istanbul</span>": <span class="value"><span class="string">"~0.2.5"</span>
+    &quot;name&quot;: &quot;d3-project-template-with-grunt&quot;,
+    &quot;version&quot;: &quot;0.0.1&quot;,
+    &quot;description&quot;: &quot;Ready to go d3 data visualization project template with grunt&quot;,
+    &quot;keywords&quot;: [
+        &quot;data visualization&quot;,
+        &quot;d3&quot;
+    ],
+    &quot;homepage&quot;: &quot;&lt;project home page&gt;&quot;,
+    &quot;author&quot;: {
+        &quot;name&quot;: &quot;&lt;your name&gt;&quot;,
+        &quot;url&quot;: &quot;&lt;your url&gt;&quot;
+    },
+    &quot;repository&quot;: {
+        &quot;type&quot;: &quot;git&quot;,
+        &quot;url&quot;: &quot;&lt;source repo url&gt;&quot;
+    },
+    &quot;dependencies&quot;: {
+        &quot;d3&quot;: &quot;3.x&quot;
+    },
+    &quot;devDependencies&quot;: {
+        &quot;grunt&quot;: &quot;~0.4.1&quot;,
+        &quot;grunt-contrib&quot;: &quot;~0.4.0&quot;,
+        &quot;grunt-contrib-uglify&quot;: &quot;~0.2.2&quot;,
+        &quot;grunt-contrib-concat&quot;: &quot;~0.3.0&quot;,
+        &quot;grunt-contrib-sass&quot;: &quot;~0.4.1&quot;,
+        &quot;grunt-contrib-jasmine&quot;: &quot;~0.5.1&quot;,
+        &quot;grunt-contrib-jshint&quot;: &quot;~0.4.0&quot;,
+        &quot;grunt-template-jasmine-istanbul&quot;: &quot;~0.2.5&quot;
 
-    </span>}</span>,
-    "<span class="attribute">scripts</span>": <span class="value">{
-       "<span class="attribute">test</span>": <span class="value"><span class="string">"grunt jasmine"</span>
-    </span>}
-</span>}
+    },
+    &quot;scripts&quot;: {
+       &quot;test&quot;: &quot;grunt jasmine&quot;
+    }
+}
 </code></pre></li>
 </ol>
 <p>6.在命令行切换到该目录下，运行<code>npm install</code>，如果会报错，且自动创建了<code>node_modules</code>目录和<code>npm-debug.log</code>文件，并下载了一堆文件，则证明使用完全没有问题。</p>
@@ -149,10 +149,10 @@ var _hmt = _hmt || [];
 
 <nav id="pagination" >
     
-    <a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/" class="alignleft prev" >Prev</a>
+    <a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2009/03/19/eclipse插件开发获取路径的几种方式/" class="alignright next" >Next</a>
+    <a href="/2009/03/19/eclipse插件开发获取路径的几种方式/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -182,7 +182,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -197,7 +197,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

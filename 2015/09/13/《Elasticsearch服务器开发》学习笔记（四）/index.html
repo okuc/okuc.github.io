@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -79,7 +79,7 @@ var _hmt = _hmt || [];
     </header>
     <div class="entry">
       
-        <h2 id="第3章_搜索(一)">第3章 搜索(一)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
+        <h2 id="第3章-搜索-一"><a href="#第3章-搜索-一" class="headerlink" title="第3章 搜索(一)"></a>第3章 搜索(一)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
 <hr>
 <ol>
 <li>查询：<code>curl -XGET &#39;localhost:9200/library/book/_search?q=title:crime&amp;pretty=true&#39;</code>，另外一种查询方式：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code></li>
@@ -105,7 +105,7 @@ org.elasticsearch.script.groovy.GroovyScriptExecutionException: MissingPropertyE
 <li>count：这是一个特殊的搜索类型，只返回匹配查询的文档数。如果你只需要结果数量，而不关心文档，应该使用这个类型。</li>
 <li><p>scan：这是另外一个类型的搜索类型，只有在要让查询返回大量结果时才用。它跟一般的查询有点不同，因为它在第一次请求后，返回一个滚动标识符，类似于数据库中的游标。所有查询需要在_search/scroll REST端点运行，并需要在请求主体中发送返回的滚动标识符。</p>
 <p>示例命令如下：</p>
-<pre><code>curl -XGET <span class="string">'localhost</span>:<span class="number">9200</span>/library/book/_search?pretty=<span class="keyword">true</span>&amp;search_type=query_and_fetch' -d '{<span class="string">"query"</span>:{<span class="string">"term"</span>:{<span class="string">"title"</span>:<span class="string">"crime"</span>}}}'
+<pre><code>curl -XGET &apos;localhost:9200/library/book/_search?pretty=true&amp;search_type=query_and_fetch&apos; -d &apos;{&quot;query&quot;:{&quot;term&quot;:{&quot;title&quot;:&quot;crime&quot;}}}&apos;
 </code></pre></li>
 </ul>
 </li>
@@ -117,7 +117,7 @@ org.elasticsearch.script.groovy.GroovyScriptExecutionException: MissingPropertyE
 <li>only_node:node_id:只在提供标识符的节点上执行搜索</li>
 <li>prefer_node:node_id:ES尝试在提供标识符的节点上执行搜索，如果该节点不可用，则使用其他的可用节点。</li>
 <li>shards：1,2：ES将在提供标识符的分片上执行操作。_shards参数可以和其他首选项合并，但_shards标识符必须在前面，比如_shards:1,2;_local</li>
-<li>自定义值：可以传入任何自定义字符串值，具有相同值的请求将在相同的分片上执行。<br>下面是一个例子：<pre><code>curl -XGET <span class="string">'localhost:9200/library/_search?preference=_local'</span> -d <span class="string">'{"</span>query<span class="string">":{"</span>term<span class="string">":{"</span>title<span class="string">":"</span>crime<span class="string">"}}}'</span>
+<li>自定义值：可以传入任何自定义字符串值，具有相同值的请求将在相同的分片上执行。<br>下面是一个例子：<pre><code>curl -XGET &apos;localhost:9200/library/_search?preference=_local&apos; -d &apos;{&quot;query&quot;:{&quot;term&quot;:{&quot;title&quot;:&quot;crime&quot;}}}&apos;
 </code></pre></li>
 </ul>
 </li>
@@ -166,13 +166,13 @@ org.elasticsearch.script.groovy.GroovyScriptExecutionException: MissingPropertyE
 </li>
 <li><p>query_string查询：它支持Apache Lucene全部的查询语法。它使用一个查询解析器把提供的文本构建成实际的查询。</p>
 <pre><code>{
-    "<span class="attribute">query</span>":<span class="value">{
-        "<span class="attribute">query_string</span>":<span class="value">{
-        "<span class="attribute">query</span>":<span class="value"><span class="string">"title:crime^10 +title:punishment -otitle:cat +author:{+Fyodor + dostoevsky}"</span></span>,
-        "<span class="attribute">default_field</span>":<span class="value">title
-        </span>}
-    </span>}
- </span>}
+    &quot;query&quot;:{
+        &quot;query_string&quot;:{
+        &quot;query&quot;:&quot;title:crime^10 +title:punishment -otitle:cat +author:{+Fyodor + dostoevsky}&quot;,
+        &quot;default_field&quot;:title
+        }
+    }
+ }
 </code></pre><p>上面这个是说：查询title字段中包含crime词条的文档，并且这些文档应有10的加权。文档在title中还应该包括punishment,而在otitle中不包含cat，author字段中包括Fyodor和dostoevsky的词条。query_string参数如下：</p>
 <ul>
 <li>query：此参数指定查询文本</li>
@@ -194,51 +194,51 @@ org.elasticsearch.script.groovy.GroovyScriptExecutionException: MissingPropertyE
 </li>
 <li><p>针对多字段的query_string查询：需要在查询主体中提供一个fields，它是个持有字段名称的数组。有两种方法对多个字段运行query_string查询：默认方法是采用布尔查询来构造查询，另一种是使用最大分查询。<br>最大分查询要在查询主体中添加use_dis_max属性并将其设置为true。示例如下：</p>
 <pre><code>{
-    "<span class="attribute">query</span>":<span class="value">{
-        "<span class="attribute">query_string</span>":<span class="value">{
-            "<span class="attribute">query</span>":<span class="value"><span class="string">"crime punishment"</span></span>,
-            "<span class="attribute">fields</span>":<span class="value">[<span class="string">"title"</span>,<span class="string">"otitle"</span>]</span>,
-            "<span class="attribute">use_dis_max</span>":<span class="value"><span class="literal">true</span>
-        </span>}
-    </span>}
-</span>}
+    &quot;query&quot;:{
+        &quot;query_string&quot;:{
+            &quot;query&quot;:&quot;crime punishment&quot;,
+            &quot;fields&quot;:[&quot;title&quot;,&quot;otitle&quot;],
+            &quot;use_dis_max&quot;:true
+        }
+    }
+}
 </code></pre></li>
 <li>simple_query_string:它使用lucene最新的查询解析器之一：SimpleQueryParser。类似字符串查询，它接受Lucene查询语法;然而不同的是，它在解析错误时不会抛出异常。它丢弃无效的部分，执行其余部分。<pre><code>{
-    "<span class="attribute">query</span>":<span class="value">{
-        "<span class="attribute">simple_query_string</span>":<span class="value">{
-        "<span class="attribute">query</span>":<span class="value"><span class="string">"title:crime^10 +title:punishment -otitle:cat +author:{+Fyodor + dostoevsky}"</span></span>,
-        "<span class="attribute">default_operator</span>":<span class="value"><span class="string">"and"</span>
-        </span>}
-    </span>}
- </span>}
+    &quot;query&quot;:{
+        &quot;simple_query_string&quot;:{
+        &quot;query&quot;:&quot;title:crime^10 +title:punishment -otitle:cat +author:{+Fyodor + dostoevsky}&quot;,
+        &quot;default_operator&quot;:&quot;and&quot;
+        }
+    }
+ }
 </code></pre></li>
 <li>标识符查询：它仅用提供的标识符来过滤返回的文档。此查询针对内部的_uid字段运行，所以它不需要启用_id字段。例子如下：<code>{&quot;query&quot;:{&quot;ids&quot;:{&quot;values&quot;:[&quot;11&quot;,&quot;12&quot;,&quot;13&quot;,&quot;14&quot;]}}}</code><br>此查询只返回具有values数组中一个标识符的文档，也可以限制文档为特定的类型，如只包括book类型的文档。查询如下：`{“query”:{“ids”:{“type”:”book”,values”:[“11”,”12”,”13”,”14”]}}}</li>
 <li>前辍查询在配置方面和词条查询类似。下面是一个查询以cri开头的例子：<pre><code>{
-    "<span class="attribute">query</span>":<span class="value">{
-        "<span class="attribute">prefix</span>":<span class="value">{
-            "<span class="attribute">title</span>":<span class="value"><span class="string">"cri"</span>
-        </span>}
-    </span>}
-</span>} 
+    &quot;query&quot;:{
+        &quot;prefix&quot;:{
+            &quot;title&quot;:&quot;cri&quot;
+        }
+    }
+} 
 </code></pre>如果要加权，则可以如下设置：<pre><code>{
-    "<span class="attribute">query</span>":<span class="value">{
-        "<span class="attribute">prefix</span>":<span class="value">{
-            "<span class="attribute">title</span>":<span class="value">{
-            "<span class="attribute">value</span>":<span class="value"><span class="string">"cri"</span></span>,
-            "<span class="attribute">boost</span>":<span class="value"><span class="number">3.0</span>
-            </span>}
-        </span>}
-    </span>}
-</span>}
+    &quot;query&quot;:{
+        &quot;prefix&quot;:{
+            &quot;title&quot;:{
+            &quot;value&quot;:&quot;cri&quot;,
+            &quot;boost&quot;:3.0
+            }
+        }
+    }
+}
 </code></pre></li>
 <li>fuzzy_like_this查询类似more_like_this查询。它查找所有与提供的文本类似的文档。与more_like_this的不同点在于它利用模糊字符串并选择生成的最佳差分词条。如在title和otitle字段查询所有类似于crime punishment的文档，示例如下：<pre><code>{
-    "<span class="attribute">query</span>":<span class="value">{
-        "<span class="attribute">fuzzy_like_this</span>":<span class="value">{
-            "<span class="attribute">fields</span>":<span class="value">[<span class="string">"title"</span>,<span class="string">"otitle"</span>]</span>,
-            "<span class="attribute">like_text</span>":<span class="value"><span class="string">"crime punishment"</span>
-        </span>}
-    </span>}
-</span>}
+    &quot;query&quot;:{
+        &quot;fuzzy_like_this&quot;:{
+            &quot;fields&quot;:[&quot;title&quot;,&quot;otitle&quot;],
+            &quot;like_text&quot;:&quot;crime punishment&quot;
+        }
+    }
+}
 </code></pre>它支持以下参数：<ul>
 <li>fields：执行查询的字段数组，默信值是_all字段。</li>
 <li>like_text:这是一个必需参数，包含用来跟文档比较的文本。</li>
@@ -251,30 +251,30 @@ org.elasticsearch.script.groovy.GroovyScriptExecutionException: MissingPropertyE
 </ul>
 </li>
 <li>fuzzy_like_this_field查询，它与fuzzy_like_this查询类似，但只能对应单个字段，它不支持多字段属性。fuzzy_like_this属性也可用在本查询中。例子如下:<pre><code>{
-    "<span class="attribute">query</span>":<span class="value">{
-        "<span class="attribute">fuzzy_like_this_field</span>":<span class="value">{
-            "<span class="attribute">title</span>":<span class="value">{
-            "<span class="attribute">like_text</span>":<span class="value"><span class="string">"crime punishment"</span>
-            </span>}
-        </span>}
-    </span>}
-</span>}
+    &quot;query&quot;:{
+        &quot;fuzzy_like_this_field&quot;:{
+            &quot;title&quot;:{
+            &quot;like_text&quot;:&quot;crime punishment&quot;
+            }
+        }
+    }
+}
 </code></pre></li>
 <li>fuzzy查询是模糊查询中的第三种类型，它基于编辑距离算法来匹配文档。编辑距离的计算基于我们提供的查询词条和被搜索文档。此查询很占用cpu资源，但需要模糊匹配时它很有用。比如有可能一个单词漏掉了一个字母，它仍会设法找到我们想要的内容。<code>{&quot;query&quot;:{&quot;fuzzy&quot;:{&quot;title&quot;:&quot;crme&quot;}}}</code><br>它的可用参数如下:<ul>
 <li>value:实际的查询</li>
 <li>boost:查询的加权值，默认址是1.0。</li>
 <li>min_similarity:指定了一个词条被算作匹配所必须拥有的最小相似度。对于字符串字段来说，这个值区间为[0,1],也就是说，包括0和1。对于数值型字段，这个值可以大于1，比如查询值是20，min_similarity设为3，则可以得到17-23间的值。对于日期，可以设置为1d,2d,1m表示1天，2天，1个月。</li>
 <li>prefix_length:指定差分词条的公共前辍长度，默认为0。</li>
-<li>max_expansions:指定查询可被扩展到的最大词条数，默认无限制。下面是一个例子：<pre><code><span class="collection">{
-    <span class="string">"query"</span>:<span class="collection">{
-        <span class="string">"fuzzy"</span>:<span class="collection">{
-            <span class="string">"title"</span>:<span class="collection">{
-                <span class="string">"value"</span>:<span class="string">"crme"</span>,
-                <span class="string">"min_similarity"</span>：<span class="number">0.2</span>
-            }</span>
-        }</span>
-    }</span>
-}</span>
+<li>max_expansions:指定查询可被扩展到的最大词条数，默认无限制。下面是一个例子：<pre><code>{
+    &quot;query&quot;:{
+        &quot;fuzzy&quot;:{
+            &quot;title&quot;:{
+                &quot;value&quot;:&quot;crme&quot;,
+                &quot;min_similarity&quot;：0.2
+            }
+        }
+    }
+}
 </code></pre></li>
 </ul>
 </li>
@@ -291,30 +291,30 @@ org.elasticsearch.script.groovy.GroovyScriptExecutionException: MissingPropertyE
 <li>boost_terms:此参数定义了用于每个词条的加权值，默认值是1。</li>
 <li>boost:查询使用的加权值，默认值是1.0。</li>
 <li>analyzer:定义分析所提供文本时用到的分析器的名称。<br>下面是一个例子：<pre><code>{
-    "<span class="attribute">query</span>":<span class="value">{
-        "<span class="attribute">more_like_this</span>":<span class="value">{
-            "<span class="attribute">fields</span>":<span class="value">[<span class="string">"title"</span>,<span class="string">"otitle"</span>]</span>,
-            "<span class="attribute">like_text</span>":<span class="value"><span class="string">"crime and punishment"</span></span>,
-            "<span class="attribute">min_term_freq</span>":<span class="value"><span class="number">1</span></span>,
-            "<span class="attribute">min_doc_freq</span>":<span class="value"><span class="number">1</span>
-        </span>}
-    </span>}
-</span>}
+    &quot;query&quot;:{
+        &quot;more_like_this&quot;:{
+            &quot;fields&quot;:[&quot;title&quot;,&quot;otitle&quot;],
+            &quot;like_text&quot;:&quot;crime and punishment&quot;,
+            &quot;min_term_freq&quot;:1,
+            &quot;min_doc_freq&quot;:1
+        }
+    }
+}
 </code></pre></li>
 </ul>
 </li>
 <li><p>more_like_this_filed:与more_like_this相似，more_like_this的参数。但是它只能针对单个字段，所以它不支持多字段属性。示例如下：</p>
 <pre><code>{
-    "<span class="attribute">query</span>":<span class="value">{
-        "<span class="attribute">more_like_this_field</span>":<span class="value">{
-            "<span class="attribute">title</span>":<span class="value">{
-            "<span class="attribute">like_text</span>":<span class="value"><span class="string">"crime and punishment"</span></span>,
-            "<span class="attribute">min_term_freq</span>":<span class="value"><span class="number">1</span></span>,
-            "<span class="attribute">min_doc_freq</span>":<span class="value"><span class="number">1</span>
-            </span>}
-        </span>}
-    </span>}
-</span>}
+    &quot;query&quot;:{
+        &quot;more_like_this_field&quot;:{
+            &quot;title&quot;:{
+            &quot;like_text&quot;:&quot;crime and punishment&quot;,
+            &quot;min_term_freq&quot;:1,
+            &quot;min_doc_freq&quot;:1
+            }
+        }
+    }
+}
 </code></pre><p>29。 范围查询针对数值型或字符串型，查询一段范围内的值，它只能针对单个字段。它的参数如下:</p>
 <ul>
 <li>gte:匹配大于或等于此参数值的文档。</li>
@@ -322,44 +322,44 @@ org.elasticsearch.script.groovy.GroovyScriptExecutionException: MissingPropertyE
 <li>lte:匹配小于或等于此参数值的文档。</li>
 <li><p>lt:匹配小于此参数值的文档。</p>
 <pre><code>{
-    "<span class="attribute">query</span>":<span class="value">{
-        "<span class="attribute">range</span>":<span class="value">{
-            "<span class="attribute">year</span>":<span class="value">{
-            "<span class="attribute">gte</span>":<span class="value"><span class="number">1700</span></span>,
-            "<span class="attribute">lte</span>":<span class="value"><span class="number">1900</span>
-            </span>}
-        </span>}
-    </span>}
-</span>}
+    &quot;query&quot;:{
+        &quot;range&quot;:{
+            &quot;year&quot;:{
+            &quot;gte&quot;:1700,
+            &quot;lte&quot;:1900
+            }
+        }
+    }
+}
 </code></pre></li>
 </ul>
 </li>
-<li>最大分查询会生成一个由所有子查询返回的文档组成的并集并将它返回。我们可以控制较低得到的子查询对文档最后得分的影响。<br>文档的最后得分计算过程如下:最高分数的子查询得分之和，加上其余子查询的得分之合乘于tie参数的值，所以可以过tie_breaker参数来控制较低得分的查询对最后得分的影响。设为0.1，则得分为：最高得分+其他得分和*0.1<pre><code><span class="collection">{
-    <span class="string">"query"</span><span class="collection">{
-        <span class="string">"dismax"</span>:<span class="collection">{
-            <span class="string">"tie_breaker"</span>:<span class="number">0.99</span>
-            <span class="string">"boost"</span>:<span class="number">10.0</span>
-            <span class="string">"queries"</span>:<span class="collection">[
-                <span class="collection">{
-                    <span class="string">"match"</span>:<span class="collection">{<span class="string">"title"</span>:<span class="string">"crime"</span>}</span>
-                }</span>，<span class="collection">{
-                    <span class="string">"match"</span>:<span class="collection">{<span class="string">"author"</span>:<span class="string">"fyodor"</span>}</span>
-                }</span>
-            ]</span>
-        }</span>
-    }</span>
-}</span>
+<li>最大分查询会生成一个由所有子查询返回的文档组成的并集并将它返回。我们可以控制较低得到的子查询对文档最后得分的影响。<br>文档的最后得分计算过程如下:最高分数的子查询得分之和，加上其余子查询的得分之合乘于tie参数的值，所以可以过tie_breaker参数来控制较低得分的查询对最后得分的影响。设为0.1，则得分为：最高得分+其他得分和*0.1<pre><code>{
+    &quot;query&quot;{
+        &quot;dismax&quot;:{
+            &quot;tie_breaker&quot;:0.99
+            &quot;boost&quot;:10.0
+            &quot;queries&quot;:[
+                {
+                    &quot;match&quot;:{&quot;title&quot;:&quot;crime&quot;}
+                }，{
+                    &quot;match&quot;:{&quot;author&quot;:&quot;fyodor&quot;}
+                }
+            ]
+        }
+    }
+}
 </code></pre></li>
 <li>可以用正则表达多来查询文本，它的性能取决于所选的正则表达式。一般是正则匹配的词条越高，查询越慢。<pre><code>{
-    "<span class="attribute">query</span>":<span class="value">{
-        "<span class="attribute">regexp</span>":<span class="value">{
-            "<span class="attribute">title</span>":<span class="value">{
-            "<span class="attribute">value</span>":<span class="value"><span class="string">"cr.m[ae]"</span></span>,
-            "<span class="attribute">boost</span>":<span class="value"><span class="number">10</span>
-            </span>}
-        </span>}
-    </span>}
-</span>}
+    &quot;query&quot;:{
+        &quot;regexp&quot;:{
+            &quot;title&quot;:{
+            &quot;value&quot;:&quot;cr.m[ae]&quot;,
+            &quot;boost&quot;:10
+            }
+        }
+    }
+}
 </code></pre></li>
 </ol>
 
@@ -386,10 +386,10 @@ org.elasticsearch.script.groovy.GroovyScriptExecutionException: MissingPropertyE
 
 <nav id="pagination" >
     
-    <a href="/2015/09/19/Elasticsearch中文乱码问题的解决/" class="alignleft prev" >Prev</a>
+    <a href="/2015/09/19/Elasticsearch中文乱码问题的解决/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/08/30/centos7常用命令/" class="alignright next" >Next</a>
+    <a href="/2015/08/30/centos7常用命令/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -419,7 +419,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -434,7 +434,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

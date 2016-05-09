@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -84,13 +84,13 @@ var _hmt = _hmt || [];
 <p><code>$http</code>也支持两种调用方式：<code>链式调用</code>及<code>普通调用</code>。下面我们来看一看这两种调用方式：<br><a id="more"></a></p>
 <ul>
 <li><p><code>连式调用</code></p>
-<pre><code><span class="variable">$http</span>({
-url:<span class="string">'data.json'</span>,
-method:<span class="string">'GET'</span>
-}).success(<span class="keyword">function</span>(data,header,config,status){
+<pre><code>$http({
+url:&apos;data.json&apos;,
+method:&apos;GET&apos;
+}).success(function(data,header,config,status){
 //响应成功
 
-}).error(<span class="keyword">function</span>(data,header,config,status){
+}).error(function(data,header,config,status){
 //处理响应失败
 });
 </code></pre><ul>
@@ -139,42 +139,42 @@ method:<span class="string">'GET'</span>
 </ul>
 </li>
 <li><p>普通调用：</p>
-<pre><code><span class="keyword">var</span> promise=<span class="variable">$http</span>({
-method:<span class="string">'GET'</span>,
-url:<span class="string">"data.json"</span>
+<pre><code>var promise=$http({
+method:&apos;GET&apos;,
+url:&quot;data.json&quot;
 });
 
-promise.then(<span class="function"><span class="keyword">function</span><span class="params">(resp)</span></span>{
-<span class="comment">//resp是一个响应对象</span>
+promise.then(function(resp){
+//resp是一个响应对象
 
-},<span class="function"><span class="keyword">function</span><span class="params">(resp)</span></span>{
-<span class="comment">//带有错误信息的resp</span>
+},function(resp){
+//带有错误信息的resp
 
 });
 
 或者这样：
-promise.success(<span class="function"><span class="keyword">function</span><span class="params">(data,status,config,headers)</span></span>{
-<span class="comment">//处理成功的响应</span>
+promise.success(function(data,status,config,headers){
+//处理成功的响应
 });
 
-promise.error(<span class="function"><span class="keyword">function</span><span class="params">(data,status,hedaers,config)</span></span>{
-<span class="comment">//处理失败后的响应</span>
+promise.error(function(data,status,hedaers,config){
+//处理失败后的响应
 });
 </code></pre><p>then()方法与其他两种方法的主要区别是，它会接收到完整的响应对象，而success()和error()则会对响应对象进行析构。</p>
 </li>
 <li><p>除了以上两种方法，还可以直接发送post方法：</p>
-<pre><code><span class="variable">$http</span>.post(<span class="string">'Gulugulus/setMenu'</span>, {
+<pre><code>$http.post(&apos;Gulugulus/setMenu&apos;, {
                 map: menu,
-                test: <span class="string">'test_lwp'</span>
-            }).success(<span class="keyword">function</span>(){
-                window.location.href = <span class="string">"Gulugulus/subMenu"</span>;
+                test: &apos;test_lwp&apos;
+            }).success(function(){
+                window.location.href = &quot;Gulugulus/subMenu&quot;;
             });
 </code></pre></li>
 <li><p>还可以启动Angularjs中的缓存功能，这样第二次请求时，则会从缓存中获取，而不再请求后台：</p>
 <p>默认情况下，$http服务不会对请求进行本地缓存。在发送单独的请求时，我们可以通过向$http请求传入一个布尔值或者一个缓存实例来启用缓存。</p>
-<pre><code><span class="variable">$http</span>.get(<span class="string">'/api/users.json'</span>,{ cache: true })
-.success(<span class="keyword">function</span>(data) {})
-.error(<span class="keyword">function</span>(data) {});
+<pre><code>$http.get(&apos;/api/users.json&apos;,{ cache: true })
+.success(function(data) {})
+.error(function(data) {});
 </code></pre><p>第一次发送请求时，$http服务会向/api/users.json发送一个GET请求。第二次发送同一个GET请求时，$http服务会从缓存中取回请求的结果，而不会真的发送一个HTTP GET请求。<br>在这个例子里，由于设置了启用缓存，AngularJS默认会使用$cacheFactory,这个服务是AngularJS在启动时自动创建的。</p>
 <p>如果想要对AngularJS使用的缓存进行更多的自定义控制，可以向请求传入一个自定义的缓存实例代替true。</p>
 </li>
@@ -182,26 +182,26 @@ promise.error(<span class="function"><span class="keyword">function</span><span 
 <p>  使用拦截器之前，我们通过factory()声明一个服务，然后通过$httpProvider注册拦截器。拦截器分为四种，两种成功拦截器，两种失败拦截器。</p>
 </li>
 </ul>
-<pre><code>angular.module(<span class="string">'test'</span>, []).factory(<span class="string">'testInterceptor'</span>, <span class="keyword">function</span>(<span class="variable">$q</span>){
+<pre><code>angular.module(&apos;test&apos;, []).factory(&apos;testInterceptor&apos;, function($q){
  var interceptor = {
-  <span class="string">'request'</span>:function(config){
+  &apos;request&apos;:function(config){
     return config;
   },
-  <span class="string">'response'</span>:function(resp){
+  &apos;response&apos;:function(resp){
     return response;
   },
-  <span class="string">'requestError'</span>:function(rejection){
-    return <span class="variable">$q</span>.reject(rejection);
+  &apos;requestError&apos;:function(rejection){
+    return $q.reject(rejection);
   },
-  <span class="string">'responseError'</span>:function(rejection){
+  &apos;responseError&apos;:function(rejection){
     return rejection
   }
  }
  return interceptor;
 })
 
-angular.module(<span class="string">'test'</span>, []).config(<span class="keyword">function</span>(<span class="variable">$httpProvider</span>){
- <span class="variable">$httpProvider</span>.interceptors.push(<span class="string">'testInterceptor'</span>);
+angular.module(&apos;test&apos;, []).config(function($httpProvider){
+ $httpProvider.interceptors.push(&apos;testInterceptor&apos;);
 })
 </code></pre>
       
@@ -227,10 +227,10 @@ angular.module(<span class="string">'test'</span>, []).config(<span class="keywo
 
 <nav id="pagination" >
     
-    <a href="/2015/12/10/新手学习Angularjs之六：使用Directive自定义控件/" class="alignleft prev" >Prev</a>
+    <a href="/2015/12/10/新手学习Angularjs之六：使用Directive自定义控件/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/" class="alignright next" >Next</a>
+    <a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -260,7 +260,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -275,7 +275,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

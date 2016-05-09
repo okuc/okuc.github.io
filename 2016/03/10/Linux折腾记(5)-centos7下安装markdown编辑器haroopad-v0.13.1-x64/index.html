@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -83,25 +83,25 @@ var _hmt = _hmt || [];
 <p>1.首先是下载。我安装的目前最新版本<code>haroopad-v0.13.1-x64.tar.gz</code>,下载地址如下：<a href="https://bitbucket.org/rhiokim/haroopad-download/downloads/haroopad-v0.13.1-x64.tar.gz" target="_blank" rel="external">haroopad-v0.13.1-x64.tar.gz</a>。<br>  如果想安装其他版本，可以在此查找下载更多的安装包：<a href="https://bitbucket.org/rhiokim/haroopad-download/downloads/" target="_blank" rel="external">https://bitbucket.org/rhiokim/haroopad-download/downloads/</a>。</p>
 <p>2.下载完成后，使用如下命令解压<code>tar -zxvf haroopad-v0.13.1-x64.tar.gz</code>。</p>
 <p>3.下面就解压出来的<code>data.tar.gz</code>进行再次解压，并释放到合适的地方。<strong>注意:下边的几步都需要root权限。</strong></p>
-<pre><code>tar -zxvf data<span class="class">.tar</span><span class="class">.gz</span>
+<pre><code>tar -zxvf data.tar.gz
 sudo cp －r ./usr /
 </code></pre> <a id="more"></a>
 <p>4.下面就解压出来的<code>control.tar.gz</code>进行解压并运行。</p>
-<pre><code>tar zxf control<span class="class">.tar</span><span class="class">.gz</span>
-chmod <span class="number">755</span> postinst
+<pre><code>tar zxf control.tar.gz
+chmod 755 postinst
 sudo ./postinst
 </code></pre><p>5.运行到这一步，就可以在菜单－编程中看到haroopad了。但是为了让它正确的显示图标，我们还要指定正确的图标位置。编辑如下位置:<code>sudo vi /usr/share/applications/Haroopad.desktop</code>,将文件内容中的<code>Icon</code>，换成正确的图标路径，即可。</p>
-<pre><code><span class="title">[Desktop Entry]</span>
-<span class="setting">Name=<span class="value">haroopad</span></span>
-<span class="setting">Version=<span class="value"><span class="number">0.13</span>.<span class="number">1</span></span></span>
-<span class="setting">Exec=<span class="value">haroopad</span></span>
-<span class="setting">Comment=<span class="value">The Next Document processor based <span class="keyword">on</span> Markdown</span></span>
-<span class="setting">Icon=<span class="value">/usr/share/icons/hicolor/<span class="number">128</span>x128/apps/haroopad.png</span></span>
-<span class="setting">Type=<span class="value">Application</span></span>
-<span class="setting">Terminal=<span class="value"><span class="keyword">false</span></span></span>
-<span class="setting">StartupNotify=<span class="value"><span class="keyword">true</span></span></span>
-<span class="setting">Encoding=<span class="value">UTF-<span class="number">8</span></span></span>
-<span class="setting">Categories=<span class="value">Development;GTK;GNOME;</span></span>
+<pre><code>[Desktop Entry]
+Name=haroopad
+Version=0.13.1
+Exec=haroopad
+Comment=The Next Document processor based on Markdown
+Icon=/usr/share/icons/hicolor/128x128/apps/haroopad.png
+Type=Application
+Terminal=false
+StartupNotify=true
+Encoding=UTF-8
+Categories=Development;GTK;GNOME;
 </code></pre>
       
     </div>
@@ -126,10 +126,10 @@ sudo ./postinst
 
 <nav id="pagination" >
     
-    <a href="/2016/03/10/hexo博客笔记源码恢复记/" class="alignleft prev" >Prev</a>
+    <a href="/2016/03/10/hexo博客笔记源码恢复记/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2016/01/05/TinkerPop3 API 简明笔记（一）/" class="alignright next" >Next</a>
+    <a href="/2016/01/05/TinkerPop3 API 简明笔记（一）/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -159,7 +159,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -174,7 +174,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

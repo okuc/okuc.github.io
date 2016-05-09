@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -80,40 +80,40 @@ var _hmt = _hmt || [];
     <div class="entry">
       
         <p>1.得到runtime workspace目录的绝对路径</p>
-<pre><code><span class="type">String</span> file = <span class="type">Platform</span>.getInstanceLocation<span class="literal">()</span>.getURL<span class="literal">()</span>.getPath<span class="literal">()</span>;
+<pre><code>String file = Platform.getInstanceLocation().getURL().getPath();
 </code></pre><p>2.得到runtime workspace目录下所有的工程</p>
 <a id="more"></a>
 <pre><code>IWorkspace workspace = ResourcesPlugin.getWorkspace();
    IWorkspaceRoot root = workspace.getRoot();
    IProject[] newProjectHandle = root.getProjects();
 
-<span class="keyword">for</span> (int i = <span class="number">0</span>, <span class="built_in">size</span> = newProjectHandle.length; i &lt; <span class="built_in">size</span>; i++) {
+for (int i = 0, size = newProjectHandle.length; i &lt; size; i++) {
     IProject iProject = newProjectHandle[i];
 
-    <span class="comment">// 工程名字</span>
+    // 工程名字
 String projectName = iProject.getName();
-IResource[] <span class="built_in">resources</span> = iProject.<span class="built_in">members</span>();
-    <span class="keyword">for</span> (int j = <span class="number">0</span>, n = <span class="built_in">resources</span>.length; j &lt; n; j++) {
-     <span class="keyword">if</span> (<span class="built_in">resources</span>[j].getType() == IResource.FILE
-       &amp;&amp; <span class="built_in">resources</span>[j].getFileExtension().equals(<span class="string">"xpdl"</span>)) {
-      <span class="comment">// 包:工程下xpdl文件的绝对路径,包路径</span>
-      String xpdlFileFullPath = <span class="built_in">resources</span>[j].getLocation()
+IResource[] resources = iProject.members();
+    for (int j = 0, n = resources.length; j &lt; n; j++) {
+     if (resources[j].getType() == IResource.FILE
+       &amp;&amp; resources[j].getFileExtension().equals(&quot;xpdl&quot;)) {
+      // 包:工程下xpdl文件的绝对路径,包路径
+      String xpdlFileFullPath = resources[j].getLocation()
         .toOSString();
       }
      }
 }
 </code></pre><p>3.取插件项目所在路径</p>
-<pre><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">String</span> getPluginPath(){
-  <span class="keyword">String</span> pluginPath=<span class="keyword">null</span>;
-  <span class="keyword">try</span> {
+<pre><code>public static String getPluginPath(){
+  String pluginPath=null;
+  try {
    pluginPath = FileLocator.toFileURL(
-           Platform.getBundle(Activator.PLUGIN_ID).getEntry(<span class="string">""</span>)).getPath();
-   pluginPath = pluginPath.substring(<span class="number">1</span>);
-  } <span class="keyword">catch</span> (IOException e1) {
-   <span class="comment">// TODO 自动生成 catch 块</span>
+           Platform.getBundle(Activator.PLUGIN_ID).getEntry(&quot;&quot;)).getPath();
+   pluginPath = pluginPath.substring(1);
+  } catch (IOException e1) {
+   // TODO 自动生成 catch 块
    e1.printStackTrace();
   }
-  <span class="keyword">return</span> pluginPath;  
+  return pluginPath;  
 } 
 </code></pre>
       
@@ -139,7 +139,7 @@ IResource[] <span class="built_in">resources</span> = iProject.<span class="buil
 
 <nav id="pagination" >
     
-    <a href="/2014/11/26/windows下搭建node.js及npm的工作环境/" class="alignleft prev" >Prev</a>
+    <a href="/2014/11/26/windows下搭建node.js及npm的工作环境/" class="alignleft prev" >Anterior</a>
     
     
     <div class="clearfix"></div>
@@ -170,7 +170,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -185,7 +185,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

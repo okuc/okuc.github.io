@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -86,15 +86,15 @@ var _hmt = _hmt || [];
 <li>如果集合不存在，数据库服务会自动创建目标集合。</li>
 <li>插入文档时，如果没有指定_id字段，数据库服务会自动创建ObjectId对象作为_id的值。</li>
 <li>可以使用<code>save()</code>(如果原来文档不存在通过调用insert实现，存在调用update来实现)、<code>update()</code>、以及<code>findAndModify()</code>插入文档。<a id="more"></a>
-<pre><code>dbService = connect(<span class="string">"localhost:27017"</span>);
-db = dbService.getSiblingDB(<span class="string">"okuc"</span>);//选择集合
+<pre><code>dbService = connect(&quot;localhost:27017&quot;);
+db = dbService.getSiblingDB(&quot;okuc&quot;);//选择集合
 db.insert_test.drop();//清空集合
 //测试文档,无_id字段，会自动生成。
-<span class="keyword">var</span> doc1 = {name:<span class="string">"xiaoli"</span>,age:<span class="number">20</span>,address:{province:<span class="string">"ShangHai"</span>,city:<span class="string">"pudong"</span>}}
+var doc1 = {name:&quot;xiaoli&quot;,age:20,address:{province:&quot;ShangHai&quot;,city:&quot;pudong&quot;}}
 //执行插入操作
-<span class="keyword">var</span> <span class="literal">result</span> = db.insert_test.insert(doc1)
-printjson(<span class="literal">result</span>)//打印函数返回结果
-<span class="keyword">var</span> cursor = db.insert_test.find({})
+var result = db.insert_test.insert(doc1)
+printjson(result)//打印函数返回结果
+var cursor = db.insert_test.find({})
 printjson(cursor.toAyyay())
 </code></pre></li>
 </ul>
@@ -111,24 +111,24 @@ printjson(cursor.toAyyay())
 </ul>
 </li>
 <li><p>执行更新操作：调用<code>Bulk.execute()</code></p>
-<pre><code>dbService = connect(<span class="string">"localhost:27017"</span>);
-db = dbService.getSiblingDB(<span class="string">"okuc"</span>);//选择集合
+<pre><code>dbService = connect(&quot;localhost:27017&quot;);
+db = dbService.getSiblingDB(&quot;okuc&quot;);//选择集合
 db.bulk_test.drop();//清空集合
-<span class="keyword">var</span> bulk = db.bulk_test.initializeUnorderedBulkOp();
-//向<span class="type">Bulk</span>中添加操作，支持的操作有：`<span class="type">Bulk</span>.insert()`、`<span class="type">Bulk</span>.find.insert()`、`<span class="type">Bulk</span>.find.update()`、`<span class="type">Bulk</span>,find.updateOne()`、`<span class="type">Bulk</span>.find.remove()`、`<span class="type">Bulk</span>.find.removeOne()`
+var bulk = db.bulk_test.initializeUnorderedBulkOp();
+//向Bulk中添加操作，支持的操作有：`Bulk.insert()`、`Bulk.find.insert()`、`Bulk.find.update()`、`Bulk,find.updateOne()`、`Bulk.find.remove()`、`Bulk.find.removeOne()`
 
-bulk.insert({_id:<span class="number">1</span>,name:<span class="string">"wangjun"</span>,age:<span class="number">23</span>,sex:<span class="string">"male"</span>});
-bulk.insert({_id:<span class="number">2</span>,name:<span class="string">"lihua"</span>,age:<span class="number">13</span>,sex:<span class="string">"female"</span>});
-bulk.insert({_id:<span class="number">3</span>,name:<span class="string">"zhaosan"</span>,age:<span class="number">23</span>,sex:<span class="string">"male"</span>});
+bulk.insert({_id:1,name:&quot;wangjun&quot;,age:23,sex:&quot;male&quot;});
+bulk.insert({_id:2,name:&quot;lihua&quot;,age:13,sex:&quot;female&quot;});
+bulk.insert({_id:3,name:&quot;zhaosan&quot;,age:23,sex:&quot;male&quot;});
 //执行插入操作
-<span class="keyword">var</span> <span class="literal">result</span> = bulk.execute();
-printjson(<span class="literal">result</span>)//打印函数返回结果，可清晰的表明插入、更新、删除了多少条数据。
-<span class="keyword">var</span> cursor = db.insert_test.find({})
+var result = bulk.execute();
+printjson(result)//打印函数返回结果，可清晰的表明插入、更新、删除了多少条数据。
+var cursor = db.insert_test.find({})
 printjson(cursor.toAyyay())
 
-<span class="keyword">var</span> <span class="literal">result</span> = db.insert_test.remove({name:<span class="string">"xiaomi"</span>})
-printjson(<span class="literal">result</span>)
-<span class="keyword">var</span> cursor = db.insert_test.find({})
+var result = db.insert_test.remove({name:&quot;xiaomi&quot;})
+printjson(result)
+var cursor = db.insert_test.find({})
 printjson(cursor.toAyyay())
 </code></pre></li>
 </ol>
@@ -144,48 +144,48 @@ printjson(cursor.toAyyay())
 <li><code>$inc</code>:为文档中的某个字段增加或减少一定的值，只能应用于整数型、长整型、浮点数类型，如果字段不存在，则新增。一次可以更新多个字段。</li>
 <li><code>$mul</code>：为文档中的某个字段乘以一定的值，只能应用于整数型。</li>
 <li><code>$rename</code>：为文档中的字段重命名。</li>
-<li><code>$currentDate</code>：更新文档中的日期类型为当前时间，主要记录操作的时间，支持Date和timestamp两种类型，默认时间用Date类型来给示，也可以通过使用$type操作符来显示的指定日期格式。{$currentDate:{<field>:<typespecification1>}}，它一次可以更新文档的多个字段，如果字段不存在，则创建。下面是三个例子：<pre><code>隐式的：{<span class="variable">$currentDate</span>:{field:true}}//field字段的值会被更新为Date类型的时间
-显式的：{<span class="variable">$currentDate</span>:{<span class="variable">$type</span>:<span class="string">"date"</span>}}或者{<span class="variable">$currentDate</span>:{<span class="variable">$type</span>:<span class="string">"timestamp"</span>}}//field字段的值会被更新为Date类型的时间
+<li><code>$currentDate</code>：更新文档中的日期类型为当前时间，主要记录操作的时间，支持Date和timestamp两种类型，默认时间用Date类型来给示，也可以通过使用$type操作符来显示的指定日期格式。{$currentDate:{<field>:<typespecification1>}}，它一次可以更新文档的多个字段，如果字段不存在，则创建。下面是三个例子：<pre><code>隐式的：{$currentDate:{field:true}}//field字段的值会被更新为Date类型的时间
+显式的：{$currentDate:{$type:&quot;date&quot;}}或者{$currentDate:{$type:&quot;timestamp&quot;}}//field字段的值会被更新为Date类型的时间
 </code></pre></typespecification1></field></li>
 <li><code>$set</code>：修改文档中字段的值。一次可更新多个文档。如果字段不存在的话，则会创建一个。</li>
 <li><code>$unset</code>：删除文档中的字段。</li>
 <li><code>$min</code>：当前更新值小于文档中的值，就将其替换，只能用于整数、长整型、浮点数类型。字段不存在则创建。一次可以更新文档的多个字段。</li>
 <li><p><code>$max</code>：当前更新值大于文档中的值，就将其替换，只能用于整数、长整型、浮点数类型。</p>
-<pre><code> <span class="keyword">var</span> <span class="literal">result</span> = db.update_test.update({name:<span class="string">"xiaomi"</span>},//如果没有更新条件，则默认直接替换原来的文档
- {$<span class="type">set</span>:{<span class="string">"name"</span>:<span class="string">"xiao_update"</span>,<span class="string">"age"</span>:<span class="number">28</span>});
+<pre><code> var result = db.update_test.update({name:&quot;xiaomi&quot;},//如果没有更新条件，则默认直接替换原来的文档
+ {$set:{&quot;name&quot;:&quot;xiao_update&quot;,&quot;age&quot;:28});
 
- printjson(<span class="literal">result</span>);
- <span class="keyword">var</span> cursor = db.insert_test.find({})
+ printjson(result);
+ var cursor = db.insert_test.find({})
  printjson(cursor.toAyyay())
 
- <span class="keyword">var</span> <span class="literal">result</span> = db.update_test.update({_id:<span class="number">1</span>},//如果没有更新条件，则默认直接替换原来的文档
-{ $inc:{<span class="string">"age"</span>:<span class="number">2</span>}});
+ var result = db.update_test.update({_id:1},//如果没有更新条件，则默认直接替换原来的文档
+{ $inc:{&quot;age&quot;:2}});
 
- printjson(<span class="literal">result</span>);
- <span class="keyword">var</span> cursor = db.insert_test.find({})
+ printjson(result);
+ var cursor = db.insert_test.find({})
  printjson(cursor.toAyyay())
 
-<span class="keyword">var</span> <span class="literal">result</span> = db.update_test.update({_id:<span class="number">1</span>},//如果没有更新条件，则默认直接替换原来的文档
-{ $currentDate:{<span class="string">"optime_1"</span>:<span class="literal">true</span>,<span class="string">"optime_2"</span>:{$<span class="keyword">type</span>:<span class="string">"timestamp"</span>}}});
+var result = db.update_test.update({_id:1},//如果没有更新条件，则默认直接替换原来的文档
+{ $currentDate:{&quot;optime_1&quot;:true,&quot;optime_2&quot;:{$type:&quot;timestamp&quot;}}});
 
- printjson(<span class="literal">result</span>);
- <span class="keyword">var</span> cursor = db.insert_test.find({})
+ printjson(result);
+ var cursor = db.insert_test.find({})
  printjson(cursor.toAyyay())
 </code></pre></li>
 </ul>
 </li>
 <li><p>下面是一个更新子文档的例子</p>
-<pre><code> <span class="keyword">var</span> <span class="literal">result</span> = db.update_test.update({_id:<span class="number">1</span>},//如果没有更新条件，则默认直接替换原来的文档
-{ $<span class="type">set</span>:{<span class="string">"address"</span>:{province:<span class="string">"Beijing"</span>,city:<span class="string">"ChaoYang"</span>}}});
+<pre><code> var result = db.update_test.update({_id:1},//如果没有更新条件，则默认直接替换原来的文档
+{ $set:{&quot;address&quot;:{province:&quot;Beijing&quot;,city:&quot;ChaoYang&quot;}}});
 
- printjson(<span class="literal">result</span>);
- <span class="keyword">var</span> cursor = db.insert_test.find({})
+ printjson(result);
+ var cursor = db.insert_test.find({})
  printjson(cursor.toAyyay())
 
-{ $<span class="type">set</span>:{<span class="string">"address.city"</span>:<span class="string">"jinan"</span>}});
+{ $set:{&quot;address.city&quot;:&quot;jinan&quot;}});
 
- printjson(<span class="literal">result</span>);
- <span class="keyword">var</span> cursor = db.insert_test.find({})
+ printjson(result);
+ var cursor = db.insert_test.find({})
  printjson(cursor.toAyyay())
 </code></pre></li>
 <li><p>针对数组，MongoDB也提供了大量的特定操作符：</p>
@@ -201,53 +201,53 @@ printjson(cursor.toAyyay())
 <li><code>$sort</code>：对数组元素排序<code>{$each:[value1,value2,...],$sort:&lt;filedName}</code>，必须和each一起使用</li>
 <li><p><code>$position</code>:指定元素的插入位置<code>{$each:[value1,value2,...],$position:&lt;num&gt;}</code></p>
 <p>下面是一个例子：</p>
-<pre><code>dbService = connect(<span class="string">"localhost:27017"</span>);
-db = dbService.getSiblingDB(<span class="string">"okuc"</span>);//选择集合
+<pre><code>dbService = connect(&quot;localhost:27017&quot;);
+db = dbService.getSiblingDB(&quot;okuc&quot;);//选择集合
 db.bulk_test.drop();//清空集合
-<span class="keyword">var</span> bulk = db.bulk_test.initializeUnorderedBulkOp();
+var bulk = db.bulk_test.initializeUnorderedBulkOp();
 
-bulk.insert({name:<span class="string">"wangjun"</span>,scores:[<span class="number">60</span>,<span class="number">60</span>,<span class="number">61</span>,<span class="number">61</span>]});
-bulk.insert({name:<span class="string">"jack"</span>,scores:[]});
+bulk.insert({name:&quot;wangjun&quot;,scores:[60,60,61,61]});
+bulk.insert({name:&quot;jack&quot;,scores:[]});
 
 //执行插入操作
-<span class="keyword">var</span> <span class="literal">result</span> = bulk.execute();
-printjson(<span class="literal">result</span>)//打印函数返回结果，可清晰的表明插入、更新、删除了多少条数据。
-<span class="keyword">var</span> cursor = db.bulk_test.find({})
+var result = bulk.execute();
+printjson(result)//打印函数返回结果，可清晰的表明插入、更新、删除了多少条数据。
+var cursor = db.bulk_test.find({})
 printjson(cursor.toAyyay())
 
-<span class="keyword">var</span> <span class="literal">result</span> = db.bulk_test.update({name:<span class="string">"wangjun"</span>,scores:<span class="number">60</span>},{$<span class="type">set</span>:{<span class="string">"scores.$"</span>:<span class="number">90</span>}});//把第一个满足要求数组元素分数更新为<span class="number">90</span>
-printjson(<span class="literal">result</span>)
-<span class="keyword">var</span> cursor = db.bulk_test.find({})
+var result = db.bulk_test.update({name:&quot;wangjun&quot;,scores:60},{$set:{&quot;scores.$&quot;:90}});//把第一个满足要求数组元素分数更新为90
+printjson(result)
+var cursor = db.bulk_test.find({})
 printjson(cursor.toAyyay())
 
-<span class="keyword">var</span> <span class="literal">result</span> = db.bulk_test.update({name:<span class="string">"wangjun"</span>},{$pop:{<span class="string">"scores"</span>:<span class="number">1</span>}});//从符合条件的数组尾部删除一条记录
-printjson(<span class="literal">result</span>)
-<span class="keyword">var</span> cursor = db.bulk_test.find({name:<span class="string">"wangjun"</span>})
+var result = db.bulk_test.update({name:&quot;wangjun&quot;},{$pop:{&quot;scores&quot;:1}});//从符合条件的数组尾部删除一条记录
+printjson(result)
+var cursor = db.bulk_test.find({name:&quot;wangjun&quot;})
 printjson(cursor.toAyyay())
 
-<span class="keyword">var</span> <span class="literal">result</span> = db.bulk_test.update({name:<span class="string">"wangjun"</span>},{$pull:{<span class="string">"scores"</span>:{$get:<span class="number">61</span>}}});//删除数组中大于等于<span class="number">61</span>的元素
-printjson(<span class="literal">result</span>)
-<span class="keyword">var</span> cursor = db.bulk_test.find({name:<span class="string">"wangjun"</span>})
+var result = db.bulk_test.update({name:&quot;wangjun&quot;},{$pull:{&quot;scores&quot;:{$get:61}}});//删除数组中大于等于61的元素
+printjson(result)
+var cursor = db.bulk_test.find({name:&quot;wangjun&quot;})
 printjson(cursor.toAyyay())
 
-<span class="keyword">var</span> <span class="literal">result</span> = db.bulk_test.update({name:<span class="string">"wangjun"</span>},{$pullAll:{<span class="string">"scores"</span>:[<span class="number">60</span>,<span class="number">61</span>]}});//删除数组中等于<span class="number">60</span>,<span class="number">61</span>的元素
-printjson(<span class="literal">result</span>)
-<span class="keyword">var</span> cursor = db.insert_test.find({name:<span class="string">"wangjun"</span>})
+var result = db.bulk_test.update({name:&quot;wangjun&quot;},{$pullAll:{&quot;scores&quot;:[60,61]}});//删除数组中等于60,61的元素
+printjson(result)
+var cursor = db.insert_test.find({name:&quot;wangjun&quot;})
 printjson(cursor.toAyyay())
 
-<span class="keyword">var</span> <span class="literal">result</span> = db.bulk_test.update({name:<span class="string">"jack"</span>},{$push:{<span class="string">"scores"</span>:[<span class="number">80</span>]}});//字段不存在，则会添加一个同名的数组，存在则放到数组中，如果存在但不是数组类型，则抛出异常。
-printjson(<span class="literal">result</span>)
-<span class="keyword">var</span> cursor = db.bulk_test.find({name:<span class="string">"jack"</span>})
+var result = db.bulk_test.update({name:&quot;jack&quot;},{$push:{&quot;scores&quot;:[80]}});//字段不存在，则会添加一个同名的数组，存在则放到数组中，如果存在但不是数组类型，则抛出异常。
+printjson(result)
+var cursor = db.bulk_test.find({name:&quot;jack&quot;})
 printjson(cursor.toAyyay())
 
-<span class="keyword">var</span> <span class="literal">result</span> = db.bulk_test.update({name:<span class="string">"jack"</span>},{$push:{<span class="string">"scores"</span>:{$each:[<span class="number">80</span>,<span class="number">90</span>,<span class="number">34</span>],$slice:-<span class="number">4</span>}}});//批量添加三个元素，同时，只保留该数组的后四个元素。如果加上$position:<span class="number">1</span>,则可以指定元素的插入位置
-printjson(<span class="literal">result</span>)
-<span class="keyword">var</span> cursor = db.bulk_test.find({name:<span class="string">"jack"</span>})
+var result = db.bulk_test.update({name:&quot;jack&quot;},{$push:{&quot;scores&quot;:{$each:[80,90,34],$slice:-4}}});//批量添加三个元素，同时，只保留该数组的后四个元素。如果加上$position:1,则可以指定元素的插入位置
+printjson(result)
+var cursor = db.bulk_test.find({name:&quot;jack&quot;})
 printjson(cursor.toAyyay())
 
-<span class="keyword">var</span> <span class="literal">result</span> = db.bulk_test.update({name:<span class="string">"jack"</span>},{$push:{<span class="string">"scores"</span>:{$each:[{<span class="string">"科目"</span>:<span class="string">"语文"</span>,<span class="string">"成绩"</span>:<span class="number">80</span>},{<span class="string">"科目"</span>:<span class="string">"数学"</span>,<span class="string">"成绩"</span>:<span class="number">90</span>},{<span class="string">"科目"</span>:<span class="string">"外语"</span>,<span class="string">"成绩"</span>:<span class="number">70</span>},{<span class="string">"科目"</span>:<span class="string">"政汉"</span>,<span class="string">"成绩"</span>:<span class="number">60</span>},{<span class="string">"科目"</span>:<span class="string">"计算机"</span>,<span class="string">"成绩"</span>:<span class="number">85</span>}],$sort:{<span class="string">"成绩"</span>:-<span class="number">1</span>},$slice:<span class="number">3</span>}}});//批量添加五个元素，并按成绩进行降序排列，同时，只保留该数组的前三个元素。
-printjson(<span class="literal">result</span>)
-<span class="keyword">var</span> cursor = db.bulk_test.find({name:<span class="string">"jack"</span>})
+var result = db.bulk_test.update({name:&quot;jack&quot;},{$push:{&quot;scores&quot;:{$each:[{&quot;科目&quot;:&quot;语文&quot;,&quot;成绩&quot;:80},{&quot;科目&quot;:&quot;数学&quot;,&quot;成绩&quot;:90},{&quot;科目&quot;:&quot;外语&quot;,&quot;成绩&quot;:70},{&quot;科目&quot;:&quot;政汉&quot;,&quot;成绩&quot;:60},{&quot;科目&quot;:&quot;计算机&quot;,&quot;成绩&quot;:85}],$sort:{&quot;成绩&quot;:-1},$slice:3}}});//批量添加五个元素，并按成绩进行降序排列，同时，只保留该数组的前三个元素。
+printjson(result)
+var cursor = db.bulk_test.find({name:&quot;jack&quot;})
 printjson(cursor.toAyyay())
 </code></pre></li>
 </ul>
@@ -277,10 +277,10 @@ printjson(cursor.toAyyay())
 
 <nav id="pagination" >
     
-    <a href="/2015/12/15/新手学习mongodb之四：使用find轻松查询数据/" class="alignleft prev" >Prev</a>
+    <a href="/2015/12/15/新手学习mongodb之四：使用find轻松查询数据/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/" class="alignright next" >Next</a>
+    <a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -310,7 +310,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -325,7 +325,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

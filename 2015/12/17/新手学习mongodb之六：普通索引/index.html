@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -91,31 +91,31 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 <li><p>单字段索引可以是普通字段、整个子文档以及子文档的某个字段。</p>
-<pre><code>db.std.createIndex({<span class="string">'address'</span>:<span class="number">1</span>});
-db.std.createIndex({<span class="string">'address.city'</span>:<span class="number">1</span>})
+<pre><code>db.std.createIndex({&apos;address&apos;:1});
+db.std.createIndex({&apos;address.city&apos;:1})
 </code></pre><p>在子文档上建立索引，要求名称、个数、顺序需要完全一致，要精确匹配。<code>_id</code>索引是系统默认创建的单字段升序且具有唯一属性的索引，每个集合的文档都会包含该字段，不能被删除，默认值是ObjectId类型。</p>
 </li>
 <li><p>复合索引是建立在多个字段上的索引，功能比单字段索引强大，但使用较复杂，如<code>db.std.createIndex({name:1,age:-1})</code>,按name升序，age倒序进行排序。在使用索引时，会自动进行优化，利用上面的索引，可以支持如下的两个排序操作：<code>db.std.find().sort({name:1,age:-1})</code>、 <code>db.std.find().sort({name:1-,age:1})</code>但是不支持<code>db.std.find().sort({name:1,age:1})</code></p>
 <p>对于复合索引，MongoDB支持前辍匹配，如：<code>db.std.createIndex({name:1,age:1,address:1})</code>,前辍索引包括:<code>{name:1}</code><br>、<code>{name:1,age:1}</code>,使用上面的索引可以在如下的字段上进行查询：</p>
-<pre><code><span class="property">name</span>
-<span class="property">name</span>和age
-<span class="property">name</span>、age和address
+<pre><code>name
+name和age
+name、age和address
 </code></pre><p>不支持在下面的字段上进行查询：<code>age</code>、<code>address</code>、<code>age和address</code></p>
 <p>当查询返回的文档中包含的字段，与一个索引包含的字段相同或是其子集时，这个索引就覆盖了本次查询。在实际中，应优先使用覆盖查询，它可以直接访问索引数据就能够完成查询，可极大提高查询效率。</p>
 <p>为确保查询只使用索引就可以完成可以使用映身来指定不要返回的<code>_id</code>字段，除非它是复合索引的一部分。如：</p>
-<pre><code><span class="tag">db</span><span class="class">.std</span><span class="class">.createIndex</span>(<span class="rules">{<span class="rule"><span class="attribute">name</span>:<span class="value"><span class="number">1</span>,age:<span class="number">1</span></span></span></span>})
-<span class="tag">db</span><span class="class">.std</span><span class="class">.find</span>(<span class="rules">{}</span>,<span class="rules">{<span class="rule"><span class="attribute">_id</span>:<span class="value"><span class="number">0</span>,name:<span class="number">1</span>,age:<span class="number">1</span></span></span></span>})
+<pre><code>db.std.createIndex({name:1,age:1})
+db.std.find({},{_id:0,name:1,age:1})
 </code></pre></li>
 </ol>
 <ol>
 <li><p>多键索引是对数组类型建立的索引，对数组建立索引，实际上是对数组的每个元素建立索引，而不是对数组本身建立索引。</p>
-<pre><code>obj2 = {<span class="string">name:</span><span class="string">'bob'</span>,<span class="string">scores:</span>[<span class="number">95</span>,<span class="number">98</span>]}
-obj1 = {<span class="string">name:</span><span class="string">'joe'</span>,<span class="string">scores:</span>[<span class="number">95</span>,<span class="number">95</span>]}
-db.std.creatIndex({<span class="string">scores:</span><span class="number">1</span>})
+<pre><code>obj2 = {name:&apos;bob&apos;,scores:[95,98]}
+obj1 = {name:&apos;joe&apos;,scores:[95,95]}
+db.std.creatIndex({scores:1})
 </code></pre><p>创建索引后大致如下：</p>
-<pre><code><span class="prompt">95=&gt;</span><span class="clojure"><span class="collection">[obj1,obj2]</span></span>
-<span class="prompt">98=&gt;</span><span class="clojure"><span class="collection">[obj2]</span></span>
-<span class="prompt">99=&gt;</span><span class="clojure"><span class="collection">[obj1]</span></span>
+<pre><code>95=&gt;[obj1,obj2]
+98=&gt;[obj2]
+99=&gt;[obj1]
 </code></pre></li>
 </ol>
 <pre><code>使用多键索引需要注意的几个问题：
@@ -123,157 +123,157 @@ db.std.creatIndex({<span class="string">scores:</span><span class="number">1</sp
 -   一个索引中的数组字段最多只能有一个：由于复合键的笛卡尔积中的值都要被索引，如果支持多个数组，笛卡尔积分很大，索引条目会爆炸式增长。所以一个索引中只允许一个数组。
 -   当数组元素是文档类型时，可以为文档的某个字段建立多键索引。
 
-        {<span class="string">"_id"</span>:ObjectId(<span class="attribute">...</span>),<span class="string">"title"</span>:<span class="string">"Grocery Quality"</span>,
-            <span class="string">"comments"</span>:<span class="preprocessor">[</span>
-                    {author_id:ObjectId(<span class="attribute">...</span>),
-                     <span class="built_in">date</span>:<span class="built_in">Date</span>(<span class="attribute">...</span>),
-                     text:<span class="string">"please expand the cheddar selection."</span>},<span class="attribute">...</span>
-                <span class="preprocessor">]</span><span class="markup">
+        {&quot;_id&quot;:ObjectId(...),&quot;title&quot;:&quot;Grocery Quality&quot;,
+            &quot;comments&quot;:[
+                    {author_id:ObjectId(...),
+                     date:Date(...),
+                     text:&quot;please expand the cheddar selection.&quot;},...
+                ]
         }
-        db.feedback.createIndex({"comments.text":1});
+        db.feedback.createIndex({&quot;comments.text&quot;:1});
 
--   多键索引与哈希索引是不兼容的</span>
+-   多键索引与哈希索引是不兼容的
 </code></pre><ol>
 <li><p>哈希索引：它存储的是索引键的哈希值，哈希索引只支持等值查询，不支持范围查找<code>db.std.createIndex({name:&quot;hashed&quot;})</code></p>
 <p>哈希索引主要用于分片在集合上，可以作为片键来使用，能够将数据比较均匀的分散存储在各个分片上。</p>
 </li>
 <li><p>这是一个例子：</p>
-<pre><code>dbService = connect(<span class="string">"localhost:27017"</span>);
-db = dbService.getSiblingDB(<span class="string">"okuc"</span>);
+<pre><code>dbService = connect(&quot;localhost:27017&quot;);
+db = dbService.getSiblingDB(&quot;okuc&quot;);
 
-print(<span class="string">"=================单字段索引=================="</span>)
+print(&quot;=================单字段索引==================&quot;)
 db.index_single.drop();
 
-<span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">100000</span>;i++){//插入测试数据
+for(var i=0;i&lt;100000;i++){//插入测试数据
   db.index_single.insert({ index:i,
-                            name:<span class="string">"user"</span>+i
+                            name:&quot;user&quot;+i
                             })
 
 }
 
-print(<span class="string">"不使用索引:"</span>)
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_single.find({name:<span class="string">"user1000"</span>}).explain(<span class="string">"executionStats"</span>).executionStats
-print(<span class="string">"扫描文档数："</span>+<span class="literal">result</span>.totalDocsExamined)
-print(<span class="string">"执行总耗时："</span>+<span class="literal">result</span>.executionStages.executionTimeMillisEstimate)
+print(&quot;不使用索引:&quot;)
+var result = db.index_single.find({name:&quot;user1000&quot;}).explain(&quot;executionStats&quot;).executionStats
+print(&quot;扫描文档数：&quot;+result.totalDocsExamined)
+print(&quot;执行总耗时：&quot;+result.executionStages.executionTimeMillisEstimate)
 
-print(<span class="string">"不使用索引,只返回一条查询的文档:"</span>)
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_single.find({name:<span class="string">"user1000"</span>}).limit(<span class="number">1</span>).explain(<span class="string">"executionStats"</span>).executionStats
-print(<span class="string">"扫描文档数："</span>+<span class="literal">result</span>.totalDocsExamined)
-print(<span class="string">"执行总耗时："</span>+<span class="literal">result</span>.executionStages.executionTimeMillisEstimate)
+print(&quot;不使用索引,只返回一条查询的文档:&quot;)
+var result = db.index_single.find({name:&quot;user1000&quot;}).limit(1).explain(&quot;executionStats&quot;).executionStats
+print(&quot;扫描文档数：&quot;+result.totalDocsExamined)
+print(&quot;执行总耗时：&quot;+result.executionStages.executionTimeMillisEstimate)
 
-print(<span class="string">"使用索引后:"</span>)
+print(&quot;使用索引后:&quot;)
 db.index_single.createIndex({name})
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_single.find({name:<span class="string">"user1000"</span>}).explain(<span class="string">"executionStats"</span>).executionStats
-print(<span class="string">"扫描文档数："</span>+<span class="literal">result</span>.totalDocsExamined)
-print(<span class="string">"执行总耗时："</span>+<span class="literal">result</span>.executionStages.executionTimeMillisEstimate)
+var result = db.index_single.find({name:&quot;user1000&quot;}).explain(&quot;executionStats&quot;).executionStats
+print(&quot;扫描文档数：&quot;+result.totalDocsExamined)
+print(&quot;执行总耗时：&quot;+result.executionStages.executionTimeMillisEstimate)
 
-print(<span class="string">"=================覆合索引=================="</span>)
+print(&quot;=================覆合索引==================&quot;)
 db.index_compound.drop();
 
-<span class="keyword">var</span> bulk = db.index_compound.initializeUnorderedBulkOp();
+var bulk = db.index_compound.initializeUnorderedBulkOp();
 
-<span class="keyword">var</span> doc1 = {
-    name :<span class="string">"xiaoli"</span>,
-    age:<span class="number">20</span>,
+var doc1 = {
+    name :&quot;xiaoli&quot;,
+    age:20,
     address:{
-        city:<span class="string">"Beijing"</span>,
-        <span class="type">Province</span>:<span class="string">"Beijing"</span>
+        city:&quot;Beijing&quot;,
+        Province:&quot;Beijing&quot;
     }
 }
 bulk.insert(doc1);
 
-<span class="keyword">var</span> doc2 = {
-    name :<span class="string">"xiaoming"</span>,
-    age:<span class="number">23</span>,
+var doc2 = {
+    name :&quot;xiaoming&quot;,
+    age:23,
     address:{
-        city:<span class="string">"Shijiazhuang"</span>,
-        <span class="type">Province</span>:<span class="string">"Hebei"</span>
+        city:&quot;Shijiazhuang&quot;,
+        Province:&quot;Hebei&quot;
     }
 }
 bulk.insert(doc2);
 bulk.execute();
 
 //创建索引
-db.index_compound.createIndex({name:<span class="number">1</span>,age:-<span class="number">1</span>,address:<span class="number">1</span>});
+db.index_compound.createIndex({name:1,age:-1,address:1});
 
 //前辍匹配
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_compound.find({age:<span class="number">23</span>}).explain().queryPlanner.winningPlan
-printjson(<span class="literal">result</span>)
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_compound.find({name:<span class="string">"xiaoming"</span>,age:<span class="number">23</span>}).explain().queryPlanner.winningPlan
-printjson(<span class="literal">result</span>)
+var result = db.index_compound.find({age:23}).explain().queryPlanner.winningPlan
+printjson(result)
+var result = db.index_compound.find({name:&quot;xiaoming&quot;,age:23}).explain().queryPlanner.winningPlan
+printjson(result)
 
 //排序方向
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_compound.find({}).sort({name:<span class="number">1</span>,age:<span class="number">1</span>}).explain().queryPlanner.winningPlan
-printjson(<span class="literal">result</span>)
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_compound.find({}).sort({name:<span class="number">1</span>,age:-<span class="number">1</span>}).explain().queryPlanner.winningPlan
-printjson(<span class="literal">result</span>)
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_compound.find({}).sort({name:-<span class="number">1</span>,age:<span class="number">1</span>}).explain().queryPlanner.winningPlan
-printjson(<span class="literal">result</span>)
+var result = db.index_compound.find({}).sort({name:1,age:1}).explain().queryPlanner.winningPlan
+printjson(result)
+var result = db.index_compound.find({}).sort({name:1,age:-1}).explain().queryPlanner.winningPlan
+printjson(result)
+var result = db.index_compound.find({}).sort({name:-1,age:1}).explain().queryPlanner.winningPlan
+printjson(result)
 
-print(<span class="string">"=================多键索引=================="</span>)
+print(&quot;=================多键索引==================&quot;)
 
 db.index_multikey.drop();
-<span class="keyword">var</span> bulk = db.index_multikey.initializeUnorderedBulkOp();
+var bulk = db.index_multikey.initializeUnorderedBulkOp();
 
-<span class="keyword">var</span> doc1 = {
-    _id:<span class="number">5</span>
-    name :<span class="string">"xiaoli"</span>,
-    age:<span class="number">20</span>,
-    scores:[<span class="number">95</span>,<span class="number">98</span>,<span class="number">99</span>]
+var doc1 = {
+    _id:5
+    name :&quot;xiaoli&quot;,
+    age:20,
+    scores:[95,98,99]
 }
 bulk.insert(doc1);
 
-<span class="keyword">var</span> doc2 = {
-    _id:<span class="number">7</span>
-    name :<span class="string">"xiaoming"</span>,
-    age:<span class="number">22</span>,
-    scores:[<span class="number">99</span>,<span class="number">95</span>,<span class="number">98</span>],
-    position:[<span class="string">"学习委员"</span>,<span class="string">"学生会主席"</span>]
+var doc2 = {
+    _id:7
+    name :&quot;xiaoming&quot;,
+    age:22,
+    scores:[99,95,98],
+    position:[&quot;学习委员&quot;,&quot;学生会主席&quot;]
 }
 bulk.insert(doc2);
 bulk.execute();
 
 //基本使用
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_multikey.find({scores:<span class="number">99</span>}).explain().queryPlanner.winningPlan
-printjson(<span class="literal">result</span>)
+var result = db.index_multikey.find({scores:99}).explain().queryPlanner.winningPlan
+printjson(result)
 
-db.index_multikey.createIndex({scores:<span class="number">1</span>})
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_multikey.find({scores:<span class="number">99</span>}).explain().queryPlanner.winningPlan
-printjson(<span class="literal">result</span>)
+db.index_multikey.createIndex({scores:1})
+var result = db.index_multikey.find({scores:99}).explain().queryPlanner.winningPlan
+printjson(result)
 
 //一个索引中的数组字段最多只能有一个
-db.index_multikey.createIndex({scores:<span class="number">1</span>,position:<span class="number">1</span>})
-printjson(<span class="literal">result</span>)
+db.index_multikey.createIndex({scores:1,position:1})
+printjson(result)
 
-print(<span class="string">"=================多键索引数组对象的例子=================="</span>)
+print(&quot;=================多键索引数组对象的例子==================&quot;)
 
 db.index_multikey_embedded.drop();
-<span class="keyword">var</span> bulk = db.index_multikey_embedded.initializeUnorderedBulkOp();
+var bulk = db.index_multikey_embedded.initializeUnorderedBulkOp();
 
-<span class="keyword">var</span> doc1 = {
-    _id:<span class="number">1</span>
-    name :<span class="string">"xiaoli"</span>,
-    age:<span class="number">20</span>,
-    scores:[{课程:<span class="string">"语文"</span>,成绩:<span class="number">90</span>},{课程:<span class="string">"数学"</span>,成绩:<span class="number">95</span>]
+var doc1 = {
+    _id:1
+    name :&quot;xiaoli&quot;,
+    age:20,
+    scores:[{课程:&quot;语文&quot;,成绩:90},{课程:&quot;数学&quot;,成绩:95]
 }
 bulk.insert(doc1);
 
-<span class="keyword">var</span> doc2 = {
-    _id:<span class="number">7</span>
-    name :<span class="string">"xiaoming"</span>,
-    age:<span class="number">22</span>,
-    scores:[{课程:<span class="string">"语文"</span>,成绩:<span class="number">92</span>},{课程:<span class="string">"数学"</span>,成绩:<span class="number">90</span>]
+var doc2 = {
+    _id:7
+    name :&quot;xiaoming&quot;,
+    age:22,
+    scores:[{课程:&quot;语文&quot;,成绩:92},{课程:&quot;数学&quot;,成绩:90]
 }
 bulk.insert(doc2);
 bulk.execute();
 
 //在数组元素上建立多键索引
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_multikey_embedded.find({<span class="string">"scores.课程"</span>:<span class="string">"语文"</span>}).explain().queryPlanner.winningPlan
-printjson(<span class="literal">result</span>)
+var result = db.index_multikey_embedded.find({&quot;scores.课程&quot;:&quot;语文&quot;}).explain().queryPlanner.winningPlan
+printjson(result)
 
-db.index_multikey_embedded.createIndex({<span class="string">"scores.课程"</span>:<span class="number">1</span>})
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_multikey_embedded.find({<span class="string">"scores.课程"</span>:<span class="string">"语文"</span>}).explain().queryPlanner.winningPlan
-printjson(<span class="literal">result</span>)
+db.index_multikey_embedded.createIndex({&quot;scores.课程&quot;:1})
+var result = db.index_multikey_embedded.find({&quot;scores.课程&quot;:&quot;语文&quot;}).explain().queryPlanner.winningPlan
+printjson(result)
 </code></pre></li>
 <li><p>MongoDB除了拥有众多的索引类型外，还有很多的属性，这些属性包括：唯一性、稀疏性以及超时删除的TTL属性。</p>
 <p>使用这个属性创建的索引叫：<code>唯一索引(Unique Index)</code>、<code>稀疏索引(Spare Index)</code>、<code>TTl索引(Time-To-Live Index)</code>。</p>
@@ -321,15 +321,15 @@ printjson(<span class="literal">result</span>)
 <p>   dbService = connect(“localhost:27017”);<br>   db = dbService.getSiblingDB(“okuc”);<br>   var bulk = db.index_unique.initializeUnorderedBulkOp();</p>
 <p>   db.index_unique.drop();</p>
 <p>   var doc1 = {</p>
-<pre><code><span class="label">name:</span><span class="string">"xiaoli"</span>,
-<span class="label">age:</span><span class="number">20</span>
+<pre><code>name:&quot;xiaoli&quot;,
+age:20
 </code></pre><p>   }<br>   bulk.insert(doc1);</p>
 <p>   var doc2 = {</p>
-<pre><code><span class="property">name</span>:<span class="string">"xiaoming"</span>
+<pre><code>name:&quot;xiaoming&quot;
 </code></pre><p>   }<br>   bulk.insert(doc2);</p>
 <p>   var doc3 = {</p>
-<pre><code><span class="string">name:</span><span class="string">"xiaoqiang"</span>,
-<span class="string">age:</span><span class="literal">null</span>
+<pre><code>name:&quot;xiaoqiang&quot;,
+age:null
 </code></pre><p>   }<br>   bulk.insert(doc3);</p>
 <p>   bulk.execute();</p>
 <p>   //将不含索引键的字段值存储为null</p>
@@ -338,29 +338,29 @@ printjson(<span class="literal">result</span>)
 <p>   //一个文档的内部，索引字段的值允许重复</p>
 <p>   db.index_unique.drop();<br>   var result = db.index_unique.createIndex({“comments.author_id”:1},{unique:true});<br>   printjson(result)</p>
 <p>   var doc1 = {</p>
-<pre><code><span class="string">"title"</span>:<span class="string">"深入浅出MongoDB"</span>，
-<span class="string">"comments"</span>:[
+<pre><code>&quot;title&quot;:&quot;深入浅出MongoDB&quot;，
+&quot;comments&quot;:[
     {
-        author_id:<span class="number">1</span>,
-        <span class="type">text</span>:<span class="string">"well Done!."</span>
+        author_id:1,
+        text:&quot;well Done!.&quot;
     },
     {
-        author_id:<span class="number">1</span>,
-        <span class="type">text</span>:<span class="string">"Good!"</span>
+        author_id:1,
+        text:&quot;Good!&quot;
     }
 ]
 </code></pre><p>   }</p>
 <p>   var result = db.index_unique.insert(doc1)<br>   printjson(result)</p>
 <p>   var doc2 = {</p>
-<pre><code><span class="string">"title"</span>:<span class="string">"Hello C++"</span>，
-<span class="string">"comments"</span>:[
+<pre><code>&quot;title&quot;:&quot;Hello C++&quot;，
+&quot;comments&quot;:[
     {
-        author_id:<span class="number">1</span>,
-        <span class="type">text</span>:<span class="string">"well Done!."</span>
+        author_id:1,
+        text:&quot;well Done!.&quot;
     },
     {
-        author_id:<span class="number">2</span>,
-        <span class="type">text</span>:<span class="string">"Good!"</span>
+        author_id:2,
+        text:&quot;Good!&quot;
     }
 ]
 </code></pre><p>   }</p>
@@ -370,15 +370,15 @@ printjson(<span class="literal">result</span>)
 <p>   dbService = connect(“localhost:27017”);<br>   db = dbService.getSiblingDB(“okuc”);<br>   var bulk = db.index_sparse.initializeUnorderedBulkOp();</p>
 <p>   db.index_sparse.drop();</p>
 <p>   var doc1 = {</p>
-<pre><code><span class="label">name:</span><span class="string">"xiaoli"</span>,
-<span class="label">age:</span><span class="number">20</span>
+<pre><code>name:&quot;xiaoli&quot;,
+age:20
 </code></pre><p>   }<br>   bulk.insert(doc1);</p>
 <p>   var doc2 = {</p>
-<pre><code><span class="label">name:</span><span class="string">"xiaoming"</span>
-<span class="label">age:</span><span class="number">21</span>
+<pre><code>name:&quot;xiaoming&quot;
+age:21
 </code></pre><p>   }<br>   bulk.insert(doc2);</p>
 <p>   var doc3 = {</p>
-<pre><code><span class="property">name</span>:<span class="string">"xiaoqiang"</span>
+<pre><code>name:&quot;xiaoqiang&quot;
 </code></pre><p>   }<br>   bulk.insert(doc3);</p>
 <p>   bulk.execute();</p>
 <p>   //spare，unique联合使用<br>   db.index_sparse.createIndex({age:1},{unique：true,sparse:true})<br>   var result = db.index_sparse.insert({name:”joe”});<br>   printjson(result)<br>   var result = db.index_sparse.insert({name:”joe”})<br>   printjson(result)</p>
@@ -390,17 +390,17 @@ printjson(<span class="literal">result</span>)
 <p>   dbService = connect(“localhost:27017”);<br>   db = dbService.getSiblingDB(“okuc”);<br>   var bulk = db.index_ttl.initializeUnorderedBulkOp();</p>
 <p>   db.index_sparse.drop();</p>
 <p>   var doc1 = {</p>
-<pre><code><span class="string">_id:</span><span class="number">5</span>,
-<span class="string">name:</span><span class="string">"xiaoli"</span>,
-<span class="string">lastUpdated:</span><span class="keyword">new</span> Date()
+<pre><code>_id:5,
+name:&quot;xiaoli&quot;,
+lastUpdated:new Date()
 </code></pre><p>   }<br>   bulk.insert(doc1);</p>
 <p>   var doc2 = {</p>
-<pre><code><span class="label">_id:</span><span class="number">6</span>
-<span class="label">name:</span><span class="string">"xiaoming"</span>
+<pre><code>_id:6
+name:&quot;xiaoming&quot;
 </code></pre><p>   }<br>   bulk.insert(doc2);<br>   bulk.execute();</p>
 <p>   db.index_ttl.createIndex({lastUpdated:1},{expireAfterSeconds:60*1})</p>
 <p>   function sleep(sleepTime){</p>
-<pre><code><span class="flow">for</span>(var <span class="built_in">start</span> = <span class="built_in">Date</span>.now();<span class="built_in">Date</span>.now() - <span class="built_in">start</span> &lt;=sleepTime){}
+<pre><code>for(var start = Date.now();Date.now() - start &lt;=sleepTime){}
 </code></pre><p>   }</p>
 <p>   //基本使用</p>
 <p>   print(“sleep…..”)<br>   sleep(1000<em>60</em>2);<br>   var cursor = db.index_ttl.find();<br>   printjson(cursor.toArray())</p>
@@ -415,7 +415,7 @@ printjson(<span class="literal">result</span>)
 <li><code>keys</code>:文档类型，用来指明创建索引的字段以及排序方向，可惟由多组键值对组成，如：<code>db.std.creatIndex({name:1,age:-1})</code></li>
 <li><code>options</code>:用来设置索引的属性以及其他辅助选项，例如：为索引指定别名、在后台创建索引以及设置索引的版本号等。</li>
 <li><p>返回值是一个文档类型，其包含的字段如下：</p>
-<pre><code><span class="tag">db</span><span class="class">.std</span><span class="class">.creatIndex</span>(<span class="rules">{<span class="rule"><span class="attribute">name</span>:<span class="value"><span class="number">1</span></span></span></span>})<span class="rules">{</span>
+<pre><code>db.std.creatIndex({name:1}){
 </code></pre><p>   “createdCollertionAutomatically”:true,//集合是否自动创建<br>   “numIndexesBefor”：1，//创建之前的索引个数<br>   “numIndexesAfter”:：2,//创建之后的索引个数<br>   “ok”:1//表示创建索引成功</p>
 <p>   }</p>
 <p>创建索引有以下几个地方需要注意：</p>
@@ -434,11 +434,11 @@ printjson(<span class="literal">result</span>)
 </li>
 <li><p>使用<code>db.集合名.getIndexes()</code>可以查看集合拥有的索引，它的返回值是一个数组，会列出所有的索引，每个数组元素主要包含以下字段：</p>
 <p>   {</p>
-<pre><code><span class="string">"v"</span>:<span class="number">1</span>,<span class="comment">//索引的版本号</span>
-<span class="string">"key"</span>:{<span class="string">"name"</span>:<span class="number">1</span>,<span class="string">"age"</span>:-<span class="number">1</span>},<span class="comment">//索引字段</span>
-<span class="string">"name"</span>:<span class="string">"name_1_age_1"</span>,<span class="comment">//索引的名字，可以指定</span>
-<span class="string">"ns"</span>:<span class="string">"okuc.index_manage"</span>,<span class="comment">//索引的所属的命名空间，数据库名_集合名</span>
-<span class="string">"background"</span>:<span class="literal">true</span><span class="comment">//其他option选项</span>
+<pre><code>&quot;v&quot;:1,//索引的版本号
+&quot;key&quot;:{&quot;name&quot;:1,&quot;age&quot;:-1},//索引字段
+&quot;name&quot;:&quot;name_1_age_1&quot;,//索引的名字，可以指定
+&quot;ns&quot;:&quot;okuc.index_manage&quot;,//索引的所属的命名空间，数据库名_集合名
+&quot;background&quot;:true//其他option选项
 </code></pre><p>   }</p>
 <p>使用<code>db.system.indexes.find()</code>查看数据库中所有的索引</p>
 </li>
@@ -449,8 +449,8 @@ printjson(<span class="literal">result</span>)
 </li>
 <li><p>返回值如下：</p>
 <p>   {</p>
-<pre><code><span class="string">"nIndexesWas"</span>:<span class="number">2</span>,<span class="comment">//删除之前，集合拥有的索引数目</span>
-<span class="string">"okuc"</span>:<span class="number">1</span><span class="comment">//删除索引成功</span>
+<pre><code>&quot;nIndexesWas&quot;:2,//删除之前，集合拥有的索引数目
+&quot;okuc&quot;:1//删除索引成功
 </code></pre><p>   }</p>
 <p>   db.集合.dropIndexes()//删除集合中所有的索引</p>
 </li>
@@ -503,58 +503,58 @@ printjson(<span class="literal">result</span>)
 </li>
 <li>这是一个例子：</li>
 </ol>
-<pre><code>dbService = connect(<span class="string">"localhost:27017"</span>);
-db = dbService.getSiblingDB(<span class="string">"okuc"</span>);
+<pre><code>dbService = connect(&quot;localhost:27017&quot;);
+db = dbService.getSiblingDB(&quot;okuc&quot;);
 
-<span class="keyword">var</span> bulk = db.index_manage.initializeUnorderedBulkOp();
+var bulk = db.index_manage.initializeUnorderedBulkOp();
 
 db.index_sparse.drop();
 
-<span class="keyword">var</span> doc1 = {
-    name:<span class="string">"xiaoli"</span>,
-    age:<span class="number">20</span>,
-    scores:[<span class="number">95</span>,<span class="number">98</span>,<span class="number">99</span>]
+var doc1 = {
+    name:&quot;xiaoli&quot;,
+    age:20,
+    scores:[95,98,99]
 }
 bulk.insert(doc1);
 
-<span class="keyword">var</span> doc2 = {
-    name:<span class="string">"xiaoqiang"</span>,
-    age:<span class="number">22</span>,
-    scores:[<span class="number">95</span>,<span class="number">99</span>]
+var doc2 = {
+    name:&quot;xiaoqiang&quot;,
+    age:22,
+    scores:[95,99]
 }
 bulk.insert(doc2);
 bulk.execute();
 
 //创建索引
-db.index_manage.createIndex({name:<span class="number">1</span>,age:-<span class="number">1</span>},{abckground:<span class="literal">true</span>,unique:<span class="literal">true</span>,spare:<span class="literal">true</span>,name:<span class="string">"name_age_new"</span>})
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_manage.getIndexes();
-printjson(<span class="literal">result</span>)
+db.index_manage.createIndex({name:1,age:-1},{abckground:true,unique:true,spare:true,name:&quot;name_age_new&quot;})
+var result = db.index_manage.getIndexes();
+printjson(result)
 
 //删除索引
-db.index_manage.dropIndex('name_age_new');
-//db.index_manage.dropIndex({name:<span class="number">1</span>,age:-<span class="number">1</span>});
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_manage.getIndexes();
-printjson(<span class="literal">result</span>)
+db.index_manage.dropIndex(&apos;name_age_new&apos;);
+//db.index_manage.dropIndex({name:1,age:-1});
+var result = db.index_manage.getIndexes();
+printjson(result)
 
 //查看当前数据库中所有索引
 
-<span class="keyword">var</span> cursor = db.system.indexes.find();
+var cursor = db.system.indexes.find();
 printjson(cursor)
 
 //explain函数的使用
 
-db.index_manage.ensureIndex({name:<span class="number">1</span>,age:-<span class="number">1</span>})
-//<span class="keyword">var</span> <span class="literal">result</span> = db.index_manage.find().explain()
-//<span class="keyword">var</span> <span class="literal">result</span> = db.index_manage.find().explain(<span class="string">"queryPlanner"</span>)
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_manage.find().explain(<span class="string">"false"</span>)
-printjson(<span class="literal">result</span>)
+db.index_manage.ensureIndex({name:1,age:-1})
+//var result = db.index_manage.find().explain()
+//var result = db.index_manage.find().explain(&quot;queryPlanner&quot;)
+var result = db.index_manage.find().explain(&quot;false&quot;)
+printjson(result)
 
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_manage.find().explain(<span class="string">"executionStats"</span>)
-printjson(<span class="literal">result</span>)
+var result = db.index_manage.find().explain(&quot;executionStats&quot;)
+printjson(result)
 
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_manage.find().explain(<span class="string">"allPlansExecution"</span>)
-<span class="keyword">var</span> <span class="literal">result</span> = db.index_manage.find().explain(<span class="string">"true"</span>)
-printjson(<span class="literal">result</span>)
+var result = db.index_manage.find().explain(&quot;allPlansExecution&quot;)
+var result = db.index_manage.find().explain(&quot;true&quot;)
+printjson(result)
 </code></pre>
       
     </div>
@@ -579,10 +579,10 @@ printjson(<span class="literal">result</span>)
 
 <nav id="pagination" >
     
-    <a href="/2015/12/19/新手学习mongodb之七：特殊索引/" class="alignleft prev" >Prev</a>
+    <a href="/2015/12/19/新手学习mongodb之七：特殊索引/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/12/16/新手学习mongodb之五：游标及模糊查询/" class="alignright next" >Next</a>
+    <a href="/2015/12/16/新手学习mongodb之五：游标及模糊查询/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -612,7 +612,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -627,7 +627,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

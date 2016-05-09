@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -79,190 +79,190 @@ var _hmt = _hmt || [];
     </header>
     <div class="entry">
       
-        <h2 id="第3章_Bootstrap内置的布局组件(1)">第3章 Bootstrap内置的布局组件(1)</h2><ol>
+        <h2 id="第3章-Bootstrap内置的布局组件-1"><a href="#第3章-Bootstrap内置的布局组件-1" class="headerlink" title="第3章 Bootstrap内置的布局组件(1)"></a>第3章 Bootstrap内置的布局组件(1)</h2><ol>
 <li><p>除了前一章介绍的标记，<code>Bootstrap</code>还内置了一套灵活的组件，可用于设计用户界面、交互功能，等等。这些组件来自一个独立的 <code>javaScript</code>文件，而这个文件可以通过<code>Bootstrap</code>的自定义构建工具生成，因此可以只包含你需要的组件。一般会选择所有组件，这样就有了最大的灵活性。</p>
 </li>
 <li><p><strong>上下文菜单</strong>：下拉菜单以列表形式呈现一组选项，一般与上下文相关，可用于不同的元素、导航、按钮，等等。</p>
-<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span> <span class="attribute">role</span>=<span class="value">"menu"</span> <span class="attribute">aria-labelledby</span>=<span class="value">"dropdownMenu"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Another action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Something else here<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"divider"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>//分隔横线
-  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Separated link<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+<pre><code>&lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;dropdownMenu&quot;&gt;
+  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;//分隔横线
+  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </code></pre><ul>
 <li><p><strong>右对齐</strong>：为<code>.dropdown-menu</code>添加<code>.pull-right</code>类，可以让下拉菜单右边缘与父对象右边缘对齐：</p>
-<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu pull-right"</span> <span class="attribute">role</span>=<span class="value">"menu"</span> <span class="attribute">aria-labelledby</span>=<span class="value">"dLabel"</span>&gt;</span>
+<pre><code>&lt;ul class=&quot;dropdown-menu pull-right&quot; role=&quot;menu&quot; aria-labelledby=&quot;dLabel&quot;&gt;
   ...
-<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+&lt;/ul&gt;
 </code></pre></li>
 <li><p><strong>子菜单</strong>：只要在当前下拉菜单的任意<code>&lt;li&gt;</code>元素上添加<code>.dropdown-submenu</code>即可实现子菜单。</p>
-<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span> <span class="attribute">role</span>=<span class="value">"menu"</span> <span class="attribute">aria-labelledby</span>=<span class="value">"dLabel"</span>&gt;</span>
+<pre><code>&lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;dLabel&quot;&gt;
   ...
-  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"dropdown-submenu"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">tabindex</span>=<span class="value">"-1"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>More options<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span>&gt;</span>
+  &lt;li class=&quot;dropdown-submenu&quot;&gt;
+    &lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;More options&lt;/a&gt;
+    &lt;ul class=&quot;dropdown-menu&quot;&gt;
       ...
-    <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 </code></pre><a id="more"></a></li>
 </ul>
 </li>
 <li><p><strong>按扭组</strong>可以把多个按纽紧密的排列在一起。要创建按钮组，只需要把按扭放在类为<code>.btn-group</code>的<code>&lt;div&gt;</code>中即可。</p>
-<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-group"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn"</span>&gt;</span>Left<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn"</span>&gt;</span>Middle<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn"</span>&gt;</span>Right<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<pre><code>&lt;div class=&quot;btn-group&quot;&gt;
+  &lt;button class=&quot;btn&quot;&gt;Left&lt;/button&gt;
+  &lt;button class=&quot;btn&quot;&gt;Middle&lt;/button&gt;
+  &lt;button class=&quot;btn&quot;&gt;Right&lt;/button&gt;
+&lt;/div&gt;
 </code></pre><p>如果想把多个按钮组放到一行上，可以用类为<code>.btn-toolbar</code>的<code>&lt;div&gt;</code>来包装这些按钮组：</p>
-<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-toolbar"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-group"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-align-left"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-align-center"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-align-right"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-align-justify"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-group"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-italic"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-bold"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-font"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-text-height"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-text-width"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-group"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-indent-left"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span><span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"icon-indent-right"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<pre><code>&lt;div class=&quot;btn-toolbar&quot;&gt;
+  &lt;div class=&quot;btn-group&quot;&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;icon-align-left&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;icon-align-center&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;icon-align-right&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;icon-align-justify&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;btn-group&quot;&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;icon-italic&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;icon-bold&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;icon-font&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;icon-text-height&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;icon-text-width&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;btn-group&quot;&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;icon-indent-left&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;icon-indent-right&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
 </code></pre><p>要想把按钮垂直堆叠起来,可以在<code>.btn-group</code>后面再添加一个<code>.btn-group-vertical</code>类：</p>
-<pre><code>&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"btn-group btn-group-vertical"</span>&gt;
+<pre><code>&lt;div class=&quot;btn-group btn-group-vertical&quot;&gt;
   ...
-&lt;/<span class="keyword">div</span>&gt;
+&lt;/div&gt;
 </code></pre></li>
 </ol>
-<pre><code>要在下拉菜单中使用按钮，必须把按钮放在<span class="escape">`.</span>btn-toolbar<span class="escape">`中</span>独立的<span class="escape">`.</span>btn-group<span class="escape">`中</span>。
+<pre><code>要在下拉菜单中使用按钮，必须把按钮放在`.btn-toolbar`中独立的`.btn-group`中。
 </code></pre><ol>
 <li><p>要为<strong>按钮添加下拉菜单</strong>，只需把按钮和下拉菜单包装在一个<code>.btn-group</code>中即可。再加上一个<code>&lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;</code>，就可以从视觉上告诉人们按钮包含下拉菜单：</p>
-<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-group"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn btn-danger dropdown-toggle"</span> <span class="attribute">data-toggle</span>=<span class="value">"dropdown"</span>&gt;</span>
+<pre><code>&lt;div class=&quot;btn-group&quot;&gt;
+  &lt;button class=&quot;btn btn-danger dropdown-toggle&quot; data-toggle=&quot;dropdown&quot;&gt;
      Danger
-    <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"caret"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">button</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Another action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Something else here<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"divider"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Separated link<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;ul class=&quot;dropdown-menu&quot;&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+    &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
 </code></pre><p>下拉菜单可以配合任意按钮大小：<code>.btn-large</code>、<code>.btn</code>、<code>.btn-small</code>或<code>.btn-mini</code>。</p>
 <ul>
 <li><p><strong>分隔式按钮下拉菜单</strong>与按钮下拉菜单的样式相同，但有分隔线隔开左边的主操作按钮和右边的下拉菜单开关按钮。</p>
-<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-group"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn"</span>&gt;</span>Action<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn dropdown-toggle"</span> <span class="attribute">data-toggle</span>=<span class="value">"dropdown"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"caret"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">button</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span>&gt;</span>
-    <span class="comment">&lt;!-- dropdown menu links --&gt;</span>
-  <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<pre><code>&lt;div class=&quot;btn-group&quot;&gt;
+  &lt;button class=&quot;btn&quot;&gt;Action&lt;/button&gt;
+  &lt;button class=&quot;btn dropdown-toggle&quot; data-toggle=&quot;dropdown&quot;&gt;
+    &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;ul class=&quot;dropdown-menu&quot;&gt;
+    &lt;!-- dropdown menu links --&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
 </code></pre></li>
 <li><p><strong>上拉菜单</strong>,要把默认的下拉改成上拉，只要在<code>.btn-group</code>容器中再加一个<code>.dropup</code>类就行了。另外，如果还想让上拉菜单与开关按钮右侧对齐，则需要在<code>.dropdown-menu</code>中再加一个<code>.pull-right</code>类：</p>
-<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"btn-group dropup"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn"</span>&gt;</span>Dropup<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn dropdown-toggle"</span> <span class="attribute">data-toggle</span>=<span class="value">"dropdown"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"caret"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">button</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span>&gt;</span>
-    <span class="comment">&lt;!-- dropdown menu links --&gt;</span>
-  <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+<pre><code>&lt;div class=&quot;btn-group dropup&quot;&gt;
+  &lt;button class=&quot;btn&quot;&gt;Dropup&lt;/button&gt;
+  &lt;button class=&quot;btn dropdown-toggle&quot; data-toggle=&quot;dropdown&quot;&gt;
+    &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;ul class=&quot;dropdown-menu&quot;&gt;
+    &lt;!-- dropdown menu links --&gt;
+  &lt;/ul&gt;
 </code></pre></li>
 </ul>
 </li>
 <li><p><strong>标签形导航</strong>：要创建标签形导航，只要给一个无序列表添加基本的<code>.nav</code>和<code>.nav-tabs</code>类即可：</p>
-<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-tabs"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"active"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Home<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Profile<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Messages<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+<pre><code>&lt;ul class=&quot;nav nav-tabs&quot;&gt;
+  &lt;li class=&quot;active&quot;&gt;
+    &lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Profile&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Messages&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </code></pre></li>
 <li><p><strong>并排形导航</strong>，这是比较常见的网页上方导航，用<code>.nav-pills</code>代替<code>.nav-tabs</code>类即可：</p>
-<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-pills"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"active"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Home<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Profile<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Messages<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+<pre><code>&lt;ul class=&quot;nav nav-pills&quot;&gt;
+  &lt;li class=&quot;active&quot;&gt;
+    &lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Profile&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Messages&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </code></pre><p><strong>禁用导航</strong>：要想禁用某个链接，只要给它加上<code>.disabled</code>类，就可以让它在任何情况下（包括<code>:hover</code>状态下）都变为灰色</p>
-<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-pills"</span>&gt;</span>
+<pre><code>&lt;ul class=&quot;nav nav-pills&quot;&gt;
   ...
-  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"disabled"</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Home<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  &lt;li class=&quot;disabled&quot;&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
   ...
-<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+&lt;/ul&gt;
 </code></pre></li>
 <li><p><strong>垂直堆叠的导航</strong>：标签形和胶囊形导航元素默认都是水平排列的。要让它们垂直堆叠起来，只要再添加一个<code>.nav-stacked</code>类即可。</p>
-<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-tabs nav-stacked"</span>&gt;</span>
+<pre><code>&lt;ul class=&quot;nav nav-tabs nav-stacked&quot;&gt;
   ...
-<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+&lt;/ul&gt;
 
-<span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-pills nav-stacked"</span>&gt;</span>
+&lt;ul class=&quot;nav nav-pills nav-stacked&quot;&gt;
   ...
-<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+&lt;/ul&gt;
 </code></pre></li>
 </ol>
 <ol>
 <li><p><strong>导航下拉菜单</strong>：导航菜单与下拉菜单的语法类似。默认情况下，给一个列表项添加.dropdown类，然后给嵌套在这个列表项中的链接添<br>加<code>.dropdown-toggle</code>类和<code>data-toggle=&quot;dropdown&quot;</code>属性，再给嵌套在这个列表项中的无序列表元素添加<code>.dropdown-menu</code>类即可：</p>
-<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-tabs"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"dropdown"</span>&gt;</span>
-        <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"dropdown-toggle"</span>
-                  <span class="attribute">data-toggle</span>=<span class="value">"dropdown"</span>
-                  <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>
+<pre><code>&lt;ul class=&quot;nav nav-tabs&quot;&gt;
+    &lt;li class=&quot;dropdown&quot;&gt;
+        &lt;a class=&quot;dropdown-toggle&quot;
+                  data-toggle=&quot;dropdown&quot;
+                  href=&quot;#&quot;&gt;
                   Dropdown
-                  <span class="tag">&lt;<span class="title">b</span> <span class="attribute">class</span>=<span class="value">"caret"</span>&gt;</span><span class="tag">&lt;/<span class="title">b</span>&gt;</span>
-        <span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-        <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span>&gt;</span>
-            <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-            <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Another action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-            <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Something else here<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-            <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"divider"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-            <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Separated link<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-        <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
-    <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+                  &lt;b class=&quot;caret&quot;&gt;&lt;/b&gt;
+        &lt;/a&gt;
+        &lt;ul class=&quot;dropdown-menu&quot;&gt;
+            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+            &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
 </code></pre><p>同样，如果想得到带下拉菜单的胶囊形导航，只要把<code>.nav-tabs</code>类替换成<code>.nav-pills</code>即可：</p>
-<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-pills"</span>&gt;</span>
-        <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"dropdown"</span>&gt;</span>
-                <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"dropdown-toggle"</span> <span class="attribute">data-toggle</span>=<span class="value">"dropdown"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>
+<pre><code>&lt;ul class=&quot;nav nav-pills&quot;&gt;
+        &lt;li class=&quot;dropdown&quot;&gt;
+                &lt;a class=&quot;dropdown-toggle&quot; data-toggle=&quot;dropdown&quot; href=&quot;#&quot;&gt;
                         Dropdown
-                        <span class="tag">&lt;<span class="title">b</span> <span class="attribute">class</span>=<span class="value">"caret"</span>&gt;</span><span class="tag">&lt;/<span class="title">b</span>&gt;</span>
-                <span class="tag">&lt;/<span class="title">a</span>&gt;</span>
-                <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span>&gt;</span>
-                        <span class="comment">&lt;!--links--&gt;</span>
-                <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
-        <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+                        &lt;b class=&quot;caret&quot;&gt;&lt;/b&gt;
+                &lt;/a&gt;
+                &lt;ul class=&quot;dropdown-menu&quot;&gt;
+                        &lt;!--links--&gt;
+                &lt;/ul&gt;
+        &lt;/li&gt;
+&lt;/ul&gt;
 </code></pre></li>
 <li><p><strong>导航列表</strong>可用于显示一组导航链接，在后台管理界面中的导航区比较常见。<code>Bootstrap</code>项目的文档也使用了这种导航列表。与我们迄今为止讨论的导航相似，导航列表也是带<code>.nav</code>类的无序列表，再给它添加一个<code>.nav-list</code>类，就可以把它变成导航列表：</p>
-<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"nav nav-list"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"nav-header"</span>&gt;</span>List Header<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"active"</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"/"</span>&gt;</span>Home<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Library<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Applications<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"nav-header"</span>&gt;</span>Another List Header<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Profile<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Settings<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"divider"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Help<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+<pre><code>&lt;ul class=&quot;nav nav-list&quot;&gt;
+    &lt;li class=&quot;nav-header&quot;&gt;List Header&lt;/li&gt;
+    &lt;li class=&quot;active&quot;&gt;&lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Library&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Applications&lt;/a&gt;&lt;/li&gt;
+    &lt;li class=&quot;nav-header&quot;&gt;Another List Header&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Profile&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Settings&lt;/a&gt;&lt;/li&gt;
+    &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Help&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </code></pre></li>
 </ol>
-<pre><code><span class="keyword">*</span><span class="keyword">*</span>水平分隔线<span class="keyword">*</span><span class="keyword">*</span>，使用带`.divider`类的空的
+<pre><code>**水平分隔线**，使用带`.divider`类的空的
 </code></pre><ol>
 <li><p>元素即可：</p>
    <ul class="nav-menu"><br>       …<br>           <li class="divider"></li><br>           ….<br>   </ul>
@@ -365,10 +365,10 @@ var _hmt = _hmt || [];
 
 <nav id="pagination" >
     
-    <a href="/2016/01/03/《Bootstrap用户手册》学习笔记(四)/" class="alignleft prev" >Prev</a>
+    <a href="/2016/01/03/《Bootstrap用户手册》学习笔记(四)/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/" class="alignright next" >Next</a>
+    <a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -398,7 +398,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -413,7 +413,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

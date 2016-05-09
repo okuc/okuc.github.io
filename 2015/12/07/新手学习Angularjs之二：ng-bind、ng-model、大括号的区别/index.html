@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -95,54 +95,54 @@ var _hmt = _hmt || [];
 <p>下面介绍一下这个例子，这个例子包含三个<code>controller</code>,第一个<code>controller</code>原样显示<code>hello angular</code>,第二个<code>controller</code>则是把输入框中的数据原样输入及倒序输出。第三个则是输入用户名和密码，点击登录，如果用户名输得是<code>admin</code>,密码是<code>123</code>。则弹出<code>登录成功。</code>，否则，则显示<code>用户名或密码错误！</code>。</p>
 <p>源代码分为<code>html</code>和<code>js</code>两部分。依次如下：</p>
 <p>一、<code>html</code>源代码：</p>
-<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
-<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"zh-cn"</span>&gt;</span>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;zh-cn&quot;&gt;
 
-<span class="tag">&lt;<span class="title">head</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"./public/lib/bootstrap/dist/css/bootstrap.min.css"</span>&gt;</span><span class="tag">&lt;/<span class="title">link</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;./public/lib/bootstrap/dist/css/bootstrap.min.css&quot;&gt;&lt;/link&gt;
+&lt;/head&gt;
 
-<span class="tag">&lt;<span class="title">body</span> <span class="attribute">ng-app</span>=<span class="value">"app"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"FirstCtrl"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">h1</span> <span class="attribute">ng-bind</span>=<span class="value">"msg"</span>&gt;</span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"SecondCtrl"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">ng-model</span>=<span class="value">"msg"</span>&gt;</span><span class="tag">&lt;/<span class="title">input</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">h1</span> <span class="attribute">ng-bind</span>=<span class="value">"msg"</span>&gt;</span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">div</span>&gt;</span>｛{reverse()}｝<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"loginCtrl"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">h1</span>&gt;</span>登录示例<span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">ng-model</span>=<span class="value">"user.name"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">ng-model</span>=<span class="value">"user.pwd"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"button"</span> <span class="attribute">ng-click</span>=<span class="value">"login()"</span>&gt;</span>登录<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"alert-box"</span> <span class="attribute">ng-show</span>=<span class="value">"errormsg.length&gt;0"</span>&gt;</span>｛{errormsg}｝<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"./public/lib/angular/angular.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"controller.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+&lt;body ng-app=&quot;app&quot;&gt;
+  &lt;div ng-controller=&quot;FirstCtrl&quot;&gt;
+    &lt;h1 ng-bind=&quot;msg&quot;&gt;&lt;/h1&gt;
+  &lt;/div&gt;
+  &lt;div ng-controller=&quot;SecondCtrl&quot;&gt;
+    &lt;input type=&quot;text&quot; ng-model=&quot;msg&quot;&gt;&lt;/input&gt;
+    &lt;h1 ng-bind=&quot;msg&quot;&gt;&lt;/h1&gt;
+    &lt;div&gt;｛{reverse()}｝&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div ng-controller=&quot;loginCtrl&quot;&gt;
+    &lt;h1&gt;登录示例&lt;/h1&gt;
+    &lt;input type=&quot;text&quot; ng-model=&quot;user.name&quot;&gt;
+    &lt;input type=&quot;text&quot; ng-model=&quot;user.pwd&quot;&gt;
+    &lt;div class=&quot;button&quot; ng-click=&quot;login()&quot;&gt;登录&lt;/div&gt;
+    &lt;div class=&quot;alert-box&quot; ng-show=&quot;errormsg.length&gt;0&quot;&gt;｛{errormsg}｝&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;./public/lib/angular/angular.js&quot;&gt;&lt;/script&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;controller.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
 
-<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+&lt;/html&gt;
 </code></pre><p>二、<code>controller.js</code>源代码：</p>
-<pre><code>angular.module(<span class="string">'app'</span>,[])
-.controller(<span class="string">'FirstCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>){
-    <span class="variable">$scope</span>.msg=<span class="string">"hello angular"</span>;
+<pre><code>angular.module(&apos;app&apos;,[])
+.controller(&apos;FirstCtrl&apos;,function($scope){
+    $scope.msg=&quot;hello angular&quot;;
 })
-.controller(<span class="string">'SecondCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>){
-    <span class="variable">$scope</span>.msg=<span class="string">"hello okuc"</span>;
-    <span class="variable">$scope</span>.reverse=function(){
-      return <span class="variable">$scope</span>.msg.split(<span class="string">""</span>).reverse().join(<span class="string">""</span>);
+.controller(&apos;SecondCtrl&apos;,function($scope){
+    $scope.msg=&quot;hello okuc&quot;;
+    $scope.reverse=function(){
+      return $scope.msg.split(&quot;&quot;).reverse().join(&quot;&quot;);
     };
-}).controller(<span class="string">'loginCtrl'</span>,<span class="keyword">function</span>(<span class="variable">$scope</span>){
-    <span class="variable">$scope</span>.msg=<span class="string">""</span>;
-    <span class="variable">$scope</span>.user={uname:<span class="string">''</span>,pwd:<span class="string">''</span>};
-    <span class="variable">$scope</span>.login=function(){
-      if(<span class="variable">$scope</span>.user.name==<span class="string">"admin"</span> &amp;&amp; <span class="variable">$scope</span>.user.pwd==<span class="string">"123"</span>){
-        alert(<span class="string">"登录成功"</span>);
+}).controller(&apos;loginCtrl&apos;,function($scope){
+    $scope.msg=&quot;&quot;;
+    $scope.user={uname:&apos;&apos;,pwd:&apos;&apos;};
+    $scope.login=function(){
+      if($scope.user.name==&quot;admin&quot; &amp;&amp; $scope.user.pwd==&quot;123&quot;){
+        alert(&quot;登录成功&quot;);
       }else{
-        <span class="variable">$scope</span>.errormsg=<span class="string">"用户名或密码错误！"</span>
+        $scope.errormsg=&quot;用户名或密码错误！&quot;
       }
     }
 
@@ -171,10 +171,10 @@ var _hmt = _hmt || [];
 
 <nav id="pagination" >
     
-    <a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/" class="alignleft prev" >Prev</a>
+    <a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/12/06/新手学习Angularjs之一：基于Angularjs的第一个应用--todoList/" class="alignright next" >Next</a>
+    <a href="/2015/12/06/新手学习Angularjs之一：基于Angularjs的第一个应用--todoList/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -204,7 +204,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -219,7 +219,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

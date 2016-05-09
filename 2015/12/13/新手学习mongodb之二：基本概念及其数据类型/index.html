@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -126,14 +126,14 @@ var _hmt = _hmt || [];
 <p> 数据类型| 类型编号 | 数据类型 | 类型编号<br> :—-:|:—-:|:—-:|:—-:<br> Double|1|RegularExpression|11<br> String|2|JavaScript|13<br> Object|3|Symbol|14<br> Array|4|JavaScript(Scope)|15<br> Binary data|5|32-bit integer|16<br> Object id|7|Timestamp|17<br> Boolean|8|64-bit integer|18<br> Date|9|Min Key|255<br> Numm|10|Max Key|127</p>
 <p> 如，要查找name类型为String的数据，刚可以这么找<code>db.collection.find({name:{$type:2}})</code>。</p>
 <p> <code>null</code>:表示空值或不存在的字段。<code>db.collection.find({&quot;y&quot;:null})</code><br> <code>布尔</code>：有两个值true或false，例如：{“y”:true}<br> <code>数值类型</code>：支持32-int,64-int以及64-double。<strong>JavaScript只支持64位浮点数</strong>所以，默认存储数字会存为浮点型，要手工指定为int型才可以。依次执行下面四个命令，就会发现这个问题：</p>
-<pre><code><span class="tag">db</span><span class="class">.demo</span><span class="class">.insert</span>(<span class="rules">{<span class="rule"><span class="attribute">y</span>:<span class="value"><span class="number">10</span></span></span></span>});
-<span class="tag">db</span><span class="class">.demo</span><span class="class">.find</span>(<span class="rules">{<span class="rule"><span class="attribute">y</span>:<span class="value">{$type:<span class="number">1</span></span></span></span>}});
-<span class="tag">db</span><span class="class">.demo</span><span class="class">.insert</span>(<span class="rules">{<span class="rule"><span class="attribute">y</span>:<span class="value"><span class="function">NumberInt</span>(<span class="number">12</span>)</span></span></span>});
-<span class="tag">db</span><span class="class">.demo</span><span class="class">.find</span>(<span class="rules">{<span class="rule"><span class="attribute">y</span>:<span class="value">{$type:<span class="number">16</span></span></span></span>}});
+<pre><code>db.demo.insert({y:10});
+db.demo.find({y:{$type:1}});
+db.demo.insert({y:NumberInt(12)});
+db.demo.find({y:{$type:16}});
 </code></pre><p> <code>字符串</code>:使用<code>UTF-8</code>对字符串进行编码，如<code>{&quot;y&quot;:&quot;Hello okuc&quot;}</code><br> <code>二进制数据</code>：可以保存由任意字节组成的字符串，例如：图片、视频等。<br> <code>正则表达式</code>：主要用于查询，使用正则表达式作为限定条件。如:</p>
-<pre><code><span class="tag">-</span> `<span class="rules">{<span class="rule"><span class="attribute">name</span>:<span class="value">/jame/</span></span></span>}`:用于查询<span class="tag">name</span>字段中含有<span class="tag">jame</span>的文档。
-<span class="tag">-</span> `<span class="rules">{<span class="rule"><span class="attribute">name</span>:<span class="value">/jame/i</span></span></span>}`:用于查询<span class="tag">name</span>字段中含有<span class="tag">jame</span>的文档,不区分大小写。
-<span class="tag">-</span> `<span class="rules">{<span class="rule"><span class="attribute">name</span>:<span class="value">/^jame/i</span></span></span>}`:用于查询<span class="tag">name</span>字段中含有<span class="tag">jame</span>的文档,不区分大小写。
+<pre><code>- `{name:/jame/}`:用于查询name字段中含有jame的文档。
+- `{name:/jame/i}`:用于查询name字段中含有jame的文档,不区分大小写。
+- `{name:/^jame/i}`:用于查询name字段中含有jame的文档,不区分大小写。
 </code></pre><p>  <code>JavaScript代码</code>：文档中可以包含任意的JavaScript代码。<code>{&quot;func&quot;:function(){}}</code></p>
 </li>
 <li>日期型是一个64位的整数，它代表的是Unix epoch的毫秒数。MongoDB在存储时间时，先转化为UTC时间：<code>北京时间(CST)=UTC+8个小时</code></li>
@@ -162,10 +162,10 @@ var _hmt = _hmt || [];
 
 <nav id="pagination" >
     
-    <a href="/2015/12/14/新手学习mongodb之三：数据更新操作/" class="alignleft prev" >Prev</a>
+    <a href="/2015/12/14/新手学习mongodb之三：数据更新操作/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/12/13/轻松在eclipse中将maven项目布署到tomcat上/" class="alignright next" >Next</a>
+    <a href="/2015/12/13/轻松在eclipse中将maven项目布署到tomcat上/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -195,7 +195,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -210,7 +210,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

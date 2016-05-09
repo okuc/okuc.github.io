@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -97,24 +97,24 @@ var _hmt = _hmt || [];
 </li>
 <li><p>默认情况下，使用fs.files存储文件的元数据，包含主要的字段如下：</p>
 <pre><code>{
-    <span class="string">"_id"</span><span class="symbol">:&lt;ObjectId&gt;</span>,<span class="string">"length"</span><span class="symbol">:&lt;num&gt;</span>,<span class="regexp">//</span>文件长度
-    <span class="string">"chunkSize"</span><span class="symbol">:&lt;num&gt;</span>,<span class="regexp">//</span>每个数据块的大小 
-    <span class="string">"uploadDate"</span><span class="symbol">:&lt;timestamp&gt;</span>,<span class="regexp">//</span>上传时间
-    <span class="string">"md5"</span><span class="symbol">:&lt;hash&gt;</span>,
-    <span class="string">"filename"</span>：&lt;string&gt;,
-    <span class="string">"contentType"</span><span class="symbol">:&lt;string&gt;</span>,<span class="regexp">//</span>表示文件的<span class="constant">MIME类</span>型
-    <span class="string">"aliases"</span><span class="symbol">:&lt;string</span> array&gt;,<span class="regexp">//</span>文件别名
-    <span class="string">"metadata"</span><span class="symbol">:&lt;dataObject&gt;//</span>文件额外的辅助信息
+    &quot;_id&quot;:&lt;ObjectId&gt;,&quot;length&quot;:&lt;num&gt;,//文件长度
+    &quot;chunkSize&quot;:&lt;num&gt;,//每个数据块的大小 
+    &quot;uploadDate&quot;:&lt;timestamp&gt;,//上传时间
+    &quot;md5&quot;:&lt;hash&gt;,
+    &quot;filename&quot;：&lt;string&gt;,
+    &quot;contentType&quot;:&lt;string&gt;,//表示文件的MIME类型
+    &quot;aliases&quot;:&lt;string array&gt;,//文件别名
+    &quot;metadata&quot;:&lt;dataObject&gt;//文件额外的辅助信息
 ｝
 </code></pre></li>
 <li><p>默认情况下，使用fs.chunks存储以255k进行分割的文件块，包含字段如下：</p>
 </li>
 </ol>
 <pre><code>{
-    <span class="string">"_id"</span><span class="symbol">:&lt;ObjectId&gt;</span>,
-    <span class="string">"files_id"</span><span class="symbol">:&lt;ObjectId&gt;</span>,<span class="regexp">//</span>文件id
-    <span class="string">"n"</span><span class="symbol">:&lt;num&gt;</span>,数据块的序号
-    <span class="string">"data"</span><span class="symbol">:&lt;binary&gt;//</span>实际数据
+    &quot;_id&quot;:&lt;ObjectId&gt;,
+    &quot;files_id&quot;:&lt;ObjectId&gt;,//文件id
+    &quot;n&quot;:&lt;num&gt;,数据块的序号
+    &quot;data&quot;:&lt;binary&gt;//实际数据
 ｝
 </code></pre><ol>
 <li><p>GridFS主要适用于如下场景：</p>
@@ -133,20 +133,20 @@ var _hmt = _hmt || [];
 </ol>
 <pre><code>在命令行中，可以依次敲入以下命令进行测试：
 
-    &gt;mongofiles --<span class="keyword">help</span>
-    &gt;echo <span class="string">"hello MongoDB"</span>&gt;&gt;<span class="keyword">test</span>.txt
-    &gt;mongofiles -<span class="keyword">h</span> localhost:27017 -<span class="keyword">d</span> okuc put <span class="keyword">test</span>.txt  <span class="comment">//okuc为数据库名</span>
+    &gt;mongofiles --help
+    &gt;echo &quot;hello MongoDB&quot;&gt;&gt;test.txt
+    &gt;mongofiles -h localhost:27017 -d okuc put test.txt  //okuc为数据库名
     &gt;Mongo
-    &gt;<span class="keyword">use</span> okuc
+    &gt;use okuc
     &gt;show collections
-    &gt;<span class="keyword">db</span>.fs.files.find()
-    &gt;<span class="keyword">db</span>.fs.chunks.find()
-    &gt;<span class="keyword">db</span>.fs.chunks.getIndexes()
-    &gt;<span class="keyword">exit</span>
-    &gt;mongofiles -<span class="keyword">h</span> localhost:27017 -<span class="keyword">d</span> okuc <span class="keyword">list</span>
-    &gt;mongofiles -<span class="keyword">h</span> localhost:27017 -<span class="keyword">d</span> okuc get <span class="keyword">test</span>.txt
-    &gt;mongofiles -<span class="keyword">h</span> localhost:27017 -<span class="keyword">d</span> okuc delete <span class="keyword">test</span>.txt  
-    &gt;mongofiles -<span class="keyword">h</span> localhost:27017 -<span class="keyword">d</span> okuc <span class="keyword">search</span> <span class="keyword">test</span>.txt
+    &gt;db.fs.files.find()
+    &gt;db.fs.chunks.find()
+    &gt;db.fs.chunks.getIndexes()
+    &gt;exit
+    &gt;mongofiles -h localhost:27017 -d okuc list
+    &gt;mongofiles -h localhost:27017 -d okuc get test.txt
+    &gt;mongofiles -h localhost:27017 -d okuc delete test.txt  
+    &gt;mongofiles -h localhost:27017 -d okuc search test.txt
 </code></pre><ol>
 <li><p>MongoDB提供了丰富的多种语言的客户端驱动程序，官方支持的包括C、C++、C#、JAVA、Node.js、PHP及Python等十几种，除此之外，还包括社区支持GO(mgo)以及Erlang等。</p>
 </li>
@@ -154,35 +154,35 @@ var _hmt = _hmt || [];
 </li>
 </ol>
 <p>首选在<a href="https://docs.mongodb.org/ecosystem/drivers/" target="_blank" rel="external">https://docs.mongodb.org/ecosystem/drivers/</a>找到java版本驱动添加到maven的pom文件中，我找到的地址如下：<a href="http://mongodb.github.io/mongo-java-driver/" target="_blank" rel="external">http://mongodb.github.io/mongo-java-driver/</a>：</p>
-<pre><code><span class="tag">&lt;<span class="title">dependencies</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">dependency</span>&gt;</span>
-        <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.mongodb<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span>
-        <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>mongodb-driver<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span>
-        <span class="tag">&lt;<span class="title">version</span>&gt;</span>3.2.0<span class="tag">&lt;/<span class="title">version</span>&gt;</span>
-    <span class="tag">&lt;/<span class="title">dependency</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">dependencies</span>&gt;</span>
+<pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.mongodb&lt;/groupId&gt;
+        &lt;artifactId&gt;mongodb-driver&lt;/artifactId&gt;
+        &lt;version&gt;3.2.0&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
 </code></pre><p>添加完毕后，代码工程如下：</p>
-<pre><code><span class="keyword">public</span> <span class="keyword">class</span> GridFSDemo{
-    String URL = <span class="string">"localhost:27017"</span>;
-    MongoClient mongoClient = <span class="keyword">new</span> MongoClient(URL);
-    DB db = mongoClient.getDB(<span class="string">"okuc"</span>);
-    GridFS gridFS = <span class="keyword">new</span> GridFS(db);
-    <span class="keyword">File</span> <span class="keyword">file</span> = <span class="keyword">new</span> <span class="keyword">File</span>(system.getProperty(<span class="string">"usr.home"</span>)+<span class="string">"/MongoDB-manual.pdf"</span>);
-    FileInputStream fis = <span class="keyword">new</span> FileInputStream(<span class="keyword">file</span>);
+<pre><code>public class GridFSDemo{
+    String URL = &quot;localhost:27017&quot;;
+    MongoClient mongoClient = new MongoClient(URL);
+    DB db = mongoClient.getDB(&quot;okuc&quot;);
+    GridFS gridFS = new GridFS(db);
+    File file = new File(system.getProperty(&quot;usr.home&quot;)+&quot;/MongoDB-manual.pdf&quot;);
+    FileInputStream fis = new FileInputStream(file);
     GridFSInputFile createFile = gridFS.createFile(fis);
-    createFile.put(<span class="string">"filename"</span>,<span class="string">"MongoDB_manual_3.0.pdf"</span>);
-    createFile.put(<span class="string">"contentType"</span>,<span class="string">"application/pdf"</span>);
+    createFile.put(&quot;filename&quot;,&quot;MongoDB_manual_3.0.pdf&quot;);
+    createFile.put(&quot;contentType&quot;,&quot;application/pdf&quot;);
     createFile.save();
 
-    GridFSDBFile findOne = gridFS.findOne(<span class="keyword">new</span> BasicDBObject(<span class="string">"_id"</span>,createFile.getId()));
-    system.out.<span class="keyword">println</span>(findOne);
+    GridFSDBFile findOne = gridFS.findOne(new BasicDBObject(&quot;_id&quot;,createFile.getId()));
+    system.out.println(findOne);
 
     DBCursor fileList = gridFS.getFileList();
-    <span class="keyword">while</span>(fileList.hasNext()){
-        system.out.<span class="keyword">println</span>(fileList.<span class="keyword">next</span>());
+    while(fileList.hasNext()){
+        system.out.println(fileList.next());
     }
 
-    gridFS.remove(<span class="keyword">new</span> BasicDBObject(<span class="string">"_id"</span>,createFile.getId()));
+    gridFS.remove(new BasicDBObject(&quot;_id&quot;,createFile.getId()));
 
     mongoClient.close();
 }
@@ -210,10 +210,10 @@ var _hmt = _hmt || [];
 
 <nav id="pagination" >
     
-    <a href="/2015/12/21/新手学习mongodb之九：聚合管道/" class="alignleft prev" >Prev</a>
+    <a href="/2015/12/21/新手学习mongodb之九：聚合管道/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/12/19/新手学习mongodb之七：特殊索引/" class="alignright next" >Next</a>
+    <a href="/2015/12/19/新手学习mongodb之七：特殊索引/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -243,7 +243,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -258,7 +258,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -84,36 +84,36 @@ var _hmt = _hmt || [];
 <ol>
 <li>对服务进行重启<code>service mysqld stop</code>，结果起不来了。报出的以下错误：<code>Timeout error occurred trying to start MySQL Daemon</code>。</li>
 <li><p>baidu的一番，毫无收获。接下来，经过XXX，顺便到访问到了google，得到了一个可能的答案：磁盘空间不足。第一念头是，不可能呀，这可是2T的硬盘，而且也没有多少数据。念头归念头，还是查询一下，眼见为证：</p>
-<pre><code>[root@htzh199 ~]<span class="preprocessor"># df -lh</span>
+<pre><code>[root@htzh199 ~]# df -lh
 Filesystem            Size  Used Avail Use% Mounted on
 /dev/mapper/vg_htzh199-lv_root
-                       <span class="number">50</span>G   <span class="number">50</span>G   <span class="number">0</span>G  <span class="number">100</span>% /
-tmpfs                  <span class="number">16</span>G   <span class="number">72</span>K   <span class="number">16</span>G   <span class="number">1</span>% /dev/shm
-/dev/sda2             <span class="number">477</span>M   <span class="number">33</span>M  <span class="number">419</span>M   <span class="number">8</span>% /boot
-/dev/sda1             <span class="number">200</span>M  <span class="number">264</span>K  <span class="number">200</span>M   <span class="number">1</span>% /boot/efi
+                       50G   50G   0G  100% /
+tmpfs                  16G   72K   16G   1% /dev/shm
+/dev/sda2             477M   33M  419M   8% /boot
+/dev/sda1             200M  264K  200M   1% /boot/efi
 /dev/mapper/vg_htzh199-lv_home
-                      <span class="number">1.8</span>T  <span class="number">284</span>G  <span class="number">1.4</span>T  <span class="number">17</span>% /home
+                      1.8T  284G  1.4T  17% /home
 </code></pre><p>由上面的数据可以看出，根目录<code>/</code>只有50G，且已经使用完了。由此也可以推测，没有空间可用的可能性非常大。</p>
 <a id="more"></a></li>
-<li>打开日志文件进行查看。PS：怎么一开始没有想到马上查看日志文件呢？<pre><code>vi /<span class="built_in">var</span>/<span class="keyword">log</span>/mysqld<span class="built_in">.</span><span class="keyword">log</span>
+<li>打开日志文件进行查看。PS：怎么一开始没有想到马上查看日志文件呢？<pre><code>vi /var/log/mysqld.log
 </code></pre>从日志文件中，一眼就看到了无可用空间的错误提示，从而找到了问题的具体原因。</li>
 </ol>
 <p>###解决问题<br> 那么，该如何解决呢？问了一下有经验的同事，得到了具体的解决方案：</p>
 <ol>
 <li><p>由上面查询磁盘空间可得知，大部分的磁盘都分给了<code>/home</code>目录，因此，可以把数据文件移动到<code>/home</code>下。于是乎，开干吧！</p>
-<pre><code>cp -<span class="constant">R</span> /var/<span class="class"><span class="keyword">lib</span>/<span class="title">mysql</span> /<span class="title">home</span>/<span class="title">mysql_data</span></span>
+<pre><code>cp -R /var/lib/mysql /home/mysql_data
 vi /etc/my.cnf
 
 [mysqld]
-lower_case_table_names=<span class="number">1</span>
-datadir=<span class="regexp">/home/mysql</span>_data
-socket=<span class="regexp">/home/mysql</span>_data/mysql.sock
+lower_case_table_names=1
+datadir=/home/mysql_data
+socket=/home/mysql_data/mysql.sock
 </code></pre></li>
 <li><p>重启一下服务<code>service mysqld restart</code>，发现服务启动不起来，查看日志，报出了以下错误，这是怎么回事？</p>
-<pre><code>151013 08:46:59 mysqld_safe mysqld from pid <span class="keyword">file</span> /<span class="keyword">var</span>/<span class="keyword">run</span>/mysqld/mysqld.pid ended
+<pre><code>151013 08:46:59 mysqld_safe mysqld from pid file /var/run/mysqld/mysqld.pid ended
 151013 08:51:57 mysqld_safe Starting mysqld daemon with databases from /home/mysql_data
-^<span class="keyword">G</span>/usr/libexec/mysqld: Can't find <span class="keyword">file</span>: './mysql/<span class="keyword">plugin</span>.frm' (errno: 13)
-151013  8:51:57 [<span class="keyword">ERROR</span>] Can't <span class="keyword">open</span> the mysql.<span class="keyword">plugin</span> <span class="keyword">table</span>. Please <span class="keyword">run</span> mysql_upgrade to create it.
+^G/usr/libexec/mysqld: Can&apos;t find file: &apos;./mysql/plugin.frm&apos; (errno: 13)
+151013  8:51:57 [ERROR] Can&apos;t open the mysql.plugin table. Please run mysql_upgrade to create it.
 </code></pre></li>
 <li><p>原来，我们把mysql的数据移动时，使用的<code>root</code>用户，而<code>mysql</code>运行，使用的是<code>mysql</code>用户，还需要把目录更改为mysql用户所有<code>chown -R mysql /home/mysql_data</code>。</p>
 </li>
@@ -144,10 +144,10 @@ socket=<span class="regexp">/home/mysql</span>_data/mysql.sock
 
 <nav id="pagination" >
     
-    <a href="/2015/10/21/svg中节点顺序的替代解决方案/" class="alignleft prev" >Prev</a>
+    <a href="/2015/10/21/svg中节点顺序的替代解决方案/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/10/10/Linux折腾记(3)-CentOS6下安装Oracle JDK8/" class="alignright next" >Next</a>
+    <a href="/2015/10/10/Linux折腾记(3)-CentOS6下安装Oracle JDK8/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -177,7 +177,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -192,7 +192,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

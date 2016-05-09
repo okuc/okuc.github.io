@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -79,133 +79,133 @@ var _hmt = _hmt || [];
     </header>
     <div class="entry">
       
-        <h2 id="路由">路由</h2><ol>
+        <h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><ol>
 <li><p>路由由一个URI、HTTP请求和若干个句柄组成，它的结构如下：<code>app.METHOD(path,[callback...],callback)</code>。<code>app</code>是<code>express</code>对象的一个实例，<code>METHOD</code>是一个HTTP请求方法，<code>path</code>是服务器上的路径，<code>callback</code>是当路由匹配时要执行的函数。</p>
 <p>下面是一个基本的示例：</p>
 </li>
 </ol>
-<pre><code>    var express = require('express');
+<pre><code>    var express = require(&apos;express&apos;);
     var app = express();
 
     //当主页收到GET请求时，返回hello world
-    app.get('/',function(req,res){
-        res.send('hello world');
+    app.get(&apos;/&apos;,function(req,res){
+        res.send(&apos;hello world&apos;);
     });
 
 
- <span class="comment">&lt;!--more--&gt;</span>
-<span class="tag">&lt;<span class="title">a</span> <span class="attribute">id</span>=<span class="value">"more"</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+ &lt;!--more--&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 </code></pre><ol>
 <li>路由方法是HTTP请求的方法，和<code>express</code>实例相关联。上面的例子就是个<code>GET</code>路由方法，下面一个<code>POST</code>路由方法的例子：</li>
 </ol>
-<pre><code>    var express = require('express')<span class="comment">;</span>
-    var app = express()<span class="comment">;</span>
+<pre><code>    var express = require(&apos;express&apos;);
+    var app = express();
 
     //当主页收到GET请求时，返回hello world
-    app.post('/',function(req,res){
-        res.send('hello world')<span class="comment">;</span>
-    })<span class="comment">;</span>
+    app.post(&apos;/&apos;,function(req,res){
+        res.send(&apos;hello world&apos;);
+    });
 
-<span class="escape">`e</span>xpress<span class="escape">`定</span>义了和HTTP请求对应的如下方法： <span class="escape">`g</span>et<span class="escape">` </span>、 <span class="escape">`p</span>ost<span class="escape">` </span>、 <span class="escape">`p</span>ut<span class="escape">` </span>、 <span class="escape">`h</span>ead<span class="escape">` </span>、 <span class="escape">`d</span>elete<span class="escape">` </span>、 <span class="escape">`o</span>ptions<span class="escape">` </span>、 <span class="escape">`t</span>race<span class="escape">` </span>、 <span class="escape">`c</span>opy<span class="escape">` </span>、 <span class="escape">`l</span>ock<span class="escape">` </span>、 <span class="escape">`m</span>kcol<span class="escape">` </span>、 <span class="escape">`m</span>ove<span class="escape">` </span>、 <span class="escape">`p</span>urge<span class="escape">` </span>、 <span class="escape">`p</span>ropfind<span class="escape">` </span>、 <span class="escape">`p</span>roppatch<span class="escape">` </span>、 <span class="escape">`u</span>nlock<span class="escape">` </span>、 <span class="escape">`r</span>eport<span class="escape">` </span>、 <span class="escape">`m</span>kactivity<span class="escape">` </span>、 <span class="escape">`c</span>heckout<span class="escape">` </span>、 <span class="escape">`m</span>erge<span class="escape">` </span>、 <span class="escape">`m</span>-search<span class="escape">` </span>、 <span class="escape">`n</span>otify<span class="escape">` </span>、 <span class="escape">`s</span>ubscribe<span class="escape">` </span>、 <span class="escape">`u</span>nsubscribe<span class="escape">` </span>、 <span class="escape">`p</span>atch<span class="escape">` </span>、 <span class="escape">`s</span>earch<span class="escape">` </span>和 <span class="escape">`c</span>onnect<span class="escape">`。</span>
+`express`定义了和HTTP请求对应的如下方法： `get` 、 `post` 、 `put` 、 `head` 、 `delete` 、 `options` 、 `trace` 、 `copy` 、 `lock` 、 `mkcol` 、 `move` 、 `purge` 、 `propfind` 、 `proppatch` 、 `unlock` 、 `report` 、 `mkactivity` 、 `checkout` 、 `merge` 、 `m-search` 、 `notify` 、 `subscribe` 、 `unsubscribe` 、 `patch` 、 `search` 和 `connect`。
 
-有些路由方法名不是合规的JavaScript变量名，此时使用括号记法，比如<span class="escape">`a</span>pp['m-search']('/',function...<span class="escape">`
-</span>
-<span class="escape">`a</span>pp.all()<span class="escape">`是</span>一个特殊的路由方法，没有任何HTTP方法与其对应，它的作用是对于一个路径上的所有请求加载中间件。如下例，只要路径对，任何方法(<span class="escape">`G</span>ET<span class="escape">`、</span><span class="escape">`P</span>OST<span class="escape">`等</span>)的请求都能执行。
+有些路由方法名不是合规的JavaScript变量名，此时使用括号记法，比如`app[&apos;m-search&apos;](&apos;/&apos;,function...`
 
-    app.all('/secret', function (req, res, next) {
-    console.log('Accessing the secret section ...')<span class="comment">;</span>
-    next()<span class="comment">; // 交给下一个句柄处理</span>
-    })<span class="comment">;</span>
+`app.all()`是一个特殊的路由方法，没有任何HTTP方法与其对应，它的作用是对于一个路径上的所有请求加载中间件。如下例，只要路径对，任何方法(`GET`、`POST`等)的请求都能执行。
+
+    app.all(&apos;/secret&apos;, function (req, res, next) {
+    console.log(&apos;Accessing the secret section ...&apos;);
+    next(); // 交给下一个句柄处理
+    });
 </code></pre><ol>
 <li><p>路由路径和请求方法一起定义了请求的端点，它可以是字符串、字符串模式或者正则表达式。</p>
 <p><code>express</code>使用<a href="https://www.npmjs.com/package/path-to-regexp" target="_blank" rel="external">path-to-regex</a>匹配路由路径，具体可查阅文档。 <a href="http://forbeslindesay.github.io/express-route-tester/" target="_blank" rel="external">Express Route Tester</a> 是测试基本 Express 路径的好工具，但不支持模式匹配。</p>
 <p>下面是一些例子：</p>
-<pre><code><span class="comment">// 匹配根路径的请求</span>
-app.<span class="keyword">get</span>(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(req, res)</span> </span>{
-res.send(<span class="string">'root'</span>);
+<pre><code>// 匹配根路径的请求
+app.get(&apos;/&apos;, function (req, res) {
+res.send(&apos;root&apos;);
 });
-<span class="comment">// 匹配 /about 路径的请求</span>
-app.<span class="keyword">get</span>(<span class="string">'/about'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(req, res)</span> </span>{
-res.send(<span class="string">'about'</span>);
+// 匹配 /about 路径的请求
+app.get(&apos;/about&apos;, function (req, res) {
+res.send(&apos;about&apos;);
 });
-<span class="comment">// 匹配 /random.text 路径的请求</span>
-app.<span class="keyword">get</span>(<span class="string">'/random.text'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(req, res)</span> </span>{
-res.send(<span class="string">'random.text'</span>);
+// 匹配 /random.text 路径的请求
+app.get(&apos;/random.text&apos;, function (req, res) {
+res.send(&apos;random.text&apos;);
 });
 
-<span class="comment">//使用字符串模式的路由路径示例：</span>
+//使用字符串模式的路由路径示例：
 
-<span class="comment">// 匹配 acd 和 abcd</span>
-app.<span class="keyword">get</span>(<span class="string">'/ab?cd'</span>, <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> </span>{
-res.send(<span class="string">'ab?cd'</span>);
+// 匹配 acd 和 abcd
+app.get(&apos;/ab?cd&apos;, function(req, res) {
+res.send(&apos;ab?cd&apos;);
 });
-<span class="comment">// 匹配 abcd、abbcd、abbbcd等app.get('/ab+cd', function(req, res) {</span>
-res.send(<span class="string">'ab+cd'</span>);
+// 匹配 abcd、abbcd、abbbcd等app.get(&apos;/ab+cd&apos;, function(req, res) {
+res.send(&apos;ab+cd&apos;);
 });
-<span class="comment">// 匹配 abcd、abxcd、abRABDOMcd、ab123cd等</span>
-app.<span class="keyword">get</span>(<span class="string">'/ab*cd'</span>, <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> </span>{
-res.send(<span class="string">'ab*cd'</span>);
+// 匹配 abcd、abxcd、abRABDOMcd、ab123cd等
+app.get(&apos;/ab*cd&apos;, function(req, res) {
+res.send(&apos;ab*cd&apos;);
 });
-<span class="comment">// 匹配 /abe 和 /abcde</span>
-app.<span class="keyword">get</span>(<span class="string">'/ab(cd)?e'</span>, <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> </span>{
-res.send(<span class="string">'ab(cd)?e'</span>);
+// 匹配 /abe 和 /abcde
+app.get(&apos;/ab(cd)?e&apos;, function(req, res) {
+res.send(&apos;ab(cd)?e&apos;);
 });
-<span class="comment">//字符 ?、+、* 和 () 是正则表达式的子集，- 和 . 在基于字符串的路径中按照字面值解释。</span>
+//字符 ?、+、* 和 () 是正则表达式的子集，- 和 . 在基于字符串的路径中按照字面值解释。
 
-<span class="comment">//使用正则表达式的路由路径示例：</span>
+//使用正则表达式的路由路径示例：
 
-<span class="comment">// 匹配任何路径中含有 a 的路径：</span>
-app.<span class="keyword">get</span>(/a/, <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> </span>{
-res.send(<span class="string">'/a/'</span>);
+// 匹配任何路径中含有 a 的路径：
+app.get(/a/, function(req, res) {
+res.send(&apos;/a/&apos;);
 });
-<span class="comment">// 匹配 butterfly、dragonfly，不匹配 butterflyman、dragonfly man等</span>
-app.<span class="keyword">get</span>(/.*fly$/, <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> </span>{
-res.send(<span class="string">'/.*fly$/'</span>);
+// 匹配 butterfly、dragonfly，不匹配 butterflyman、dragonfly man等
+app.get(/.*fly$/, function(req, res) {
+res.send(&apos;/.*fly$/&apos;);
 });
 </code></pre></li>
 <li><p>句柄路由：可以为请求处理多个回调函数，其行为类似中间件()。唯一的区别是这些回调函数有可能调用<code>next(&#39;route&#39;)</code>方法而略过其他路由回调函数。可以利用该机制为路由定义前提条件，如果在现有的路径上继续执行没有意义，则可将控制权交给剩下的路径。</p>
 <p>路由路柄有多种形式，可以是一个函数，一个函数数组，或者是两者混合。</p>
-<pre><code><span class="comment">//使用一个回调函数处理路由：</span>
-app.get(<span class="string">'/example/a'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>{
-res.send(<span class="string">'Hello from A!'</span>);
+<pre><code>//使用一个回调函数处理路由：
+app.get(&apos;/example/a&apos;, function (req, res) {
+res.send(&apos;Hello from A!&apos;);
 });
 
-<span class="comment">//使用多个回调函数处理路由（记得指定 next 对象）：</span>
-app.get(<span class="string">'/example/b'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>{
-<span class="built_in">console</span>.log(<span class="string">'response will be sent by the next function ...'</span>);
+//使用多个回调函数处理路由（记得指定 next 对象）：
+app.get(&apos;/example/b&apos;, function (req, res, next) {
+console.log(&apos;response will be sent by the next function ...&apos;);
 next();
-}, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>{
-res.send(<span class="string">'Hello from B!'</span>);
+}, function (req, res) {
+res.send(&apos;Hello from B!&apos;);
 });
 
-<span class="comment">//使用回调函数数组处理路由：</span>
-<span class="keyword">var</span> cb0 = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>{
-<span class="built_in">console</span>.log(<span class="string">'CB0'</span>);
+//使用回调函数数组处理路由：
+var cb0 = function (req, res, next) {
+console.log(&apos;CB0&apos;);
 next();
 }
-<span class="keyword">var</span> cb1 = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>{
-<span class="built_in">console</span>.log(<span class="string">'CB1'</span>);
+var cb1 = function (req, res, next) {
+console.log(&apos;CB1&apos;);
 next();
 }
-<span class="keyword">var</span> cb2 = <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>{
-res.send(<span class="string">'Hello from C!'</span>);
+var cb2 = function (req, res) {
+res.send(&apos;Hello from C!&apos;);
 }
-app.get(<span class="string">'/example/c'</span>, [cb0, cb1, cb2]);
+app.get(&apos;/example/c&apos;, [cb0, cb1, cb2]);
 
-<span class="comment">//混合使用函数和函数数组处理路由：</span>
-<span class="keyword">var</span> cb0 = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>{
-<span class="built_in">console</span>.log(<span class="string">'CB0'</span>);
+//混合使用函数和函数数组处理路由：
+var cb0 = function (req, res, next) {
+console.log(&apos;CB0&apos;);
 next();
 }
-<span class="keyword">var</span> cb1 = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>{
-<span class="built_in">console</span>.log(<span class="string">'CB1'</span>);
+var cb1 = function (req, res, next) {
+console.log(&apos;CB1&apos;);
 next();
 }
-app.get(<span class="string">'/example/d'</span>, [cb0, cb1], <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>{
-<span class="built_in">console</span>.log(<span class="string">'response will be sent by the next function ...'</span>);
+app.get(&apos;/example/d&apos;, [cb0, cb1], function (req, res, next) {
+console.log(&apos;response will be sent by the next function ...&apos;);
 next();
-}, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>{
-res.send(<span class="string">'Hello from D!'</span>);
+}, function (req, res) {
+res.send(&apos;Hello from D!&apos;);
 });
 </code></pre></li>
 </ol>
@@ -227,44 +227,44 @@ res.send(<span class="string">'Hello from D!'</span>);
 <p>下面是一个例子：</p>
 </li>
 </ol>
-<pre><code>app.route(<span class="string">'/book'</span>)
-.<span class="built_in">get</span>(<span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> {</span>
-<span class="keyword">res</span>.send(<span class="string">'Get a random book'</span>);
+<pre><code>app.route(&apos;/book&apos;)
+.get(function(req, res) {
+res.send(&apos;Get a random book&apos;);
 })
-.post(<span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> {</span>
-<span class="keyword">res</span>.send(<span class="string">'Add a book'</span>);
-}).<span class="keyword">put</span>(<span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> {</span>
-<span class="keyword">res</span>.send(<span class="string">'Update the book'</span>);
+.post(function(req, res) {
+res.send(&apos;Add a book&apos;);
+}).put(function(req, res) {
+res.send(&apos;Update the book&apos;);
 });
 </code></pre><ol>
 <li><p><code>express.Router</code>可用来创建模块化、可挂载的路由句柄。<code>Router</code>实例是一个完整的中间件和路由系统，因此常称其为一个<code>mini-app</code>。</p>
 <p>下面的实例程序创建了一个路由模块，并加载了一个中间件，定义了一些路由，并且将它们挂载至应用的路径上。</p>
 <p><code>birds.js</code>源代码：</p>
-<pre><code><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);
-<span class="keyword">var</span> router = express.Router();
-<span class="comment">// 该路由使用的中间件</span>
-router.use(<span class="function"><span class="keyword">function</span> <span class="title">timeLog</span>(<span class="params">req, res, next</span>) </span>{
-<span class="built_in">console</span>.log(<span class="string">'Time: '</span>, <span class="built_in">Date</span>.now());
+<pre><code>var express = require(&apos;express&apos;);
+var router = express.Router();
+// 该路由使用的中间件
+router.use(function timeLog(req, res, next) {
+console.log(&apos;Time: &apos;, Date.now());
 next();
 });
-<span class="comment">// 定义主页路由</span>
-router.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>{
-res.send(<span class="string">'Birds home page'</span>);
+// 定义主页路由
+router.get(&apos;/&apos;, function(req, res) {
+res.send(&apos;Birds home page&apos;);
 });
-<span class="comment">// 定义 about 路由</span>
-router.get(<span class="string">'/about'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>{
-res.send(<span class="string">'About birds'</span>);
+// 定义 about 路由
+router.get(&apos;/about&apos;, function(req, res) {
+res.send(&apos;About birds&apos;);
 });
-<span class="built_in">module</span>.exports = router;
+module.exports = router;
 </code></pre></li>
 </ol>
 <pre><code>在应用中加载路由模块源代码：
 
-    var birds = require(‘./birds’)<span class="comment">;</span>
+    var birds = require(‘./birds’);
      …
-     app.use(‘/birds’, birds)<span class="comment">;</span>
+     app.use(‘/birds’, birds);
 
-应用即可处理发自<span class="escape">`/</span>birds<span class="escape">`和</span><span class="escape">`/</span>birds/about<span class="escape">`的</span>请求，并且调用为该路由指定的<span class="escape">`t</span>imeLog<span class="escape">`中</span>间件。
+应用即可处理发自`/birds`和`/birds/about`的请求，并且调用为该路由指定的`timeLog`中间件。
 </code></pre>
       
     </div>
@@ -289,10 +289,10 @@ res.send(<span class="string">'About birds'</span>);
 
 <nav id="pagination" >
     
-    <a href="/2015/12/28/新手学习Express4之二：中间件与模板引擎/" class="alignleft prev" >Prev</a>
+    <a href="/2015/12/28/新手学习Express4之二：中间件与模板引擎/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/12/21/新手学习mongodb之九：聚合管道/" class="alignright next" >Next</a>
+    <a href="/2015/12/21/新手学习mongodb之九：聚合管道/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -322,7 +322,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -337,7 +337,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

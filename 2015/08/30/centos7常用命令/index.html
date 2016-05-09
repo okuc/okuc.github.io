@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -82,51 +82,51 @@ var _hmt = _hmt || [];
         <p>记录centos7下的一些常用命令!</p>
 <p>###网络相关</p>
 <ul>
-<li>关闭防火墙：<pre><code>systemctl stop firewalld.service<span class="comment">#停止firewall</span>
-systemctl <span class="built_in">disable</span> firewalld.service<span class="comment">#禁止firewall开机启动</span>
+<li>关闭防火墙：<pre><code>systemctl stop firewalld.service#停止firewall
+systemctl disable firewalld.service#禁止firewall开机启动
 </code></pre></li>
 <li><p>配置DNS服务</p>
 <ul>
 <li><p>命令行方式</p>
-<pre><code><span class="number">1.</span> nmcli connection show <span class="preprocessor">#显示当前网络连接</span>
+<pre><code>1. nmcli connection show #显示当前网络连接
 NAME UUID                                 TYPE           DEVICE
-eno1 <span class="number">5f</span>b06bd0-<span class="number">0</span>bb0-<span class="number">7f</span>fb-<span class="number">45f</span>1-d6edd65f3e03 <span class="number">802</span>-<span class="number">3</span>-ethernet eno1
+eno1 5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03 802-3-ethernet eno1
 
-<span class="number">2.</span> nmcli con mod eno1 ipv4.dns <span class="string">"114.114.114.114 8.8.8.8"</span> <span class="preprocessor">#修改当前网络连接对应的DNS服务器，这里的网络连接可以用名称或者UUID来标识</span>
-<span class="number">3.</span> nmcli con up eno1<span class="preprocessor">#将dns配置生效</span>
+2. nmcli con mod eno1 ipv4.dns &quot;114.114.114.114 8.8.8.8&quot; #修改当前网络连接对应的DNS服务器，这里的网络连接可以用名称或者UUID来标识
+3. nmcli con up eno1#将dns配置生效
 </code></pre></li>
 </ul>
 <ul>
 <li>直接修改文件方式<a id="more"></a>
-<pre><code><span class="number">1.</span> 修改 /etc/NetworkManager/NetworkManager.conf 文件，在main部分添加 “dns=none” 选项：
+<pre><code>1. 修改 /etc/NetworkManager/NetworkManager.conf 文件，在main部分添加 “dns=none” 选项：
     [main]
     plugins=ifcfg-rh
     dns=none
-<span class="number">2.</span> NetworkManager重新装载上面修改的配置
+2. NetworkManager重新装载上面修改的配置
     systemctl restart NetworkManager.service
-<span class="number">3.</span> 手工修改 /etc/resolv.conf
-    nameserver <span class="number">114.114</span><span class="number">.114</span><span class="number">.114</span>
-    nameserver <span class="number">8.8</span><span class="number">.8</span><span class="number">.8</span>
+3. 手工修改 /etc/resolv.conf
+    nameserver 114.114.114.114
+    nameserver 8.8.8.8
 </code></pre></li>
 </ul>
 </li>
 <li><p>配置网关、IP等</p>
 <pre><code>vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
 
-BOOTPROTO=<span class="string">"static"</span> <span class="preprocessor">#dhcp改为static</span>
-ONBOOT=<span class="string">"yes"</span> <span class="preprocessor">#开机启用本配置</span>
-IPADDR=<span class="number">192.168</span><span class="number">.7</span><span class="number">.106</span> <span class="preprocessor">#静态IP</span>
-GATEWAY=<span class="number">192.168</span><span class="number">.7</span><span class="number">.1</span> <span class="preprocessor">#默认网关</span>
-NETMASK=<span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span> <span class="preprocessor">#子网掩码</span>
-DNS1=<span class="number">192.168</span><span class="number">.7</span><span class="number">.1</span> <span class="preprocessor">#DNS 配置</span>
+BOOTPROTO=&quot;static&quot; #dhcp改为static
+ONBOOT=&quot;yes&quot; #开机启用本配置
+IPADDR=192.168.7.106 #静态IP
+GATEWAY=192.168.7.1 #默认网关
+NETMASK=255.255.255.0 #子网掩码
+DNS1=192.168.7.1 #DNS 配置
 
-service network restart <span class="preprocessor">#重启网络服务</span>
+service network restart #重启网络服务
 
-ip addr <span class="preprocessor">#查看网络地址信息</span>
+ip addr #查看网络地址信息
 </code></pre><p><strong>注意：文件名称不一定是<code>ifcfg-enp0s3</code>,需要自行去文件目录下查看</strong></p>
 </li>
 <li>修改本地host文件<pre><code>vi /etc/hosts
-<span class="number">192.168</span><span class="number">.90</span><span class="number">.135</span>  www.okuc.xyz
+192.168.90.135  www.okuc.xyz
 </code></pre></li>
 </ul>
 <p>###网络相关</p>
@@ -161,10 +161,10 @@ ip addr <span class="preprocessor">#查看网络地址信息</span>
 
 <nav id="pagination" >
     
-    <a href="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/" class="alignleft prev" >Prev</a>
+    <a href="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/08/28/java连接远程HBase/" class="alignright next" >Next</a>
+    <a href="/2015/08/28/java连接远程HBase/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -194,7 +194,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -209,7 +209,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

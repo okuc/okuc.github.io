@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -84,13 +84,13 @@ var _hmt = _hmt || [];
 <ol>
 <li>下载node.js。在<a href="https://nodejs.org/en/" target="_blank" rel="external">https://nodejs.org/en/</a>下载最新版的node.exe文件，我下载时是<code>v5.1 stable</code>,直接下载地址如下:<a href="https://nodejs.org/dist/v5.1.0/node-v5.1.0-x64.msi" target="_blank" rel="external">https://nodejs.org/dist/v5.1.0/node-v5.1.0-x64.msi</a>。</li>
 <li>不同于上次，由于本次我们使用的是安装包，上述安装包已经包含了npm，所以，不用再单独下载npm。下载完成后，直接双击进行安装，建议不要安装在C盘下，在这儿，我安装到了F盘<code>nodejs</code>文件夹下。<a id="more"></a></li>
-<li>设置缓存目录和全局模块的存放路径，在<code>nodejs</code>下建立“node global”及“node cache”两个文件夹。同时在<code>F:\nodejs</code>下切换到cmd命令行中，执行如下命令：<pre><code>npm config <span class="built_in">set</span> prefix <span class="string">"D:\nodejs\node global"</span>
-npm config <span class="built_in">set</span> <span class="keyword">cache</span> <span class="string">"D:\nodejs\node cache"</span>
+<li>设置缓存目录和全局模块的存放路径，在<code>nodejs</code>下建立“node global”及“node cache”两个文件夹。同时在<code>F:\nodejs</code>下切换到cmd命令行中，执行如下命令：<pre><code>npm config set prefix &quot;D:\nodejs\node global&quot;
+npm config set cache &quot;D:\nodejs\node cache&quot;
 </code></pre>为了查看是否执行成功，可使用如下命令查看：<code>npm config get prefix</code>。</li>
 <li>设置环境变量，将<code>F:\nodejs</code>和<code>F:\nodejs\node global</code>添加到环境变量<code>path</code>中，并新添环境变量<code>NODE_PATH</code>,它的值为:<code>F:\nodejs\node global\node_modules</code>。</li>
-<li>众所周知的原因，nodejs在国内经常下载包下载不了，那么怎么办呢？最好的办法就是找国内镜像源，一般用taobao的镜像源来替代。安装方法如下：<pre><code>npm config <span class="operator"><span class="keyword">set</span> <span class="keyword">strict</span>-ssl <span class="literal">false</span>
-npm <span class="keyword">install</span> -<span class="keyword">g</span> cnpm <span class="comment">--registry=https://registry.npm.taobao.org/</span></span>
-</code></pre>7、安装完成后，就可以使用cnpm命令代替npm命令了。测试一下，下载个<code>bower</code>。<pre><code>cnpm <span class="operator"><span class="keyword">install</span> -<span class="keyword">g</span> bower</span>
+<li>众所周知的原因，nodejs在国内经常下载包下载不了，那么怎么办呢？最好的办法就是找国内镜像源，一般用taobao的镜像源来替代。安装方法如下：<pre><code>npm config set strict-ssl false
+npm install -g cnpm --registry=https://registry.npm.taobao.org/
+</code></pre>7、安装完成后，就可以使用cnpm命令代替npm命令了。测试一下，下载个<code>bower</code>。<pre><code>cnpm install -g bower
 </code></pre>8、如果不想安装cnpm，也可以使用指定源的方式来安装：<code>npm install -g bower --registry=https://registry.npm.taobao.org/</code><br>下载完成后，查看一看<code>bower</code>版本号：<code>bower -v</code>,如果输入了版本号，那么，恭喜你，安装完成！</li>
 </ol>
 
@@ -117,10 +117,10 @@ npm <span class="keyword">install</span> -<span class="keyword">g</span> cnpm <s
 
 <nav id="pagination" >
     
-    <a href="/2015/12/05/Node.js的项目创建及依赖维护工作/" class="alignleft prev" >Prev</a>
+    <a href="/2015/12/05/Node.js的项目创建及依赖维护工作/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/11/21/Emmet常用缩写简要笔记/" class="alignright next" >Next</a>
+    <a href="/2015/11/21/Emmet常用缩写简要笔记/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -150,7 +150,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -165,7 +165,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

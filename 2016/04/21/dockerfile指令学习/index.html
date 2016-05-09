@@ -1,0 +1,284 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>dockerfile指令学习 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="dockerfile指令学习"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="//archives">归档</a></li>
+    
+      <li><a href="//coding">编程技术</a></li>
+    
+      <li><a href="//bigData">大数据技术</a></li>
+    
+      <li><a href="//dataV">数据可视化</a></li>
+    
+      <li><a href="//about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-04-21T01:06:32.000Z"><a href="/2016/04/21/dockerfile指令学习/">2016-04-21</a></time>
+      
+      
+  
+    <h1 class="title">dockerfile指令学习</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><code>FROM</code>：它必须针对已经存在的镜像，且是基础镜像来操作。而且它必须是第一条非注释指令。</li>
+<li>第一个<code>dockfile</code>文件，文件名必须为：<code>Dockerfile</code>,内容如下,然后使用<code>docker build -t okuc/okuc_test .</code>命令执行：<pre><code>#First Dockerfile
+FROM centos:6.6
+MAINTAINER okuc &quot;okuc@live.cn&quot;
+RUN yum install -y java
+EXPOSE 80
+</code></pre></li>
+<li><code>MAINTAINER &lt;name&gt;</code>:指定镜像的作者信息，包含镜像的所有者和联系信息。</li>
+<li><code>RUN</code>指定当前镜像中运行的命令。<ul>
+<li>RUN <command> (shell模式)<pre><code>/bin/sh -c command
+RUN echo hello
+</code></pre></li>
+<li>RUN [“executable”,”param1”,”param2”] (exec模式)<pre><code>RUN[&quot;/bin/bash&quot;,&quot;-c&quot;,&quot;echo hello&quot;]
+</code></pre><a id="more"></a></li>
+</ul>
+</li>
+<li><code>EXPOSE &lt;port&gt; [&lt;port&gt;...]</code>：指定运行该镜像的容器使用的端口，如<code>docker run -p 80 -d okuc/okuc_test nginx -g &quot;daemon off&quot;</code></li>
+<li><code>CMD [&quot;executable&quot;,&quot;param1&quot;,&quot;param2&quot;]</code>(exec模式)，用来在镜像中执行一些命令。</li>
+<li><code>CMD command param1 param2</code>(shell 模式)</li>
+<li><p><code>CMD [&quot;param1&quot;,&quot;param2&quot;]</code>(作为ENTRYPOINT指令的默认参数)<br>下面是一个例子：</p>
+<pre><code>#First Dockerfile
+FROM centos:6.6
+MAINTAINER okuc &quot;okuc@live.cn&quot;
+RUN yum install -y java
+EXPOSE 80
+CMD [&quot;/usr/sbin/nginx&quot;,&quot;-g&quot;,&quot;daemon off&quot;]
+</code></pre><p> 使用如下命令执行：<code>docker run -p 80 --name okuctest -d okuc/okuc_test</code><br>查看里边的进程情况：<code>docker top okuctest</code></p>
+</li>
+<li><p><code>ENTRYPOINT [&quot;executable&quot;,&quot;param1&quot;,&quot;param2&quot;]</code>(exec模式),进入点，制作出的镜象，默认的进入点。<br><code>ENTRYPOINT command param1 param2</code> (shell模式)<br>在运行期间，可以用<code>docker run --entrypoint</code>覆盖默认的进入点。如果不使用<code>entrypoint</code>来覆盖，即使运行时指定的<code>/bin/bash</code>,这样的命令，也不会执行。使用<code>docker ps -l</code>可以看到这一点。<code>ENTRYPOINT [&quot;/usr/sbin/nginx&quot;,&quot;-g&quot;]</code>等价于<code>ENTRYPOINT [&quot;/usr/sbin/nginx&quot;]  CMD[&quot;-g&quot;]</code></p>
+</li>
+<li><p><code>ADD &lt;src&gt;...&lt;dest&gt;</code><br><code>ADD [&quot;&lt;src&gt;&quot;...&quot;&lt;dest&gt;&quot;]</code>(适用于文件路径中有空格的情况)<br><code>COPY &lt;src&gt;...&lt;dest&gt;</code><br><code>COPY [&quot;&lt;src&gt;&quot;...&quot;&lt;dest&gt;&quot;]</code>(适用于文件路径中有空格的情况)<br><code>ADD</code>包含类似<code>tar</code>的解压功能，如果单纯复制文件，<code>Docker</code>推荐使用<code>COPY</code></p>
+</li>
+<li><p><code>VOLUME[&quot;/data&quot;]</code>:创建一个挂载点用于共享目录。此命令可以构建包含数据卷的镜像。</p>
+</li>
+<li><code>WORKDIR /path/to/workdir</code>:设置当前的工作路径，也可以多次设置，<code>WORKDIR /a WORKDIR b WORKDIR c RUN pwd</code>，这条命令其实是在<code>`/a/b/c</code>下执行<code>pwd</code></li>
+<li><code>ENV &lt;key&gt; &lt;value&gt;</code>、<code>ENV &lt;key&gt;=&lt;value&gt;</code>：临时修改环境变量的值</li>
+<li><code>USER user</code>、<code>USER user:group</code>、<code>USER user:gid</code>:使用哪个用户跑<code>container</code>。</li>
+<li><code>ONBUILD [INSTRUCTION]</code>:镜像触发器，当一个镜像被其他镜像作为基础镜像时执行，它会在构建过程中插入指令。</li>
+<li>在<code>Dockerfile</code>的构建过程中，可以构建缓存，也可以不使用缓存。<code>docker build --no-cache</code></li>
+<li>查看镜像构建的过程:<code>docker history [image]</code>- <strong>数据卷</strong>是经过特殊设计的目录，可以绕过联合文件系统(UFS),为一个或多个容器提供访问。数据卷的目的，在于数据的永久化，它完全独立与容器的生存周期，因此，Docker不会在容器删除时删除其挂载的数据卷，也不会存在类似垃圾收集机制，对容器引用的数据卷进行处理。它的特点如下：<ul>
+<li>数据卷在容器启动时初始化，如果容器使用的镜像在挂载点包含了数据，这些数据会拷贝到新初始化的数据卷中。</li>
+<li>数据卷可以在容器之间共享和重用。i</li>
+<li>可以对数据卷里的内容直接进行修改。</li>
+<li>数据卷的变化不会影响镜像的更新</li>
+<li>卷会一直存在，即使挂载数据卷的容器已经被删除</li>
+</ul>
+</li>
+<li><p><code>sudo docker run -V ~/container_data:/data -it ubuntu /bin/bash</code>为容器添加数据卷。添加读写权限，则用：<code>sudo docker run -V ~/container_data:/data:ro -it ubuntu /bin/bash</code></p>
+</li>
+<li><p>数据卷容器：命名的容器挂载数据卷，其他容器通过挂载这个容器实现数据共享，挂载数据卷的容器，就叫做数据卷容器。挂载方法如下：<code>docker run --volumes-from [CONTAINER　NAME]</code>。下面是一个例子：</p>
+<pre><code>docker run -it --name dvt4 dormamcypress/dvt  //该镜像已经指定的数据卷
+docker run -it --name dvt5 --volumes-from dvt4 ubuntu  /bin/bash
+</code></pre></li>
+<li>使用下面的命令查看卷加载情况：<code>docker inspect --format=&quot;｛{.Volumes}｝&quot; dvt5</code></li>
+<li><p>数据备份方法：<code>docker run --volumes-from dvt5 -v ~/backup:/backup  --name dvt10 ubuntu tar cvf /backup/backup.tar /datavolume1</code></p>
+</li>
+<li><p>数据还原方法：<code>docker run --volumes-from [container name] -v $(pwd):/backup ubuntu tar xvf /backup/backup.tar [container data volume]</code></p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/docker/">docker</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2016/05/11/docker网络学习/" class="alignleft prev" >Anterior</a>
+    
+    
+    <a href="/2016/03/30/docker常用命令/" class="alignright next" >Siguiente</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/04/21/dockerfile指令学习/" data-title="dockerfile指令学习" data-url="http://www.52brt.com/2016/04/21/dockerfile指令学习/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Etiquetas</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

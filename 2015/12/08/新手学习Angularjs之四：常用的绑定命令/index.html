@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -103,12 +103,12 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <p>下面来说说<code>ng-repeat</code>,实际上这个也比较简单：</p>
-<pre><code><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">ng-controller</span>=<span class="value">"ListCtrl"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">ng-repeat</span>=<span class="value">"item in items"</span>&gt;</span>
+<pre><code>&lt;ul ng-controller=&quot;ListCtrl&quot;&gt;
+  &lt;li ng-repeat=&quot;item in items&quot;&gt;
     ｛{item.name}｝
-    <span class="tag">&lt;<span class="title">button</span> <span class="attribute">ng-click</span>=<span class="value">"remove($index)"</span>&gt;</span>remove<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+    &lt;button ng-click=&quot;remove($index)&quot;&gt;remove&lt;/button&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 </code></pre><p><code>$index</code>为当前循环个数，从0开始，注意，当添加了过滤器时，则<code>$index</code>对应过滤后的索引。<code>$first</code>如果为第一条记录则为<code>true</code>。<code>$last</code>如果为最后一条记录，则为<code>true</code>。</p>
 
       
@@ -134,10 +134,10 @@ var _hmt = _hmt || [];
 
 <nav id="pagination" >
     
-    <a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/" class="alignleft prev" >Prev</a>
+    <a href="/2015/12/09/新手学习Angularjs之五：$http服务的简单用法/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/" class="alignright next" >Next</a>
+    <a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -167,7 +167,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -182,7 +182,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

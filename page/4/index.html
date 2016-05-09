@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 4 | 我的后院自留地</title>
+  <title>Página 4 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -64,6 +64,102 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-07T14:06:32.000Z"><a href="/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">2015-12-07</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">新手学习Angularjs之二：ng-bind、ng-model、大括号的区别</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<p>在学习的过程中，遇到了这三个对象，一时把我给搞糊涂了。经过百度，得到了以下答案：</p>
+<ul>
+<li><code>ng-model</code>：用于双向绑定，所以一般用于前台可输入的控件，如<code>input</code>。</li>
+<li><code>ng-bind</code>：只用于前台展示，所以一般和<code>div</code>结合使用。</li>
+<li><code>双大括号</code>：其基本作用类似<code>ng-bind</code>，但不同的是，在<code>angularjs</code>未加载完成时，由于页面未解释，所以很有可能客户会看到大括号，所以一般<code>&lt;div ng-clock class=&quot;ng-clock&quot;&gt;｛{uname}｝&lt;/div&gt;</code>这样使用，这样可使页面先不加载大括号，待全部加载完成后再解释执行。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-06T14:06:32.000Z"><a href="/2015/12/06/新手学习Angularjs之一：基于Angularjs的第一个应用--todoList/">2015-12-06</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/06/新手学习Angularjs之一：基于Angularjs的第一个应用--todoList/">新手学习Angularjs之一：基于Angularjs的第一个应用--todoList</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<ol>
+<li>由于系统需要用到<code>bootstrap</code>、<code>angularjs</code>，首先使用下面命令进行安装<code>bower install bootstrap</code>、<code>bower install angularjs</code>。</li>
+<li><p>新建<code>index.html</code>,修改title并引入使用到的css及js，内容如下：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;./public/bootstrap/dist/css/bootstrap.min.css&quot;&gt;&lt;/link&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;./public/lib/angular/angular.js&quot;&gt;
+  &lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/06/新手学习Angularjs之一：基于Angularjs的第一个应用--todoList/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -165,26 +261,26 @@ var _hmt = _hmt || [];
 <li><p>初始化文档。</p>
 <ul>
 <li><p><code>html:5</code> 或<code>!</code>：用于HTML5文档类型。生成的代码如下，<strong>注意</strong>,生成后需要把<code>lang=&quot;en&quot;</code>改为<code>lang=&quot;zh-cn&quot;</code>，再把’title’改成相对应的文档标题就可以了。</p>
-<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
-<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
-<span class="tag">&lt;<span class="title">head</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
-<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
 
-<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+&lt;/body&gt;
+&lt;/html&gt;
 </code></pre></li>
 <li><code>html:xt</code>：用于XHTML过渡文档类型。</li>
 <li><code>html:4s</code>：用于HTML4严格文档类型。</li>
 </ul>
 </li>
-<li>子代：<code>&gt;</code>用来表示子代。代码<code>div&gt;ul&gt;li</code>可以生成的代码：<pre><code><span class="tag">&lt;div&gt;</span>
-    <span class="tag">&lt;ul&gt;</span>
-        <span class="tag">&lt;li&gt;</span><span class="tag">&lt;/li&gt;</span>
-    <span class="tag">&lt;/ul&gt;</span>
-<span class="tag">&lt;/div&gt;</span>
+<li>子代：<code>&gt;</code>用来表示子代。代码<code>div&gt;ul&gt;li</code>可以生成的代码：<pre><code>&lt;div&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
 </code></pre>
       
     </div>
@@ -223,8 +319,8 @@ var _hmt = _hmt || [];
       
         <p>如果你的前端页面图形是使用svg画的，那么有一个问题很有可能遇到的，就是节点间先后顺序的问题。由于svg元素没有z-index属性，画的顺序决定了显示的顺序，所以当你拖拽一个节点时，很容易会发生，该节点与其他节点重合时会跑到其他节点下面的尴尬。</p>
 <p>###raphaeljs下解决方案<br>如果你使用的是<code>raphaeljs</code>，那么恭喜你，这都不是事，<code>raphaeljs</code>中提供了如下方法，直接操作就可以了！</p>
-<pre><code>element.<span class="function"><span class="title">toBack</span><span class="params">()</span></span>
-element.<span class="function"><span class="title">toFront</span><span class="params">()</span></span>
+<pre><code>element.toBack()
+element.toFront()
 </code></pre><p>当然，如果你没有使用svg，那么悄悄的把<code>raphaeljs</code>用起来也不错哦。<br>
       
     </div>
@@ -266,15 +362,15 @@ element.<span class="function"><span class="title">toFront</span><span class="pa
 <ol>
 <li>对服务进行重启<code>service mysqld stop</code>，结果起不来了。报出的以下错误：<code>Timeout error occurred trying to start MySQL Daemon</code>。</li>
 <li><p>baidu的一番，毫无收获。接下来，经过XXX，顺便到访问到了google，得到了一个可能的答案：磁盘空间不足。第一念头是，不可能呀，这可是2T的硬盘，而且也没有多少数据。念头归念头，还是查询一下，眼见为证：</p>
-<pre><code>[root@htzh199 ~]<span class="preprocessor"># df -lh</span>
+<pre><code>[root@htzh199 ~]# df -lh
 Filesystem            Size  Used Avail Use% Mounted on
 /dev/mapper/vg_htzh199-lv_root
-                       <span class="number">50</span>G   <span class="number">50</span>G   <span class="number">0</span>G  <span class="number">100</span>% /
-tmpfs                  <span class="number">16</span>G   <span class="number">72</span>K   <span class="number">16</span>G   <span class="number">1</span>% /dev/shm
-/dev/sda2             <span class="number">477</span>M   <span class="number">33</span>M  <span class="number">419</span>M   <span class="number">8</span>% /boot
-/dev/sda1             <span class="number">200</span>M  <span class="number">264</span>K  <span class="number">200</span>M   <span class="number">1</span>% /boot/efi
+                       50G   50G   0G  100% /
+tmpfs                  16G   72K   16G   1% /dev/shm
+/dev/sda2             477M   33M  419M   8% /boot
+/dev/sda1             200M  264K  200M   1% /boot/efi
 /dev/mapper/vg_htzh199-lv_home
-                      <span class="number">1.8</span>T  <span class="number">284</span>G  <span class="number">1.4</span>T  <span class="number">17</span>% /home
+                      1.8T  284G  1.4T  17% /home
 </code></pre><p>由上面的数据可以看出，根目录<code>/</code>只有50G，且已经使用完了。由此也可以推测，没有空间可用的可能性非常大。</p>
       
     </div>
@@ -313,10 +409,10 @@ tmpfs                  <span class="number">16</span>G   <span class="number">72
       
         <p>CentOS6中自带了openJDK1.7，由于XXX原因，一般还是要手动更改成Oracle JDK。本文描述的即是这一过程。</p>
 <p>首先，要查看一下你安装的版本中，是否自动安装了openJDK,如果没有，恭喜你，可以直接进行安装了。查询命令如下：</p>
-<pre><code><span class="attr_selector">[root@okuc6 ~]</span># <span class="tag">java</span> <span class="tag">-version</span>
-<span class="tag">java</span> <span class="tag">version</span> "1<span class="class">.7</span><span class="class">.0_79</span>"
-<span class="tag">OpenJDK</span> <span class="tag">Runtime</span> <span class="tag">Environment</span> (<span class="tag">rhel-2</span><span class="class">.5</span><span class="class">.5</span><span class="class">.4</span><span class="class">.el6-x86_64</span> <span class="tag">u79-b14</span>)
-<span class="tag">OpenJDK</span> 64<span class="tag">-Bit</span> <span class="tag">Server</span> <span class="tag">VM</span> (<span class="tag">build</span> 24<span class="class">.79-b02</span>, <span class="tag">mixed</span> <span class="tag">mode</span>)
+<pre><code>[root@okuc6 ~]# java -version
+java version &quot;1.7.0_79&quot;
+OpenJDK Runtime Environment (rhel-2.5.5.4.el6-x86_64 u79-b14)
+OpenJDK 64-Bit Server VM (build 24.79-b02, mixed mode)
 </code></pre><p>如上，如果返回的结果中还了OpenJDK字样，那就先卸载吧。<br>
       
     </div>
@@ -355,22 +451,22 @@ tmpfs                  <span class="number">16</span>G   <span class="number">72
       
         <p>想把windows上的一些资料定时备份到linux，首先想到的就是利用共享文件夹的方式，折腾了一番，最终还是搞成功了。过程如下：</p>
 <ol>
-<li>首先安装<code>samba</code>及<code>samba-client</code>,中间不管提问什么，一路<code>y</code>即可。<pre><code>yum <span class="operator"><span class="keyword">install</span> samba samba-<span class="keyword">client</span></span>
+<li>首先安装<code>samba</code>及<code>samba-client</code>,中间不管提问什么，一路<code>y</code>即可。<pre><code>yum install samba samba-client
 </code></pre></li>
-<li>在<code>home</code>下创建文件夹<code>test</code>。<pre><code><span class="keyword">mkdir</span> /home/<span class="keyword">test</span>
+<li>在<code>home</code>下创建文件夹<code>test</code>。<pre><code>mkdir /home/test
 </code></pre></li>
 <li><p>将<code>/etc/samba/smb.conf</code>文件中的内容替换成。</p>
 <pre><code>[global]
-<span class="constant">security</span>=share
+security=share
 dos charset=cp936
 unix charset=gb2312
 
 [mygitback]
-<span class="constant">comment</span> = share
-<span class="constant">path</span> = /home/test
-<span class="constant">browseable</span> = yes
+comment = share
+path = /home/test
+browseable = yes
 guest ok = yes
-<span class="constant">writable</span> = yes
+writable = yes
 </code></pre>
       
     </div>
@@ -407,7 +503,7 @@ guest ok = yes
     </header>
     <div class="entry">
       
-        <h2 id="第3章_搜索(二)">第3章 搜索(二)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
+        <h2 id="第3章-搜索-二"><a href="#第3章-搜索-二" class="headerlink" title="第3章 搜索(二)"></a>第3章 搜索(二)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
 <hr>
 <ol>
 <li><p>布尔查询：它可以来封装无限数量的查询，并通过下面描述的节点之一使用一个逻辑值来连接他们。</p>
@@ -439,92 +535,13 @@ guest ok = yes
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-09-19T14:35:02.000Z"><a href="/2015/09/19/Elasticsearch中文乱码问题的解决/">2015-09-19</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/09/19/Elasticsearch中文乱码问题的解决/">Elasticsearch中文乱码问题的解决</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>最近在研究ES的分词，一直想找一个理想的大全分词方式，如<code>中国人民</code>，希望能全部分开，分成<code>中国</code>、<code>国人</code>、<code>人民</code>、<code>中国人</code>、<code>国人民</code>、<code>中国人民</code>,6个词。也就是说，不管什么词性、词义、同义词什么的，全部按字数进行切割。争取能够实现类似关系数据库中like的效果。</p>
-<p>后来，听人说IK分词能够达到这个效果，于是，开始安装IK插件，不想却遇到了乱码问题。</p>
-<p>具体乱码情况如下：<br>如果输入查询<code>_search</code>，则返回的结果不会乱码。如是查询分词结果<code>_analyze</code>,则会返回乱码。</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/09/19/Elasticsearch中文乱码问题的解决/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-09-13T14:35:02.000Z"><a href="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/">2015-09-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/">《Elasticsearch服务器开发》学习笔记（四）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第3章_搜索(一)">第3章 搜索(一)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
-<hr>
-<ol>
-<li>查询：<code>curl -XGET &#39;localhost:9200/library/book/_search?q=title:crime&amp;pretty=true&#39;</code>，另外一种查询方式：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code></li>
-<li>分页和结果集大小：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;from&quot;:9,&quot;size&quot;:20,&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code><br>from:该属性指定我们希望在结果中返回的起始文档。它的默认值是0，表示想要得到从第一个文档开始的结果。<br>size:该属性指定了一次查询中返回的最大文档数，默认值是10.如果只对切面结果感兴趣，并不关心文档本身，可以把这个参数设置成0。</li>
-<li>ES可以返回版本信息的查询。查询命令如下：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;version&quot;:true,&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/page/3/" class="alignleft prev">Prev</a>
+    <a href="/page/3/" class="alignleft prev">Anterior</a>
   
   
-    <a href="/page/5/" class="alignright next">Next</a>
+    <a href="/page/5/" class="alignright next">Siguiente</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -533,7 +550,7 @@ guest ok = yes
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -548,7 +565,7 @@ guest ok = yes
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -83,10 +83,10 @@ var _hmt = _hmt || [];
 <li><p>聚合操作主要秀于批量数据处理，往往将记录按条件进行分组，然后在每组上分别进行一系列操作，如，求最大最小值、平均值、求和等。</p>
 <pre><code>db.orders.aggregate([
 {
-    <span class="variable">$group</span>:{
-    _id:<span class="string">"$cust_id"</span>,
-    total:{<span class="variable">$sum</span>:<span class="string">"$price"</span>}
-},{<span class="variable">$sort</span>:{total:<span class="number">1</span>}}}])
+    $group:{
+    _id:&quot;$cust_id&quot;,
+    total:{$sum:&quot;$price&quot;}
+},{$sort:{total:1}}}])
 </code></pre><p>聚合操作能够对记录进行复杂处理，主要用于数理统计和数据挖掘。在MongoDB中，聚合操作的输入是集合中的文档，输出可以是一条或多条文档。</p>
 <p>MongoDB提供了强大的聚合功能，针对聚合操作提供了三种方式：</p>
 <ul>
@@ -100,9 +100,9 @@ var _hmt = _hmt || [];
 <li><p>聚合管道有<code>阶段(stage)</code>组成，文档在一个阶段处理完毕后，聚合管道会将处理结果传递给下一个阶段。</p>
 <p>每个阶段由阶段操作符(Stage Operators)来对文档进行相应的处理，待处理的文档会流经各个阶段，最终完成计算。计算的结果可以直接输出也可以存储到集合中。</p>
 <p><code>MongoDB Shell</code>使用<code>db.collection.aggregate([{&lt;stage&gt;},...])</code>来构建和使用聚合管道。 例子如下：</p>
-<pre><code>db.orders.aggregate([{<span class="variable">$match</span>:{status:<span class="string">"A"</span>}},//挑选出状态为A的记录
-                     {<span class="variable">$group</span>:{_id:<span class="string">"$cust_id"</span>,total:{<span class="variable">$sum</span>:<span class="string">"$amount"</span>}}},//根据_id进行分组，对amount进行相加赋给total字段
-                    ｛<span class="variable">$out</span>:<span class="string">"Rresult"</span>｝//将结果输出
+<pre><code>db.orders.aggregate([{$match:{status:&quot;A&quot;}},//挑选出状态为A的记录
+                     {$group:{_id:&quot;$cust_id&quot;,total:{$sum:&quot;$amount&quot;}}},//根据_id进行分组，对amount进行相加赋给total字段
+                    ｛$out:&quot;Rresult&quot;｝//将结果输出
 ])
 </code></pre></li>
 <li><p>聚合管道需要注意以下几个问题：</p>
@@ -123,19 +123,19 @@ var _hmt = _hmt || [];
 <li><p>聚合管道操作</p>
 <ul>
 <li><p><code>{$project:{&lt;spectifications&gt;}}</code>:用于修改文档的结构，可以重命名、增加或删除文档字段。</p>
-<pre><code><span class="tag">db</span><span class="class">.books</span><span class="class">.aggregate</span>([{
-    $<span class="tag">project</span>:{ <span class="tag">_id</span><span class="pseudo">:0</span>,<span class="comment">//不显示id字段</span>
-               <span class="tag">address</span><span class="class">.city</span><span class="pseudo">:1</span>,<span class="comment">//显示此字段</span>
-               <span class="tag">totalViews</span>:{$<span class="attribute">add</span>:[<span class="string">"$pageViews"</span>,<span class="number">10</span>]},<span class="comment">//把pageViews字段加10赋给TotalViews</span>
-               <span class="attribute">newName</span>:<span class="string">"$name"</span>}<span class="comment">//把name重命名</span>
+<pre><code>db.books.aggregate([{
+    $project:{ _id:0,//不显示id字段
+               address.city:1,//显示此字段
+               totalViews:{$add:[&quot;$pageViews&quot;,10]},//把pageViews字段加10赋给TotalViews
+               newName:&quot;$name&quot;}//把name重命名
 
     }])
 </code></pre></li>
 <li><p><code>{$match:{&lt;query&gt;}}</code>:用于过滤文档(与find函数的query参数用法相同)</p>
 <pre><code>db.articles.aggregate([{
-    <span class="variable">$match</span>:{<span class="variable">$or</span>:[ //或操作符
-        {score:{<span class="variable">$gt</span>:<span class="number">70</span>,<span class="variable">$lt</span>:<span class="number">90</span>}},//分数大于<span class="number">70</span>或小于<span class="number">90</span>
-        {views:{<span class="variable">$gte</span>:<span class="number">1000</span>}}//或者views大于等于<span class="number">1000</span>的字段
+    $match:{$or:[ //或操作符
+        {score:{$gt:70,$lt:90}},//分数大于70或小于90
+        {views:{$gte:1000}}//或者views大于等于1000的字段
 
     ]}}])
 </code></pre><p>关于$match需要注意的几个问题：</p>
@@ -148,9 +148,9 @@ var _hmt = _hmt || [];
 </li>
 <li><p><code>{$group:{_id:&lt;expression&gt;,&lt;field1&gt;:{&lt;accumulator1&gt;:&lt;expressiong1&gt;},...}}</code>:将集合中的文档进行分组。</p>
 <pre><code>db.books.aggregate([{
-    <span class="variable">$group</span>:{ _id:<span class="string">"$author"</span>,//_id是必须的，指明按那个字段分组
-        totalPublish:{<span class="variable">$sum</span>:<span class="string">"$publish"</span>},//同组内的publish相加赋组totalPublish字段
-            books:{<span class="variable">$push</span>:<span class="string">"$title"</span>}}//同组内的title放到books数据中
+    $group:{ _id:&quot;$author&quot;,//_id是必须的，指明按那个字段分组
+        totalPublish:{$sum:&quot;$publish&quot;},//同组内的publish相加赋组totalPublish字段
+            books:{$push:&quot;$title&quot;}}//同组内的title放到books数据中
 
 }]
 )
@@ -158,114 +158,114 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 </ol>
-<pre><code>    默认情况下，分组只能在内存中进行，这个阶段最大只能使用`<span class="number">100</span>MB`的内存空间。如果处理的数据集比较大时，可以使用**allowDiskUse**选项，在分组时可以供助磁盘空间，将部分数据交换到磁盘上，以处理更大的数据量。
+<pre><code>    默认情况下，分组只能在内存中进行，这个阶段最大只能使用`100MB`的内存空间。如果处理的数据集比较大时，可以使用**allowDiskUse**选项，在分组时可以供助磁盘空间，将部分数据交换到磁盘上，以处理更大的数据量。
 
--   `{<span class="variable">$sort</span>:{&lt;field1&gt;:&lt;sort order&gt;,&lt;field2&gt;:&lt;sort order&gt;...}}`:对输入的文档进行排序
+-   `{$sort:{&lt;field1&gt;:&lt;sort order&gt;,&lt;field2&gt;:&lt;sort order&gt;...}}`:对输入的文档进行排序
 
         db.books.aggregate([{
-          <span class="variable">$sort</span>:{age:-<span class="number">1</span>,posts:<span class="number">1</span>}
+          $sort:{age:-1,posts:1}
 
         }]
         )
 
-    默认情况下，`sort`只能在内存中进行，这个阶段最大只能使用`<span class="number">100</span>MB`的内存空间。如果处理的数据集比较大时，可以使用**allowDiskUse**选项。
+    默认情况下，`sort`只能在内存中进行，这个阶段最大只能使用`100MB`的内存空间。如果处理的数据集比较大时，可以使用**allowDiskUse**选项。
 
--   `{<span class="variable">$limit</span>:&lt;positive integer&gt;}`:限制返回的文档数量
+-   `{$limit:&lt;positive integer&gt;}`:限制返回的文档数量
 
         db.books.aggregate([{
-          <span class="variable">$limit</span>:<span class="number">5</span>
+          $limit:5
 
         }]
         )
 
--   `{<span class="variable">$skip</span>:&lt;positive integer&gt;}`:跳过指定数量的文档
+-   `{$skip:&lt;positive integer&gt;}`:跳过指定数量的文档
 
         db.books.aggregate([{
-          <span class="variable">$skip</span>:<span class="number">5</span>
+          $skip:5
 
         }]
         )
 
--   `{<span class="variable">$unwind</span>:&lt;file path&gt;}`:将文档按照数组字段拆分成多条文档，每条文档包含数组中的一个元素。
+-   `{$unwind:&lt;file path&gt;}`:将文档按照数组字段拆分成多条文档，每条文档包含数组中的一个元素。
 
-    如原文档：`{<span class="string">"_id"</span>:<span class="number">1</span>,<span class="string">"item"</span>:<span class="string">"ABC"</span>,<span class="string">"sizes"</span>:[<span class="string">"S"</span>、<span class="string">"M"</span>、<span class="string">"L"</span>]}`,执行：`db.test.aggregate([{<span class="variable">$unwind</span>:<span class="string">"$sizes"</span>}])`,如果如下：
+    如原文档：`{&quot;_id&quot;:1,&quot;item&quot;:&quot;ABC&quot;,&quot;sizes&quot;:[&quot;S&quot;、&quot;M&quot;、&quot;L&quot;]}`,执行：`db.test.aggregate([{$unwind:&quot;$sizes&quot;}])`,如果如下：
 
-        {“_id”:<span class="number">1</span>,”item:”ABC”,”sizes”:”S”}
-         {“_id”:<span class="number">1</span>,”item:”ABC”,”sizes”:”M”}
-         {“_id”:<span class="number">1</span>,”item:”ABC”,”sizes”:”L”}
+        {“_id”:1,”item:”ABC”,”sizes”:”S”}
+         {“_id”:1,”item:”ABC”,”sizes”:”M”}
+         {“_id”:1,”item:”ABC”,”sizes”:”L”}
 
-    关于`<span class="variable">$unwind</span>`需要注意以下问题：
+    关于`$unwind`需要注意以下问题：
 
-    -   `<span class="variable">$unwind</span>`参数数组字段为空或不存在时，待处理的文档将会被忽略，该条文档将不会产生任何输出。
-    -   `<span class="variable">$unwind</span>`参数不是一个数组类型时，将会产生一个错误
-    -   `<span class="variable">$unwind</span>`所作的修改只用于输出，不会改变原文档的内空。
--   `{<span class="variable">$geoNear</span>:{&lt;geoNear options&gt;}}`:按照由近到远顺序输出接近某一地理位置的文档。
+    -   `$unwind`参数数组字段为空或不存在时，待处理的文档将会被忽略，该条文档将不会产生任何输出。
+    -   `$unwind`参数不是一个数组类型时，将会产生一个错误
+    -   `$unwind`所作的修改只用于输出，不会改变原文档的内空。
+-   `{$geoNear:{&lt;geoNear options&gt;}}`:按照由近到远顺序输出接近某一地理位置的文档。
 
         db.places.aggregate([{
-            <span class="variable">$geoNear</span>:{near:{type:<span class="string">"point"</span>,coordinates:[-<span class="number">73.99279</span>,<span class="number">40.719296</span>]},//near用来指明要查找的节点类型及坐标值
-                distanceField:<span class="string">"dist.calculated"</span>,//distanceField用来指明存储计算距离结果的字段
-                maxDistance:<span class="number">2</span>,//存储要查询的范围最大距离
-                    query:{type:<span class="string">"public"</span>},//条件过滤，查询满足条件的文档
-                    includeLocs:<span class="string">"dist.location"</span>,//指明计算距离时用到的存储经纬度的具体的字段名
-                    num:<span class="number">5</span>,//限制最多返回<span class="number">5</span>条。
-                    spherical:true }//true表明使用的是球面索引，默认false使用的是<span class="number">2</span>d索引
+            $geoNear:{near:{type:&quot;point&quot;,coordinates:[-73.99279,40.719296]},//near用来指明要查找的节点类型及坐标值
+                distanceField:&quot;dist.calculated&quot;,//distanceField用来指明存储计算距离结果的字段
+                maxDistance:2,//存储要查询的范围最大距离
+                    query:{type:&quot;public&quot;},//条件过滤，查询满足条件的文档
+                    includeLocs:&quot;dist.location&quot;,//指明计算距离时用到的存储经纬度的具体的字段名
+                    num:5,//限制最多返回5条。
+                    spherical:true }//true表明使用的是球面索引，默认false使用的是2d索引
         }]
         )
 
-    关于`<span class="variable">$geoNear</span>`需要注意的几个问题：
+    关于`$geoNear`需要注意的几个问题：
 
-    -   `<span class="variable">$geoNear</span>`操作符只能位于管道的第一个阶段
+    -   `$geoNear`操作符只能位于管道的第一个阶段
     -   使用时，必须指定`distanceField`选项，用来存储计算结果
-    -   `<span class="variable">$geoNear</span>`和数据库命令`geoNear`相似，不同之处在于`distanceField`在`<span class="variable">$geoNear</span>`中是必选的，`includeLocs`是string类型；在数据库命令中，`distanceField`是可选的，`includeLocs`是`boolean`类型。
--   `{<span class="variable">$redact</span>:&lt;expression&gt;}`:限制单条文档内容的显示(可以控制只输出文档的部分内容)
+    -   `$geoNear`和数据库命令`geoNear`相似，不同之处在于`distanceField`在`$geoNear`中是必选的，`includeLocs`是string类型；在数据库命令中，`distanceField`是可选的，`includeLocs`是`boolean`类型。
+-   `{$redact:&lt;expression&gt;}`:限制单条文档内容的显示(可以控制只输出文档的部分内容)
 
         db.accounts.aggregate([{
-            <span class="variable">$match</span>:{ status:<span class="string">"A"</span>}},//查询条件
-            {<span class="variable">$redact</span>:{//限制输出部分内容
-                <span class="variable">$cond</span>:{//条件
-                if:{<span class="variable">$eq</span>:[<span class="string">"$level"</span>,<span class="number">5</span>]},//如果level字段等于<span class="number">5</span>
-                then:<span class="string">"$PRUNE"</span>,//当前层次及其子文档都不显示
-                else:<span class="string">"$DESCEND"</span>}}//输出当前层次文档的内容，不输出子文档的内容
+            $match:{ status:&quot;A&quot;}},//查询条件
+            {$redact:{//限制输出部分内容
+                $cond:{//条件
+                if:{$eq:[&quot;$level&quot;,5]},//如果level字段等于5
+                then:&quot;$PRUNE&quot;,//当前层次及其子文档都不显示
+                else:&quot;$DESCEND&quot;}}//输出当前层次文档的内容，不输出子文档的内容
 
         }]
         )
 
     下面是一个子：
 
-        { _id:<span class="number">1</span>,level:<span class="number">1</span>,acct_id:<span class="string">"xyz123"</span>,
-            cc:{level:<span class="number">5</span>,type:<span class="string">"yy"</span>,
-                num:<span class="number">000000000000</span>,
+        { _id:1,level:1,acct_id:&quot;xyz123&quot;,
+            cc:{level:5,type:&quot;yy&quot;,
+                num:000000000000,
                 billing_addr:{
-                    level:<span class="number">5</span>,addr1:<span class="string">"123 ABC Street"</span>,
-                    city:<span class="string">"Some City"</span>
+                    level:5,addr1:&quot;123 ABC Street&quot;,
+                    city:&quot;Some City&quot;
                 }
 
             },
 
-            status:<span class="string">"A"</span>
+            status:&quot;A&quot;
 
         ｝
 
     最后会输出：
 
-        { _id:<span class="number">1</span>,
-          level:<span class="number">1</span>,
-          acct_id:<span class="string">"xyz123"</span>,
-          status:<span class="string">"A"</span>
+        { _id:1,
+          level:1,
+          acct_id:&quot;xyz123&quot;,
+          status:&quot;A&quot;
 
         ｝
 
--   `{<span class="variable">$out</span>:<span class="string">"&lt;output-collection&gt;"</span>}`:将聚合结果存入集合中
+-   `{$out:&quot;&lt;output-collection&gt;&quot;}`:将聚合结果存入集合中
 
     如：
 
           db.orders.aggregate([
-              {<span class="variable">$match</span>:{status:<span class="string">"A"</span>}},
-              {<span class="variable">$group</span>:{_id:<span class="string">"$cust_id"</span>,total:{<span class="variable">$sum</span>:<span class="string">"$amount"</span>}},
-              {<span class="variable">$out</span>:<span class="string">"Result"</span>}     
+              {$match:{status:&quot;A&quot;}},
+              {$group:{_id:&quot;$cust_id&quot;,total:{$sum:&quot;$amount&quot;}},
+              {$out:&quot;Result&quot;}     
           ])
 
-    关于<span class="variable">$out</span>需要注意以下几个问题：
+    关于$out需要注意以下几个问题：
 
     -   输出集合不能是分片集合和固定集合
     -   输出集合不存在时，在管道命令执行完毕时，会自动进行创建
@@ -290,16 +290,16 @@ var _hmt = _hmt || [];
 <p>当聚合管道命令执行时，数据库本身也会对各个阶段自动进行优化，主要包括下面几种情况：</p>
 </li>
 <li><p><code>$sort</code> + <code>$match</code>顺序优化：如果<code>$match</code>阶段出现在<code>$Sort</code>阶段之后，优化器会将<code>$match</code>移动到<code>$sort</code>的前面。</p>
-<pre><code>{<span class="variable">$sort</span>:{age:-<span class="number">1</span>}},{<span class="variable">$match</span>:{status:<span class="string">'A'</span>}}//优化前
-{<span class="variable">$match</span>:{status:<span class="string">'A'</span>}},{<span class="variable">$sort</span>:{age:-<span class="number">1</span>}}//优化后
+<pre><code>{$sort:{age:-1}},{$match:{status:&apos;A&apos;}}//优化前
+{$match:{status:&apos;A&apos;}},{$sort:{age:-1}}//优化后
 </code></pre></li>
 </ul>
 </li>
 </ol>
-<pre><code>-   `<span class="variable">$skip</span>`+`<span class="variable">$limit</span>`顺序优化：如果`<span class="variable">$skip</span>`阶段出现在`<span class="variable">$limit</span>`之后，优化器会将`<span class="variable">$limit</span>`移动到`<span class="variable">$skip</span>`的前面，移动后`<span class="variable">$limit</span>`参数的值等于原来的值加上`skip`参数的值。
+<pre><code>-   `$skip`+`$limit`顺序优化：如果`$skip`阶段出现在`$limit`之后，优化器会将`$limit`移动到`$skip`的前面，移动后`$limit`参数的值等于原来的值加上`skip`参数的值。
 
-        ｛{<span class="variable">$skip</span>:<span class="number">10</span>},{<span class="variable">$limit</span>:<span class="number">5</span>}}//优化前
-        ｛{<span class="variable">$limit</span>:<span class="number">15</span>},{<span class="variable">$skip</span>:<span class="number">10</span>}}//优化后
+        ｛{$skip:10},{$limit:5}}//优化前
+        ｛{$limit:15},{$skip:10}}//优化后
 </code></pre><ol>
 <li><p>使用聚合管道的限制如下：</p>
 <ul>
@@ -309,52 +309,52 @@ var _hmt = _hmt || [];
 </li>
 <li>单目的(Single Purpose Aggregation Operations)聚合命令，常用的主要有三个：<code>count</code>、<code>distinct</code>、<code>group</code>。与聚合管道相比，单目的操作符功能单一，使用简单且频繁。如：</li>
 </ol>
-<pre><code>db.records.count({a:<span class="number">1</span>})//统计
-db.records.<span class="keyword">distinct</span>(<span class="string">"b"</span>)//去重
+<pre><code>db.records.count({a:1})//统计
+db.records.distinct(&quot;b&quot;)//去重
 db.records.group(
-    {key:{a:<span class="number">1</span>},//分组条件
-    cond:{a:{$lt:<span class="number">3</span>}},//筛选文档
-    reduce:function(cur,<span class="literal">result</span>)//在每组上执行reduce函数，进行累加求合{<span class="literal">result</span>.count +=cur.count},
-    initial:{count:<span class="number">0</span>}
+    {key:{a:1},//分组条件
+    cond:{a:{$lt:3}},//筛选文档
+    reduce:function(cur,result)//在每组上执行reduce函数，进行累加求合{result.count +=cur.count},
+    initial:{count:0}
 }
 )
 </code></pre><ol>
 <li><p>这是一个例子，首先下载美国每个城市的邮政编码信息：<a href="http://media.mongodb.org/zips.json" target="_blank" rel="external">http://media.mongodb.org/zips.json</a>,然后导入到数据库中：<code>mongoimport -d okuc -c zipcodes --drop zips.json</code>。</p>
 <p>下载后，我们也可以看到，数据格式如下：</p>
 <p>   {</p>
-<pre><code><span class="string">"_id"</span>:<span class="string">"10280"</span>,<span class="comment">//一个城市会有多个不同的邮政编码</span>
-<span class="string">"city"</span>:<span class="string">"NEW YORK"</span>,<span class="string">"state"</span>:<span class="string">"NY"</span>,
-<span class="string">"pop"</span>:<span class="number">5574</span>，<span class="comment">//地区人口数量</span>
-<span class="string">"loc"</span>:[-<span class="number">74.016323</span>,<span class="number">40.71053</span>]
+<pre><code>&quot;_id&quot;:&quot;10280&quot;,//一个城市会有多个不同的邮政编码
+&quot;city&quot;:&quot;NEW YORK&quot;,&quot;state&quot;:&quot;NY&quot;,
+&quot;pop&quot;:5574，//地区人口数量
+&quot;loc&quot;:[-74.016323,40.71053]
 </code></pre><p>   }</p>
 <p>   dbService = connect(“localhost:27017”);<br>   db = dbService.getSiblingDB(“okuc”);</p>
 <p>   //人口超过一千万的州</p>
 <p>   var cursor = db.zipcodes.aggregate([</p>
-<pre><code>{<span class="variable">$group</span>:{_id:<span class="string">"$state"</span>,totalPop:{<span class="variable">$sum</span>:<span class="string">"$pop"</span>}}},//按state分组，对pop进行求合
-{<span class="variable">$match</span>:{totalPop:{<span class="variable">$gte</span>:<span class="number">10</span>*<span class="number">1000</span>*<span class="number">1000</span>}}}//筛选出大于<span class="number">1000</span>万的
+<pre><code>{$group:{_id:&quot;$state&quot;,totalPop:{$sum:&quot;$pop&quot;}}},//按state分组，对pop进行求合
+{$match:{totalPop:{$gte:10*1000*1000}}}//筛选出大于1000万的
 </code></pre><p>   ])<br>   printjson(cursor.toArray)</p>
 <p>   //每个州城市拥有的平均人口数<br>   var cursor = db.zipcodes.aggregate([</p>
-<pre><code>{<span class="variable">$group</span>:{_id:{state:<span class="string">"$state"</span>,city:<span class="string">"$city"</span>},//按state、city进行分组
-                pop:{<span class="variable">$sum</span>:<span class="string">"$pop"</span>}}},//对pop进行求合
-{<span class="variable">$group</span>:{_id:<span class="string">"$_id.state"</span>,avgCityPop{<span class="variable">$avg</span>:<span class="string">"$pop"</span>}}}//按州名进行分组，求平均值
+<pre><code>{$group:{_id:{state:&quot;$state&quot;,city:&quot;$city&quot;},//按state、city进行分组
+                pop:{$sum:&quot;$pop&quot;}}},//对pop进行求合
+{$group:{_id:&quot;$_id.state&quot;,avgCityPop{$avg:&quot;$pop&quot;}}}//按州名进行分组，求平均值
 </code></pre><p>   ])<br>   printjson(cursor.toArray)</p>
 <p>   //求所有州的集合<br>   var cursor = db.zipcodes.distinct(“state”);<br>   printjson(cursor)</p>
 <p>   //每个州的人口最多和最少的城市<br>   var cursor = db.zipcodes.aggregate([</p>
-<pre><code>{<span class="variable">$group</span>:{_id:{state:<span class="string">"$state"</span>,city:<span class="string">"$city"</span>},//按state、city进行分组
-                pop:{<span class="variable">$sum</span>:<span class="string">"$pop"</span>}}},//对pop进行求合
-{<span class="variable">$sort</span>:{pop:<span class="number">1</span>}},//根据pop进行排序
-{<span class="variable">$group</span>:{_id:<span class="string">"$_id.state"</span>,//按州名进行分组
-        biggestCity:{<span class="variable">$last</span>:<span class="string">"$_id.city"</span>},//最多的城市
-        biggestPop：{<span class="variable">$last</span>:<span class="string">"$pop"</span>},//取pop
-        smallestCity:{<span class="variable">$first</span>:<span class="string">"$_id.city"</span>},
-        smallestPop:{<span class="variable">$first</span>:<span class="string">"$pop"</span>}
+<pre><code>{$group:{_id:{state:&quot;$state&quot;,city:&quot;$city&quot;},//按state、city进行分组
+                pop:{$sum:&quot;$pop&quot;}}},//对pop进行求合
+{$sort:{pop:1}},//根据pop进行排序
+{$group:{_id:&quot;$_id.state&quot;,//按州名进行分组
+        biggestCity:{$last:&quot;$_id.city&quot;},//最多的城市
+        biggestPop：{$last:&quot;$pop&quot;},//取pop
+        smallestCity:{$first:&quot;$_id.city&quot;},
+        smallestPop:{$first:&quot;$pop&quot;}
  }},
-{ <span class="variable">$project</span>://修改文档最后展示出来的结构
+{ $project://修改文档最后展示出来的结构
     {
-        _id:<span class="number">0</span>,
-        state:<span class="string">"$_id"</span>,
-        biggestCity:{name:<span class="string">"$biggestCity"</span>,pop:<span class="string">"$biggestPop"</span>},
-        smallestCity:{name:<span class="string">"$smallestCity"</span>,pop:<span class="string">"$smallestPop"</span>}
+        _id:0,
+        state:&quot;$_id&quot;,
+        biggestCity:{name:&quot;$biggestCity&quot;,pop:&quot;$biggestPop&quot;},
+        smallestCity:{name:&quot;$smallestCity&quot;,pop:&quot;$smallestPop&quot;}
     }    
 }
 </code></pre><p>   ])<br>   printjson(cursor.toArray)</p>
@@ -384,10 +384,10 @@ db.records.group(
 
 <nav id="pagination" >
     
-    <a href="/2015/12/25/新手学习Express4之一 路由 /" class="alignleft prev" >Prev</a>
+    <a href="/2015/12/25/新手学习Express4之一 路由 /" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/12/20/新手学习mongodb之八：GridFS文件存储/" class="alignright next" >Next</a>
+    <a href="/2015/12/20/新手学习mongodb之八：GridFS文件存储/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -417,7 +417,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -432,7 +432,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

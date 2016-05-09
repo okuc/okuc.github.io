@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -81,37 +81,37 @@ var _hmt = _hmt || [];
       
         <p>CentOS6中自带了openJDK1.7，由于XXX原因，一般还是要手动更改成Oracle JDK。本文描述的即是这一过程。</p>
 <p>首先，要查看一下你安装的版本中，是否自动安装了openJDK,如果没有，恭喜你，可以直接进行安装了。查询命令如下：</p>
-<pre><code><span class="attr_selector">[root@okuc6 ~]</span># <span class="tag">java</span> <span class="tag">-version</span>
-<span class="tag">java</span> <span class="tag">version</span> "1<span class="class">.7</span><span class="class">.0_79</span>"
-<span class="tag">OpenJDK</span> <span class="tag">Runtime</span> <span class="tag">Environment</span> (<span class="tag">rhel-2</span><span class="class">.5</span><span class="class">.5</span><span class="class">.4</span><span class="class">.el6-x86_64</span> <span class="tag">u79-b14</span>)
-<span class="tag">OpenJDK</span> 64<span class="tag">-Bit</span> <span class="tag">Server</span> <span class="tag">VM</span> (<span class="tag">build</span> 24<span class="class">.79-b02</span>, <span class="tag">mixed</span> <span class="tag">mode</span>)
+<pre><code>[root@okuc6 ~]# java -version
+java version &quot;1.7.0_79&quot;
+OpenJDK Runtime Environment (rhel-2.5.5.4.el6-x86_64 u79-b14)
+OpenJDK 64-Bit Server VM (build 24.79-b02, mixed mode)
 </code></pre><p>如上，如果返回的结果中还了OpenJDK字样，那就先卸载吧。<br> <a id="more"></a></p>
 <p>###卸载过程</p>
 <ol>
 <li><p>查询系统中安装的OpenJDK具体版本：</p>
-<pre><code>[root@okuc6 ~]<span class="preprocessor"># rpm -qa|grep jdk</span>
-java-<span class="number">1.6</span><span class="number">.0</span>-openjdk-<span class="number">1.6</span><span class="number">.0</span><span class="number">.35</span>-<span class="number">1.13</span><span class="number">.7</span><span class="number">.1</span>.el6_6.x86_64
-java-<span class="number">1.7</span><span class="number">.0</span>-openjdk-<span class="number">1.7</span><span class="number">.0</span><span class="number">.79</span>-<span class="number">2.5</span><span class="number">.5</span><span class="number">.4</span>.el6.x86_64
+<pre><code>[root@okuc6 ~]# rpm -qa|grep jdk
+java-1.6.0-openjdk-1.6.0.35-1.13.7.1.el6_6.x86_64
+java-1.7.0-openjdk-1.7.0.79-2.5.5.4.el6.x86_64
 </code></pre><p>上述命令可以看到我的系统中安装了2个版本的JDK，依次卸载。</p>
 </li>
 <li><p>使用<code>yum -y rmove</code>命令进行卸载。</p>
-<pre><code><span class="tag">yum</span> <span class="tag">-y</span> <span class="tag">remove</span> <span class="tag">java</span> <span class="tag">java-1</span><span class="class">.6</span><span class="class">.0-openjdk-1</span><span class="class">.6</span><span class="class">.0</span><span class="class">.35-1</span><span class="class">.13</span><span class="class">.7</span><span class="class">.1</span><span class="class">.el6_6</span><span class="class">.x86_64</span>
-<span class="tag">yum</span> <span class="tag">-y</span> <span class="tag">remove</span> <span class="tag">java</span> <span class="tag">java-1</span><span class="class">.7</span><span class="class">.0-openjdk-1</span><span class="class">.7</span><span class="class">.0</span><span class="class">.79-2</span><span class="class">.5</span><span class="class">.5</span><span class="class">.4</span><span class="class">.el6</span><span class="class">.x86_64</span>
+<pre><code>yum -y remove java java-1.6.0-openjdk-1.6.0.35-1.13.7.1.el6_6.x86_64
+yum -y remove java java-1.7.0-openjdk-1.7.0.79-2.5.5.4.el6.x86_64
 </code></pre></li>
 <li>卸载完成后再次使<code>rpm -qa|grep jdk</code>用查询，已经没有上次返回的结果了。</li>
 </ol>
 <p>###安装过程</p>
 <ol>
 <li>在下载的jdk中目录中，直接执行<code>rpm -ivh jdk-8u60-linux-x64.rpm</code>进行安装。</li>
-<li>配置环境变量<pre><code>vi /etc/profile  <span class="comment">#打开配置文件，在文件的最后三行，添加如下三行：</span>
-<span class="built_in">export</span> JAVA_HOME=E/usr/java/jdk1.<span class="number">8.0</span>_60
-<span class="built_in">export</span> CLASSPATH=.
-<span class="built_in">export</span> PATH = <span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin
+<li>配置环境变量<pre><code>vi /etc/profile  #打开配置文件，在文件的最后三行，添加如下三行：
+export JAVA_HOME=E/usr/java/jdk1.8.0_60
+export CLASSPATH=.
+export PATH = $PATH:$JAVA_HOME/bin
 </code></pre></li>
-<li>查询系统中安装的JDK具体版本：<pre><code><span class="list">[<span class="keyword">root@okuc6</span> soft]# java -version
-java version <span class="string">"1.8.0_60"</span>
-Java<span class="list">(<span class="keyword">TM</span>)</span> SE Runtime Environment <span class="list">(<span class="keyword">build</span> <span class="number">1.8</span>.0_60-b27)</span>
-Java HotSpot<span class="list">(<span class="keyword">TM</span>)</span> <span class="number">64</span>-Bit Server VM <span class="list">(<span class="keyword">build</span> <span class="number">25.60</span>-b23, mixed mode)</span></span>
+<li>查询系统中安装的JDK具体版本：<pre><code>[root@okuc6 soft]# java -version
+java version &quot;1.8.0_60&quot;
+Java(TM) SE Runtime Environment (build 1.8.0_60-b27)
+Java HotSpot(TM) 64-Bit Server VM (build 25.60-b23, mixed mode)
 </code></pre>可以看到，已安装成功。<br>如果还不放心，可以再使用<code>java</code>,<code>javac</code>分别测试一下。</li>
 </ol>
 
@@ -138,10 +138,10 @@ Java HotSpot<span class="list">(<span class="keyword">TM</span>)</span> <span cl
 
 <nav id="pagination" >
     
-    <a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/" class="alignleft prev" >Prev</a>
+    <a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/09/30/Linux折腾记(2)-CentOS6下匿名共享可读写文件夹/" class="alignright next" >Next</a>
+    <a href="/2015/09/30/Linux折腾记(2)-CentOS6下匿名共享可读写文件夹/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -171,7 +171,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -186,7 +186,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

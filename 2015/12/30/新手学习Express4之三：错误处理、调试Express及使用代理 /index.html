@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -79,129 +79,129 @@ var _hmt = _hmt || [];
     </header>
     <div class="entry">
       
-        <h2 id="错误处理">错误处理</h2><ol>
+        <h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><ol>
 <li><p>定义错误处理中间件和定义其他中间件一样，除了需要 4 个参数，而不是 3 个，其签名如下 <code>(err, req, res, next)</code> 。</p>
-<pre><code><span class="keyword">app</span>.<span class="keyword">use</span>(function(<span class="keyword">err</span>, req, res, next) {
-console.<span class="keyword">error</span>(<span class="keyword">err</span>.<span class="keyword">stack</span>);
-res.status(500).send('Something broke!');
+<pre><code>app.use(function(err, req, res, next) {
+console.error(err.stack);
+res.status(500).send(&apos;Something broke!&apos;);
 });
 </code></pre><a id="more"></a></li>
 <li><p>在其他 <code>app.use()</code> 和路由调用后，最后定义错误处理中间件，比如：</p>
-<pre><code><span class="keyword">var</span> bodyParser = <span class="keyword">require</span>(<span class="string">'body-parser'</span>);
-<span class="keyword">var</span> methodOverride = <span class="keyword">require</span>(<span class="string">'method-override'</span>);
-app.<span class="keyword">use</span>(bodyParser());
-app.<span class="keyword">use</span>(methodOverride());
-app.<span class="keyword">use</span>(<span class="function"><span class="keyword">function</span><span class="params">(err, req, res, next)</span> </span>{
-<span class="comment">// 业务逻辑</span>
+<pre><code>var bodyParser = require(&apos;body-parser&apos;);
+var methodOverride = require(&apos;method-override&apos;);
+app.use(bodyParser());
+app.use(methodOverride());
+app.use(function(err, req, res, next) {
+// 业务逻辑
 });
 </code></pre></li>
 <li><p>中间件返回的响应是随意的，可以响应一个 <code>HTML</code> 错误页面、一句简单的话、一个 <code>JSON</code> 字符串，或者其他任何您想要的东西。</p>
 <p>为了便于组织（更高级的框架），您可能会像定义常规中间件一样，定义多个错误处理中间件。比如您想为使用</p>
 <p><code>XHR</code> 的请求定义一个，还想为没有使用的定义一个，那么：</p>
-<pre><code><span class="keyword">var</span> bodyParser = require('body-parser');
-<span class="keyword">var</span> methodOverride = require('method-override');
-<span class="keyword">app</span>.<span class="keyword">use</span>(bodyParser());
-<span class="keyword">app</span>.<span class="keyword">use</span>(methodOverride());
-<span class="keyword">app</span>.<span class="keyword">use</span>(logErrors);
-<span class="keyword">app</span>.<span class="keyword">use</span>(clientErrorHandler);
-<span class="keyword">app</span>.<span class="keyword">use</span>(errorHandler);
+<pre><code>var bodyParser = require(&apos;body-parser&apos;);
+var methodOverride = require(&apos;method-override&apos;);
+app.use(bodyParser());
+app.use(methodOverride());
+app.use(logErrors);
+app.use(clientErrorHandler);
+app.use(errorHandler);
 </code></pre></li>
 </ol>
 <pre><code>`logErrors` 将请求和错误信息写入标准错误输出、日志或类似服务：
 
-    <span class="function"><span class="keyword">function</span> <span class="title">logErrors</span><span class="params">(err, req, res, next)</span></span> {
-        console.<span class="built_in">error</span>(err.stack);
-        <span class="built_in">next</span>(err);
+    function logErrors(err, req, res, next) {
+        console.error(err.stack);
+        next(err);
     }
 
 
-`clientErrorHandler` 的定义如下（注意这里将错误直接传给了 `<span class="built_in">next</span>` ）：
+`clientErrorHandler` 的定义如下（注意这里将错误直接传给了 `next` ）：
 
-    <span class="function"><span class="keyword">function</span> <span class="title">clientErrorHandler</span><span class="params">(err, req, res, next)</span></span> {
-    <span class="keyword">if</span> (req.xhr) {
-    res.status(<span class="number">500</span>).send({ <span class="built_in">error</span>: <span class="string">'Something blew up!'</span> });
-    } <span class="keyword">else</span> {
-    <span class="built_in">next</span>(err);
+    function clientErrorHandler(err, req, res, next) {
+    if (req.xhr) {
+    res.status(500).send({ error: &apos;Something blew up!&apos; });
+    } else {
+    next(err);
     }
     }
 
 `errorHandler` 能捕获所有错误，其定义如下：
 
-    <span class="function"><span class="keyword">function</span> <span class="title">errorHandler</span><span class="params">(err, req, res, next)</span></span> {
-    res.status(<span class="number">500</span>);
-    res.render(<span class="string">'error'</span>, { <span class="built_in">error</span>: err });
+    function errorHandler(err, req, res, next) {
+    res.status(500);
+    res.render(&apos;error&apos;, { error: err });
     }
 </code></pre><ol>
 <li><p>如果向 <code>next()</code> 传入参数（除了 <code>route</code> 字符串），<code>Express</code> 会认为当前请求有错误的输出，因此跳过后续其他非错误处理和路由<code>/</code>中间件函数。如果需做特殊处理，需要创建新的错误处理路由，如下节所示。</p>
 <p>如果路由句柄有多个回调函数，可使用 <code>route</code> 参数跳到下一个路由句柄。比如：</p>
-<pre><code>app.<span class="keyword">get</span>(<span class="string">'/a_route_behind_paywall'</span>,
-<span class="function"><span class="keyword">function</span> <span class="title">checkIfPaidSubscriber</span><span class="params">(req, res, next)</span> </span>{
-<span class="keyword">if</span>(!req.user.hasPaid) {
-<span class="comment">// 继续处理该请求</span>
-next(<span class="string">'route'</span>);
+<pre><code>app.get(&apos;/a_route_behind_paywall&apos;,
+function checkIfPaidSubscriber(req, res, next) {
+if(!req.user.hasPaid) {
+// 继续处理该请求
+next(&apos;route&apos;);
 }
-}, <span class="function"><span class="keyword">function</span> <span class="title">getPaidContent</span><span class="params">(req, res, next)</span> </span>{
-PaidContent.find(<span class="function"><span class="keyword">function</span><span class="params">(err, doc)</span> </span>{
-<span class="keyword">if</span>(err) <span class="keyword">return</span> next(err);
+}, function getPaidContent(req, res, next) {
+PaidContent.find(function(err, doc) {
+if(err) return next(err);
 res.json(doc);
 });
 });
 </code></pre></li>
 </ol>
-<pre><code>在这个例子中，句柄 <span class="escape">`g</span>etPaidContent<span class="escape">` </span>会被跳过，但 <span class="escape">`a</span>pp<span class="escape">` </span>中为 <span class="escape">`/</span><span class="built_in">a_route</span>_behind_paywall<span class="escape">` </span>定义的其他句柄则会继续执行。
+<pre><code>在这个例子中，句柄 `getPaidContent` 会被跳过，但 `app` 中为 `/a_route_behind_paywall` 定义的其他句柄则会继续执行。
 </code></pre><ol>
 <li><code>next()</code> 和 <code>next(err)</code> 类似于 <code>Promise.resolve()</code> 和 <code>Promise.reject()</code> 。它们让您可以向 <code>Express</code> 发信号，告诉它当前句柄执行结束并且处于什么状态。 <code>next(err)</code> 会跳过后续句柄，除了那些用来处理错误的句柄。</li>
 </ol>
-<h2 id="调试Express">调试Express</h2><ol>
+<h2 id="调试Express"><a href="#调试Express" class="headerlink" title="调试Express"></a>调试Express</h2><ol>
 <li><p><code>Express</code> 内部使用 <code>debug</code> <a href="https://github.com/visionmedia/debug]模块记录路由匹配、使用到的中间件、应" target="_blank" rel="external">[https://github.com/visionmedia/debug]模块记录路由匹配、使用到的中间件、应</a><br>用模式以及请求-响应循环。</p>
 <p><code>debug</code> 有点像改装过的 <code>console.log</code> ，不同的是，您不需要在生产代码中注释掉 <code>debug</code> 。它会默认关闭，而且使用一个名为 <code>DEBUG</code> 的环境变量还可以打开。</p>
 </li>
 <li><p>在启动应用时，设置<code>DEBUG</code>环境变量为<code>express.*</code>,可以查看<code>Express</code>中用到的所有内部日志。</p>
 </li>
 </ol>
-<pre><code>    $ <span class="variable">DEBUG=</span>express:* <span class="keyword">node</span><span class="identifier"> </span><span class="title">index</span>.js
+<pre><code>    $ DEBUG=express:* node index.js
 
 
 
 在Windows系统中，使用相应的命令。
 
-    &gt;set <span class="variable">DEBUG=</span>express:* &amp; <span class="keyword">node</span><span class="identifier"> </span><span class="title">index</span>.js
+    &gt;set DEBUG=express:* &amp; node index.js
 </code></pre><ol>
 <li><p>在由 <code>express generator</code> <a href="">http://expressjs.com/starter/generator.html</a> 生成的默认应用中执行，会打印出如下信息：</p>
-<pre><code>$ DEBUG=<span class="string">express:</span>* node .<span class="regexp">/bin/</span>www
-<span class="string">express:</span><span class="string">router:</span>route <span class="keyword">new</span> / +<span class="number">0</span>ms
-<span class="string">express:</span><span class="string">router:</span>layer <span class="keyword">new</span> / +<span class="number">1</span>ms
-<span class="string">express:</span><span class="string">router:</span>route get / +<span class="number">1</span>ms
-<span class="string">express:</span><span class="string">router:</span>layer <span class="keyword">new</span> / +<span class="number">0</span>ms
-<span class="string">express:</span><span class="string">router:</span>route <span class="keyword">new</span> / +<span class="number">1</span>ms
-<span class="string">express:</span><span class="string">router:</span>layer <span class="keyword">new</span> / +<span class="number">0</span>ms
-<span class="string">express:</span><span class="string">router:</span>route get / +<span class="number">0</span>ms
-<span class="string">express:</span><span class="string">router:</span>layer <span class="keyword">new</span> / +<span class="number">0</span>ms
-<span class="string">express:</span>application compile etag weak +<span class="number">1</span>ms
-<span class="string">express:</span>application compile query parser extended +<span class="number">0</span>ms
-<span class="string">express:</span>application compile trust proxy <span class="literal">false</span> +<span class="number">0</span>ms
-<span class="string">express:</span>application booting <span class="keyword">in</span> development mode +<span class="number">1</span>ms
-<span class="string">express:</span>router use / query +<span class="number">0</span>ms
-<span class="string">express:</span><span class="string">router:</span>layer <span class="keyword">new</span> / +<span class="number">0</span>ms
-<span class="string">express:</span>router use / expressInit +<span class="number">0</span>ms
-<span class="string">express:</span><span class="string">router:</span>layer <span class="keyword">new</span> / +<span class="number">0</span>ms
-<span class="string">express:</span>router use / favicon +<span class="number">1</span>ms
+<pre><code>$ DEBUG=express:* node ./bin/www
+express:router:route new / +0ms
+express:router:layer new / +1ms
+express:router:route get / +1ms
+express:router:layer new / +0ms
+express:router:route new / +1ms
+express:router:layer new / +0ms
+express:router:route get / +0ms
+express:router:layer new / +0ms
+express:application compile etag weak +1ms
+express:application compile query parser extended +0ms
+express:application compile trust proxy false +0ms
+express:application booting in development mode +1ms
+express:router use / query +0ms
+express:router:layer new / +0ms
+express:router use / expressInit +0ms
+express:router:layer new / +0ms
+express:router use / favicon +1ms
 ...
 </code></pre><p>当应用收到请求时，能看到 <code>Express</code> 代码中打印出的日志:</p>
-<pre><code><span class="string">express:</span>router dispatching GET / +<span class="number">4</span>h
-<span class="string">express:</span>router <span class="string">query  :</span> / +<span class="number">2</span>ms
-<span class="string">express:</span>router <span class="string">expressInit  :</span> / +<span class="number">0</span>ms
-<span class="string">express:</span>router <span class="string">favicon  :</span> / +<span class="number">0</span>ms
-<span class="string">express:</span>router <span class="string">logger  :</span> / +<span class="number">1</span>ms
-<span class="string">express:</span>router <span class="string">jsonParser  :</span> / +<span class="number">0</span>ms
-<span class="string">express:</span>router <span class="string">urlencodedParser  :</span> / +<span class="number">1</span>ms
-<span class="string">express:</span>router <span class="string">cookieParser  :</span> / +<span class="number">0</span>ms
-<span class="string">express:</span>router <span class="string">stylus  :</span> / +<span class="number">0</span>ms
-<span class="string">express:</span>router <span class="string">serveStatic  :</span> / +<span class="number">2</span>ms
-<span class="string">express:</span>router <span class="string">router  :</span> / +<span class="number">2</span>ms
-<span class="string">express:</span>router dispatching GET / +<span class="number">1</span>ms
-<span class="string">express:</span>view lookup <span class="string">"index.jade"</span> +<span class="number">338</span>ms
-<span class="string">express:</span>view stat <span class="string">"/projects/example/views/index.jade"</span> +<span class="number">0</span>ms
+<pre><code>express:router dispatching GET / +4h
+express:router query  : / +2ms
+express:router expressInit  : / +0ms
+express:router favicon  : / +0ms
+express:router logger  : / +1ms
+express:router jsonParser  : / +0ms
+express:router urlencodedParser  : / +1ms
+express:router cookieParser  : / +0ms
+express:router stylus  : / +0ms
+express:router serveStatic  : / +2ms
+express:router router  : / +2ms
+express:router dispatching GET / +1ms
+express:view lookup &quot;index.jade&quot; +338ms
+express:view stat &quot;/projects/example/views/index.jade&quot; +0ms
 </code></pre><p>设置 <code>DEBUG</code> 的值为 <code>express:router</code> ，只查看路由部分的日志；设置 <code>DEBUG</code> 的值为 <code>express:application</code> ，只查看应用部分的日志，依此类推。</p>
 </li>
 <li><p>使用 <code>express</code> 命令行生成的应用也使用了 <code>debug</code> 模块，它的命名空间限制在应用中。</p>
@@ -210,7 +210,7 @@ res.json(doc);
 <p>关于<code>DEBUG</code>,更多请参见：<a href="">https://github.com/visionmedia/debug?_ga=1.168308001.1286277039.1432108056</a></p>
 </li>
 </ol>
-<h2 id="使用代理">使用代理</h2><ol>
+<h2 id="使用代理"><a href="#使用代理" class="headerlink" title="使用代理"></a>使用代理</h2><ol>
 <li>如果运行<code>Express</code>需要代理，则可以通过<code>app.set(&#39;trust proxy&#39;,XXXX)</code>来指定，否则，应用不会运行。如果代理设置不正确，则会误将代理服务器的IP地址注册为客户端IP地址。</li>
 <li><p><code>trust proxy</code>的取值有以下几种：</p>
 <ul>
@@ -269,10 +269,10 @@ res.json(doc);
 
 <nav id="pagination" >
     
-    <a href="/2015/12/31/新手学习Express4之四：数据库集成/" class="alignleft prev" >Prev</a>
+    <a href="/2015/12/31/新手学习Express4之四：数据库集成/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/12/28/新手学习Express4之二：中间件与模板引擎/" class="alignright next" >Next</a>
+    <a href="/2015/12/28/新手学习Express4之二：中间件与模板引擎/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -302,7 +302,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -317,7 +317,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

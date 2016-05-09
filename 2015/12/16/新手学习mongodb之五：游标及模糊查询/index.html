@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -112,64 +112,64 @@ var _hmt = _hmt || [];
 <p>如果希望游标存在时间长一些，避免这种”超时销毁”的行为，可以使用addOption函数为游标添加noTimeout的选项：<br><code>var mycurosr=db.collection.find().addOption(DBQuery.Option.noTimeout)</code></p>
 <p>如果要查询整个游标的生命周期，可以使用<code>serverStatus()函数</code>查看当前系统的游标状态</p>
 <pre><code>db.serverStatus().metrics.cursor{
- “timedOut”<span class="symbol">:&lt;number&gt;//</span>数据库启来以来，超时的游标个数
- “open”<span class="symbol">:</span>{&lt;<span class="regexp">/number&gt;</span>
+ “timedOut”:&lt;number&gt;//数据库启来以来，超时的游标个数
+ “open”:{&lt;/number&gt;
 </code></pre></li>
 </ul>
 </li>
 </ol>
-<pre><code><span class="string">"noTimeout"</span><span class="symbol">:&lt;number&gt;</span>,<span class="regexp">//</span>表示使用notimeout阻止销毁的游标个数
-<span class="string">"pinned"</span><span class="symbol">:&lt;number&gt;</span>,<span class="regexp">//</span>服务器启动以来，超时的游标个数
-<span class="string">"total"</span><span class="symbol">:&lt;number&gt;//</span>打开的游标总数
+<pre><code>&quot;noTimeout&quot;:&lt;number&gt;,//表示使用notimeout阻止销毁的游标个数
+&quot;pinned&quot;:&lt;number&gt;,//服务器启动以来，超时的游标个数
+&quot;total&quot;:&lt;number&gt;//打开的游标总数
 
 }
 }
 </code></pre><ol>
 <li><p>在多个客户端操作时，有可能由于数据更新了，导致位置改变了，从而致使有的数据从没取出来，有的会取出多次，也就是说，多个客户端之间有可能产生混乱。解决这个问题的方法是对查询进行快照：<code>db.collection.find().snapshot()</code>,这样，查询就会在_id索引上来遍历执行，这样就可以保证每个文档只会被返回一次，从而保证获取结果的一致性。但是快照会使结果变慢，要谨慎使用。</p>
-<pre><code>dbService = connect(<span class="string">"localhost:27017"</span>);
-<span class="keyword">db</span> = dbService.getSiblingDB(<span class="string">"okuc"</span>);
-<span class="keyword">db</span>.query_cursor.<span class="keyword">drop</span>();<span class="comment">//清空集合</span>
+<pre><code>dbService = connect(&quot;localhost:27017&quot;);
+db = dbService.getSiblingDB(&quot;okuc&quot;);
+db.query_cursor.drop();//清空集合
 
-<span class="keyword">for</span>(i=0;i&lt;100;i++){
-    <span class="keyword">db</span>.query_cursor.insert({index:i,text:<span class="string">"Hello MongoDB!"</span>});
+for(i=0;i&lt;100;i++){
+    db.query_cursor.insert({index:i,text:&quot;Hello MongoDB!&quot;});
 }
 
-<span class="keyword">var</span> cursor = <span class="keyword">db</span>.query_cursor.find({},{_id:0,index:1});<span class="comment">//返回的结果只包含index字段</span>
+var cursor = db.query_cursor.find({},{_id:0,index:1});//返回的结果只包含index字段
 
-<span class="keyword">while</span>(cursor.hasNext()){
-    <span class="keyword">var</span> obj = cursor.next();
-    <span class="keyword">print</span>(tojson(obj));
+while(cursor.hasNext()){
+    var obj = cursor.next();
+    print(tojson(obj));
 
-    <span class="keyword">var</span> left = cursor.objsLeftInBatch();<span class="comment">//未被迭代的文档</span>
-    <span class="keyword">print</span>(<span class="string">"Left in bash:"</span>,left);
+    var left = cursor.objsLeftInBatch();//未被迭代的文档
+    print(&quot;Left in bash:&quot;,left);
 }
 
-<span class="keyword">var</span> documentArray = <span class="keyword">db</span>.query_cursor.find().toArray()<span class="comment">//转成数组</span>
-<span class="keyword">if</span>(documentArray.length&gt;10){
-    <span class="keyword">var</span> obj = documentArray[10];
+var documentArray = db.query_cursor.find().toArray()//转成数组
+if(documentArray.length&gt;10){
+    var obj = documentArray[10];
     printjson(obj)
 }
 
-<span class="keyword">var</span> cursor = <span class="keyword">db</span>.query_cursor.find()
-cursor.<span class="keyword">forEach</span>(function(temp){<span class="comment">//自定义函数对结果进行处理</span>
-    <span class="keyword">if</span>(temp.index==10){
-        <span class="keyword">print</span>(<span class="string">"test.index:"</span>+temp.index)+
-              <span class="string">" test.obj:"</span>+temp.text)
+var cursor = db.query_cursor.find()
+cursor.forEach(function(temp){//自定义函数对结果进行处理
+    if(temp.index==10){
+        print(&quot;test.index:&quot;+temp.index)+
+              &quot; test.obj:&quot;+temp.text)
     }
 });
 </code></pre></li>
 </ol>
 <ol>
 <li><p>MongoDB可以使用正则表达式，从而实现模糊查询的功能。模糊查询可以使用$regex操作符或直接使用正则表达式对象。MongoDB使用PCRE(Perl Compatible Regular Expression)作为正则表达式语言。</p>
-<pre><code>db.student.find({<span class="variable">$name</span>:{<span class="variable">$regex</span>:/joe/}})
-db.student.find({<span class="variable">$name</span>:/joe/})
+<pre><code>db.student.find({$name:{$regex:/joe/}})
+db.student.find({$name:/joe/})
 </code></pre><p>regex操作符：</p>
-<pre><code>{&lt;field&gt;:{<span class="variable">$regex</span>:/pattern/,<span class="variable">$options</span>:<span class="string">'&lt;options&gt;'</span>}}
-{&lt;field&gt;:{<span class="variable">$regex</span>:<span class="string">'pattern'</span>,<span class="variable">$options</span>:<span class="string">'&lt;options&gt;'</span>}}
-{&lt;field&gt;:{<span class="variable">$regex</span>:/pattern/&lt;options&gt;}}//options为隐式方式
+<pre><code>{&lt;field&gt;:{$regex:/pattern/,$options:&apos;&lt;options&gt;&apos;}}
+{&lt;field&gt;:{$regex:&apos;pattern&apos;,$options:&apos;&lt;options&gt;&apos;}}
+{&lt;field&gt;:{$regex:/pattern/&lt;options&gt;}}//options为隐式方式
 </code></pre></li>
 </ol>
-<pre><code>正则表达式对象：`{&lt;field&gt;<span class="symbol">:/pattern/&lt;options&gt;</span>}&lt;<span class="regexp">/options&gt;&lt;/field</span>&gt;`
+<pre><code>正则表达式对象：`{&lt;field&gt;:/pattern/&lt;options&gt;}&lt;/options&gt;&lt;/field&gt;`
 </code></pre><ol>
 <li><p>$regex与正则表达式对象的区别：</p>
 <ul>
@@ -195,62 +195,62 @@ db.student.find({<span class="variable">$name</span>:/joe/})
 <p>   dbService = connect(“localhost:27017”);<br>   db = dbService.getSiblingDB(“okuc”);</p>
 <p>   db.query_regex.drop();<br>   var bulk = db.query_regex.initializeUnorderedBulkOp();</p>
 <p>   var doc1 = </p>
-<pre><code><span class="rules">{
-    <span class="rule"><span class="attribute">type</span>:<span class="value"><span class="string">"Abc123"</span>,
-    description:<span class="string">"Single line description."</span>
-</span></span></span>}
+<pre><code>{
+    type:&quot;Abc123&quot;,
+    description:&quot;Single line description.&quot;
+}
 </code></pre><p>   bulk.insert(doc1);</p>
 <p>   var doc2 = </p>
-<pre><code><span class="rules">{
-    <span class="rule"><span class="attribute">type</span>:<span class="value"><span class="string">"Abc789"</span>,
-    description:<span class="string">"First line\nSecond line"</span>
-</span></span></span>}
+<pre><code>{
+    type:&quot;Abc789&quot;,
+    description:&quot;First line\nSecond line&quot;
+}
 </code></pre><p>   bulk.insert(doc2);</p>
 <p>   var doc3 = </p>
-<pre><code><span class="rules">{
-    <span class="rule"><span class="attribute">type</span>:<span class="value"><span class="string">"xyz456"</span>,
-    description:<span class="string">"Many spaces before      line"</span>
-</span></span></span>}
+<pre><code>{
+    type:&quot;xyz456&quot;,
+    description:&quot;Many spaces before      line&quot;
+}
 </code></pre><p>   bulk.insert(doc3);</p>
 <p>   var doc4 = </p>
-<pre><code><span class="rules">{
-    <span class="rule"><span class="attribute">type</span>:<span class="value"><span class="string">"xyz789"</span>,
-    description:<span class="string">"Multiple\nline description"</span>
-</span></span></span>}
+<pre><code>{
+    type:&quot;xyz789&quot;,
+    description:&quot;Multiple\nline description&quot;
+}
 </code></pre><p>   bulk.insert(doc4);</p>
 <p>   bulk.execute();</p>
 <p>   var cursor = db.query_regex.find({//查找type字段中以abc开头且不分大小写的元素。</p>
-<pre><code>    <span class="symbol">type:</span>
+<pre><code>    type:
     {
-        <span class="variable">$regex</span><span class="symbol">:/^ABC/i</span>
+        $regex:/^ABC/i
         }
 });
 </code></pre><p>   printjson(cursor.toarray);</p>
 <p>   var cursor = db.query_regex.find({//查找description字段中以S开头e且启用多行匹配。</p>
 <pre><code>    description:
     {
-        <span class="variable">$regex</span>:/^S/,<span class="variable">$options</span>:<span class="string">'m'</span>
+        $regex:/^S/,$options:&apos;m&apos;
         }
 });
 </code></pre><p>   printjson(cursor.toarray);</p>
 <p>   var cursor = db.query_regex.find({//查找description字段中以S开头，它不能匹配多行</p>
 <pre><code>    description:
     {
-        <span class="variable">$regex</span>:/^S/
+        $regex:/^S/
         }
 });
 </code></pre><p>   printjson(cursor.toarray);</p>
 <p>   var cursor = db.query_regex.find({//查找description字段中m和line之间所有字符，包括换行符，s可以点号忽略换行符，i会忽略掉大小写</p>
 <pre><code>    description:
     {
-        <span class="variable">$regex</span>:/m.*line/,<span class="variable">$options</span>:<span class="string">'si'</span>
+        $regex:/m.*line/,$options:&apos;si&apos;
         }
 });
 </code></pre><p>   printjson(cursor.toarray);</p>
 <p>   var pattern = “abc #category conde\n123 #item number”;<br>   var cursor = db.query_regex.find({//查找description字段中不区分大小写的<code>abc 123</code>，由于使用了x，所以会把#到换行符之间作为注释忽略掉，和//$regex:/abc123/,$options:’xi’</p>
 <pre><code>    description:
     {
-        <span class="variable">$regex</span>:pattern,<span class="variable">$options</span>:<span class="string">'xi'</span>
+        $regex:pattern,$options:&apos;xi&apos;
         }
 });
 </code></pre><p>   printjson(cursor.toarray);</p>
@@ -286,32 +286,32 @@ db.student.find({<span class="variable">$name</span>:/joe/})
 <p>   db.update_findAndModify.drop();<br>   var bulk = db.update_findAndModify.initializeUnorderedBulkOp();</p>
 <p>   var doc1 = </p>
 <pre><code>{
-    <span class="attribute">_id</span>:<span class="number">1</span>,
-    <span class="attribute">name</span>:<span class="string">"xiaoli"</span>,
-    <span class="attribute">age</span>:<span class="number">20</span>,
-    <span class="attribute">score</span>:<span class="number">90</span>
+    _id:1,
+    name:&quot;xiaoli&quot;,
+    age:20,
+    score:90
 }
 </code></pre><p>   bulk.insert(doc1);</p>
 <p>   var doc2 = </p>
 <pre><code>{
-    <span class="attribute">_id</span>:<span class="number">2</span>,
-    <span class="attribute">name</span>:<span class="string">"xiaoli"</span>,
-    <span class="attribute">age</span>:<span class="number">22</span>,
-    <span class="attribute">score</span>:<span class="number">95</span>
+    _id:2,
+    name:&quot;xiaoli&quot;,
+    age:22,
+    score:95
 }
 </code></pre><p>   bulk.insert(doc2);</p>
 <p>   bulk.execute();</p>
 <p>   var res = db.update_findAndModify.findAndModify({</p>
-<pre><code><span class="string">query:</span>{<span class="string">name:</span><span class="string">"xiaoli"</span>},
-sort：{<span class="string">age:</span><span class="number">1</span>},
-<span class="string">update:</span>{<span class="string">$inc:</span>{<span class="string">score:</span><span class="number">1</span>}},
-<span class="string">new:</span><span class="literal">true</span>,
-<span class="string">upsert:</span><span class="literal">true</span>
+<pre><code>query:{name:&quot;xiaoli&quot;},
+sort：{age:1},
+update:{$inc:{score:1}},
+new:true,
+upsert:true
 </code></pre><p>   })<br>   printjson(res)<br>   var cursor = db.update_findAndModify.find();<br>   cursor.forEach(printjson)</p>
 <p>   var res = db.update_findAndModify.findAndModify({</p>
-<pre><code><span class="tag">query</span>:<span class="rules">{<span class="rule"><span class="attribute">name</span>:<span class="value"><span class="string">"xiaoli"</span></span></span></span>},
-<span class="tag">sort</span>：<span class="rules">{<span class="rule"><span class="attribute">age</span>:<span class="value"><span class="number">1</span></span></span></span>},
-<span class="tag">remove</span><span class="pseudo">:true</span>
+<pre><code>query:{name:&quot;xiaoli&quot;},
+sort：{age:1},
+remove:true
 </code></pre><p>   })<br>   printjson(res)<br>   var cursor = db.update_findAndModify.find();<br>   cursor.forEach(printjson)</p>
 </li>
 </ol>
@@ -319,25 +319,25 @@ sort：{<span class="string">age:</span><span class="number">1</span>},
 <li><p>MongoDB是为分布式存储而设计，<code>_id</code>主键默认使用的是ObjectId类型的值，它比自增式主键更适合在分布式环境下使用，所以MongoDB默信不支持字段自增功能。利用findAndModify函数的get-and-set的原子特性，来实现<code>_id</code>的自增。</p>
 <p>   dbService = connect(“localhost:27017”);<br>   db = dbService.getSiblingDB(“okuc”);<br>   db.user_test.drop();</p>
 <p>   //初始化，_id为计数器的名字，seq字段为计数器的值。<br>   db.counters.insert({</p>
-<pre><code><span class="label">_id:</span><span class="string">"userid"</span>,
-<span class="label">seq:</span><span class="number">0</span>
+<pre><code>_id:&quot;userid&quot;,
+seq:0
 </code></pre><p>   })</p>
 <p>   //用于增加计数器的值，返回自增后的计数器的值<br>   function getNextSequence(name){</p>
 <pre><code>  var ret = db.counters.findAndModify({
 
   query:{_id:name},
-  update:{<span class="variable">$inc</span>:{seq:<span class="number">1</span>}},
+  update:{$inc:{seq:1}},
   new:true,
   upsert:true
   });
-<span class="keyword">return</span> ret.seq;
+return ret.seq;
 </code></pre><p>   }</p>
 <p>   //插入五条测试数据</p>
 <p>   for(var i=0;i&lt;5;i++){</p>
-<pre><code><span class="tag">db</span><span class="class">.user_test</span><span class="class">.insert</span>(<span class="rules">{
-    <span class="rule"><span class="attribute">_id</span>:<span class="value"><span class="function">getNextSequence</span>(<span class="string">"userid"</span>),
-    name:<span class="string">"Bob"</span>
-</span></span></span>});
+<pre><code>db.user_test.insert({
+    _id:getNextSequence(&quot;userid&quot;),
+    name:&quot;Bob&quot;
+});
 </code></pre><p>   }</p>
 <p>   var cursor = db.user_test.find();<br>   cursor.forEach(printjson)</p>
 </li>
@@ -366,10 +366,10 @@ sort：{<span class="string">age:</span><span class="number">1</span>},
 
 <nav id="pagination" >
     
-    <a href="/2015/12/17/新手学习mongodb之六：普通索引/" class="alignleft prev" >Prev</a>
+    <a href="/2015/12/17/新手学习mongodb之六：普通索引/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/12/15/新手学习mongodb之四：使用find轻松查询数据/" class="alignright next" >Next</a>
+    <a href="/2015/12/15/新手学习mongodb之四：使用find轻松查询数据/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -399,7 +399,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -414,7 +414,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

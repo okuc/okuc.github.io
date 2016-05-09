@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 3 | 我的后院自留地</title>
+  <title>Página 3 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -64,6 +64,446 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-16T14:06:32.000Z"><a href="/2015/12/16/新手学习mongodb之五：游标及模糊查询/">2015-12-16</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/16/新手学习mongodb之五：游标及模糊查询/">新手学习mongodb之五：游标及模糊查询</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li>使用<code>find</code>函数进行查询时，MongoDB并不是一次返回结果集中的所有文档，而是以多条文档的形式分白费来返回查询结果，返回的文档会缓存到内存中。<br>分批的原则是不超过101个文档或1M的数据，以先达到的标准为主。如果101个文档大于1M，则会减少文档的数量，以小的为准，除第一次外，以后每次可以返回4M的文档。<br>这种批量返回结果的好处是，一方面，它可以减少客户端对服务器连接次数，从而减轻服务器的查询负担；另一方面，当查询结果集很大时，批量返回的结果的方式可以减少客户端的等待时间，提高数据的处理效率。<br>在没有建立索引的字段上进行排序，会把符合条件的全部加载到内存中进行排序，所以，一定要建立索引。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/16/新手学习mongodb之五：游标及模糊查询/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-15T14:06:32.000Z"><a href="/2015/12/15/新手学习mongodb之四：使用find轻松查询数据/">2015-12-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/15/新手学习mongodb之四：使用find轻松查询数据/">新手学习mongodb之四：使用find轻松查询数据</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li><p>find参数的原型如下：<code>db.集合名.find(query,fields,limit,skip)</code>,这四个参数的意思如下：</p>
+<ul>
+<li><code>query</code>：指明查询条件，相当于SQL中的where语句，例如：<code>db.std.find({name:&quot;henry&quot;,&quot;ang&quot;:{$lt:22}})</code></li>
+<li><code>fields</code>:用于字段映射，语法格式:<code>{field:0}</code>或<code>{filed:1}</code>用来表示该字段在结果中是否显示。<code>1</code>为显示。如：<code>db.std.find({&quot;age&quot;:{$lt:22}},{&quot;_id&quot;:0,&quot;name&quot;:1})</code>,除<code>_id</code>字段，其它字段必须设置同样的值，要么为<code>0</code>，要么为<code>1</code>。如果<code>_id</code>为<code>1</code>，那么其他字段必须为<code>1</code>；如果<code>_id</code>字段为<code>0</code>，其他字段可同时为<code>0或1</code>。</li>
+<li>limit:限制查询结果集的文档数量，指定查询返回结果数量的上限，例如：<code>db.std.find({name:&quot;henry&quot;},{&quot;name&quot;:1,&quot;age&quot;:1},5)</code></li>
+<li>skip：跳过一定数据量的结果，设置第一条返回文档的偏移量。如<code>db.std.find({name:&quot;henry&quot;},{&quot;name&quot;:1,&quot;age&quot;:1},5,20)</code></li>
+<li><p>返回对象为cursor对象<code>var cursor = db.std.find({name:&quot;joe&quot;})</code></p>
+<p><a id="more"></a></p>
+<p>使用find函数时需要注意以下问题：</p>
+</li>
+<li><p>一次只能查询一个集合，不能针对多个集合</p>
+</li>
+<li><p><code>find</code>参数为空或者查询条件为空查询时，会返回集合中的所有文档。<code>db.std.find()</code>或<code>db.std.find()</code></p>
+</li>
+<li>除了将<code>limit</code>和<code>skip</code>作为<code>find</code>函数的参数外，还可以单独使用<code>limit</code>和<code>skip</code>函数来修饰查询结果。<code>db.std.find({age:{$lt:22}}).limit(5).skip(10)</code></li>
+<li>返回的查询结果默认情况下是无序的，如果需要对结果进行排序，可以使用sort函数。例如：db.std.find().sort({name:1,age:-1})</li>
+<li>db.collection.findOne()只会返回第一条数据</li>
+<li>当查询的集合文档数量很大时，为了加快数据的查询速度可以创建索引</li>
+<li><p>除了使用find函数实现基本查询外，还可以使用聚合框架，用于复杂查询。</p>
+<pre><code>dbService = connect(&quot;localhost:27017&quot;);
+db = dbService.getSiblingDB(&quot;okuc&quot;);
+db.query_test.drop();
+var bulk = db.query_test.initializeUnorderedBulkOp();
+var doc1 = {
+            name:&quot;joe&quot;,
+            age:20
+}
+bulk.insert(doc1);
+var doc2 = {
+            name:&quot;joe&quot;,
+            age:31
+}
+bulk.insert(doc2);
+var doc3 = {
+            name:&quot;henry&quot;,
+            age:21
+}
+bulk.insert(doc3);
+var doc4 = {
+            name:&quot;john&quot;,
+            age:null
+}
+bulk.insert(doc4);
+
+bulk.execute()
+
+var cursor = db.query_test.find(
+        {},//查询条件
+        {_id:0,age:1},//字段映射
+        2,//返回结果条数
+        1).sort({age:1});//跳过文档条件 结果按照年龄升序排列
+);
+printjson(cursor.toArray())
+
+var cursor = db.query_test.find(
+        {},//查询条件
+        {_id:0,age:1}).limit(2).skip(1).sort({age:1});
+);
+printjson(cursor.toArray())
+</code></pre></li>
+</ul>
+</li>
+<li><p>比较查询操作符共有以下几种：</p>
+<ul>
+<li><code>$wq / $ne</code>:等于/不等于<code>{&lt;field&gt;:{$eq:&lt;value&gt;}}</code></li>
+<li><code>$gt / $gte</code>:大于/大于等于<code>{&lt;field&gt;:{$gt:&lt;value&gt;}}</code></li>
+<li><code>$lt / $lte</code>:小于/小于等于<code>{&lt;field&gt;:{$lt:&lt;value&gt;}}</code></li>
+<li><code>$in / $nin</code>：包含/不包含<code>{&lt;field&gt;:{$in:[&lt;value1&gt;,&lt;value2&gt;...&lt;valueN&gt;]}}</code></li>
+</ul>
+</li>
+<li><p>利用逻辑查询操作符还可以连接多个查询条件</p>
+<ul>
+<li><code>$and</code>:与<code>{$and:[{&lt;expression1&gt;},&lt;expression2&gt;},...,&lt;expressionN&gt;}]}</code></li>
+<li><code>$or</code>：或<code>{$or:[{&lt;expression1&gt;},&lt;expression2&gt;},...,&lt;expressionN&gt;}]}</code></li>
+<li><code>$nor</code>:非<code>{$nor:[{&lt;expression1&gt;},&lt;expression2&gt;},...,&lt;expressionN&gt;}]}</code></li>
+<li><code>$not</code>：取反<code>{$not:[{&lt;expression1&gt;},&lt;expression2&gt;},...,&lt;expressionN&gt;}]}</code></li>
+</ul>
+</li>
+<li><p>元素查询操作符</p>
+<ul>
+<li><code>$exists</code>:按照字段是否存在来查询文档<code>{field:{$exists:&lt;boolean&gt;}}</code></li>
+<li><p><code>$type</code>:选择字段值为指定BSON数据类型编号的文档<code>{field:{$type:&lt;BSON type&gt;}}</code></p>
+<pre><code>dbService = connect(&quot;localhost:27017&quot;);
+db = dbService.getSiblingDB(&quot;okuc&quot;);
+db.query_test.drop();
+var bulk = db.query_test.initializeUnorderedBulkOp();
+var doc1 = {
+            name:&quot;joe&quot;,
+            age:20
+}
+bulk.insert(doc1);
+var doc2 = {
+            name:&quot;joe&quot;,
+            age:31
+}
+bulk.insert(doc2);
+var doc3 = {
+            name:&quot;henry&quot;,
+            age:21
+}
+bulk.insert(doc3);
+var doc4 = {
+            name:&quot;john&quot;,
+            age:null
+}
+bulk.insert(doc4);
+
+bulk.execute()
+
+var cursor = db.query_test.find(
+        {
+    age:{$eq:20}//也可以写成 age:20
+    //age:20
+    }
+});
+printjson(cursor.toArray())
+
+var cursor = db.query_test.find(
+        {
+        {
+    age:{$nin:[20,21]}//键值等于20,21的文档
+    //age:20
+    }
+});
+printjson(cursor.toArray())
+
+var cursor = db.query_test.find(
+        {//查询年龄等于19或21且名字等于joe或jack的数据
+    $and:[{ $or:[{age:19},age:21]},
+          { $or:[{name:&quot;joe&quot;},{name:&quot;jack&quot;}]}
+    ]
+    //age:20
+});
+printjson(cursor.toArray())
+
+var cursor = db.query_test.find(
+        {
+    $nor:[{name:&quot;joe&quot;},{name:&quot;jack&quot;}]//查出姓名不等于joe或jack的人
+});
+printjson(cursor.toArray())
+
+var cursor = db.query_test.find(
+        {
+    age:{$not:{$gt:22,$lte30}}年龄小于等于22，且大于30
+});
+printjson(cursor.toArray())
+
+var cursor = db.query_test.find(
+        {
+    age:{$exists:true}//存在年龄的人
+});
+printjson(cursor.toArray())
+</code></pre></li>
+</ul>
+</li>
+<li><p>查询操作符介绍及使用–<code>$where</code>查询</p>
+<p><code>$where</code>可以将JavaScript表达式的字符串或JavaScript函数作为查询语句的一部分，在JavaScript表达式和函数中，可以使用this或obj来引用当前操作的文档。<code>db.collection.find({$where:&quot;this.credits == this.debits&quot;})</code>,只有js或函数返回值为true时，才会返回当前文档。</p>
+<p>查询时，<code>$where</code>操作符不能使用索引，每个文档需要从BSON对象转换成JS对象后，才可以通过<code>$where</code>表达式来运行。所以，比一般查询要慢，因此要避免使用。</p>
+<pre><code>dbService = connect(&quot;localhost:27017&quot;);
+db = dbService.getSiblingDB(&quot;okuc&quot;);
+db.query_test.drop();
+var bulk = db.query_test.initializeUnorderedBulkOp();
+var doc1 = {
+            &quot;apple&quot;:1,&quot;banana&quot;:6,&quot;peach&quot;:4
+}
+bulk.insert(doc1);
+var doc2 = {
+            &quot;apple&quot;:3,&quot;banana&quot;:3,&quot;peach&quot;:4
+}
+bulk.insert(doc2);
+
+bulk.execute()
+
+var cursor = db.query_test.find(
+        {
+     $where:function(){
+        for(var current in this){
+            for(var other in this){
+                if(current !=other &amp;&amp; this[current]==this[other]) return true;
+            }
+        }
+    }
+    }
+});
+printjson(cursor.toArray());
+        var cursor = db.query_test.find(
+        {
+     $where:&quot;this.apple==1 &amp;&amp; this.banana==6&quot;
+});
+printjson(cursor.toArray());
+</code></pre></li>
+<li><p>内嵌文档查询包括两种情况</p>
+<p>如果是查询整个文档，当内嵌文档键值对的数量以及键值对的顺序都相同时，才会匹配；如果是查询某个字段，需要使用点操作符。</p>
+<pre><code>dbService = connect(&quot;localhost:27017&quot;);
+db = dbService.getSiblingDB(&quot;okuc&quot;);
+db.query_test.drop();
+var bulk = db.query_test.initializeUnorderedBulkOp();
+var doc1 = {
+            &quot;name&quot;:&quot;xiaoli&quot;,&quot;age&quot;:20,&quot;address&quot;:
+{&quot;province&quot;:&quot;GuangDong&quot;,&quot;city&quot;:ShenZhen}
+}
+bulk.insert(doc1);
+var doc2 = {
+            &quot;name&quot;:&quot;xiaoqing&quot;,&quot;age&quot;:22,&quot;address&quot;:
+{&quot;city&quot;:ShenZhen,&quot;province&quot;:&quot;GuangDong&quot;}
+}
+bulk.insert(doc2);
+
+bulk.execute()
+
+var cursor = db.query_embedded.fin({
+    &quot;address&quot;:{
+        &quot;province&quot;:&quot;GuangDong&quot;
+    }
+});
+printjson(cursor.toArray());
+</code></pre></li>
+<li><p>数组查询</p>
+<ul>
+<li><code>$all</code>:查询包含参数数组中所有元素的文档</li>
+<li><code>$elemMatch</code>:多条件查询</li>
+<li><code>$size</code>：查询指定长度的数组</li>
+<li>`&lt;div class=”entry”:返回第一个匹配的数组元素</li>
+<li><code>$elemMatch</code>：按条件返回数组元素的子集</li>
+<li><p><code>$slice</code>：返回连续数组元素的子集</p>
+<pre><code>dbService = connect(&quot;localhost:27017&quot;);
+db = dbService.getSiblingDB(&quot;okuc&quot;);
+db.query_test.drop();
+var bulk = db.query_test.initializeUnorderedBulkOp();
+var doc1 = {_id:5,
+            name:&quot;xiaoli&quot;,
+            age:20,
+            scores:[95,98,99]
+}
+bulk.insert(doc1);
+var doc2 = {_id:6,
+            name:&quot;xiaoqiang&quot;,
+            age:22,
+            scores:[95,99]
+}
+bulk.insert(doc2);
+var doc3 = {_id:7,
+            name:&quot;xiaoming&quot;,
+            age:22,
+            scores:[99,95,98]
+}
+bulk.insert(doc3);                
+bulk.execute()
+
+var cursor = db.query_array.find(//整个数组查询
+    {
+        scores:[95,98,99]
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//整个数组查询
+    {
+        scores:[95,98,99]
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//查询数组包括95的元素
+    {
+        scores:95
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//查询数组第一个元素是95的元素
+    {
+        scores.0:95
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//查询数组包括99,98两个元素的文档，顺序可以不同
+    {
+        scores:{
+            $all:[99,98]
+        }
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//查询scores数组中有一个元素大于等于95，且小于等于99的元素
+    {
+        scores:{
+            $elemMatch:{$gt:95,$lt:99}
+        }
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//查询scores数组中有一个元素大于等于95，还有一个元素小于等于99的数组
+    {
+        scores:{
+            $gt:95,$lt:99
+        }
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//只显示大于等于95且小于等于99的元素
+    { {},//查询条件
+        {scores:{//查询映射
+            $elemMatch:{$gt:95,$lt:99}
+        }
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//查询指定长度的数组
+    { 
+        {scores:{
+            $size:2
+        }}
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//显示时跳过第一个元素，最多只显示两个元素
+    { {},//查询条件
+        {scores:{//查询映射
+            $slice:[1,2]
+        }
+    }
+);
+printjson(cursor.toArray());
+
+var cursor = db.query_array.find(//查询数组中分数大于等于94的数组元素
+    { {scores：{$gt:94}},//查询条件
+        { &quot;scores.$&quot;:1;//只显示第一个元素。这个映射必须出现在查询条件中
+        }
+    }
+);
+printjson(cursor.toArray());
+
+dbService = connect(&quot;localhost:27017&quot;);
+db = dbService.getSiblingDB(&quot;okuc&quot;);
+db.query_test.drop();
+var bulk = db.query_test.initializeUnorderedBulkOp();
+var doc1 = {_id:1,
+            name:&quot;xiaoli&quot;,
+            age:20,
+            scores:[{课程：&quot;语文&quot;，成绩：90},{课程：&quot;数学&quot;，成绩：95}]
+}
+bulk.insert(doc1);
+var doc2 = {id:1,
+            name:&quot;xiaoqiang&quot;,
+            age:22,
+            scores:[{课程：&quot;语文&quot;，成绩：92},{课程：&quot;英语&quot;，成绩：90}]
+}
+bulk.insert(doc2);
+
+bulk.execute()
+
+var cursor = db.array_embedded.find({&apos;scores.成绩&apos;：90});//不使用数组索引，查询数组中成绩为90的元素
+printjson(cursor.toArray());
+
+var cursor = db.array_embedded.find({&apos;scores.1.成绩&apos;：90});//使用数组索引，查询数组第二个元素中成绩为90的元素
+printjson(cursor.toArray());
+
+var cursor = db.array_embedded.find({&apos;scores:{$elemMatch:{&quot;课程&quot;:&quot;语文&quot;,&quot;成绩&quot;：90}}});//查询数组中包含课程为语文，成绩为90的文档
+printjson(cursor.toArray());
+</code></pre></li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -210,7 +650,7 @@ var _hmt = _hmt || [];
     </header>
     <div class="entry">
       
-        <h2 id="Linux下安装mongodb">Linux下安装mongodb</h2><p>我使用的是Centos7，所以首先在官网<a href="https://www.mongodb.org/">https://www.mongodb.org/</a>上找到合适的安装包，对应的下载地址为：<a href="https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-3.2.0.tgz">https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-3.2.0.tgz</a>。接下来，我们开始安装吧！<br>
+        <h2 id="Linux下安装mongodb"><a href="#Linux下安装mongodb" class="headerlink" title="Linux下安装mongodb"></a>Linux下安装mongodb</h2><p>我使用的是Centos7，所以首先在官网<a href="https://www.mongodb.org/">https://www.mongodb.org/</a>上找到合适的安装包，对应的下载地址为：<a href="https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-3.2.0.tgz">https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-3.2.0.tgz</a>。接下来，我们开始安装吧！<br>
       
     </div>
     <footer>
@@ -247,21 +687,21 @@ var _hmt = _hmt || [];
     <div class="entry">
       
         <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
-<h2 id="一、一般自定义组件">一、一般自定义组件</h2><p>首先来一个简单的例子：</p>
-<pre><code><span class="tag">&lt;<span class="title">html</span> <span class="attribute">ng-app</span>=<span class="value">'app'</span>&gt;</span>
- <span class="tag">&lt;<span class="title">body</span>&gt;</span>
- <span class="tag">&lt;<span class="title">hello</span>&gt;</span><span class="tag">&lt;/<span class="title">hello</span>&gt;</span>
- <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
- <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"../angular-1.0.3/angular.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
- <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"HelloDirect.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+<h2 id="一、一般自定义组件"><a href="#一、一般自定义组件" class="headerlink" title="一、一般自定义组件"></a>一、一般自定义组件</h2><p>首先来一个简单的例子：</p>
+<pre><code>&lt;html ng-app=&apos;app&apos;&gt;
+ &lt;body&gt;
+ &lt;hello&gt;&lt;/hello&gt;
+ &lt;/body&gt;
+ &lt;script src=&quot;../angular-1.0.3/angular.min.js&quot;&gt;&lt;/script&gt;
+ &lt;script src=&quot;HelloDirect.js&quot;&gt;&lt;/script&gt;
+&lt;/html&gt;
 
 
-var appModule = angular.module('app', []);
-appModule.directive('hello', function() {
+var appModule = angular.module(&apos;app&apos;, []);
+appModule.directive(&apos;hello&apos;, function() {
  return {
- restrict: 'E',
- template: '<span class="tag">&lt;<span class="title">div</span>&gt;</span>Hi there<span class="tag">&lt;/<span class="title">div</span>&gt;</span>',
+ restrict: &apos;E&apos;,
+ template: &apos;&lt;div&gt;Hi there&lt;/div&gt;&apos;,
  replace: true
  };
 });
@@ -329,46 +769,6 @@ appModule.directive('hello', function() {
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">2015-12-08</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">新手学习Angularjs之三：几种service的区别</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
-<p>Angularjs有几种自定义服务的方法：<code>value</code>、<code>constant</code>、<code>factory</code>、<code>service</code>、<code>provider</code>,那么他们有什么区别呢？</p>
-<ul>
-<li><code>value</code>:这个方法是用来定义变量的，类似其他编程语言中定义的变量。</li>
-<li><code>constant</code>:这个则是类似其他编程语言中定义的常量，一旦定义，就不能被修改。
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/">2015-12-08</a></time>
       
       
@@ -406,84 +806,28 @@ appModule.directive('hello', function() {
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-12-07T14:06:32.000Z"><a href="/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">2015-12-07</a></time>
+        <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">2015-12-08</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">新手学习Angularjs之二：ng-bind、ng-model、大括号的区别</a></h1>
+    <h1 class="title"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">新手学习Angularjs之三：几种service的区别</a></h1>
   
 
     </header>
     <div class="entry">
       
         <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
-<p>在学习的过程中，遇到了这三个对象，一时把我给搞糊涂了。经过百度，得到了以下答案：</p>
+<p>Angularjs有几种自定义服务的方法：<code>value</code>、<code>constant</code>、<code>factory</code>、<code>service</code>、<code>provider</code>,那么他们有什么区别呢？</p>
 <ul>
-<li><code>ng-model</code>：用于双向绑定，所以一般用于前台可输入的控件，如<code>input</code>。</li>
-<li><code>ng-bind</code>：只用于前台展示，所以一般和<code>div</code>结合使用。</li>
-<li><code>双大括号</code>：其基本作用类似<code>ng-bind</code>，但不同的是，在<code>angularjs</code>未加载完成时，由于页面未解释，所以很有可能客户会看到大括号，所以一般<code>&lt;div ng-clock class=&quot;ng-clock&quot;&gt;｛{uname}｝&lt;/div&gt;</code>这样使用，这样可使页面先不加载大括号，待全部加载完成后再解释执行。
+<li><code>value</code>:这个方法是用来定义变量的，类似其他编程语言中定义的变量。</li>
+<li><code>constant</code>:这个则是类似其他编程语言中定义的常量，一旦定义，就不能被修改。
       
     </div>
     <footer>
       
         
           <div class="alignleft">
-            <a href="/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-06T14:06:32.000Z"><a href="/2015/12/06/新手学习Angularjs之一：基于Angularjs的第一个应用--todoList/">2015-12-06</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/06/新手学习Angularjs之一：基于Angularjs的第一个应用--todoList/">新手学习Angularjs之一：基于Angularjs的第一个应用--todoList</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
-<ol>
-<li>由于系统需要用到<code>bootstrap</code>、<code>angularjs</code>，首先使用下面命令进行安装<code>bower install bootstrap</code>、<code>bower install angularjs</code>。</li>
-<li><p>新建<code>index.html</code>,修改title并引入使用到的css及js，内容如下：</p>
-<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
-<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
-
-<span class="tag">&lt;<span class="title">head</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"./public/bootstrap/dist/css/bootstrap.min.css"</span>&gt;</span><span class="tag">&lt;/<span class="title">link</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
-
-<span class="tag">&lt;<span class="title">body</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"./public/lib/angular/angular.js"</span>&gt;</span><span class="undefined">
-  </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
-
-<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/06/新手学习Angularjs之一：基于Angularjs的第一个应用--todoList/#more" class="more-link">阅读更多</a>
+            <a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -499,10 +843,10 @@ appModule.directive('hello', function() {
 
 <nav id="pagination">
   
-    <a href="/page/2/" class="alignleft prev">Prev</a>
+    <a href="/page/2/" class="alignleft prev">Anterior</a>
   
   
-    <a href="/page/4/" class="alignright next">Next</a>
+    <a href="/page/4/" class="alignright next">Siguiente</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -511,7 +855,7 @@ appModule.directive('hello', function() {
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -526,7 +870,7 @@ appModule.directive('hello', function() {
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

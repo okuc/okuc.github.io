@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -79,7 +79,7 @@ var _hmt = _hmt || [];
     </header>
     <div class="entry">
       
-        <h2 id="第1章_入门-知识点">第1章 入门-知识点</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
+        <h2 id="第1章-入门-知识点"><a href="#第1章-入门-知识点" class="headerlink" title="第1章 入门-知识点"></a>第1章 入门-知识点</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
 <p>1.术语</p>
 <ul>
 <li>文档document：索引和搜索时使用的主要数据载体，包含一个或多个存有数据的字段。</li>
@@ -140,21 +140,21 @@ var _hmt = _hmt || [];
 <li>使用REST API</li>
 </ul>
 <p>19.Elasticsearch作为系统服务。如果是在linux上安装的，则已经自动完成了。如果是解压的，则按以下步骤进行：</p>
-<pre><code><span class="number">1.</span> curl -L <span class="string">http:</span><span class="comment">//github.com/elasticsearch/elasticsearch-servicewrapper/tarball/master | tar -xz</span>
-<span class="number">2.</span> sudo mv *servicewrapper* <span class="regexp">/service/</span>usr<span class="regexp">/local/</span>share<span class="regexp">/elasticsearch/</span>bin<span class="regexp">/          /</span>/将下载的服务封装软件移到elasticsearch的bin目录下
-<span class="number">3.</span> rm -Rf *servicewrapper*    <span class="comment">//移除原有的下载目录</span>
-<span class="number">4.</span> sudo <span class="regexp">/usr/</span>local<span class="regexp">/share/</span>elasticsearch<span class="regexp">/bin/</span>service<span class="regexp">/elasticsearch install    /</span>/通过install命令来安装服务
-<span class="number">5.</span> sudo ln -s ‘readlink -f <span class="regexp">/usr/</span>local<span class="regexp">/share/</span>elasticsearch<span class="regexp">/bin/</span>service<span class="regexp">/elasticsearch’ /</span>usr<span class="regexp">/local/</span>bin<span class="regexp">/rcelasticsearch    /</span>/创建符号链接指向该脚本
-<span class="number">6.</span> <span class="regexp">/etc/</span>init.d<span class="regexp">/elasticsearch start    /</span>/启动Elasticsearch
+<pre><code>1. curl -L http://github.com/elasticsearch/elasticsearch-servicewrapper/tarball/master | tar -xz
+2. sudo mv *servicewrapper* /service/usr/local/share/elasticsearch/bin/          //将下载的服务封装软件移到elasticsearch的bin目录下
+3. rm -Rf *servicewrapper*    //移除原有的下载目录
+4. sudo /usr/local/share/elasticsearch/bin/service/elasticsearch install    //通过install命令来安装服务
+5. sudo ln -s ‘readlink -f /usr/local/share/elasticsearch/bin/service/elasticsearch’ /usr/local/bin/rcelasticsearch    //创建符号链接指向该脚本
+6. /etc/init.d/elasticsearch start    //启动Elasticsearch
 </code></pre><p>如果是在windows上安装的，则执行：</p>
-<pre><code><span class="number">1</span>. service<span class="class">.bat</span> install
-<span class="number">2</span>. service<span class="class">.bat</span> start
+<pre><code>1. service.bat install
+2. service.bat start
 </code></pre><p>在命令行直接输入service.bat还可以查看其它的命令</p>
 <p>20.<code>GET</code>用来获得请求对象的当前状态，<code>POST</code>用来改变对象的当前状态<code>，</code>PUT<code>创建一个对象，</code>DELETE<code>销毁对象，</code>head`请求获取对象的基本信息。</p>
 <p>21.默认情况下,Elasticsearch在添加、更改或删除文档时会递增版本号。当然，它也可以使用我们提供给它的版本号。在版本存储在外部系统时，这是必要的。为了告诉elasticsearch我们使用的是外部版本号，需设置：<code>version_type=external</code>参数。</p>
 <p>22.默认情况下，删除的文档在60S内仍然可以查询版本信息，可以通过index.gc_deletes配置参数来更改这个值。</p>
 <p>23.为了搜索一个给定的类型，需要指定一个或多个类型。需要查找任意索引，直接*即可，或忽略索引名称。</p>
-<h2 id="第1章_入门－命令">第1章 入门－命令</h2><ul>
+<h2 id="第1章-入门－命令"><a href="#第1章-入门－命令" class="headerlink" title="第1章 入门－命令"></a>第1章 入门－命令</h2><ul>
 <li>查看搜索是否就绪：<code>http://127.0.0.1:9200</code></li>
 <li>检查集群健康度：<code>curl -XGET http://127.0.0.1:9200/_cluster/health?pretty</code>,-X是一个参数方法，默认是<code>GET</code>（可忽略），<code>pretty</code>是使返回json串格式化，否则会返回一串。</li>
 <li>关闭整个集群：<code>curl -XPOST http://127.0.0.1:9200/_cluster/nodes/_shutdown</code></li>
@@ -164,8 +164,8 @@ var _hmt = _hmt || [];
 <li>存一条数据:<code>curl -XPUT http://127.0.0.1:9200/blog/article/1 -d &#39;{&quot;id&quot;:&quot;1&quot;,&quot;title&quot;:&quot;Elasticsearch的新版本发布了！&quot;,&quot;content&quot;:&quot;今天1.0版本发布&quot;,&quot;priority&quot;:10,&quot;tags&quot;:[&quot;发布&quot;,&quot;elasticsearch&quot;,&quot;发布&quot;]}&#39;</code>,如果索引等不存在,会自动创建,这句话创建了一个名为blog的索引,创建了一个名为article的类型,这下面的对象的标识符设置为1,存了进去。-d表示后边是请求的主体。把PUT改为POST，后边的1就可以省略了，会自动生成标识符，这相当于修改了索引。另外，如果后边使用了数据库，标识符则不会自动生成，除非数据库中也存储生成标识符。</li>
 <li>取出刚才存的文档：<code>curl -XGET http://127.0.0.1:9200/blog/article/1</code></li>
 <li><p>更新文档内容:<code>curl -XPOST http://127.0.0.1:9200/blog/article/1/_update -d &#39;{&quot;script&quot;:&quot;ctx._source.content=\&quot;新内容\&quot;&quot;}&#39;</code>,此参数需要配置elasticsearch.yml中的配置文件,才可以使用。而且不同的版本配置参数名不同，我是1.7.1版本，所以配置的参数为：</p>
-<pre><code><span class="keyword">script</span>.inline: <span class="function_start"><span class="keyword">on</span></span>
-<span class="keyword">script</span>.indexed: <span class="function_start"><span class="keyword">on</span></span>
+<pre><code>script.inline: on
+script.indexed: on
 </code></pre></li>
 </ul>
 <p>具体版本的配置方式参见：(<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting.html" target="_blank" rel="external">https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting.html</a>)</p>
@@ -178,9 +178,9 @@ var _hmt = _hmt || [];
 </ul>
 <p><strong>一个例子</strong></p>
 <p>1.输入数据：</p>
-<pre><code>curl -XPUT http://<span class="number">127.0.0.1:9200</span>/books/es/<span class="number">1</span> -d '{<span class="string">"title"</span>:<span class="string">"Elasticsearch Server"</span>,<span class="string">"published"</span>:<span class="number">2013</span>}'
-curl -XPUT http://<span class="number">127.0.0.1:9200</span>/books/es/<span class="number">2</span> -d '{<span class="string">"title"</span>:<span class="string">"Mastering Elasticsearch"</span>,<span class="string">"published"</span>:<span class="number">2013</span>}'
-curl -XPUT http://<span class="number">127.0.0.1:9200</span>/books/es/<span class="number">3</span> -d '{<span class="string">"title"</span>:<span class="string">"Apache Solr 4 cookbook"</span>,<span class="string">"published"</span>:<span class="number">2012</span>}'
+<pre><code>curl -XPUT http://127.0.0.1:9200/books/es/1 -d &apos;{&quot;title&quot;:&quot;Elasticsearch Server&quot;,&quot;published&quot;:2013}&apos;
+curl -XPUT http://127.0.0.1:9200/books/es/2 -d &apos;{&quot;title&quot;:&quot;Mastering Elasticsearch&quot;,&quot;published&quot;:2013}&apos;
+curl -XPUT http://127.0.0.1:9200/books/es/3 -d &apos;{&quot;title&quot;:&quot;Apache Solr 4 cookbook&quot;,&quot;published&quot;:2012}&apos;
 </code></pre><p>2.查询：</p>
 <ul>
 <li>在某一索引内查找：<code>curl -XGET &#39;http://127.0.0.1:9200/books/_search?pretty&#39;</code></li>
@@ -189,28 +189,28 @@ curl -XPUT http://<span class="number">127.0.0.1:9200</span>/books/es/<span clas
 <li>在全部里面搜索：<code>curl -XGET &#39;http://127.0.0.1:9200/_search?pretty&#39;</code></li>
 <li><p>在books索引中title字段包含elasticsearch一词的所有文档：<code>curl -XGET &#39;http://127.0.0.1:9200/books/_search?pretty&amp;q=title:elasticsearch&#39;</code></p>
 <pre><code>{
-  <span class="string">"took"</span> : <span class="number">6</span>,<span class="comment">//花费时间,单位是毫秒</span>
-  <span class="string">"timed_out"</span> : <span class="literal">false</span>,<span class="comment">//有没有超时</span>
-  <span class="string">"_shards"</span> : {<span class="comment">//分片信息</span>
-    <span class="string">"total"</span> : <span class="number">5</span>,
-    <span class="string">"successful"</span> : <span class="number">5</span>,<span class="comment">//成功返回结果的分片数量</span>
-    <span class="string">"failed"</span> : <span class="number">0</span>
+  &quot;took&quot; : 6,//花费时间,单位是毫秒
+  &quot;timed_out&quot; : false,//有没有超时
+  &quot;_shards&quot; : {//分片信息
+    &quot;total&quot; : 5,
+    &quot;successful&quot; : 5,//成功返回结果的分片数量
+    &quot;failed&quot; : 0
   },
-  <span class="string">"hits"</span> : {
-    <span class="string">"total"</span> : <span class="number">2</span>,<span class="comment">//查询结果总数</span>
-    <span class="string">"max_score"</span> : <span class="number">0.19178301</span>, <span class="comment">//计算最高得分</span>
-    <span class="string">"hits"</span> : [ {<span class="comment">//请求返回结果</span>
-      <span class="string">"_index"</span> : <span class="string">"books"</span>,
-      <span class="string">"_type"</span> : <span class="string">"es"</span>,
-      <span class="string">"_id"</span> : <span class="string">"1"</span>,
-      <span class="string">"_score"</span> : <span class="number">0.19178301</span>,
-      <span class="string">"_source"</span>:{<span class="string">"title"</span>:<span class="string">"Elasticsearch Server"</span>,<span class="string">"published"</span>:<span class="number">2013</span>}
+  &quot;hits&quot; : {
+    &quot;total&quot; : 2,//查询结果总数
+    &quot;max_score&quot; : 0.19178301, //计算最高得分
+    &quot;hits&quot; : [ {//请求返回结果
+      &quot;_index&quot; : &quot;books&quot;,
+      &quot;_type&quot; : &quot;es&quot;,
+      &quot;_id&quot; : &quot;1&quot;,
+      &quot;_score&quot; : 0.19178301,
+      &quot;_source&quot;:{&quot;title&quot;:&quot;Elasticsearch Server&quot;,&quot;published&quot;:2013}
     }, {
-      <span class="string">"_index"</span> : <span class="string">"books"</span>,
-      <span class="string">"_type"</span> : <span class="string">"es"</span>,
-      <span class="string">"_id"</span> : <span class="string">"2"</span>,
-      <span class="string">"_score"</span> : <span class="number">0.19178301</span>,
-      <span class="string">"_source"</span>:{<span class="string">"title"</span>:<span class="string">"Mastering Elasticsearch"</span>,<span class="string">"published"</span>:<span class="number">2013</span>}
+      &quot;_index&quot; : &quot;books&quot;,
+      &quot;_type&quot; : &quot;es&quot;,
+      &quot;_id&quot; : &quot;2&quot;,
+      &quot;_score&quot; : 0.19178301,
+      &quot;_source&quot;:{&quot;title&quot;:&quot;Mastering Elasticsearch&quot;,&quot;published&quot;:2013}
     } ]
   }
 }
@@ -261,10 +261,10 @@ curl -XPUT http://<span class="number">127.0.0.1:9200</span>/books/es/<span clas
 
 <nav id="pagination" >
     
-    <a href="/2015/08/10/Linux折腾记(1)-CentOS7下安装mysql数据库/" class="alignleft prev" >Prev</a>
+    <a href="/2015/08/10/Linux折腾记(1)-CentOS7下安装mysql数据库/" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2014/11/26/windows下搭建node.js及npm的工作环境/" class="alignright next" >Next</a>
+    <a href="/2014/11/26/windows下搭建node.js及npm的工作环境/" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -294,7 +294,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -309,7 +309,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   

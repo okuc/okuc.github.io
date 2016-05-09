@@ -46,17 +46,17 @@ var _hmt = _hmt || [];
 <nav id="main-nav" class="alignright">
   <ul>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="//">首页</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="//archives">归档</a></li>
     
-      <li><a href="/coding">编程技术</a></li>
+      <li><a href="//coding">编程技术</a></li>
     
-      <li><a href="/bigData">大数据技术</a></li>
+      <li><a href="//bigData">大数据技术</a></li>
     
-      <li><a href="/dataV">数据可视化</a></li>
+      <li><a href="//dataV">数据可视化</a></li>
     
-      <li><a href="/about">关于</a></li>
+      <li><a href="//about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -79,7 +79,7 @@ var _hmt = _hmt || [];
     </header>
     <div class="entry">
       
-        <h2 id="中间件">中间件</h2><ol>
+        <h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><ol>
 <li><p>中件间是一个可访问请求对象<code>req</code>和响应对象<code>res</code>的函数，在<code>Express</code>应用的请求-响应循环里，下一个内联的中间件通常用变量<code>next</code>表示。</p>
 <p>如果当前中间件没有终结请求-响应循环，则必须调用<code>next()</code>方法将控制权交给下一个中间件，否则请求就会挂起。</p>
 <p>使用可选择挂载路径，可在应用级别或路由级别装载中间件。</p>
@@ -94,111 +94,111 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 <li><p>应用级中间件绑定到<code>express</code>实例，使用<code>app.use()</code>和<code>app.VERB()</code>。</p>
-<pre><code><span class="keyword">var</span> app = express();
+<pre><code>var app = express();
 
-<span class="comment">// 没有挂载路径的中间件，应用的每个请求都会执行该中间件</span>
-app.<span class="keyword">use</span>(<span class="function"><span class="keyword">function</span> <span class="params">(req, res, next)</span> </span>{
-console.log(<span class="string">'Time:'</span>, Date.now());
+// 没有挂载路径的中间件，应用的每个请求都会执行该中间件
+app.use(function (req, res, next) {
+console.log(&apos;Time:&apos;, Date.now());
 next();
 });
 
-<span class="comment">// 挂载至 /user/:id 的中间件，任何指向 /user/:id 的请求都会执行它</span>
-app.<span class="keyword">use</span>(<span class="string">'/user/:id'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(req, res, next)</span> </span>{
-console.log(<span class="string">'Request Type:'</span>, req.method);next();
+// 挂载至 /user/:id 的中间件，任何指向 /user/:id 的请求都会执行它
+app.use(&apos;/user/:id&apos;, function (req, res, next) {
+console.log(&apos;Request Type:&apos;, req.method);next();
 });
 
-<span class="comment">// 路由和句柄函数(中间件系统)，处理指向 /user/:id 的 GET 请求</span>
-app.<span class="keyword">get</span>(<span class="string">'/user/:id'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(req, res, next)</span> </span>{
-res.send(<span class="string">'USER'</span>);
+// 路由和句柄函数(中间件系统)，处理指向 /user/:id 的 GET 请求
+app.get(&apos;/user/:id&apos;, function (req, res, next) {
+res.send(&apos;USER&apos;);
 });
 </code></pre><p>下面是一个在一个挂载点装载一组中间件的例子：</p>
 </li>
 </ol>
-<pre><code>    <span class="comment">// 一个中间件栈，对任何指向 /user/:id 的 HTTP 请求打印出相关信息</span>
-    app.use(<span class="string">'/user/:id'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>{
-    <span class="built_in">console</span>.log(<span class="string">'Request URL:'</span>, req.originalUrl);
+<pre><code>    // 一个中间件栈，对任何指向 /user/:id 的 HTTP 请求打印出相关信息
+    app.use(&apos;/user/:id&apos;, function(req, res, next) {
+    console.log(&apos;Request URL:&apos;, req.originalUrl);
     next();
-    }, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>{
-    <span class="built_in">console</span>.log(<span class="string">'Request Type:'</span>, req.method);
+    }, function (req, res, next) {
+    console.log(&apos;Request Type:&apos;, req.method);
     next();
     });
 
-在下面的例子中，为指向 <span class="string">`/user/:id`</span> 的 GET请求定义了两个路由。第二个路由虽然不会带来任何问题，但却永远不会被调用，因为第一个路由已经终止了请求-响应循环。
+在下面的例子中，为指向 `/user/:id` 的 GET请求定义了两个路由。第二个路由虽然不会带来任何问题，但却永远不会被调用，因为第一个路由已经终止了请求-响应循环。
 
-    <span class="comment">// 一个中间件栈，处理指向 /user/:id 的 GET 请求</span>
-    app.get(<span class="string">'/user/:id'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>{
-    <span class="built_in">console</span>.log(<span class="string">'ID:'</span>, req.params.id);
+    // 一个中间件栈，处理指向 /user/:id 的 GET 请求
+    app.get(&apos;/user/:id&apos;, function (req, res, next) {
+    console.log(&apos;ID:&apos;, req.params.id);
     next();
-    }, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>{
-    res.send(<span class="string">'User Info'</span>);
+    }, function (req, res, next) {
+    res.send(&apos;User Info&apos;);
     });
-    <span class="comment">// 处理 /user/:id， 打印出用户 id</span>
-    app.get(<span class="string">'/user/:id'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>{
+    // 处理 /user/:id， 打印出用户 id
+    app.get(&apos;/user/:id&apos;, function (req, res, next) {
     res.end(req.params.id);
     });
 
-如果需要在中间件栈中跳过剩余中间件，调用 <span class="string">`next(‘route’)`</span> 方法将控制权交给下一个路由。需要注意的是 <span class="string">`next(‘route’)`</span> 只对使用 <span class="string">`app.VERB()`</span> 或 <span class="string">`router.VERB()`</span> 加载的中间件有效。
+如果需要在中间件栈中跳过剩余中间件，调用 `next(‘route’)` 方法将控制权交给下一个路由。需要注意的是 `next(‘route’)` 只对使用 `app.VERB()` 或 `router.VERB()` 加载的中间件有效。
 
-    <span class="comment">// 一个中间件栈，处理指向 /user/:id 的 GET 请求</span>
-    app.get(<span class="string">'/user/:id'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>{
-    <span class="comment">// 如果 user id 为 0, 跳到下一个路由</span>
-    <span class="keyword">if</span> (req.params.id == <span class="number">0</span>) next(<span class="string">'route'</span>);
-    <span class="comment">// 负责将控制权交给栈中下一个中间件</span>
-    <span class="keyword">else</span> next(); <span class="comment">//}, function (req, res, next) {</span>
-    <span class="comment">// 渲染常规页面</span>
-    res.render(<span class="string">'regular'</span>);
+    // 一个中间件栈，处理指向 /user/:id 的 GET 请求
+    app.get(&apos;/user/:id&apos;, function (req, res, next) {
+    // 如果 user id 为 0, 跳到下一个路由
+    if (req.params.id == 0) next(&apos;route&apos;);
+    // 负责将控制权交给栈中下一个中间件
+    else next(); //}, function (req, res, next) {
+    // 渲染常规页面
+    res.render(&apos;regular&apos;);
     });
-    <span class="comment">// 处理 /user/:id， 渲染一个特殊页面</span>
-    app.get(<span class="string">'/user/:id'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>{
-    res.render(<span class="string">'special'</span>);
+    // 处理 /user/:id， 渲染一个特殊页面
+    app.get(&apos;/user/:id&apos;, function (req, res, next) {
+    res.render(&apos;special&apos;);
     });
 </code></pre><ol>
 <li><p>路由级中间件和应用级中间件一样，只是它绑定的对象为<code>express.Router()</code>。</p>
-<pre><code><span class="variable"><span class="keyword">var</span> router</span> = express.Router();
+<pre><code>var router = express.Router();
 </code></pre><p>路由级使用<code>router.use()</code>或<code>router.VERB()</code>加载</p>
 <p>下面是一些示例代码：</p>
-<pre><code><span class="keyword">var</span> app = express();
-<span class="keyword">var</span> router = express.Router();
-<span class="comment">// 没有挂载路径的中间件，通过该路由的每个请求都会执行该中间件</span>
-router.<span class="keyword">use</span>(<span class="function"><span class="keyword">function</span> <span class="params">(req, res, next)</span> </span>{
-console.log(<span class="string">'Time:'</span>, Date.now());
+<pre><code>var app = express();
+var router = express.Router();
+// 没有挂载路径的中间件，通过该路由的每个请求都会执行该中间件
+router.use(function (req, res, next) {
+console.log(&apos;Time:&apos;, Date.now());
 next();
 });
-<span class="comment">// 一个中间件栈，显示任何指向 /user/:id 的 HTTP 请求的信息</span>
-router.<span class="keyword">use</span>(<span class="string">'/user/:id'</span>, <span class="function"><span class="keyword">function</span><span class="params">(req, res, next)</span> </span>{
-console.log(<span class="string">'Request URL:'</span>, req.originalUrl);
+// 一个中间件栈，显示任何指向 /user/:id 的 HTTP 请求的信息
+router.use(&apos;/user/:id&apos;, function(req, res, next) {
+console.log(&apos;Request URL:&apos;, req.originalUrl);
 next();
-}, <span class="function"><span class="keyword">function</span> <span class="params">(req, res, next)</span> </span>{
-console.log(<span class="string">'Request Type:'</span>, req.method);
+}, function (req, res, next) {
+console.log(&apos;Request Type:&apos;, req.method);
 next();
 });
-<span class="comment">// 一个中间件栈，处理指向 /user/:id 的 GET 请求</span>
-router.<span class="keyword">get</span>(<span class="string">'/user/:id'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(req, res, next)</span> </span>{
-<span class="comment">// 如果 user id 为 0, 跳到下一个路由</span>
-<span class="keyword">if</span> (req.params.id == <span class="number">0</span>) next(<span class="string">'route'</span>);
-<span class="comment">// 负责将控制权交给栈中下一个中间件</span>
-<span class="keyword">else</span> next(); <span class="comment">//}, function (req, res, next) {</span>
-<span class="comment">// 渲染常规页面</span>
-res.render(<span class="string">'regular'</span>);
+// 一个中间件栈，处理指向 /user/:id 的 GET 请求
+router.get(&apos;/user/:id&apos;, function (req, res, next) {
+// 如果 user id 为 0, 跳到下一个路由
+if (req.params.id == 0) next(&apos;route&apos;);
+// 负责将控制权交给栈中下一个中间件
+else next(); //}, function (req, res, next) {
+// 渲染常规页面
+res.render(&apos;regular&apos;);
 });
-<span class="comment">// 处理 /user/:id， 渲染一个特殊页面</span>
-router.<span class="keyword">get</span>(<span class="string">'/user/:id'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(req, res, next)</span> </span>{
+// 处理 /user/:id， 渲染一个特殊页面
+router.get(&apos;/user/:id&apos;, function (req, res, next) {
 console.log(req.params.id);
-res.render(<span class="string">'special'</span>);
+res.render(&apos;special&apos;);
 });
-<span class="comment">// 将路由挂载至应用</span>
-app.<span class="keyword">use</span>(<span class="string">'/'</span>, router);
+// 将路由挂载至应用
+app.use(&apos;/&apos;, router);
 </code></pre></li>
 <li><p>错误处理中间件有 4 个参数，定义错误处理中间件时必须使用这 4 个参数。即使不需要 <code>next</code> 对象，也必须在签名中声明它，否则中间件会被识别为一个常规中间件，不能处理错误。下面是一个例子：</p>
-<pre><code><span class="keyword">app</span>.<span class="keyword">use</span>(function(<span class="keyword">err</span>, req, res, next) {
-console.<span class="keyword">error</span>(<span class="keyword">err</span>.<span class="keyword">stack</span>);
-res.status(500).send('Something broke!');
+<pre><code>app.use(function(err, req, res, next) {
+console.error(err.stack);
+res.status(500).send(&apos;Something broke!&apos;);
 });
 </code></pre></li>
 <li><p>内置中间件，在4.X版本中，<code>Express</code>已经不再依赖<code>Connect</code>，除了<code>express.static</code>。<code>Express</code>以前的中间件现在已经在一个单独的库里了，可参见这儿<a href="">https://github.com/senchalabs/connect?&amp;&amp;_ga=1.169674273.1<br>286277039.1432108056#middleware</a></p>
-<pre><code>express.<span class="function"><span class="title">static</span><span class="params">(root,[options])</span></span>
+<pre><code>express.static(root,[options])
 
-express<span class="class">.static</span> 是 Express 唯一内置的中间件，它基于 serve-static &lt;<span class="tag">a</span> href=<span class="string">""</span>&gt;https:<span class="comment">//github.com/xpressjs/serve-static?_ga=1.226969245.1286277039.1432108056&lt;/a&gt; ，负责在 Express 应用中提供静态资源。</span>
+express.static 是 Express 唯一内置的中间件，它基于 serve-static &lt;a href=&quot;&quot;&gt;https://github.com/xpressjs/serve-static?_ga=1.226969245.1286277039.1432108056&lt;/a&gt; ，负责在 Express 应用中提供静态资源。
 </code></pre><p>参数 root 指提供静态资源的根目录。</p>
 <p>可选的 options 参数拥有如下属性:</p>
 <ul>
@@ -211,22 +211,22 @@ express<span class="class">.static</span> 是 Express 唯一内置的中间件�
 <li><code>redirect</code>，<code>Boolean</code>类型，默认值是<code>true</code>，当路径为目录时，重定向至 <code>/</code>。</li>
 <li><p><code>setHeaders</code>，<code>Function</code>类型,设置 <code>HTTP</code> 头以提供文件的函数。</p>
 <p>下面的例子使用了 <code>express.static</code> 中间件，其中的 <code>options</code> 对象经过了精心的设计。</p>
-<pre><code><span class="keyword">var</span> options = {
+<pre><code>var options = {
  dotfiles: ‘ignore’,
- etag: <span class="literal">false</span>,
+ etag: false,
  extensions: [‘htm’, ‘html’],
- index: <span class="literal">false</span>,
- maxAge: ‘<span class="number">1</span>d’,
- redirect: <span class="literal">false</span>,
- setHeaders: <span class="function"><span class="keyword">function</span> <span class="params">(res, path, stat)</span> </span>{
- res.<span class="keyword">set</span>(‘x-timestamp’, Date.now());
+ index: false,
+ maxAge: ‘1d’,
+ redirect: false,
+ setHeaders: function (res, path, stat) {
+ res.set(‘x-timestamp’, Date.now());
  }
  }
- app.<span class="keyword">use</span>(express.<span class="keyword">static</span>(‘<span class="keyword">public</span>’, options));
+ app.use(express.static(‘public’, options));
 </code></pre><p>每个应用可有多个静态目录。</p>
-<pre><code>app.<span class="keyword">use</span>(express.<span class="keyword">static</span>(‘<span class="keyword">public</span>’));
-app.<span class="keyword">use</span>(express.<span class="keyword">static</span>(‘uploads’));
-app.<span class="keyword">use</span>(express.<span class="keyword">static</span>(‘files’));
+<pre><code>app.use(express.static(‘public’));
+app.use(express.static(‘uploads’));
+app.use(express.static(‘files’));
 </code></pre><p>请参考 <code>serve-static</code> <a href="">https://github.com/expressjs/serve-static?_ga=1.226969245.1286277039.1432108056</a> 文档，了解更多关于 <code>serve-static</code> 和其选项的信息。</p>
 </li>
 </ul>
@@ -236,15 +236,15 @@ app.<span class="keyword">use</span>(express.<span class="keyword">static</span>
 <p>下面的例子安装并加载了一个解析 <code>cookie</code> 的中间件： <code>cookie-parser</code></p>
 <pre><code>$ npm install cookie-parser
 
-<span class="keyword">var</span> express = <span class="keyword">require</span>(<span class="string">'express'</span>);
-<span class="keyword">var</span> app = express();
-<span class="keyword">var</span> cookieParser = <span class="keyword">require</span>(<span class="string">'cookie-parser'</span>);
-<span class="comment">// 加载 cookie 解析中间件</span>
-app.<span class="keyword">use</span>(cookieParser());
+var express = require(&apos;express&apos;);
+var app = express();
+var cookieParser = require(&apos;cookie-parser&apos;);
+// 加载 cookie 解析中间件
+app.use(cookieParser());
 </code></pre><p>请参考 <code>Third-party middleware</code> <a href="">http://expressjs.com/resources/middleware.html</a> 获取 <code>Express</code> 中经用到的第三方中间件列表。</p>
 </li>
 </ol>
-<h2 id="模板引擎">模板引擎</h2><ol>
+<h2 id="模板引擎"><a href="#模板引擎" class="headerlink" title="模板引擎"></a>模板引擎</h2><ol>
 <li><p>要使用模板引擎，需要以下三步：</p>
 <ol>
 <li>安装模板引擎npm软件包：<code>$ npm install jade --save</code>。</li>
@@ -257,20 +257,20 @@ app.<span class="keyword">use</span>(cookieParser());
 </li>
 <li><p>下面是一个例子：</p>
 <p>在<code>views</code>目录下生成名为<code>index.jade</code>的<code>jade</code>模板文件，内容如下：</p>
-<pre><code><span class="tag">html</span>
+<pre><code>html
     head
         title!= title
-    <span class="tag">body</span>
+    body
         h1!= message
 </code></pre><p>然后创建一个路由渲染 index.jade 文件。如果没有设置 view engine ，您需要指明视图文件的后缀，否则就会遗漏它。</p>
-<pre><code><span class="tag">app</span><span class="class">.get</span>(<span class="string">'/'</span>, function (req, res) {
-<span class="tag">res</span><span class="class">.render</span>(<span class="string">'index'</span>, { <span class="attribute">title</span>: <span class="string">'Hey'</span>, <span class="attribute">message</span>: <span class="string">'Hello there!'</span>});
+<pre><code>app.get(&apos;/&apos;, function (req, res) {
+res.render(&apos;index&apos;, { title: &apos;Hey&apos;, message: &apos;Hello there!&apos;});
 });
 </code></pre></li>
 </ol>
 <pre><code>此时向主页发送请求，“index.jade” 会被渲染为 HTML。
 
-请阅读 为 <span class="escape">`E</span>xpress 开发模板引擎<span class="escape">` </span>&lt;<span class="literal">a</span> href=<span class="string">""</span>&gt;http://expressjs.com/advanced/developing-template-engines.html&lt;/<span class="literal">a</span>&gt;了解模板引擎在 Express 中是如何工作的。
+请阅读 为 `Express 开发模板引擎` &lt;a href=&quot;&quot;&gt;http://expressjs.com/advanced/developing-template-engines.html&lt;/a&gt;了解模板引擎在 Express 中是如何工作的。
 </code></pre>
       
     </div>
@@ -295,10 +295,10 @@ app.<span class="keyword">use</span>(cookieParser());
 
 <nav id="pagination" >
     
-    <a href="/2015/12/30/新手学习Express4之三：错误处理、调试Express及使用代理 /" class="alignleft prev" >Prev</a>
+    <a href="/2015/12/30/新手学习Express4之三：错误处理、调试Express及使用代理 /" class="alignleft prev" >Anterior</a>
     
     
-    <a href="/2015/12/25/新手学习Express4之一 路由 /" class="alignright next" >Next</a>
+    <a href="/2015/12/25/新手学习Express4之一 路由 /" class="alignright next" >Siguiente</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -328,7 +328,7 @@ var duoshuoQuery = {short_name:"okuc"};
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -343,7 +343,7 @@ var duoshuoQuery = {short_name:"okuc"};
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
-    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   
