@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Página 3 | 我的后院自留地</title>
+  <title>Page 3 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -64,6 +64,50 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-17T14:06:32.000Z"><a href="/2015/12/17/新手学习mongodb之六：普通索引/">2015-12-17</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/17/新手学习mongodb之六：普通索引/">新手学习mongodb之六：普通索引</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li><p>所有的索引信息被保存在<strong>system.indexes</strong>集合中，且默认总是为<code>_id</code>创建索引。<code>db.system.indexes.find()</code>可以查看当前数据库中创建的所有的索引。Mongodb使用的是B-树算法。Mongodb提供的索引类型为：</p>
+<ul>
+<li>Single Filed:单字段索引，在普通字段、子文档以及子文档的某个字段上建立的索引。</li>
+<li>Compound Index:复合索引，同时在多个字段上建立的索引。</li>
+<li>Multikey Index:多键索引，对数组建立的索引。</li>
+<li>Geospatial Index:地理空间索引，对地理位置数据库建立的索引{支持球面和平面}。</li>
+<li>Text Index：全文索引，对每一个词建立索引，支持全文搜索。</li>
+<li>Hashed Index：哈希索引，索引中存储的是被索引键的哈希值。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/17/新手学习mongodb之六：普通索引/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -800,53 +844,13 @@ appModule.directive(&apos;hello&apos;, function() {
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">2015-12-08</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">新手学习Angularjs之三：几种service的区别</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
-<p>Angularjs有几种自定义服务的方法：<code>value</code>、<code>constant</code>、<code>factory</code>、<code>service</code>、<code>provider</code>,那么他们有什么区别呢？</p>
-<ul>
-<li><code>value</code>:这个方法是用来定义变量的，类似其他编程语言中定义的变量。</li>
-<li><code>constant</code>:这个则是类似其他编程语言中定义的常量，一旦定义，就不能被修改。
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/page/2/" class="alignleft prev">Anterior</a>
+    <a href="/page/2/" class="alignleft prev">Prev</a>
   
   
-    <a href="/page/4/" class="alignright next">Siguiente</a>
+    <a href="/page/4/" class="alignright next">Next</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -855,7 +859,7 @@ appModule.directive(&apos;hello&apos;, function() {
 
   
 <div class="widget tag">
-  <h3 class="title">Etiquetas</h3>
+  <h3 class="title">Tags</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -882,7 +886,11 @@ appModule.directive(&apos;hello&apos;, function() {
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>1</small></li>
+    <li><a href="/tags/java/">java</a><small>2</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>1</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>5</small></li>
   

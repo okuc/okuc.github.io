@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Página 2 | 我的后院自留地</title>
+  <title>Page 2 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -70,6 +70,69 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-01-02T14:06:32.000Z"><a href="/2016/01/02/《Bootstrap用户手册》学习笔记(三)/">2016-01-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/01/02/《Bootstrap用户手册》学习笔记(三)/">《Bootstrap用户手册》学习笔记(三)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第3章-Bootstrap内置的布局组件-1"><a href="#第3章-Bootstrap内置的布局组件-1" class="headerlink" title="第3章 Bootstrap内置的布局组件(1)"></a>第3章 Bootstrap内置的布局组件(1)</h2><ol>
+<li><p>除了前一章介绍的标记，<code>Bootstrap</code>还内置了一套灵活的组件，可用于设计用户界面、交互功能，等等。这些组件来自一个独立的 <code>javaScript</code>文件，而这个文件可以通过<code>Bootstrap</code>的自定义构建工具生成，因此可以只包含你需要的组件。一般会选择所有组件，这样就有了最大的灵活性。</p>
+</li>
+<li><p><strong>上下文菜单</strong>：下拉菜单以列表形式呈现一组选项，一般与上下文相关，可用于不同的元素、导航、按钮，等等。</p>
+<pre><code>&lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;dropdownMenu&quot;&gt;
+  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;//分隔横线
+  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><ul>
+<li><p><strong>右对齐</strong>：为<code>.dropdown-menu</code>添加<code>.pull-right</code>类，可以让下拉菜单右边缘与父对象右边缘对齐：</p>
+<pre><code>&lt;ul class=&quot;dropdown-menu pull-right&quot; role=&quot;menu&quot; aria-labelledby=&quot;dLabel&quot;&gt;
+  ...
+&lt;/ul&gt;
+</code></pre></li>
+<li><p><strong>子菜单</strong>：只要在当前下拉菜单的任意<code>&lt;li&gt;</code>元素上添加<code>.dropdown-submenu</code>即可实现子菜单。</p>
+<pre><code>&lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;dLabel&quot;&gt;
+  ...
+  &lt;li class=&quot;dropdown-submenu&quot;&gt;
+    &lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;More options&lt;/a&gt;
+    &lt;ul class=&quot;dropdown-menu&quot;&gt;
+      ...
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/01/02/《Bootstrap用户手册》学习笔记(三)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-01-01T14:06:32.000Z"><a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/">2016-01-01</a></time>
       
       
@@ -103,6 +166,49 @@ var _hmt = _hmt || [];
         
           <div class="alignleft">
             <a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">2015-12-31</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">《Bootstrap用户手册》学习笔记(一)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第1章-Bootstrap提供的网站框架"><a href="#第1章-Bootstrap提供的网站框架" class="headerlink" title="第1章 Bootstrap提供的网站框架"></a>第1章 Bootstrap提供的网站框架</h2><ol>
+<li><p><code>Bootstrap</code>中有几种默认样式需要注意，它们专门针对排版和链接。</p>
+<ul>
+<li>从<code>body</code>中去掉了<code>margin</code>,这样内容就会紧贴浏览器窗口边缘。</li>
+<li>为<code>body</code>应用了<code>background-color:white;</code>。</li>
+<li><code>Bootstrap</code>以<code>@baseFontFamily</code>、<code>@baseFontSize</code>、<code>@baseLineHeight</code>属性作为排版的基准，确保整个网站的标题及其他内容的行高一致。</li>
+<li><p><code>Bootstrap</code>通过<code>@linkColor</code>设置全局链接颜色，只在<code>:hover</code>状态下给链接添加下划线。</p>
+<p>要改变默认颜色，可以直接修改相应<code>.less</code>文件中的全局变量值。要么修改<code>scaffolding.less</code>文件，要么修改你自已的样式表。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -155,49 +261,6 @@ console.log(result.rows[0]);
         
           <div class="alignleft">
             <a href="/2015/12/31/新手学习Express4之四：数据库集成/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">2015-12-31</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">《Bootstrap用户手册》学习笔记(一)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第1章-Bootstrap提供的网站框架"><a href="#第1章-Bootstrap提供的网站框架" class="headerlink" title="第1章 Bootstrap提供的网站框架"></a>第1章 Bootstrap提供的网站框架</h2><ol>
-<li><p><code>Bootstrap</code>中有几种默认样式需要注意，它们专门针对排版和链接。</p>
-<ul>
-<li>从<code>body</code>中去掉了<code>margin</code>,这样内容就会紧贴浏览器窗口边缘。</li>
-<li>为<code>body</code>应用了<code>background-color:white;</code>。</li>
-<li><code>Bootstrap</code>以<code>@baseFontFamily</code>、<code>@baseFontSize</code>、<code>@baseLineHeight</code>属性作为排版的基准，确保整个网站的标题及其他内容的行高一致。</li>
-<li><p><code>Bootstrap</code>通过<code>@linkColor</code>设置全局链接颜色，只在<code>:hover</code>状态下给链接添加下划线。</p>
-<p>要改变默认颜色，可以直接修改相应<code>.less</code>文件中的全局变量值。要么修改<code>scaffolding.less</code>文件，要么修改你自已的样式表。</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -650,57 +713,13 @@ module.exports = router;
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-17T14:06:32.000Z"><a href="/2015/12/17/新手学习mongodb之六：普通索引/">2015-12-17</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/17/新手学习mongodb之六：普通索引/">新手学习mongodb之六：普通索引</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ol>
-<li><p>所有的索引信息被保存在<strong>system.indexes</strong>集合中，且默认总是为<code>_id</code>创建索引。<code>db.system.indexes.find()</code>可以查看当前数据库中创建的所有的索引。Mongodb使用的是B-树算法。Mongodb提供的索引类型为：</p>
-<ul>
-<li>Single Filed:单字段索引，在普通字段、子文档以及子文档的某个字段上建立的索引。</li>
-<li>Compound Index:复合索引，同时在多个字段上建立的索引。</li>
-<li>Multikey Index:多键索引，对数组建立的索引。</li>
-<li>Geospatial Index:地理空间索引，对地理位置数据库建立的索引{支持球面和平面}。</li>
-<li>Text Index：全文索引，对每一个词建立索引，支持全文搜索。</li>
-<li>Hashed Index：哈希索引，索引中存储的是被索引键的哈希值。
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/17/新手学习mongodb之六：普通索引/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/" class="alignleft prev">Anterior</a>
+    <a href="/" class="alignleft prev">Prev</a>
   
   
-    <a href="/page/3/" class="alignright next">Siguiente</a>
+    <a href="/page/3/" class="alignright next">Next</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -709,7 +728,7 @@ module.exports = router;
 
   
 <div class="widget tag">
-  <h3 class="title">Etiquetas</h3>
+  <h3 class="title">Tags</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -736,7 +755,11 @@ module.exports = router;
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>1</small></li>
+    <li><a href="/tags/java/">java</a><small>2</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>1</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>5</small></li>
   
