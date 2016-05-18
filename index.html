@@ -64,6 +64,101 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-18T14:35:02.000Z"><a href="/2016/05/18/shell学习(一)/">2016-05-18</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/18/shell学习(一)/">shell学习(一)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="linux常用命令"><a href="#linux常用命令" class="headerlink" title="linux常用命令"></a>linux常用命令</h2><ul>
+<li><code>echo</code> hello world</li>
+<li><code>echo</code> “hello world”</li>
+<li><code>man</code> 查看linux命令手册。<code>man echo</code></li>
+<li><code>ls</code> 列出文件和目录。<code>ls -a</code>、<code>ls -l</code></li>
+<li><code>pwd</code>返回当前的工作目录</li>
+<li><code>mkdir test</code>创建新目录</li>
+<li><code>rm -d test</code>删除目录，<code>rm -rf test</code>删除非空的目录。<code>rm -rd test -v</code>输出过程</li>
+<li><code>touch test</code>创建一个文件</li>
+<li><code>cat test</code>查看文件内容</li>
+<li><code>echo helo world &gt; test</code>:输出一个流并将这个流输出到test中。</li>
+<li><code>more test</code>，可以分页，优化体验。<code>less test</code>，可以分页，还可以上下一行行移动</li>
+<li><code>cp test ../test1</code>拷贝文件</li>
+<li><code>mv test ../test1</code>移动或重命名文件</li>
+<li><code>rm test</code>删除文件
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/18/shell学习(一)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-15T14:06:32.000Z"><a href="/2016/05/15/centos6下共享文件/">2016-05-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/15/centos6下共享文件/">centos6下共享文件</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>1、首先安装smb服务：<code>yum install samba</code><br>2、将配置文件<code>/etc/samba/smb.conf</code>文件修改为：</p>
+<pre><code>[global]
+security=share
+dos charset=cp936
+unix charset=gb2312
+
+[szmacs]
+comment = share
+path = /data/macs
+browseable = yes
+guest ok = yes
+writable = yes
+</code></pre><p>3、关闭访火墙<code>iptables -F</code><br>4、关闭selinux：<code>setenforce 0</code><br>5、重启smb服务：<code>service smb restart</code><br>6、设置smb服务为随机启动：<code>chkconfig smb on</code></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="coding">
   
   <div class="post-content">
@@ -88,62 +183,15 @@ var _hmt = _hmt || [];
     }
 </code></pre></li>
 <li>如果没有参数，仍然可以提供一对空的小括号：<code>()-&gt;{for(int i=0;i&lt;100;i++) System.out.println(i);}</code></li>
-<li>如果lambda表达式的参数类型是可以被推导的，那么就可以省略它们的类型，如：<code>Comparator&lt;String&gt; com=(first,second)-&gt;Integer.compare(first.length(),second.length());</code>,由于它被赋于一个字符串比较器，所以参数必须字符串。</li>
-<li>如果某个方法只有一个参数，并且该参数的类型可以被推导出来，那么小括号都可以被忽略掉：<code>EventHandler&lt;actionEvent&gt; kusteber = event-&gt;Ststem.out.println(&quot;Thanks for clicking!&quot;);</code></li>
-</ul>
-</li>
-<li>lambda表达式的参数也可以使用final或注解修饰符。</li>
-<li>lambda表达式永远不需要标明返回类型，它总是会从上下文中被推导出来。它的每一个分支都必须有返回值，只有部分有返回值是不对的。</li>
-<li><strong>函数式接口</strong>对于只包含一个抽像方法的接口，可以通过lambda表达式来创建该接口的对象，这种接口就叫函数式接口。</li>
-<li>两个例子：<code>Array.sort(words,(first,second)-&gt;Integer.compare(first.length(),second.length()));</code>、<code>button.setOnAction(event-&gt;System.out.println(&quot;hello&quot;));</code>，这种实现比内部类效率更高。</li>
-<li>函数式接口的转换是在java中使用lambda表达式能做的唯一一件事情。任何一个lambda表达式都可以等价转换成现在所使用的API中对应的函数式接口。</li>
-<li>lambda表达式不能赋值给一个object类型的变量，因为object不是一个函数式接口。</li>
-<li>函数式接口可以标注<code>@FunctionalInterface</code>注解。这样，编译器会检查标注该注解的实体，检查它是否中包含一个抽象方法的接口。另个，javadoc也会包含一条声明，说明这个接口是一个函数式接口。</li>
-<li>lambda如果有异常抛出，则必须捕获处理，或者将它赋值给抽像方法可以抛出异常的函数式接口。</li>
-<li><strong>方法引用</strong>：<code>x-&gt;System.out.println(x)</code>可以简化为<code>System.out::println</code>;<code>::</code>将方法名与对像或类的名称隔离开来。主要使用情况有以下三种：<ul>
-<li><code>对像::实例方法</code>：<code>x-&gt;System.out.println(x)</code>可以简化为<code>System.out::println</code></li>
-<li><code>类::静态方式</code>:<code>Math::pow</code>等价于<code>(x,y)-&gt;Math.pow(x,y)</code></li>
-<li><code>类::实例方法</code>：第一个参数是执行方法的对象，如`String::comp</li>
-<li><code>areToIgnoreCase</code>等价于<code>(x,y)-&gt;x.compareToIgnoreCase(y)</code></li>
-</ul>
-</li>
-<li>如果有多处同名的重载方法，编译器会试图从上下文中找到最匹配的一个方法。方法引用也不会独立存在，它们经常被用于转换为函数式接口的实例。</li>
-<li><code>this::equals</code>等价于<code>x-&gt;this.equals(x)</code>、<code>super::method</code>等价于<code>x-&gt;super.method(x)</code>后者是在继承某个类后，调用父类的方法的例子。如果父类这个函数无参数，也适用于这么写。</li>
-<li><strong>构造器引用</strong>和方法引用类似，不同的是，构造器引用的方法名是<strong>new</strong>,如<code>Button::new</code>表示对<code>Button</code>类构造器的使用。如果有多个构造器，编译器会自动挑选一个最合适的构造器。int[]:new是一个含有参数的构造器引用，这个参数就是数组的长度。它等同于x-&gt;new int[x</li>
-<li>数组构造器引用可以绕过java的一个限制，java中不能创造泛型类型T的数组，会强制转化为Object，但是，stream API通过构造器引用解决了这个问题<code>Button[] buttons=steam.toArray(Button[]::new);</code></li>
-<li>如果在一个方法中传入了参数，然后这个方法中的lambda表达式直接使用了这个方法的参数，这时，这些参数将会自动存储起来，且不允许被更改。</li>
-<li>一个lambda表达式有三部分：<ul>
-<li>一段代码</li>
-<li>参数</li>
-<li>自由变量的值。是指不是参数且没有在代码定义的变量，像上述中，外层方法中的参数，被lambda表达式使用，就是自由变量。</li>
-</ul>
-</li>
-<li>含有自由变量的代码块称之为“闭包”</li>
-<li>在java8中，像上述的外层方法参数，虽然没有定义为<code>final</code>，但被lambda表达式使用了，不能再变动，实际上已经是<code>final</code>类型了，因为，内部类现在也被允许访问这样的变量。</li>
-<li>lambda表达式的方法体与嵌套代码块有着相同的作为域。即，lambda中的变量不能和外层方法的变量相同，因为他们是一个作用域。lambda中使用<code>this</code>，也是外层的<code>this</code>。</li>
-<li><strong>默认方法</strong>在java8中，添加了默认方法。即在接口中添加已经实现了具体内容的方法。如：<pre><code>interface Person{
-    long getId();
-    default String getName(){return &quot;hello&quot;;}
-}
-</code></pre>继承<code>Person</code>的实现类必须实现<code>getId</code>方法，它可以选择保留<code>getName</code>的实现或者重写它。<br>如果一个接口定义了一个默认方法，而另外一个父类或接口中又定义了一个同名的方法，则规则如下：<ul>
-<li>选择父类中的方法。如果一个父类提供了具体的实现方法，那么接口中具有相同名称和参数的默认方法会被忽略。</li>
-<li>接口冲突。如果一个父接口提供了默认方法，而另一个接口也提供了一个相同的方法（不管是不是默认方法还是仅仅是声明），那么你必须通过覆盖该方法来解决问题。下面是一个例子：<pre><code>class Student implements Person,Named{
-    public String getName(){ return Person.super.getName();}
-        ...
-}
-</code></pre></li>
-</ul>
-</li>
-<li>不能为Object中的方法重新定义一个默契认方法。也就是说，不能定义默认方法<code>toString</code>或者<code>equals</code>。</li>
-<li>java8中，<code>forEach</code>方法已经被添加到<code>Iterable</code>接口中。<code>list.forEach(System.out::println)</code></li>
-<li>java8中，接口可以添加静态方法。如。<code>Path</code>接口，实现了<code>Path.get(&quot;jdk1.8.0&quot;,&quot;jre&quot;,&quot;bin&quot;)</code>，这样，<code>Paths</code>类实际上就没有存在的必须了。</li>
-<li>java8K,很多接口中已经添加了静态方法。例如：<code>Comparator</code>接口提供了一个很实用的比较方法，它接收一个“键提取”函数，并产生一个用来比较所提取出的键的比较器。如要对名称对<code>Person</code>对象进行比较，你可以使用函数<code>Comparator.comparing(Person::getName)</code></li>
-</ul>
-
+<li>如果lambda表达式的参数类型是可以被推导的，那么就可以省略它们的类型，如：<code>Comparator&lt;String&gt; com=(first,second)-&gt;Integer.compare(first.length(),second.length());</code>,由于它被赋于一个字符串比较器，所以参数必须字符串。
       
     </div>
     <footer>
       
+        
+          <div class="alignleft">
+            <a href="/2016/05/14/JAVA8学习（一）/#more" class="more-link">阅读更多</a>
+          </div>
         
         
       
@@ -454,104 +502,11 @@ sudo cp －r ./usr /
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-01-04T14:06:32.000Z"><a href="/2016/01/04/《Bootstrap用户手册》学习笔记(五)/">2016-01-04</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/01/04/《Bootstrap用户手册》学习笔记(五)/">《Bootstrap用户手册》学习笔记(五)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第-4-章Bootstrap支持的JavaScript插件-2"><a href="#第-4-章Bootstrap支持的JavaScript插件-2" class="headerlink" title="第 4 章Bootstrap支持的JavaScript插件(2)"></a>第 4 章Bootstrap支持的JavaScript插件(2)</h2><ol>
-<li><p><strong>提示条</strong>可以用来给出链接说明或（与标签连用）给出缩写词的的全称。这个插件最初的原型是<code>Jason Frame</code>的<code>jQuery.tipsy</code>插件。但<br>目前这个提示条利用<code>Bootstrap JavaScript API</code>可以不使用图片，而且有<code>CSS</code>动画。</p>
-<p><strong>用法</strong>给<code>&lt;a&gt;</code>元素添加<code>rel=&quot;tooltip&quot;</code>就可以添加提示条，<code>&lt;a&gt;</code>元素的<code>title</code>属性值就是提示条的内容。下面两个例子分别使用<code>Bootstrap Data API</code>和<code>JavaScript</code>来创建提示条：</p>
-<pre><code>&lt;a href=&quot;#&quot; rel=&quot;tooltip&quot; title=&quot;This is the tooltip&quot;&gt;Tooltip Example&lt;/a&gt;
-$(&apos;#example&apos;).tooltip(options)
-</code></pre><p><strong>选项</strong>与其他插件一样，提示条也可以通过<code>Data API</code>或 <code>JavaScript</code>来设置。只不过在使用数据属性时，选项名称前面要加上<code>data-</code>，比如<code>title</code>就要变成<code>data-title</code>。</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/01/04/《Bootstrap用户手册》学习笔记(五)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-01-03T14:06:32.000Z"><a href="/2016/01/03/《Bootstrap用户手册》学习笔记(四)/">2016-01-03</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/01/03/《Bootstrap用户手册》学习笔记(四)/"></a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第3章-Bootstrap内置的布局组件-2"><a href="#第3章-Bootstrap内置的布局组件-2" class="headerlink" title="第3章 Bootstrap内置的布局组件(2)"></a>第3章 Bootstrap内置的布局组件(2)</h2><ol>
-<li><p><strong>标签</strong>：标签非常适合显示计数结果、提示信息等 内容。</p>
-<pre><code>&lt;span class=&quot;label&quot;&gt;Default&lt;/span&gt;
-&lt;span class=&quot;label label-success&quot;&gt;Success&lt;/span&gt;
-&lt;span class=&quot;label label-warning&quot;&gt;Warning&lt;/span&gt;
-&lt;span class=&quot;label label-important&quot;&gt;Important&lt;/span&gt;
-&lt;span class=&quot;label label-info&quot;&gt;Info&lt;/span&gt;
-&lt;span class=&quot;label label-inverse&quot;&gt;Inverse&lt;/span&gt;
-</code></pre></li>
-<li><p><strong>圆标签</strong>与标签类似，主要区别在于它们的两头更圆。它的颜色与标签的颜色是一样的。</p>
-<pre><code>&lt;span class=&quot;badge&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;badge badge-success&quot;&gt;2&lt;/span&gt;
-&lt;span class=&quot;badge badge-warning&quot;&gt;4&lt;/span&gt;
-&lt;span class=&quot;badge badge-important&quot;&gt;6&lt;/span&gt;
-&lt;span class=&quot;badge badge-info&quot;&gt;8&lt;/span&gt;
-&lt;span class=&quot;badge badge-inverse&quot;&gt;10&lt;/span&gt;
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/01/03/《Bootstrap用户手册》学习笔记(四)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
   
-    <a href="/page/2/" class="alignright next">Next</a>
+    <a href="/page/2/" class="alignright next">Nächste Seite</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -575,13 +530,15 @@ $(&apos;#example&apos;).tooltip(options)
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
     <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   
     <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
   
-    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>7</small></li>
   
     <li><a href="/tags/express/">express</a><small>4</small></li>
   
@@ -593,7 +550,7 @@ $(&apos;#example&apos;).tooltip(options)
   
     <li><a href="/tags/lambda/">lambda</a><small>1</small></li>
   
-    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+    <li><a href="/tags/linux/">linux</a><small>6</small></li>
   
     <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
   

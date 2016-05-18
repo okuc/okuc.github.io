@@ -1,0 +1,422 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>shell学习(一) | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="shell学习(一)"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="//archives">归档</a></li>
+    
+      <li><a href="//coding">编程技术</a></li>
+    
+      <li><a href="//bigData">大数据技术</a></li>
+    
+      <li><a href="//dataV">数据可视化</a></li>
+    
+      <li><a href="//about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-18T14:35:02.000Z"><a href="/2016/05/18/shell学习(一)/">2016-05-18</a></time>
+      
+      
+  
+    <h1 class="title">shell学习(一)</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="linux常用命令"><a href="#linux常用命令" class="headerlink" title="linux常用命令"></a>linux常用命令</h2><ul>
+<li><code>echo</code> hello world</li>
+<li><code>echo</code> “hello world”</li>
+<li><code>man</code> 查看linux命令手册。<code>man echo</code></li>
+<li><code>ls</code> 列出文件和目录。<code>ls -a</code>、<code>ls -l</code></li>
+<li><code>pwd</code>返回当前的工作目录</li>
+<li><code>mkdir test</code>创建新目录</li>
+<li><code>rm -d test</code>删除目录，<code>rm -rf test</code>删除非空的目录。<code>rm -rd test -v</code>输出过程</li>
+<li><code>touch test</code>创建一个文件</li>
+<li><code>cat test</code>查看文件内容</li>
+<li><code>echo helo world &gt; test</code>:输出一个流并将这个流输出到test中。</li>
+<li><code>more test</code>，可以分页，优化体验。<code>less test</code>，可以分页，还可以上下一行行移动</li>
+<li><code>cp test ../test1</code>拷贝文件</li>
+<li><code>mv test ../test1</code>移动或重命名文件</li>
+<li><code>rm test</code>删除文件<a id="more"></a>
+第一个Shell脚本</li>
+</ul>
+<hr>
+<ul>
+<li>mkdir shellscript</li>
+<li>cd shellscript</li>
+<li>touch helloworld</li>
+<li><p>vim helloworld</p>
+<pre><code>#!bin/bash
+echo hello world
+</code></pre></li>
+<li>chmod u+x helloworld</li>
+<li><p>./helloworld</p>
+<pre><code>#! /bin/bash
+echo &quot;please type first number:&quot;
+read param1
+echo &quot;please type second number:&quot;
+read param2
+result=$[$param1+$param2]
+echo &quot;The result is:&quot;$result
+</code></pre></li>
+</ul>
+<h2 id="Shell脚本中使用自定义变量"><a href="#Shell脚本中使用自定义变量" class="headerlink" title="Shell脚本中使用自定义变量"></a>Shell脚本中使用自定义变量</h2><ul>
+<li><code>echo $SHELL</code>、<code>ll /bin/sh</code>:输出当前使用的<code>shell</code></li>
+<li><code>cat /etc/shells</code>：可以看到系统所支持的所有版本的<code>shell</code>,乌班图默认使用<code>dash</code>。</li>
+<li><code>Shell</code>编程中的变量：用户自定义的变量和系统环境变量。也可分为脚本中的自定义变量及环境变量（全局环境变量，局部环境变量）。</li>
+<li>变量名只能是字母、数字、下划线。且变量名的总数要小于等于20，变量名区分大小写。</li>
+<li>声明变量：<code>变量名=变量值</code>,变量值的类型：是自动分配的，支持数字、字符串、日期、数组。</li>
+<li>调用方式：$+变量名，如$Var。</li>
+<li>作用范围：脚本生存期内。</li>
+<li>下面是一个例子：<pre><code>var=12
+echo $var
+var=hello
+echo $var
+var =&apos;hello world&apos;
+echo $var
+var2=&apos;hello $var world&apos;
+echo $var2  //hello $var world
+var2=&quot;hello $var world&quot;
+echo $var2 //hello hello world world
+var=`date` //使用反引号，会将命令执行后再赋值给变量
+echo $var //输出日期
+var=`date +%Y%m%d`
+echo $var //输出20150604
+</code></pre></li>
+<li><code>env</code>命令，查看所有全局的环境变量。<code>env | less</code> 分页查看，<code>set | less</code>返回的变量比<code>env</code>要多，它还返回了当前<code>shell</code>中的所有环境变量，而<code>env</code>只是返回全局的。</li>
+<li><code>PATH=$PATH:~/shellscript</code>修改环境变量。</li>
+<li><code>export abc</code>:将一个局部变量导出为全局变量。</li>
+<li>系统加载环境变量的过程如下：<ol>
+<li><code>/etc/profile</code>:这个文件中加载：   <code>/etc/bash.bashrc</code>及<code>/etc/profile.d/*.sh</code></li>
+<li><code>$HOME/.bash_profile</code></li>
+<li><code>$HOME/.bash_login</code></li>
+<li><code>$HOME/.profile</code> ,如果~/.bash_profile 或 ~/.bash_login存在，就不会加载本文件，否则，加载本文件，本文件又加载了 <code>$HOME/.bashrc</code></li>
+</ol>
+</li>
+<li><code>source /etc/profile</code> 重新加载配置文件，<code>source</code> 有个别名<code>.</code></li>
+<li><code>$HOME/.bashrc</code>修改这个文件，会在<code>bash</code>启动时调用。这时，如果在<code>bash</code>中启动子<code>bash</code>，就会加载两次，进而加载两次。</li>
+<li>别名<code>alias</code>： <code>alias ll=&#39;ls -alf&#39;</code>,这个也是在<code>.bashrc</code>中定义的。</li>
+</ul>
+<h2 id="shell中的判断条件"><a href="#shell中的判断条件" class="headerlink" title="shell中的判断条件"></a>shell中的判断条件</h2><ul>
+<li><p>shell中有两种条件判断：<code>if-then</code>和<code>case</code></p>
+<pre><code>if command
+then   //成功时执行
+    commands
+elif command //第二个判断
+then   //成功时执行
+    commands
+else   //失败时执行
+    commands
+fi
+</code></pre></li>
+<li><p>下面是一个例子：</p>
+<pre><code>#! /bin/bash
+
+if date
+then 
+    echo &quot;date sucess&quot;
+fi
+</code></pre></li>
+<li><p>由于if是根据返回的0来判断成功失败，所以可以使用test来实现对条件的判断</p>
+<pre><code>if test condition
+then
+    commands
+if
+
+if [condition]
+then
+    commands
+if
+</code></pre></li>
+<li><p>复合条件 <code>[condition]&amp;&amp;[condition]</code>、<code>[condition]||[condition]</code></p>
+</li>
+<li><p>test可以进行数值、字符串、文件的比较</p>
+<pre><code>#! /bin/bash
+echo &quot;please type first number:&quot;
+read num
+if[ $num -lt 10] &amp;&amp; [$num -gt 5]
+then
+    echo &quot;the number is greater than 5 and less than 10&quot;
+fi
+</code></pre></li>
+<li>数值比较<ul>
+<li>相等  <code>n1 -eq n2</code></li>
+<li>大于等于  <code>n1 -ge n2</code></li>
+<li>大于  <code>n1 -gt n2</code></li>
+<li>小于等于  <code>n1 -le n2</code></li>
+<li>小于  <code>n1 -lt n2</code></li>
+<li>不等于  <code>n1 -ne n2</code></li>
+</ul>
+</li>
+<li>字符串比较<ul>
+<li><code>str1 = str2</code> 相同</li>
+<li><code>str1 != str2</code> 不同</li>
+<li><code>str1 &gt; str2 str1</code>比str2大 #需要转义 ></li>
+<li><code>str1 &lt;str2 str1</code>比strw小 #需要转义 /&gt;</li>
+<li><code>-n str1</code> 字符串长度是否非0</li>
+<li><code>-z str1</code> 字符串长度是否为0</li>
+</ul>
+</li>
+<li>文件比较<ul>
+<li><code>-d file</code> 检查file是否存在且是一个目录</li>
+<li><code>-e file</code> 检查file是否存在</li>
+<li><code>-f file</code> 检查file是否存在并是一个文件</li>
+<li><code>-s file</code> 检查file是否存在并非空</li>
+<li><code>file1 -nt file2</code> 检查file1 是否比file2新</li>
+<li><code>file1 -ot file2</code> 检查file1是否比file2旧</li>
+<li><code>-r file</code> 检查file是否存在并可读</li>
+<li><code>-w file</code> 检查file是否存在并可写</li>
+<li><code>-x file</code> 检查file是否存在并可执行</li>
+<li><code>-O file</code> 检查file是否存在并属当前用户所有</li>
+<li><code>-G file</code> 检查file是否存在并默认组与当前用户相同</li>
+</ul>
+</li>
+<li><p>高级判断：<code>((expression))</code>高级数学表达式，<code>[[expression]]</code>高级字符串比较</p>
+<pre><code>#！ /bin/bash
+var1=10
+if (($val1 **2&gt;90))
+then 
+    ((val2 = $val1 **2))
+    echo &quot;The square of $val1 is $val2&quot;
+if
+
+#！ /bin/bash
+if [[ $USER ==o* ]]//模糊比较
+then 
+    echo &quot;hello $USER&quot;
+if
+</code></pre></li>
+<li>case语法<pre><code>case variable in
+pattern1 | pattern2) commands1;;
+pattern3)commands3;;
+*) default commands;;
+esac
+</code></pre></li>
+<li><p>一个例子</p>
+<pre><code>#！ /bin/bash
+echo &quot;请输入一个数字&quot;
+read num
+case $num in
+1)
+    echo &quot;输入了1 &quot;
+2)
+    echo &quot;输入了2 &quot;
+3)
+    echo &quot;输入了3 &quot;
+*)
+    echo &quot;输入了其他数字 &quot;
+esac
+
+#！ /bin/bash
+echo &quot;please input yes |no:&quot;
+read var
+case $var in
+yes | Yes |yEs |YES)
+    echo &quot;AAAAAAAAAA&quot;;;
+no)
+    ehco &quot;BBBBBBBB&quot;;;
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/elasticsearch/">elasticsearch</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    
+    <a href="/2016/05/15/centos6下共享文件/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/05/18/shell学习(一)/" data-title="shell学习(一)" data-url="http://www.52brt.com/2016/05/18/shell学习(一)/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>2</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>7</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>2</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>6</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

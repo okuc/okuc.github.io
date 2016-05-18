@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 6 | 我的后院自留地</title>
+  <title>Seite 6 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -64,6 +64,98 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-10T14:59:45.000Z"><a href="/2015/08/10/Linux折腾记(1)-CentOS7下安装mysql数据库/">2015-08-10</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/10/Linux折腾记(1)-CentOS7下安装mysql数据库/">Linux折腾记(1)-CentOS7下安装mysql数据库</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>最近几天在CentOS7下安装mysql数据，折腾了好几天，问遍了度娘和谷歌，发现同样的错误是不少，但解决方案多种多样。很可惜，这么多方案我始终没有调试成功。最终，去官网上扒拉了一番洋文，找到了一种正确的步骤，才得以安装成功，现记录如下：</p>
+<h2 id="清理"><a href="#清理" class="headerlink" title="#清理"></a>#清理</h2><p>折腾了这么久了，还是先把之前的环境给清理干净吧：</p>
+<ol>
+<li><p>先查询mysql相关的软件包，使用如下命令：</p>
+<pre><code>[root@localhost 桌面]# rpm -qa|grep mysql
+mysql-community-common-5.6.26-2.el7.x86_64  
+mysql-community-release-el7-5.noarch  
+</code></pre></li>
+<li><p>可以看到我的机器上有两个相关的包，使用下面的命令依次删除：</p>
+</li>
+</ol>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/08/10/Linux折腾记(1)-CentOS7下安装mysql数据库/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-06T07:38:12.000Z"><a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/">2015-08-06</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/">《Elasticsearch服务器开发》学习笔记（一）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第1章-入门-知识点"><a href="#第1章-入门-知识点" class="headerlink" title="第1章 入门-知识点"></a>第1章 入门-知识点</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
+<p>1.术语</p>
+<ul>
+<li>文档document：索引和搜索时使用的主要数据载体，包含一个或多个存有数据的字段。</li>
+<li>字段field：文档的一部分，包含名称和值两部分。</li>
+<li>词term：一个搜索单元，表示文本中的一个词</li>
+<li>标记token：表示在字段文本中出现的词，由这个词的文本、开始和结束偏移量以及类型组成</li>
+</ul>
+<p>2.Apache Luncence将所有信息写到一个称为倒排索引Inverted index的结构中。它是面向词而不是文档的。</p>
+<p>3.分词的工作由分析器完成，它由一个分词器tokenizer和0个或多个标记过滤器token filter组成，也可以有0个或多个字符射器character mapper。分词的结果被称为标记流token stream，它是一个接一个的标记，准备被过滤器处理。</p>
+<p>4.Lucene分析器包含零个或多个标记过滤器，用来处理标记流中的标记，如</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/08/06/《Elasticsearch服务器开发》学习笔记（一）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -144,7 +236,7 @@ var _hmt = _hmt || [];
 
 <nav id="pagination">
   
-    <a href="/page/5/" class="alignleft prev">Prev</a>
+    <a href="/page/5/" class="alignleft prev">Vorherige Seite</a>
   
   
   <div class="clearfix"></div>
@@ -169,13 +261,15 @@ var _hmt = _hmt || [];
   
     <li><a href="/tags/centos/">centos</a><small>2</small></li>
   
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
     <li><a href="/tags/docker/">docker</a><small>3</small></li>
   
     <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
   
     <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
   
-    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>7</small></li>
   
     <li><a href="/tags/express/">express</a><small>4</small></li>
   
@@ -187,7 +281,7 @@ var _hmt = _hmt || [];
   
     <li><a href="/tags/lambda/">lambda</a><small>1</small></li>
   
-    <li><a href="/tags/linux/">linux</a><small>5</small></li>
+    <li><a href="/tags/linux/">linux</a><small>6</small></li>
   
     <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
   
