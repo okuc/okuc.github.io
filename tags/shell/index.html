@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>centos6下共享文件 | 我的后院自留地</title>
+  <title>shell | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="centos6下共享文件"/>
+  
   <meta property="og:site_name" content="我的后院自留地"/>
 
   
@@ -63,86 +63,25 @@ var _hmt = _hmt || [];
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-15T14:06:32.000Z"><a href="/2016/05/15/centos6下共享文件/">2016-05-15</a></time>
-      
-      
-  
-    <h1 class="title">centos6下共享文件</h1>
-  
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title tag">shell</h2>
 
-    </header>
-    <div class="entry">
-      
-        <p>1、首先安装smb服务：<code>yum install samba</code><br>2、将配置文件<code>/etc/samba/smb.conf</code>文件修改为：</p>
-<pre><code>[global]
-security=share
-dos charset=cp936
-unix charset=gb2312
 
-[szmacs]
-comment = share
-path = /data/macs
-browseable = yes
-guest ok = yes
-writable = yes
-</code></pre><p>3、关闭访火墙<code>iptables -F</code><br>4、关闭selinux：<code>setenforce 0</code><br>5、重启smb服务：<code>service smb restart</code><br>6、设置smb服务为随机启动：<code>chkconfig smb on</code></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/linux/">linux</a>, <a href="/tags/centos6/">centos6</a>
+  <div class="archive">
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2016-05-18T14:35:02.000Z"><a href="/2016/05/18/shell学习(一)/">2016-05-18</a></time>
+            
+              <h1 class="title"><a href="/2016/05/18/shell学习(一)/">shell学习(一)</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
   </div>
-
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-<nav id="pagination" >
-    
-    <a href="/2016/05/18/shell学习(一)/" class="alignleft prev" >Vorherige Seite</a>
-    
-    
-    <a href="/2016/05/14/JAVA8学习（一）/" class="alignright next" >Nächste Seite</a>
-    
-    <div class="clearfix"></div>
-</nav>
-
-<!-- ��˵���ۿ� start -->
- <div class="ds-thread" data-thread-key="/2016/05/15/centos6下共享文件/" data-title="centos6下共享文件" data-url="http://www.52brt.com/2016/05/15/centos6下共享文件/"></div>
-<!-- ��˵���ۿ� end -->
-<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"okuc"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
-<!-- ��˵����JS���� end -->
-<section id="comment">
-</section>
-
 </div></div>
     <aside id="sidebar" class="alignright">
   
