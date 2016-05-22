@@ -1,0 +1,469 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>shell学习(二) | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="shell学习(二)"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="//archives">归档</a></li>
+    
+      <li><a href="//coding">编程技术</a></li>
+    
+      <li><a href="//bigData">大数据技术</a></li>
+    
+      <li><a href="//dataV">数据可视化</a></li>
+    
+      <li><a href="//about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-19T14:35:02.000Z"><a href="/2016/05/19/shell学习(二)/">2016-05-19</a></time>
+      
+      
+  
+    <h1 class="title">shell学习(二)</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="shell编程中字符串的操作"><a href="#shell编程中字符串的操作" class="headerlink" title="shell编程中字符串的操作"></a>shell编程中字符串的操作</h2><ul>
+<li><p>连接字符串</p>
+<pre><code>str=hello
+str1=world
+连接起来：str=str$str1、str = $str&apos; &apos;&quot;aa123&quot;、str = $str: 
+</code></pre></li>
+<li><p>查看字符串长度：</p>
+<ul>
+<li><code>expr length &quot;hello&quot;</code></li>
+<li><code>expr length &quot;$str&quot;</code></li>
+<li><code>charcount=\</code>expr length “$str”``</li>
+<li><code>echo $charcount</code></li>
+</ul>
+</li>
+<li>查看特定字符：<ul>
+<li><code>expr index &quot;$str&quot; &#39;h&#39;</code> #从1开始，不是0，只返回第一个。如果是查找多个字母，只返回这些字母的第一个查找到的位置</li>
+</ul>
+</li>
+<li>字符串截断：<ul>
+<li><code>expr substr &quot;$str&quot; 6 10</code> #获取指定位置指定长度的字符串</li>
+</ul>
+</li>
+<li>正则匹配<ul>
+<li><code>expr $str : REGEXP</code></li>
+<li><code>expr match $str REGEXP</code></li>
+<li><code>expr $str : &#39;.*&#39;  #返回长度</code></li>
+<li><code>expr $str : &#39;(.*\[0-9]\{5\}\)&#39;</code></li>
+<li><code>expr $str : &#39;\([a-zA-X: ]*\).*&#39;</code><a id="more"></a>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="shell编程中的数学运算"><a href="#shell编程中的数学运算" class="headerlink" title="shell编程中的数学运算"></a>shell编程中的数学运算</h2><ul>
+<li>数值运算：<code>+</code>、<code>-</code>、<code>*</code>、<code>/</code>、<code>%</code>、<code>()</code></li>
+<li>expr expression</li>
+<li>result=$[expression]</li>
+<li>例子：<pre><code>num1=7
+num2=13
+num3=7
+expr $num1 \&lt; $num2
+expr $num1 \&lt; 9
+result =$[$sum1&lt;9] #不用转义
+echo $result
+expr $num1 = $num3 #等号两边必须有空隔
+result = $[$num1 == 7] #在中括号中必须使用双等号
+expr $num1 \* $num2
+result=$[$num1*$num2]
+result=$[$num1/$num2]
+</code></pre></li>
+<li>浮点运算：通过内建计算器：<code>bc</code>,<code>bc</code>能够识别：<ul>
+<li>数字（整形和浮点型）</li>
+<li>变量</li>
+<li>注释（以#开始的行，或者c语言中的注释形式/<em> </em>/）</li>
+<li>表达式</li>
+<li>编程语句（如条件判断：if-then）</li>
+<li>函数</li>
+</ul>
+</li>
+<li><code>bc</code>：可以输出版本、版权等，然后进入<code>bc</code>，可以进行浮点计算。首先设置小数位数：<code>scale=4</code>,<code>quit</code>退出</li>
+<li>bc中也支持变量：<pre><code>num=12
+num2=3;num3=4
+num/num2
+</code></pre></li>
+<li><p>在脚本中使用bc：</p>
+<pre><code>var = `echo &quot;options;expression&quot; | bc`
+var = `echo &quot;scale=4;3.44/5&quot; | bc` //管道方式
+echo $var
+
+var1=10.46
+var2=43.34
+var3=32.3
+VAR4=54.2
+result=`bc &lt;&lt; EOF  //内联方式
+&gt;scale=4
+&gt;a1 = $var1+$var2
+&gt;b1 = $var3+$var4
+&gt;a1+b1
+&gt;EOF
+&gt;`
+</code></pre></li>
+</ul>
+<h2 id="shell编程中的循环-for"><a href="#shell编程中的循环-for" class="headerlink" title="shell编程中的循环-for"></a>shell编程中的循环-for</h2><ul>
+<li><p>语法结构</p>
+<pre><code>for var in list
+do
+    commands
+done
+</code></pre></li>
+<li><p>一个例子：</p>
+<pre><code>#! /bin/bash
+#直接列表
+for val in Jan Feb Mar Apr May
+do
+    echo &quot;Month name is $val&quot;
+done
+
+#从变量读取
+list=&quot;Jan Feb Mar Apr May&quot;
+for val in $list
+do
+    echo &quot;Month name is $val&quot;
+done
+
+#从命令读取
+for val in `cat ltestfile`  #反引号，执行并返回。获取文件内容并返回
+do
+    echo &quot;Month name is $val in file&quot;
+done
+
+#! /bin/bash
+#从目录读取,获取所有的文件,/home/c*,/home/*c
+for val in /home/*
+do
+    echo &quot;$val&quot;
+done
+
+for val in `ls /home/*`
+do
+    echo &quot;$val&quot;
+done
+</code></pre></li>
+<li><p>语法结构</p>
+<pre><code>for((i=1;i&lt;=10;i++))
+do
+    commands
+done
+</code></pre></li>
+<li><p>一个例子：</p>
+<pre><code>#! /bin/bash
+#直接列表
+for ((i=1,j=10;i&lt;=10;i++,j--))
+do
+    echo &quot;number is $i $j&quot;
+done
+</code></pre></li>
+</ul>
+<h2 id="shell编程中的循环-while、until"><a href="#shell编程中的循环-while、until" class="headerlink" title="shell编程中的循环-while、until"></a>shell编程中的循环-while、until</h2><ul>
+<li>语法结构<br>while test command #test执行成功，返回0，执行不成功，返回1。判断成立时，执行语句。<br>do<pre><code>commands
+</code></pre>done</li>
+</ul>
+<p>  until test command #test执行成功，返回0，执行不成功，返回1。判断成立时，结束执行<br>  do<br>      commands<br>  done</p>
+<ul>
+<li><p>一个例子</p>
+<pre><code>#! /bin/bash
+var =1
+while [$var -lt 10]
+do
+    echo &quot;$var&quot;
+    var = $[$var +1]
+done
+
+var = 1
+until [$var -eq 10]
+do
+    echo &quot;$var&quot;
+    var = $[$var +1]
+done
+</code></pre></li>
+</ul>
+<h2 id="shell编程中的循环嵌套"><a href="#shell编程中的循环嵌套" class="headerlink" title="shell编程中的循环嵌套"></a>shell编程中的循环嵌套</h2><ul>
+<li><p>例子：</p>
+<pre><code>#! /bin/bash
+for((i=1;i&lt;=3;i++))
+do
+    echo &quot;Outside loop:$i&quot;
+    for((j=1;j&lt;=3;j++))
+    do
+        echo &quot;inside loop:$j&quot;
+    done
+done
+
+i=1
+while [$i -le 3]
+do
+    echo &quot;Outside loop:$i&quot;
+    for((j=1;j&lt;=3;j++))
+    do
+        echo &quot;inside loop:$j&quot;
+    done
+    i=$[$i+1] #赋值语句不能有空隔
+done
+</code></pre></li>
+<li><p>break：跳出循环</p>
+<pre><code>#! /bin/bash
+for((i=1;i&lt;=10;i++))
+do
+    if [$i -eq 5]
+    then 
+        break;
+    fi
+    echo &quot;$i&quot;
+done
+</code></pre></li>
+<li><p>continue：继续循环</p>
+<pre><code>#! /bin/bash
+for((i=1;i&lt;=10;i++))
+do
+    if [$i -eq 5]
+    then 
+        continue;
+    fi
+    echo &quot;$i&quot;
+done
+</code></pre></li>
+<li><p>一个综合的例子</p>
+<pre><code>#! /bin/bash
+
+echo &quot;please input a user name:&quot;
+read uname
+
+IFS=$&apos;\n&apos;
+
+for row in `cat /etc/passwd`
+do
+  IFS=$&apos;:&apos;
+  i=1
+  is_target=0
+  for value in $row
+  do
+      if [$i -eq 1] &amp;&amp; [$value = $uname]
+      then 
+          is_target=1
+      fi
+      i=$[ $i+1 ]
+      if [ $is_target -eq 1]
+      then
+          echo $value
+      fi
+   done
+     if [ $is_target -eq 1]
+     then
+      echo $row
+      break
+     fi
+down
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/linux/">linux</a>, <a href="/tags/centos/">centos</a>, <a href="/tags/shell/">shell</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2016/05/19/shell学习(三)/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2016/05/18/shell学习(一)/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/05/19/shell学习(二)/" data-title="shell学习(二)" data-url="http://www.52brt.com/2016/05/19/shell学习(二)/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>2</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

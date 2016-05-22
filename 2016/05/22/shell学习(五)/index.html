@@ -1,0 +1,339 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>shell学习(五) | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="shell学习(五)"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="//archives">归档</a></li>
+    
+      <li><a href="//coding">编程技术</a></li>
+    
+      <li><a href="//bigData">大数据技术</a></li>
+    
+      <li><a href="//dataV">数据可视化</a></li>
+    
+      <li><a href="//about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-22T14:35:02.000Z"><a href="/2016/05/22/shell学习(五)/">2016-05-22</a></time>
+      
+      
+  
+    <h1 class="title">shell学习(五)</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="linux中的信号"><a href="#linux中的信号" class="headerlink" title="linux中的信号"></a>linux中的信号</h2><ul>
+<li>软中断</li>
+<li>进程间异步通信</li>
+<li><code>man 7 signal</code> 查看系统中对信号的支持</li>
+<li>键盘组合键生成信号<ul>
+<li>终止进程： <code>SIGINT</code> <code>Ctrl+C</code></li>
+<li>暂停进程： <code>SIGSTP</code> <code>Ctrl+Z</code></li>
+</ul>
+</li>
+<li><code>man kill</code> ：查看kill命令的帮助</li>
+<li>程序中的信号处理<ul>
+<li>按照默认方式处理信号</li>
+<li>忽略信号</li>
+<li>按照自定义方式捕捉并处理信号<a id="more"></a></li>
+</ul>
+</li>
+<li><p>一个捕捉停止信号然后自定义信号的例子：</p>
+<pre><code>#!/bin/bash
+trap &quot;echo &apos;Signal traped SIGINT for Ctrl+C&apos;&quot; SIGINT //捕捉到信号后不停止程序，输出中间的一段话
+count=1
+while [ $count -le 10 ]
+do
+    echo &quot;Loop # $count&quot;
+    sleep 1  //暂停1S
+    count=$[ $count + 1 ]
+done
+
+echo &apos;Loop ended&apos;
+</code></pre></li>
+<li><p>一个捕捉退出程序信号的例子。这个例子循环中间退出会打印出<code>quit scrpit</code>，最后执行完自动退出，由于已经移除了，则不会打印该字样。</p>
+<pre><code>#!/bin/bash
+
+trap &quot;echo &apos;quit script&apos;&quot; EXIT
+count=1
+while [ $count -le 10 ]
+do
+    echo &quot;Loop # $count&quot;
+    sleep 5
+    count=$[ $count + 1 ]
+done
+
+trap - EXIT //移除捕捉
+
+echo &apos;Loop ended&apos;
+</code></pre></li>
+</ul>
+<h2 id="后台运行脚本"><a href="#后台运行脚本" class="headerlink" title="后台运行脚本"></a>后台运行脚本</h2><ul>
+<li><code>脚本 &amp;</code>：让程序从后台运行</li>
+<li><code>jobs</code>命令可以查看后台的作业</li>
+<li><code>fg 1</code>以前台方式启动作业1，在以后台方式启动作业时，能够看到作业的编号</li>
+<li><code>bg 1</code> 以后台的方式启动作业1。</li>
+<li>作业优先级<ul>
+<li>范围： <code>-20(高) -- 19(低)</code></li>
+<li>优先级设定：<code>nice</code></li>
+<li>优先级重设：<code>renice</code></li>
+<li>例子：<code>nice -n 10 ./bgtest &gt;temp &amp;</code>，<code>renice 11 -p 12345</code>,12345是线程的id</li>
+<li><code>ps al</code>:在NI列显示的是作业的优先级</li>
+</ul>
+</li>
+<li><code>nohup ./bgtest &amp;</code>:不与指定的shell窗口关联。shell关了，仍然在后台运行。好像在centos中，这样也可以<code>( ./bgtest &amp;)</code></li>
+</ul>
+<h2 id="定时运行脚本"><a href="#定时运行脚本" class="headerlink" title="定时运行脚本"></a>定时运行脚本</h2><ul>
+<li><code>at [-f filename ] time</code>,使用<code>at</code>命令可以定时执行。注<code>at</code>需要使用<code>yum install at</code> 时间格式为：<ul>
+<li><code>10:15</code></li>
+<li><code>10:15~PM</code></li>
+<li><code>now</code></li>
+<li><code>noon</code></li>
+<li><code>midnight</code></li>
+<li><code>teatime</code></li>
+<li><code>MMDDYY</code></li>
+<li><code>MM/DD/YY</code></li>
+<li><code>MM.DD.YY</code></li>
+<li><code>Jul 14</code></li>
+<li><code>Dec 25</code></li>
+<li><code>now+25min</code></li>
+</ul>
+</li>
+<li><code>at -M -f ./attest 18:18</code>。<code>at -M -f ./attest now+2 min</code>两分钟后运行。<code>-M</code>用来指定不使用邮件输出<br>-<code>atq</code>：查看<code>at</code>命令的运行队列</li>
+<li><code>cron</code>时间表可以周期性运行，<code>/etc/crontab</code>可以周期性的运行</li>
+<li><code>ls /etc/cron*</code>,可以看到，有几个不同的文件夹，将脚本复制到不同的文件夹下。</li>
+<li><code>crontab -l</code>查看当前用户的时间表</li>
+<li><code>crontab -e</code> 修改当前用户的时间表</li>
+<li>有时，由于设定的时间没有开机，所以并不会执行。这时需要用到异步的<code>anacron</code>。它也在<code>/etc/anacrontab</code>,它的最小时间点是天。</li>
+</ul>
+<h2 id="启动时运行脚本"><a href="#启动时运行脚本" class="headerlink" title="启动时运行脚本"></a>启动时运行脚本</h2><ul>
+<li>开机过程<ul>
+<li><code>System V init</code></li>
+<li><code>Upstart init</code></li>
+</ul>
+</li>
+<li>自定义开机运行脚本<ul>
+<li><code>debin</code>:<code>/etc/init.d/rc.local</code></li>
+<li><code>Ubuntu</code>:<code>/etc/rc.local</code></li>
+<li><code>openSUSE</code>:<code>/etc/init.d/boot.local</code></li>
+<li><code>CentOS</code>:<code>/etc/rc.d/rc.local</code></li>
+</ul>
+</li>
+<li><p>在上述的脚本中，重定向信息，就可以看到执行脚本的信息了。</p>
+<pre><code>exec 1&gt;&gt;/home/okuc/logs/startup/logs
+exec 2&gt;&gt;/home/okuc/logs/startup/error
+</code></pre></li>
+<li>在上述的脚本中，并不能访问有些环境变量。所以一般先自已写个脚本，把用到的<code>java_home</code>等重新设置一遍，然后在上述脚本中调用这个脚本。</li>
+<li>shell启动时运行脚本<ul>
+<li>启动bash：执行<code>/etc/profile</code>、<code>/etc/.bashrc</code></li>
+<li>通过ssh登录：执行<code>/etc/profile</code>、<code>/etc/.bashrc</code></li>
+<li>通过ssh执行命令执行<code>/etc/.bashrc</code></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/linux/">linux</a>, <a href="/tags/centos/">centos</a>, <a href="/tags/shell/">shell</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    
+    <a href="/2016/05/20/shell学习(四)/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/05/22/shell学习(五)/" data-title="shell学习(五)" data-url="http://www.52brt.com/2016/05/22/shell学习(五)/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>2</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

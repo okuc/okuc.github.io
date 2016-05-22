@@ -70,6 +70,185 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-12-13T14:06:32.000Z"><a href="/2015/12/13/轻松在eclipse中将maven项目布署到tomcat上/">2015-12-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/13/轻松在eclipse中将maven项目布署到tomcat上/">轻松在eclipse中将maven项目布署到tomcat上</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在eclipse中导入已经建好的maven项目后，往往会出现无法布署到tomcat上的情况，此时，该怎么办呢？</p>
+<ol>
+<li><p>右键项目名，选择<code>Properties</code>。在弹出的页面中，左侧选择<code>Project Facets</code>,在右侧的列表中，选中<code>Dynamic Web Module</code>、<code>Java</code>、<code>JavaScript</code>三项，然后点击右下角的<code>Apply</code>按扭。</p>
+</li>
+<li><p>左侧选择<code>Deployment Assembly</code>,在左则，配置好依赖：</p>
+<ul>
+<li><code>/src/main/java</code>–&gt;<code>WEB-INF/classes</code></li>
+<li><code>/src/main/resources</code>–&gt;<code>WEB-INF/classes</code></li>
+<li><code>/src/main/webapp</code>–&gt;<code>/</code></li>
+<li><code>/src/test/java</code>–&gt;<code>WEB-INF/classes</code></li>
+<li><p><code>Maven Dependencies</code>–&gt;<code>WEB-INF/lib</code></p>
+<p>然后点击右下角的<code>Apply</code>按扭。</p>
+</li>
+</ul>
+</li>
+<li><p>点击<code>OK</code>按扭返回，这回，可以直接在项目名上点击右键，选择<code>Run AS</code> -&gt; <code>Run on Server</code>了。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-13T14:06:32.000Z"><a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/">2015-12-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/">新手学习mongodb之二：基本概念及其数据类型</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li><p>MongoDB是面向集合的文档型数据库，文档是MongoDB的核心概念，本质是一种类JSON的BSON格式的数据，BSON在JSON的基础出上添加了一些数据类型，如日期型、int32、int64等。BSON的官方地址如下：<a href="http://bsonspec.org">http://bsonspec.org</a>与传统关系数据库相比，他们的对应关系如下：</p>
+<p> MongoDB | 关系型数据库<br> :—-:|:—-:<br> DataBase|DataBase<br> Collection|Table<br> Document/BSON Document|Record/Row<br> field|Column<br> Index|Index<br> embedded documents/reference|table joins</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-12T14:06:32.000Z"><a href="/2015/12/12/新手学习mongodb之一：在windows及linux下安装mongodb/">2015-12-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/12/新手学习mongodb之一：在windows及linux下安装mongodb/">新手学习mongodb之一：在windows及linux下安装mongodb</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="Linux下安装mongodb"><a href="#Linux下安装mongodb" class="headerlink" title="Linux下安装mongodb"></a>Linux下安装mongodb</h2><p>我使用的是Centos7，所以首先在官网<a href="https://www.mongodb.org/">https://www.mongodb.org/</a>上找到合适的安装包，对应的下载地址为：<a href="https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-3.2.0.tgz">https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-3.2.0.tgz</a>。接下来，我们开始安装吧！<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/12/新手学习mongodb之一：在windows及linux下安装mongodb/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-10T14:06:32.000Z"><a href="/2015/12/10/新手学习Angularjs之六：使用Directive自定义控件/">2015-12-10</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/10/新手学习Angularjs之六：使用Directive自定义控件/">新手学习Angularjs之六：使用Directive自定义控件</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<h2 id="一、一般自定义组件"><a href="#一、一般自定义组件" class="headerlink" title="一、一般自定义组件"></a>一、一般自定义组件</h2><p>首先来一个简单的例子：</p>
+<pre><code>&lt;html ng-app=&apos;app&apos;&gt;
+ &lt;body&gt;
+ &lt;hello&gt;&lt;/hello&gt;
+ &lt;/body&gt;
+ &lt;script src=&quot;../angular-1.0.3/angular.min.js&quot;&gt;&lt;/script&gt;
+ &lt;script src=&quot;HelloDirect.js&quot;&gt;&lt;/script&gt;
+&lt;/html&gt;
+
+
+var appModule = angular.module(&apos;app&apos;, []);
+appModule.directive(&apos;hello&apos;, function() {
+ return {
+ restrict: &apos;E&apos;,
+ template: &apos;&lt;div&gt;Hi there&lt;/div&gt;&apos;,
+ replace: true
+ };
+});
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/10/新手学习Angularjs之六：使用Directive自定义控件/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-12-09T14:06:32.000Z"><a href="/2015/12/09/新手学习Angularjs之五：$http服务的简单用法/">2015-12-09</a></time>
       
       
@@ -315,197 +494,6 @@ var _hmt = _hmt || [];
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-03T14:06:32.000Z"><a href="/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">2015-12-03</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境_更新版</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>曾经在去年写过一篇过于在windos下搭建node.js工作环境的文章（原文详见：<a href="http://www.52brt.com/2014/11/26/windows%E4%B8%8B%E6%90%AD%E5%BB%BAnode.js%E5%8F%8Anpm%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83/">windows下搭建node.js及npm的工作环境</a>），现在看来,可能当时有些地方写得不妥，所以，特意重新编写了此篇。</p>
-<p>下面就把我的一些搭建过程说一下：</p>
-<ol>
-<li>下载node.js。在<a href="https://nodejs.org/en/">https://nodejs.org/en/</a>下载最新版的node.exe文件，我下载时是<code>v5.1 stable</code>,直接下载地址如下:<a href="https://nodejs.org/dist/v5.1.0/node-v5.1.0-x64.msi">https://nodejs.org/dist/v5.1.0/node-v5.1.0-x64.msi</a>。</li>
-<li>不同于上次，由于本次我们使用的是安装包，上述安装包已经包含了npm，所以，不用再单独下载npm。下载完成后，直接双击进行安装，建议不要安装在C盘下，在这儿，我安装到了F盘<code>nodejs</code>文件夹下。
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-11-21T14:35:02.000Z"><a href="/2015/11/21/Emmet常用缩写简要笔记/">2015-11-21</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/11/21/Emmet常用缩写简要笔记/">Emmet常用缩写简要笔记</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>emmet可谓前端开发神器，特别是在前端页台和后端服务分离化，restful大肆流行的今天，掌握点emmet还是有必要的。现将一些常用知识点简单记录如下。</p>
-<ol>
-<li><p>初始化文档。</p>
-<ul>
-<li><p><code>html:5</code> 或<code>!</code>：用于HTML5文档类型。生成的代码如下，<strong>注意</strong>,生成后需要把<code>lang=&quot;en&quot;</code>改为<code>lang=&quot;zh-cn&quot;</code>，再把’title’改成相对应的文档标题就可以了。</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;Document&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre></li>
-<li><code>html:xt</code>：用于XHTML过渡文档类型。</li>
-<li><code>html:4s</code>：用于HTML4严格文档类型。</li>
-</ul>
-</li>
-<li>子代：<code>&gt;</code>用来表示子代。代码<code>div&gt;ul&gt;li</code>可以生成的代码：<pre><code>&lt;div&gt;
-    &lt;ul&gt;
-        &lt;li&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/div&gt;
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/11/21/Emmet常用缩写简要笔记/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-10-21T14:06:32.000Z"><a href="/2015/10/21/svg中节点顺序的替代解决方案/">2015-10-21</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/10/21/svg中节点顺序的替代解决方案/">svg中节点顺序的替代解决方案</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>如果你的前端页面图形是使用svg画的，那么有一个问题很有可能遇到的，就是节点间先后顺序的问题。由于svg元素没有z-index属性，画的顺序决定了显示的顺序，所以当你拖拽一个节点时，很容易会发生，该节点与其他节点重合时会跑到其他节点下面的尴尬。</p>
-<p>###raphaeljs下解决方案<br>如果你使用的是<code>raphaeljs</code>，那么恭喜你，这都不是事，<code>raphaeljs</code>中提供了如下方法，直接操作就可以了！</p>
-<pre><code>element.toBack()
-element.toFront()
-</code></pre><p>当然，如果你没有使用svg，那么悄悄的把<code>raphaeljs</code>用起来也不错哦。<br>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/10/21/svg中节点顺序的替代解决方案/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-10-12T14:59:45.000Z"><a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/">2015-10-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/">CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>正常运行的mysql，忽然报出了<code>The Table ‘XXX’ is full Query</code>的错误，于是，又开始了一番折腾之旅。下面简单的记录一下：</p>
-<p>###排查原因</p>
-<ol>
-<li>对服务进行重启<code>service mysqld stop</code>，结果起不来了。报出的以下错误：<code>Timeout error occurred trying to start MySQL Daemon</code>。</li>
-<li><p>baidu的一番，毫无收获。接下来，经过XXX，顺便到访问到了google，得到了一个可能的答案：磁盘空间不足。第一念头是，不可能呀，这可是2T的硬盘，而且也没有多少数据。念头归念头，还是查询一下，眼见为证：</p>
-<pre><code>[root@htzh199 ~]# df -lh
-Filesystem            Size  Used Avail Use% Mounted on
-/dev/mapper/vg_htzh199-lv_root
-                       50G   50G   0G  100% /
-tmpfs                  16G   72K   16G   1% /dev/shm
-/dev/sda2             477M   33M  419M   8% /boot
-/dev/sda1             200M  264K  200M   1% /boot/efi
-/dev/mapper/vg_htzh199-lv_home
-                      1.8T  284G  1.4T  17% /home
-</code></pre><p>由上面的数据可以看出，根目录<code>/</code>只有50G，且已经使用完了。由此也可以推测，没有空间可用的可能性非常大。</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -534,7 +522,7 @@ tmpfs                  16G   72K   16G   1% /dev/shm
   
     <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
   
-    <li><a href="/tags/centos/">centos</a><small>3</small></li>
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
   
     <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
   
@@ -556,7 +544,7 @@ tmpfs                  16G   72K   16G   1% /dev/shm
   
     <li><a href="/tags/lambda/">lambda</a><small>1</small></li>
   
-    <li><a href="/tags/linux/">linux</a><small>7</small></li>
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
   
     <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
   
@@ -568,7 +556,7 @@ tmpfs                  16G   72K   16G   1% /dev/shm
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/shell/">shell</a><small>1</small></li>
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   

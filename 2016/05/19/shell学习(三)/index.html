@@ -1,0 +1,414 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>shell学习(三) | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="shell学习(三)"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="//archives">归档</a></li>
+    
+      <li><a href="//coding">编程技术</a></li>
+    
+      <li><a href="//bigData">大数据技术</a></li>
+    
+      <li><a href="//dataV">数据可视化</a></li>
+    
+      <li><a href="//about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-19T14:35:02.000Z"><a href="/2016/05/19/shell学习(三)/">2016-05-19</a></time>
+      
+      
+  
+    <h1 class="title">shell学习(三)</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="shell中的输入输出重定向"><a href="#shell中的输入输出重定向" class="headerlink" title="shell中的输入输出重定向"></a>shell中的输入输出重定向</h2><ul>
+<li>标准输入是键盘，标准输出是终端显示器。</li>
+<li>输出重定向<ul>
+<li><code>command &gt; outputfile</code> //大于号两端要有空格分开</li>
+<li><code>command &gt;&gt; outputfile</code></li>
+</ul>
+</li>
+<li><p>一个例子</p>
+<pre><code>echo 22222 &gt; ./iotest
+echo 111 &gt; ./iotest //会把上一行覆盖掉
+echo 111 &gt;&gt; ./iotest //不会覆盖掉原有数据，会新起一行
+</code></pre></li>
+<li>输入重定向<ul>
+<li><code>command &lt; outputfile</code></li>
+</ul>
+</li>
+<li>例子： <code>cat &lt; iotest &gt; iotest2</code></li>
+<li><p>内联输入重定向</p>
+<pre><code>command &lt;&lt; marker
+data input
+marker
+</code></pre></li>
+<li><p>例子：</p>
+<pre><code>result = `bc &lt;&lt; EOF
+&gt;var1=3
+&gt;var2=4
+&gt;var3=var1+var2
+&gt;print var3
+&gt;EOF`
+
+echo $result
+</code></pre><a id="more"></a></li>
+<li>Linux系统将每个对象当作<strong>文件</strong>处理，包括输入输出过程。</li>
+<li>Linux用<strong>文件描述符来标识</strong>每个文件对象。</li>
+<li>文件描述符是一个非负整数，唯一标识会话中打开的文件。</li>
+<li>每个过程一次最多可以有9个文件描述符。</li>
+<li><p>文件描述符，缩写，描述</p>
+<ul>
+<li>0，STDIN，标准输入</li>
+<li>1,STDOUT，标准输出</li>
+<li>2，STDERR，标准错误</li>
+</ul>
+</li>
+<li><p>例子</p>
+<pre><code>  ehco hello 1&gt; iotest3
+cat 0&lt; iotest
+  cat iot 2&gt;iotest4  //错误重定向
+  ls io* ff* 1&gt;iotest5 2&gt; errlog //将正确的输出和错误输出进行分离
+</code></pre></li>
+</ul>
+<h2 id="脚本中的重定向"><a href="#脚本中的重定向" class="headerlink" title="脚本中的重定向"></a>脚本中的重定向</h2><ul>
+<li><p>监时重定向：<code>command &gt;&amp;文件描述符</code></p>
+<pre><code>#！ /bin/bash
+
+echo &quot;Test Error&quot; &gt;&amp;2
+echo &quot;Nomal outPut&quot;
+
+运行时，直接运行，则都会输出。如果运行时指定的错误输出， `./iotest6 2&gt;&gt; errlog`,则只会输出正确的，错误的会自动追加到 `errlog`中。虽然也可以在脚本中直接指定输出文件，但是，当要输出的较多时，则比较麻烦。
+</code></pre></li>
+<li><p>永久重定向： <code>exec  文件描述符&gt;文件名</code> 。对整个脚本的代码都有效</p>
+<pre><code>#！ /bin/bash
+
+exec 1&gt;testoutput
+exec 2&gt;errlog
+
+echo &quot;Test Error&quot; &gt;&amp;2
+echo &quot;Nomal outPut&quot;
+</code></pre></li>
+<li><p>输入重定向 <code>exec 0&lt;文件名</code></p>
+</li>
+</ul>
+<pre><code>#! /bin/bash
+#从文件中读取，并输出
+exec 0&lt; errlog
+
+count=1
+while read line
+do
+    echo &quot;第 $count行 :$line&quot;
+        count=$[$count +1]
+done
+</code></pre><h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><ul>
+<li>将一个命令的输出，重定向至另一个命令的标准输出。<code>command1 | comand2</code></li>
+<li><code>ps -ef|grep java</code> //将ps命令的输出，传递给grep进行快速的输出</li>
+<li><code>ps -ef|less</code> //将ps命令的输出，传递给less进行分页</li>
+<li><code>ps -ef &gt;tempfile</code>、<code>less&lt;tempfile</code> //不如管道方便</li>
+<li><code>date | tee datefile</code> ：<code>tee</code>命令有两个输出，一个是文件，一个是标准输出。执行后控制台上也会显示日期，<code>datefile</code>中也会有日期。</li>
+</ul>
+<h2 id="shell编程中的函数"><a href="#shell编程中的函数" class="headerlink" title="shell编程中的函数"></a>shell编程中的函数</h2><ul>
+<li><p>函数声明的两种方式如下：</p>
+<pre><code>function name {
+    commands
+}
+
+name(){
+    commands
+}
+</code></pre></li>
+<li><p>下面是一个例子，定义了后直接调用（必须先定义后调用）：</p>
+<pre><code>#! /bin/bash
+
+function func1 {
+    echo &apos;第一种方式定义的函数&apos;
+}
+
+func2(){
+    echo &apos;第二种方式定义的函数&apos;
+}
+
+func1
+func2
+</code></pre><p>  echo “$?”</p>
+</li>
+<li>函数默认的退出码<code>echo &quot;$?</code>,执行成功时，状态码是0，不成功时，状态码是其他的值。</li>
+<li>函数的返回值使用 <code>return</code> 来实现。在函数的最后使用<code>return 20</code>,则状态码输入的就是<code>20</code>。退出的状态码必须在0到255之间，否则会报错。</li>
+<li><p>函数返回其他字符：</p>
+<pre><code>value = `func1`
+  echo $value
+</code></pre></li>
+<li><p>函数参数</p>
+<pre><code>#! /bin/bash  
+
+add() {
+    if [ $# -eq 2 ];then  //判断参数是否等于2个
+        result=$[ $1+$2 ]
+        echo $result
+    else
+        echo &quot;Please input 2 params&quot;
+        return 1
+    fi
+}
+</code></pre></li>
+</ul>
+<pre><code>value=`add $1 $2` //收集两个参数，传给函数add
+if [ $? -eq 0 ]; then //如果函数返回值是0，说明执行成功
+    echo $value
+else
+    echo &quot;Err: $value&quot;
+fi
+</code></pre><ul>
+<li><p>函数中数组参数的处理</p>
+<pre><code>#! /bin/bash
+testarray(){
+            echo &quot;$@&quot; //输出所有参数
+            echo &quot;$0&quot;
+            echo &quot;$0&quot;
+            echo &quot;$#&quot; //输出参数的数量
+}
+
+sum(){
+    local result=0 //
+    for var in $@
+    do
+        result=$[ $result + $var ]
+    done
+    echo $result
+    local newarray=(`echo &quot;$@&quot;`)
+    echo ${newarray[*]}
+}
+</code></pre></li>
+</ul>
+<pre><code>array=(1 2 3 4 5 6 7)
+
+testarray ${array[*]}
+
+testarray ${array[*]}
+</code></pre><ul>
+<li>全局变量：在整个脚本中都有效,在函数内使用的，不使用<code>local</code>修饰符，也是全局变量</li>
+<li>局部变量：仅在函数内部使用有效</li>
+<li><p>函数库。下面是一个引用函数库的例子：</p>
+<pre><code>#! /bin/bash
+
+source ./calc.sh
+
+echo `add 12 23`
+</code></pre><p>也可以在命令行中，直接执行上面的两句。即：</p>
+<pre><code>source ./calc.sh
+
+echo `add 12 23
+</code></pre></li>
+<li>在<code>~/.bashrc</code>这个文 件中，系统已加加载了众多的函数库</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/linux/">linux</a>, <a href="/tags/centos/">centos</a>, <a href="/tags/shell/">shell</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2016/05/20/shell学习(四)/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2016/05/19/shell学习(二)/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/05/19/shell学习(三)/" data-title="shell学习(三)" data-url="http://www.52brt.com/2016/05/19/shell学习(三)/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>2</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

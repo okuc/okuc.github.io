@@ -64,6 +64,197 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-03T14:06:32.000Z"><a href="/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">2015-12-03</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境_更新版</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>曾经在去年写过一篇过于在windos下搭建node.js工作环境的文章（原文详见：<a href="http://www.52brt.com/2014/11/26/windows%E4%B8%8B%E6%90%AD%E5%BB%BAnode.js%E5%8F%8Anpm%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83/">windows下搭建node.js及npm的工作环境</a>），现在看来,可能当时有些地方写得不妥，所以，特意重新编写了此篇。</p>
+<p>下面就把我的一些搭建过程说一下：</p>
+<ol>
+<li>下载node.js。在<a href="https://nodejs.org/en/">https://nodejs.org/en/</a>下载最新版的node.exe文件，我下载时是<code>v5.1 stable</code>,直接下载地址如下:<a href="https://nodejs.org/dist/v5.1.0/node-v5.1.0-x64.msi">https://nodejs.org/dist/v5.1.0/node-v5.1.0-x64.msi</a>。</li>
+<li>不同于上次，由于本次我们使用的是安装包，上述安装包已经包含了npm，所以，不用再单独下载npm。下载完成后，直接双击进行安装，建议不要安装在C盘下，在这儿，我安装到了F盘<code>nodejs</code>文件夹下。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-21T14:35:02.000Z"><a href="/2015/11/21/Emmet常用缩写简要笔记/">2015-11-21</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/11/21/Emmet常用缩写简要笔记/">Emmet常用缩写简要笔记</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>emmet可谓前端开发神器，特别是在前端页台和后端服务分离化，restful大肆流行的今天，掌握点emmet还是有必要的。现将一些常用知识点简单记录如下。</p>
+<ol>
+<li><p>初始化文档。</p>
+<ul>
+<li><p><code>html:5</code> 或<code>!</code>：用于HTML5文档类型。生成的代码如下，<strong>注意</strong>,生成后需要把<code>lang=&quot;en&quot;</code>改为<code>lang=&quot;zh-cn&quot;</code>，再把’title’改成相对应的文档标题就可以了。</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></li>
+<li><code>html:xt</code>：用于XHTML过渡文档类型。</li>
+<li><code>html:4s</code>：用于HTML4严格文档类型。</li>
+</ul>
+</li>
+<li>子代：<code>&gt;</code>用来表示子代。代码<code>div&gt;ul&gt;li</code>可以生成的代码：<pre><code>&lt;div&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/11/21/Emmet常用缩写简要笔记/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-10-21T14:06:32.000Z"><a href="/2015/10/21/svg中节点顺序的替代解决方案/">2015-10-21</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/10/21/svg中节点顺序的替代解决方案/">svg中节点顺序的替代解决方案</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>如果你的前端页面图形是使用svg画的，那么有一个问题很有可能遇到的，就是节点间先后顺序的问题。由于svg元素没有z-index属性，画的顺序决定了显示的顺序，所以当你拖拽一个节点时，很容易会发生，该节点与其他节点重合时会跑到其他节点下面的尴尬。</p>
+<p>###raphaeljs下解决方案<br>如果你使用的是<code>raphaeljs</code>，那么恭喜你，这都不是事，<code>raphaeljs</code>中提供了如下方法，直接操作就可以了！</p>
+<pre><code>element.toBack()
+element.toFront()
+</code></pre><p>当然，如果你没有使用svg，那么悄悄的把<code>raphaeljs</code>用起来也不错哦。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/10/21/svg中节点顺序的替代解决方案/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-10-12T14:59:45.000Z"><a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/">2015-10-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/">CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>正常运行的mysql，忽然报出了<code>The Table ‘XXX’ is full Query</code>的错误，于是，又开始了一番折腾之旅。下面简单的记录一下：</p>
+<p>###排查原因</p>
+<ol>
+<li>对服务进行重启<code>service mysqld stop</code>，结果起不来了。报出的以下错误：<code>Timeout error occurred trying to start MySQL Daemon</code>。</li>
+<li><p>baidu的一番，毫无收获。接下来，经过XXX，顺便到访问到了google，得到了一个可能的答案：磁盘空间不足。第一念头是，不可能呀，这可是2T的硬盘，而且也没有多少数据。念头归念头，还是查询一下，眼见为证：</p>
+<pre><code>[root@htzh199 ~]# df -lh
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/mapper/vg_htzh199-lv_root
+                       50G   50G   0G  100% /
+tmpfs                  16G   72K   16G   1% /dev/shm
+/dev/sda2             477M   33M  419M   8% /boot
+/dev/sda1             200M  264K  200M   1% /boot/efi
+/dev/mapper/vg_htzh199-lv_home
+                      1.8T  284G  1.4T  17% /home
+</code></pre><p>由上面的数据可以看出，根目录<code>/</code>只有50G，且已经使用完了。由此也可以推测，没有空间可用的可能性非常大。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="coding">
   
   <div class="post-content">
@@ -341,181 +532,6 @@ eno1 5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03 802-3-ethernet eno1
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-08-27T17:23:41.000Z"><a href="/2015/08/28/java连接远程HBase/">2015-08-28</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/08/28/java连接远程HBase/">java连接远程HBase 1.1.1</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>由于工作需要用到<code>HBase</code>，今晚使用<code>HBase 1.1.1</code>小试牛刀了一把。<code>HBase 1.1.1</code>运行环境为<code>CentOS7.0</code>，java客户端运行环境为<code>Win10</code>，服务端jdk版本为<code>1.8</code>，客户端jdk版本为<code>1.7</code>。</p>
-<p><strong>提示：本文最后可下载源代码</strong></p>
-<p>具体步骤如下：</p>
-<ol>
-<li>下载<code>HBase 1.1.1</code>,下载地址如下：<a href="http://mirrors.cnnic.cn/apache/hbase/1.1.1/hbase-1.1.1-bin.tar.gz">http://mirrors.cnnic.cn/apache/hbase/1.1.1/hbase-1.1.1-bin.tar.gz</a>。</li>
-<li>使用<code>tar -xvf hbase-1.1.1-bin.tar.gz</code>解压。<strong>我使用的是root用户</strong></li>
-<li>进入到解压后的bin目录中，使用<code>./start-hbase.sh</code>启动Hbase，启动成功会显示如下提示：<pre><code>starting master, logging to /home/soft/hbase-1.1.1/bin/../logs/hbase-root-master-MiWiFi-R1CM.out
-</code></pre><strong>由于没有作任何设置，此时，所有数据都保存在临时环境中，一旦重启就会丢失。</strong>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/08/28/java连接远程HBase/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-08-22T14:35:02.000Z"><a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/">2015-08-22</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/">《Elasticsearch服务器开发》学习笔记（三）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第2章-映射配置-二"><a href="#第2章-映射配置-二" class="headerlink" title="第2章 映射配置(二)"></a>第2章 映射配置(二)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
-<hr>
-<ol>
-<li>lucene 4.0后，允许修改默认的基于TF/IDF的算法。4.0还附加了相似度模型，允许在文档中使用不同的评分公式。</li>
-<li><p>为每个字段设置不同的相似度模型。如下例子：</p>
-<pre><code>{
-   &quot;mappings&quot;:{
-       &quot;post&quot;:{
-           “properties”：{
-               “id”：{“type”：“long”，“store”：“yes”，“precision_step”：“0”}，
-               “name”：{“type”：“string”，“store”：“yes”，“index”：“analyzed”,&quot;similarity&quot;:&quot;BM25&quot;}，
-               “published”：{“type”：“date”，“store”：“yes”，“precision_step”：“0”}，
-               “contents”：{“type”：“long”，“store”：“no”，“index”：“analyzed”},&quot;similarity&quot;:&quot;BM25&quot;
-               }
-           }
-     }
-
-}
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-08-21T13:26:27.000Z"><a href="/2015/08/21/在批处理-bat-中设置java程序的内存参数/">2015-08-21</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/08/21/在批处理-bat-中设置java程序的内存参数/">在批处理(bat)中设置java程序的内存参数</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>最近做一个java的桌面程序，竟然内存溢出了。由于是将启动命令<code>java -jar XXX.jar</code>写在了批处理中,所以竟一时想不起来如何设置程序运行参数了。以前是天天在eclipse的开发环境中设置，在tomcat的启动批处理中设置，在各种开源软件的启动脚本中设置，可是要在这么的一个简单命令中设置，竟然失忆了，不会了。。。<br>于是乎，百度了一番，才猛然间想了起来，原来，如此简单，添加后的示例如下，权当记录一下，谨防以后再忘记吧。</p>
-<pre><code>java  -Xms800m -Xmx800m -XX:PermSize=128M -XX:MaxNewSize=256m -XX:MaxPermSize=256m  -jar  XXX.jar
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-08-16T15:38:12.000Z"><a href="/2015/08/16/《Elasticsearch服务器开发》学习笔记（二）/">2015-08-16</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/08/16/《Elasticsearch服务器开发》学习笔记（二）/">《Elasticsearch服务器开发》学习笔记（二）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第2章-映射配置-一"><a href="#第2章-映射配置-一" class="headerlink" title="第2章 映射配置(一)"></a>第2章 映射配置(一)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
-<ol>
-<li>Elasticsearch是一个无模式的搜索引警,可以即时算出数据结构,但是自已控制并定义结构是更好的办法。</li>
-<li>Elasticsearch是由一个或多个分片组成，每个分片包含了文档集的一部分。而且这些分片也有副本。在创建索引时，可以规定分片及副本的数量，也可以使用全局配置文件或软件内部的默认值。5个分片，1个副本，就意味着在集群中有10个lucene索引。<strong>副本可以随时调整，但是分片，则不能调整。创建好索引后更改分片的唯一图径是创建另外一个索引并重新索引数据。</strong></li>
-<li>直接创建一个索引<code>curl -XPUT http://localhost:9200/blog</code>。不让它自动创建索引是因为有时候要修改分片数目、设置索引结构。因此，可以关闭配置文件中自动创建索引的配置<code>action.auto_create_index:-an*,+a,-*</code>,上面的命令意思是说不允许自动创建以<code>an</code>开头的索引；允许自动创建以<code>a</code>开头的索引，其他的索引也必须手工创建。</li>
-<li>一个手工设置分片及副本数量的例子<code>curl -XPUT http://localhost:9200/blog/ -d &#39;{&quot;settings&quot;:{&quot;number_of_shards&quot;:1,&quot;number_of_replicas&quot;:2}}&#39;</code></li>
-<li>删除索引<code>curl -XDELETE http://localhost:9200/posts</code></li>
-<li>映射类似于关系数据库的数据结构。在定义映射时，Elasticsearch可以通过定义的JSON来猜测文档结构。在JSON中，字符串用引号括起来，布尔值用特定的词语定义，数值则是数字。但是，有时ES也会忽略数字类型，全按字符串来处理。可以使用如下命令来强制它进行文本检测。</li>
-</ol>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/08/16/《Elasticsearch服务器开发》学习笔记（二）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -544,7 +560,7 @@ eno1 5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03 802-3-ethernet eno1
   
     <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
   
-    <li><a href="/tags/centos/">centos</a><small>3</small></li>
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
   
     <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
   
@@ -566,7 +582,7 @@ eno1 5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03 802-3-ethernet eno1
   
     <li><a href="/tags/lambda/">lambda</a><small>1</small></li>
   
-    <li><a href="/tags/linux/">linux</a><small>7</small></li>
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
   
     <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
   
@@ -578,7 +594,7 @@ eno1 5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03 802-3-ethernet eno1
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/shell/">shell</a><small>1</small></li>
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   

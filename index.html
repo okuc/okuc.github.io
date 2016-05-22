@@ -70,6 +70,232 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-05-22T14:35:02.000Z"><a href="/2016/05/22/shell学习(五)/">2016-05-22</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/22/shell学习(五)/">shell学习(五)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="linux中的信号"><a href="#linux中的信号" class="headerlink" title="linux中的信号"></a>linux中的信号</h2><ul>
+<li>软中断</li>
+<li>进程间异步通信</li>
+<li><code>man 7 signal</code> 查看系统中对信号的支持</li>
+<li>键盘组合键生成信号<ul>
+<li>终止进程： <code>SIGINT</code> <code>Ctrl+C</code></li>
+<li>暂停进程： <code>SIGSTP</code> <code>Ctrl+Z</code></li>
+</ul>
+</li>
+<li><code>man kill</code> ：查看kill命令的帮助</li>
+<li>程序中的信号处理<ul>
+<li>按照默认方式处理信号</li>
+<li>忽略信号</li>
+<li>按照自定义方式捕捉并处理信号
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/22/shell学习(五)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(四)/">2016-05-20</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/20/shell学习(四)/">shell学习(四)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><ul>
+<li>参数之前用空格分隔</li>
+<li>位置参数：<code>$+position:$0,$1,$2....$9</code><ul>
+<li><code>$0</code> :程序名</li>
+<li><code>$1,$2....$9</code></li>
+<li><code>${10}</code> //大于10的需要如此处理</li>
+</ul>
+</li>
+<li><p><code>basename</code>:获取脚本的名字</p>
+<pre><code>#! /bin/bash
+echo `basename $0` //输出程序的直实名字，且不包含路径,即取最后一层的名字
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/20/shell学习(四)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-19T14:35:02.000Z"><a href="/2016/05/19/shell学习(三)/">2016-05-19</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/19/shell学习(三)/">shell学习(三)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="shell中的输入输出重定向"><a href="#shell中的输入输出重定向" class="headerlink" title="shell中的输入输出重定向"></a>shell中的输入输出重定向</h2><ul>
+<li>标准输入是键盘，标准输出是终端显示器。</li>
+<li>输出重定向<ul>
+<li><code>command &gt; outputfile</code> //大于号两端要有空格分开</li>
+<li><code>command &gt;&gt; outputfile</code></li>
+</ul>
+</li>
+<li><p>一个例子</p>
+<pre><code>echo 22222 &gt; ./iotest
+echo 111 &gt; ./iotest //会把上一行覆盖掉
+echo 111 &gt;&gt; ./iotest //不会覆盖掉原有数据，会新起一行
+</code></pre></li>
+<li>输入重定向<ul>
+<li><code>command &lt; outputfile</code></li>
+</ul>
+</li>
+<li>例子： <code>cat &lt; iotest &gt; iotest2</code></li>
+<li><p>内联输入重定向</p>
+<pre><code>command &lt;&lt; marker
+data input
+marker
+</code></pre></li>
+<li><p>例子：</p>
+<pre><code>result = `bc &lt;&lt; EOF
+&gt;var1=3
+&gt;var2=4
+&gt;var3=var1+var2
+&gt;print var3
+&gt;EOF`
+
+echo $result
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/19/shell学习(三)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-19T14:35:02.000Z"><a href="/2016/05/19/shell学习(二)/">2016-05-19</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/19/shell学习(二)/">shell学习(二)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="shell编程中字符串的操作"><a href="#shell编程中字符串的操作" class="headerlink" title="shell编程中字符串的操作"></a>shell编程中字符串的操作</h2><ul>
+<li><p>连接字符串</p>
+<pre><code>str=hello
+str1=world
+连接起来：str=str$str1、str = $str&apos; &apos;&quot;aa123&quot;、str = $str: 
+</code></pre></li>
+<li><p>查看字符串长度：</p>
+<ul>
+<li><code>expr length &quot;hello&quot;</code></li>
+<li><code>expr length &quot;$str&quot;</code></li>
+<li><code>charcount=\</code>expr length “$str”``</li>
+<li><code>echo $charcount</code></li>
+</ul>
+</li>
+<li>查看特定字符：<ul>
+<li><code>expr index &quot;$str&quot; &#39;h&#39;</code> #从1开始，不是0，只返回第一个。如果是查找多个字母，只返回这些字母的第一个查找到的位置</li>
+</ul>
+</li>
+<li>字符串截断：<ul>
+<li><code>expr substr &quot;$str&quot; 6 10</code> #获取指定位置指定长度的字符串</li>
+</ul>
+</li>
+<li>正则匹配<ul>
+<li><code>expr $str : REGEXP</code></li>
+<li><code>expr match $str REGEXP</code></li>
+<li><code>expr $str : &#39;.*&#39;  #返回长度</code></li>
+<li><code>expr $str : &#39;(.*\[0-9]\{5\}\)&#39;</code></li>
+<li><code>expr $str : &#39;\([a-zA-X: ]*\).*&#39;</code>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/19/shell学习(二)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-05-18T14:35:02.000Z"><a href="/2016/05/18/shell学习(一)/">2016-05-18</a></time>
       
       
@@ -81,8 +307,8 @@ var _hmt = _hmt || [];
     <div class="entry">
       
         <h2 id="linux常用命令"><a href="#linux常用命令" class="headerlink" title="linux常用命令"></a>linux常用命令</h2><ul>
-<li><code>echo</code> hello world</li>
-<li><code>echo</code> “hello world”</li>
+<li><code>echo hello world</code></li>
+<li><code>echo &quot;hello world&quot;</code></li>
 <li><code>man</code> 查看linux命令手册。<code>man echo</code></li>
 <li><code>ls</code> 列出文件和目录。<code>ls -a</code>、<code>ls -l</code></li>
 <li><code>pwd</code>返回当前的工作目录</li>
@@ -337,171 +563,6 @@ RUN echo hello
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-03-12T14:35:02.000Z"><a href="/2016/03/12/Linux折腾记(6)-centos7下快捷搭建nodejs开发环境/">2016-03-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/03/12/Linux折腾记(6)-centos7下快捷搭建nodejs开发环境/">Linux折腾记(6)-centos7下快捷搭建nodejs开发环境</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>闲话少说，直接上步骤。</p>
-<ol>
-<li>安装<code>epel-release</code>，命令如下：｀sudo yum install epel-release｀。</li>
-<li>安装<code>nodejs</code>，命令如下：｀sudo yum install nodejs｀。</li>
-<li>安装<code>npm</code>，命令如下：｀sudo yum install npm｀。</li>
-<li>设置缓存目录和全局模块的存放路径，在<code>/home/okuc/nodejs</code>下建立<code>node global</code>及<code>node cache</code>两个文件夹。同时在终端命令行中，执行如下命令：<pre><code>npm config set prefix &quot;/home/okuc/nodejs/node global&quot;
-npm config set cache &quot;/home/okuc/nodejs/node cache&quot;
-</code></pre>为了查看是否执行成功，可使用如下命令查看：<code>npm config get prefix</code>。
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/03/12/Linux折腾记(6)-centos7下快捷搭建nodejs开发环境/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-03-10T14:59:45.000Z"><a href="/2016/03/10/hexo博客笔记源码恢复记/">2016-03-10</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/03/10/hexo博客笔记源码恢复记/">hexo博客笔记源码恢复记</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>  一直信赖金山快盘，所以当我的旧硬件空间不够时，毫不犹豫的删除掉了本地的博客内容。等我拷贝上新的内容，同步下来文件时，才发现，近两个月的内容，竟然没有同步。强烈谴责某山，太不负责任了，论坛上也没有人管，没有人问。无耐只有自已想法了。试了n种方案，感沉下面这种方案是工作量最小的，现在步骤记录如下：</p>
-<p>1、首先从博客户把编译后的｀index.html｀下载下来。找到属于<code>markdown</code>的一部分。主要是位于<code>&lt;div class=&quot;entry&quot;&gt;...&lt;/div&gt;</code>中，结尾处在<code>&lt;footer&gt;</code>上边。</p>
-<p>2.将上述片断的<code>html代码片断</code>拷到网页<a href="">http://tool.lu/markdown/</a>中，转成<code>markdown</code>。<br>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/03/10/hexo博客笔记源码恢复记/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-03-10T14:35:02.000Z"><a href="/2016/03/10/Linux折腾记(5)-centos7下安装markdown编辑器haroopad-v0.13.1-x64/">2016-03-10</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/03/10/Linux折腾记(5)-centos7下安装markdown编辑器haroopad-v0.13.1-x64/">Linux折腾记(5)-centos7下安装markdown编辑器haroopad-v0.13.1-x64</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>安装上了windos10和centos7双系统，想找一款比较不错的<code>markdown</code>双系统，找来找去，最终决定安装<code>haroopad</code>，安装过程如下：</p>
-<p>1.首先是下载。我安装的目前最新版本<code>haroopad-v0.13.1-x64.tar.gz</code>,下载地址如下：<a href="https://bitbucket.org/rhiokim/haroopad-download/downloads/haroopad-v0.13.1-x64.tar.gz">haroopad-v0.13.1-x64.tar.gz</a>。<br>  如果想安装其他版本，可以在此查找下载更多的安装包：<a href="https://bitbucket.org/rhiokim/haroopad-download/downloads/">https://bitbucket.org/rhiokim/haroopad-download/downloads/</a>。</p>
-<p>2.下载完成后，使用如下命令解压<code>tar -zxvf haroopad-v0.13.1-x64.tar.gz</code>。</p>
-<p>3.下面就解压出来的<code>data.tar.gz</code>进行再次解压，并释放到合适的地方。<strong>注意:下边的几步都需要root权限。</strong></p>
-<pre><code>tar -zxvf data.tar.gz
-sudo cp －r ./usr /
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/03/10/Linux折腾记(5)-centos7下安装markdown编辑器haroopad-v0.13.1-x64/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-01-05T14:06:32.000Z"><a href="/2016/01/05/TinkerPop3 API 简明笔记（一）/">2016-01-05</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/01/05/TinkerPop3 API 简明笔记（一）/">TinkerPop3 API 简明笔记（一）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ol>
-<li><p><code>Lambda</code>:尽量避免使用，防止死循环。</p>
-<ul>
-<li><code>map</code>：<code>g.V(1).out().map {it.get().value(&#39;name&#39;)}</code> 等同于 <code>g.V(1).out().values(&#39;name&#39;)</code>，查询标识为1的节点所指向的节点的名字。</li>
-<li><code>filter</code>:过滤。<code>g.V().filter {it.get().label() == &#39;person&#39;}</code> 等同于 <code>g.V().hasLabel(&#39;person&#39;)</code>,查找类型（标签）为person的节点。</li>
-<li><code>sideEffect</code>:执行某些操作，并把源数据传递给下一步。<code>g.V().hasLabel(&#39;person&#39;).sideEffect(System.out.&amp;println)</code> 。</li>
-<li><code>branch</code>相当于<code>if</code>操作，<code>g.V().branch(values(&#39;name&#39;)).option(&#39;marko&#39;, values(&#39;age&#39;)). option(none, values(&#39;name&#39;))</code>等同于<code>g.V().choose(has(&#39;name&#39;,&#39;marko&#39;),values(&#39;age&#39;),values(&#39;name&#39;))</code>，如果名称为<code>marko</code>，则获取出年龄，否则执行第二步，获取名字。
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/01/05/TinkerPop3 API 简明笔记（一）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -528,7 +589,7 @@ sudo cp －r ./usr /
   
     <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
   
-    <li><a href="/tags/centos/">centos</a><small>3</small></li>
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
   
     <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
   
@@ -550,7 +611,7 @@ sudo cp －r ./usr /
   
     <li><a href="/tags/lambda/">lambda</a><small>1</small></li>
   
-    <li><a href="/tags/linux/">linux</a><small>7</small></li>
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
   
     <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
   
@@ -562,7 +623,7 @@ sudo cp －r ./usr /
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/shell/">shell</a><small>1</small></li>
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   
