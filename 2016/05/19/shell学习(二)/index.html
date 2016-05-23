@@ -83,13 +83,13 @@ var _hmt = _hmt || [];
 <li><p>连接字符串</p>
 <pre><code>str=hello
 str1=world
-连接起来：str=str$str1、str = $str&apos; &apos;&quot;aa123&quot;、str = $str: 
+连接起来：str=$str$str1、str = $str&apos; &apos;&quot;aa123&quot;、str = $str:
 </code></pre></li>
 <li><p>查看字符串长度：</p>
 <ul>
 <li><code>expr length &quot;hello&quot;</code></li>
 <li><code>expr length &quot;$str&quot;</code></li>
-<li><code>charcount=\</code>expr length “$str”``</li>
+<li>charcount= ` expr length “$str”`  //反引号，执行里面的代码</li>
 <li><code>echo $charcount</code></li>
 </ul>
 </li>
@@ -105,7 +105,7 @@ str1=world
 <li><code>expr $str : REGEXP</code></li>
 <li><code>expr match $str REGEXP</code></li>
 <li><code>expr $str : &#39;.*&#39;  #返回长度</code></li>
-<li><code>expr $str : &#39;(.*\[0-9]\{5\}\)&#39;</code></li>
+<li><code>expr $str : &#39;\(.*[0-9]\{5\}\)&#39;</code></li>
 <li><code>expr $str : &#39;\([a-zA-X: ]*\).*&#39;</code><a id="more"></a>
 </li>
 </ul>
@@ -266,7 +266,7 @@ done
 for((i=1;i&lt;=10;i++))
 do
     if [$i -eq 5]
-    then 
+    then
         break;
     fi
     echo &quot;$i&quot;
@@ -277,7 +277,7 @@ done
 for((i=1;i&lt;=10;i++))
 do
     if [$i -eq 5]
-    then 
+    then
         continue;
     fi
     echo &quot;$i&quot;
@@ -289,7 +289,7 @@ done
 echo &quot;please input a user name:&quot;
 read uname
 
-IFS=$&apos;\n&apos;
+IFS=$&apos;\n&apos;  //默认拆分的间隔符设置为换行
 
 for row in `cat /etc/passwd`
 do
@@ -299,7 +299,7 @@ do
   for value in $row
   do
       if [$i -eq 1] &amp;&amp; [$value = $uname]
-      then 
+      then
           is_target=1
       fi
       i=$[ $i+1 ]
@@ -340,7 +340,7 @@ down
 
 <nav id="pagination" >
     
-    <a href="/2016/05/19/shell学习(三)/" class="alignleft prev" >Vorherige Seite</a>
+    <a href="/2016/05/20/shell学习(四)/" class="alignleft prev" >Vorherige Seite</a>
     
     
     <a href="/2016/05/18/shell学习(一)/" class="alignright next" >Nächste Seite</a>

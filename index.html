@@ -119,6 +119,73 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(三)/">2016-05-20</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/20/shell学习(三)/">shell学习(三)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="shell中的输入输出重定向"><a href="#shell中的输入输出重定向" class="headerlink" title="shell中的输入输出重定向"></a>shell中的输入输出重定向</h2><ul>
+<li>标准输入是键盘，标准输出是终端显示器。</li>
+<li>输出重定向<ul>
+<li><code>command &gt; outputfile</code> //大于号两端要有空格分开</li>
+<li><code>command &gt;&gt; outputfile</code></li>
+</ul>
+</li>
+<li><p>一个例子</p>
+<pre><code>echo 22222 &gt; ./iotest
+echo 111 &gt; ./iotest //会把上一行覆盖掉
+echo 111 &gt;&gt; ./iotest //不会覆盖掉原有数据，会新起一行
+</code></pre></li>
+<li>输入重定向<ul>
+<li><code>command &lt; outputfile</code></li>
+</ul>
+</li>
+<li>例子： <code>cat &lt; iotest &gt; iotest2</code></li>
+<li><p>内联输入重定向</p>
+<pre><code>command &lt;&lt; marker
+data input
+marker
+</code></pre></li>
+<li><p>例子：</p>
+<pre><code>result = `bc &lt;&lt; EOF
+&gt;var1=3
+&gt;var2=4
+&gt;var3=var1+var2
+&gt;print var3
+&gt;EOF`
+
+echo $result
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/20/shell学习(三)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(四)/">2016-05-20</a></time>
       
       
@@ -166,73 +233,6 @@ echo `basename $0` //输出程序的直实名字，且不包含路径,即取最�
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-05-19T14:35:02.000Z"><a href="/2016/05/19/shell学习(三)/">2016-05-19</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/19/shell学习(三)/">shell学习(三)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="shell中的输入输出重定向"><a href="#shell中的输入输出重定向" class="headerlink" title="shell中的输入输出重定向"></a>shell中的输入输出重定向</h2><ul>
-<li>标准输入是键盘，标准输出是终端显示器。</li>
-<li>输出重定向<ul>
-<li><code>command &gt; outputfile</code> //大于号两端要有空格分开</li>
-<li><code>command &gt;&gt; outputfile</code></li>
-</ul>
-</li>
-<li><p>一个例子</p>
-<pre><code>echo 22222 &gt; ./iotest
-echo 111 &gt; ./iotest //会把上一行覆盖掉
-echo 111 &gt;&gt; ./iotest //不会覆盖掉原有数据，会新起一行
-</code></pre></li>
-<li>输入重定向<ul>
-<li><code>command &lt; outputfile</code></li>
-</ul>
-</li>
-<li>例子： <code>cat &lt; iotest &gt; iotest2</code></li>
-<li><p>内联输入重定向</p>
-<pre><code>command &lt;&lt; marker
-data input
-marker
-</code></pre></li>
-<li><p>例子：</p>
-<pre><code>result = `bc &lt;&lt; EOF
-&gt;var1=3
-&gt;var2=4
-&gt;var3=var1+var2
-&gt;print var3
-&gt;EOF`
-
-echo $result
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/19/shell学习(三)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2016-05-19T14:35:02.000Z"><a href="/2016/05/19/shell学习(二)/">2016-05-19</a></time>
       
       
@@ -247,13 +247,13 @@ echo $result
 <li><p>连接字符串</p>
 <pre><code>str=hello
 str1=world
-连接起来：str=str$str1、str = $str&apos; &apos;&quot;aa123&quot;、str = $str: 
+连接起来：str=$str$str1、str = $str&apos; &apos;&quot;aa123&quot;、str = $str:
 </code></pre></li>
 <li><p>查看字符串长度：</p>
 <ul>
 <li><code>expr length &quot;hello&quot;</code></li>
 <li><code>expr length &quot;$str&quot;</code></li>
-<li><code>charcount=\</code>expr length “$str”``</li>
+<li>charcount= ` expr length “$str”`  //反引号，执行里面的代码</li>
 <li><code>echo $charcount</code></li>
 </ul>
 </li>
@@ -269,7 +269,7 @@ str1=world
 <li><code>expr $str : REGEXP</code></li>
 <li><code>expr match $str REGEXP</code></li>
 <li><code>expr $str : &#39;.*&#39;  #返回长度</code></li>
-<li><code>expr $str : &#39;(.*\[0-9]\{5\}\)&#39;</code></li>
+<li><code>expr $str : &#39;\(.*[0-9]\{5\}\)&#39;</code></li>
 <li><code>expr $str : &#39;\([a-zA-X: ]*\).*&#39;</code>
       
     </div>

@@ -94,19 +94,18 @@ var _hmt = _hmt || [];
 <li><code>cp test ../test1</code>拷贝文件</li>
 <li><code>mv test ../test1</code>移动或重命名文件</li>
 <li><code>rm test</code>删除文件<a id="more"></a>
-第一个Shell脚本</li>
+</li>
 </ul>
-<hr>
-<ul>
-<li>mkdir shellscript</li>
-<li>cd shellscript</li>
-<li>touch helloworld</li>
-<li><p>vim helloworld</p>
+<h2 id="第一个Shell脚本"><a href="#第一个Shell脚本" class="headerlink" title="第一个Shell脚本"></a>第一个Shell脚本</h2><ul>
+<li><code>mkdir shellscript</code></li>
+<li><code>cd shellscript</code></li>
+<li><code>touch helloworld</code></li>
+<li><p><code>vim helloworld</code></p>
 <pre><code>#!bin/bash
 echo hello world
 </code></pre></li>
-<li>chmod u+x helloworld</li>
-<li><p>./helloworld</p>
+<li><code>chmod u+x helloworld</code></li>
+<li><p><code>./helloworld</code></p>
 <pre><code>#! /bin/bash
 echo &quot;please type first number:&quot;
 read param1
@@ -169,7 +168,7 @@ fi
 <pre><code>#! /bin/bash
 
 if date
-then 
+then
     echo &quot;date sucess&quot;
 fi
 </code></pre></li>
@@ -231,14 +230,14 @@ fi
 <pre><code>#！ /bin/bash
 var1=10
 if (($val1 **2&gt;90))
-then 
+then
     ((val2 = $val1 **2))
     echo &quot;The square of $val1 is $val2&quot;
 if
 
 #！ /bin/bash
 if [[ $USER ==o* ]]//模糊比较
-then 
+then
     echo &quot;hello $USER&quot;
 if
 </code></pre></li>
