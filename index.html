@@ -64,6 +64,76 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-02T14:59:45.000Z"><a href="/2016/06/02/JAVA8学习（二）/">2016-06-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/02/JAVA8学习（二）/">JAVA8学习（二）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="Stream-API"><a href="#Stream-API" class="headerlink" title="Stream API"></a>Stream API</h2><ul>
+<li><p>要统计一本书的长单词，做法如下：</p>
+<pre><code>String contents = new String(Files.readAllBytes(Paths.get(&quot;alice.txt&quot;)),StandardCharsets.UTF_8);
+List&lt;String&gt; words = Arrays.asList(contents.split(&quot;[\\P{L}]+&quot;));//将字符串分隔成字母，非字母被认为是分隔符
+
+//传统方式
+int count=0;
+for(String w:words){
+    if(w.length()&gt;12)count++;
+}
+
+//java8方式
+long count= words.stream().filter(w-&gt;w.lenght()&gt;12).count();
+</code></pre></li>
+<li><p><code>Stream</code>与集合的区别如下：</p>
+<ul>
+<li><code>Stream</code>自已不会存储元素。元素可能被存储在底层的集合中，或者根据需要产生出来。</li>
+<li><code>Stream</code>操作符不会改变源对象。它们会返回一个持有结果的新的Stream。</li>
+<li><code>Stream</code>是<strong>延迟执行</strong>的。就是说，他们在需要结果的时候才会执行。</li>
+</ul>
+</li>
+<li><p><code>stream</code>与<code>parallelStream</code>的区别是，后者可以并行执行过滤和统计操作。</p>
+<pre><code>//java8方式
+long count= words.parallelStream().filter(w-&gt;w.lenght()&gt;12).count();
+</code></pre></li>
+<li><p>使用<code>stream</code>，会通过三个阶段来建立一个操作流水线：</p>
+<ol>
+<li>创建一个<code>stream</code>。</li>
+<li>在一个或多个步骤中，指定将初始<code>stream</code>转换为另一个<code>stream</code>的中间操作。</li>
+<li>使用一个终止操作来产生一个结果。该操作会强制它之前的延迟操作立即执行。在这之后，该<code>Stream</code>就不会再被使用了。</li>
+</ol>
+</li>
+<li><p><code>stream</code>操作不会按元素的顺序调用执行。</p>
+</li>
+<li>数组也可以转化为<code>stream</code>。<code>Stream.of(contents.split(&quot;[\\P{L}]+&quot;))</code>;<code>of</code>方法可接收一个可变长度的参数，因此可构造任意个参数的<code>Stream</code>。<code>Stream&lt;String&gt; song = Stream.of(&quot;gently&quot;,&quot;down&quot;,&quot;the&quot;,&quot;stream&quot;);</code>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/02/JAVA8学习（二）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -101,6 +171,53 @@ var _hmt = _hmt || [];
         
           <div class="alignleft">
             <a href="/2016/05/22/shell学习(五)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/">2016-05-20</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/">shell学习(四)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><ul>
+<li>参数之前用空格分隔</li>
+<li>位置参数：<code>$+position:$0,$1,$2....$9</code><ul>
+<li><code>$0</code> :程序名</li>
+<li><code>$1,$2....$9</code></li>
+<li><code>${10}</code> //大于10的需要如此处理</li>
+</ul>
+</li>
+<li><p><code>basename</code>:获取脚本的名字</p>
+<pre><code>#! /bin/bash
+echo `basename $0` //输出程序的直实名字，且不包含路径,即取最后一层的名字
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -168,53 +285,6 @@ echo $result
         
           <div class="alignleft">
             <a href="/2016/05/20/shell学习(三)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/">2016-05-20</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/">shell学习(四)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><ul>
-<li>参数之前用空格分隔</li>
-<li>位置参数：<code>$+position:$0,$1,$2....$9</code><ul>
-<li><code>$0</code> :程序名</li>
-<li><code>$1,$2....$9</code></li>
-<li><code>${10}</code> //大于10的需要如此处理</li>
-</ul>
-</li>
-<li><p><code>basename</code>:获取脚本的名字</p>
-<pre><code>#! /bin/bash
-echo `basename $0` //输出程序的直实名字，且不包含路径,即取最后一层的名字
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -429,76 +499,6 @@ writable = yes
 
 
 
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-14T14:59:45.000Z"><a href="/2016/05/14/JAVA8学习（二）/">2016-05-14</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/14/JAVA8学习（二）/">JAVA8学习（二）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="Stream-API"><a href="#Stream-API" class="headerlink" title="Stream API"></a>Stream API</h2><ul>
-<li><p>要统计一本书的长单词，做法如下：</p>
-<pre><code>String contents = new String(Files.readAllBytes(Paths.get(&quot;alice.txt&quot;)),StandardCharsets.UTF_8);
-List&lt;String&gt; words = Arrays.asList(contents.split(&quot;[\\P{L}]+&quot;));//将字符串分隔成字母，非字母被认为是分隔符
-
-//传统方式
-int count=0;
-for(String w:words){
-    if(w.length()&gt;12)count++;
-}
-
-//java8方式
-long count= words.stream().filter(w-&gt;w.lenght()&gt;12).count();
-</code></pre></li>
-<li><p><code>Stream</code>与集合的区别如下：</p>
-<ul>
-<li><code>Stream</code>自已不会存储元素。元素可能被存储在底层的集合中，或者根据需要产生出来。</li>
-<li><code>Stream</code>操作符不会改变源对象。它们会返回一个持有结果的新的Stream。</li>
-<li><code>Stream</code>是<strong>延迟执行</strong>的。就是说，他们在需要结果的时候才会执行。</li>
-</ul>
-</li>
-<li><p><code>stream</code>与<code>parallelStream</code>的区别是，后者可以并行执行过滤和统计操作。</p>
-<pre><code>//java8方式
-long count= words.parallelStream().filter(w-&gt;w.lenght()&gt;12).count();
-</code></pre></li>
-<li><p>使用<code>stream</code>，会通过三个阶段来建立一个操作流水线：</p>
-<ol>
-<li>创建一个<code>stream</code>。</li>
-<li>在一个或多个步骤中，指定将初始<code>stream</code>转换为另一个<code>stream</code>的中间操作。</li>
-<li>使用一个终止操作来产生一个结果。该操作会强制它之前的延迟操作立即执行。在这之后，该<code>Stream</code>就不会再被使用了。</li>
-</ol>
-</li>
-<li><p><code>stream</code>操作不会按元素的顺序调用执行。</p>
-</li>
-<li>数组也可以转化为<code>stream</code>。<code>Stream.of(contents.split(&quot;[\\P{L}]+&quot;))</code>;<code>of</code>方法可接收一个可变长度的参数，因此可构造任意个参数的<code>Stream</code>。<code>Stream&lt;String&gt; song = Stream.of(&quot;gently&quot;,&quot;down&quot;,&quot;the&quot;,&quot;stream&quot;);</code>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/14/JAVA8学习（二）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
   <article class="post">
   
   <div class="post-content">
@@ -593,7 +593,7 @@ RUN echo hello
 <nav id="pagination">
   
   
-    <a href="/page/2/" class="alignright next">Next</a>
+    <a href="/page/2/" class="alignright next">Вперед</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -602,7 +602,7 @@ RUN echo hello
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Метки</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
