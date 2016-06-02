@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Seite 5 | 我的后院自留地</title>
+  <title>Page 5 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -64,6 +64,46 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-05T14:06:32.000Z"><a href="/2015/12/05/Node.js的项目创建及依赖维护工作/">2015-12-05</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>要编写nodejs项目，则一般使用向导生成工程样板，然后修改工程样板，达到自已的目地，也有的直接编写各类文件。本人将自已常的生成工程样板的方式在此分享一下，高手请直接飘过。。。。。<br>在此假定我们node及npm环境已经安装配置完成，可以直接使用。</p>
+<p>###使用npm向导创建nodejs样板工程</p>
+<ol>
+<li>创建一目录<code>nodejs-demo</code>，并在命令行中切换到该目录下。输入<code>npm init</code>，按要求输入工程名称、版本号、描述、入口等就可以了。一般直接使用默认就可以，但是有两点，入口现在一般添<code>bin/www</code>,关键词直接输入项目关键字或不输都可以。</li>
+<li>使用命令<code>yum install -g bower</code>安装<code>bower</code>。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/05/Node.js的项目创建及依赖维护工作/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -478,67 +518,13 @@ writable = yes
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-08-30T01:06:32.000Z"><a href="/2015/08/30/centos7常用命令/">2015-08-30</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/08/30/centos7常用命令/">centos7常用命令</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>记录centos7下的一些常用命令!</p>
-<p>###网络相关</p>
-<ul>
-<li>关闭防火墙：<pre><code>systemctl stop firewalld.service#停止firewall
-systemctl disable firewalld.service#禁止firewall开机启动
-</code></pre></li>
-<li><p>配置DNS服务</p>
-<ul>
-<li><p>命令行方式</p>
-<pre><code>1. nmcli connection show #显示当前网络连接
-NAME UUID                                 TYPE           DEVICE
-eno1 5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03 802-3-ethernet eno1
-
-2. nmcli con mod eno1 ipv4.dns &quot;114.114.114.114 8.8.8.8&quot; #修改当前网络连接对应的DNS服务器，这里的网络连接可以用名称或者UUID来标识
-3. nmcli con up eno1#将dns配置生效
-</code></pre></li>
-</ul>
-<ul>
-<li>直接修改文件方式
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/08/30/centos7常用命令/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/page/4/" class="alignleft prev">Vorherige Seite</a>
+    <a href="/page/4/" class="alignleft prev">Prev</a>
   
   
-    <a href="/page/6/" class="alignright next">Nächste Seite</a>
+    <a href="/page/6/" class="alignright next">Next</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -576,9 +562,9 @@ eno1 5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03 802-3-ethernet eno1
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>2</small></li>
+    <li><a href="/tags/java/">java</a><small>3</small></li>
   
-    <li><a href="/tags/java8/">java8</a><small>1</small></li>
+    <li><a href="/tags/java8/">java8</a><small>2</small></li>
   
     <li><a href="/tags/lambda/">lambda</a><small>1</small></li>
   
@@ -595,6 +581,8 @@ eno1 5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03 802-3-ethernet eno1
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/stream/">stream</a><small>1</small></li>
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   
