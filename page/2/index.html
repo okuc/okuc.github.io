@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Страница 2 | 我的后院自留地</title>
+  <title>Page 2 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -64,6 +64,56 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-04-21T01:06:32.000Z"><a href="/2016/04/21/dockerfile指令学习/">2016-04-21</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/04/21/dockerfile指令学习/">dockerfile指令学习</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><code>FROM</code>：它必须针对已经存在的镜像，且是基础镜像来操作。而且它必须是第一条非注释指令。</li>
+<li>第一个<code>dockfile</code>文件，文件名必须为：<code>Dockerfile</code>,内容如下,然后使用<code>docker build -t okuc/okuc_test .</code>命令执行：<pre><code>#First Dockerfile
+FROM centos:6.6
+MAINTAINER okuc &quot;okuc@live.cn&quot;
+RUN yum install -y java
+EXPOSE 80
+</code></pre></li>
+<li><code>MAINTAINER &lt;name&gt;</code>:指定镜像的作者信息，包含镜像的所有者和联系信息。</li>
+<li><code>RUN</code>指定当前镜像中运行的命令。<ul>
+<li>RUN <command> (shell模式)<pre><code>/bin/sh -c command
+RUN echo hello
+</code></pre></li>
+<li>RUN [“executable”,”param1”,”param2”] (exec模式)<pre><code>RUN[&quot;/bin/bash&quot;,&quot;-c&quot;,&quot;echo hello&quot;]
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/04/21/dockerfile指令学习/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -480,65 +530,13 @@ $(&apos;#example&apos;).tooltip(options)
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/新手学习Express4之四：数据库集成/">2015-12-31</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/31/新手学习Express4之四：数据库集成/">新手学习Express4之四：数据库集成</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="数据库集成"><a href="#数据库集成" class="headerlink" title="数据库集成"></a>数据库集成</h2><ol>
-<li><p>为<code>Express</code>应用添加连接数据库的能力，只需要加载相应数据库的<code>Node.js驱动</code>即可。这里会列举一些常用的例子。</p>
-<p>除本章列举的例子外，更多的可在npm官网<a href="">https://www.npmjs.com</a>来查找。</p>
-</li>
-<li><p><code>Cassandra</code>：</p>
-<ul>
-<li>模块: <code>cassandra-driver</code> (<a href="https://github.com/datastax/nodejs-driver">https://github.com/datastax/nodejs-driver</a>)</li>
-<li>安装: <code>$ npm install cassandra-driver</code></li>
-<li><p>示例:</p>
-<pre><code>var cassandra = require(&apos;cassandra-driver&apos;);
-var client = new cassandra.Client({ contactPoints: [&apos;localhost&apos;]});
-client.execute(&apos;select key from system.local&apos;, function(err, result) {
-if (err) throw err;
-console.log(result.rows[0]);
-});
-</code></pre></li>
-</ul>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/31/新手学习Express4之四：数据库集成/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/" class="alignleft prev">Назад</a>
+    <a href="/" class="alignleft prev">Prev</a>
   
   
-    <a href="/page/3/" class="alignright next">Вперед</a>
+    <a href="/page/3/" class="alignright next">Next</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -547,7 +545,7 @@ console.log(result.rows[0]);
 
   
 <div class="widget tag">
-  <h3 class="title">Метки</h3>
+  <h3 class="title">Tags</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -576,11 +574,11 @@ console.log(result.rows[0]);
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>3</small></li>
+    <li><a href="/tags/java/">java</a><small>4</small></li>
   
-    <li><a href="/tags/java8/">java8</a><small>2</small></li>
+    <li><a href="/tags/java8/">java8</a><small>3</small></li>
   
-    <li><a href="/tags/lambda/">lambda</a><small>1</small></li>
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>11</small></li>
   
@@ -596,7 +594,7 @@ console.log(result.rows[0]);
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   
-    <li><a href="/tags/stream/">stream</a><small>1</small></li>
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   

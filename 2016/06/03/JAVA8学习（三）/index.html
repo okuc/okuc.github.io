@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>我的后院自留地</title>
+  <title>JAVA8学习（三） | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="JAVA8学习（三）"/>
   <meta property="og:site_name" content="我的后院自留地"/>
 
   
@@ -63,8 +63,7 @@ var _hmt = _hmt || [];
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-  <article class="coding">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
   
   <div class="post-content">
     <header>
@@ -74,7 +73,7 @@ var _hmt = _hmt || [];
       
       
   
-    <h1 class="title"><a href="/2016/06/03/JAVA8学习（三）/">JAVA8学习（三）</a></h1>
+    <h1 class="title">JAVA8学习（三）</h1>
   
 
     </header>
@@ -250,75 +249,11 @@ LatentImage transform(UnaryOperator&lt;Color&gt; f){
       
         
         
-      
-      <div class="clearfix"></div>
-    </footer>
+  
+  <div class="tags">
+    <a href="/tags/java/">java</a>, <a href="/tags/java8/">java8</a>, <a href="/tags/lambda/">lambda</a>, <a href="/tags/stream/">stream</a>
   </div>
-</article>
 
-
-
-
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-06-02T14:59:45.000Z"><a href="/2016/06/02/JAVA8学习（二）/">2016-06-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/02/JAVA8学习（二）/">JAVA8学习（二）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="Stream-API"><a href="#Stream-API" class="headerlink" title="Stream API"></a>Stream API</h2><ul>
-<li><p>要统计一本书的长单词，做法如下：</p>
-<pre><code>String contents = new String(Files.readAllBytes(Paths.get(&quot;alice.txt&quot;)),StandardCharsets.UTF_8);
-List&lt;String&gt; words = Arrays.asList(contents.split(&quot;[\\P{L}]+&quot;));//将字符串分隔成字母，非字母被认为是分隔符
-
-//传统方式
-int count=0;
-for(String w:words){
-    if(w.length()&gt;12)count++;
-}
-
-//java8方式
-long count= words.stream().filter(w-&gt;w.lenght()&gt;12).count();
-</code></pre></li>
-<li><p><code>Stream</code>与集合的区别如下：</p>
-<ul>
-<li><code>Stream</code>自已不会存储元素。元素可能被存储在底层的集合中，或者根据需要产生出来。</li>
-<li><code>Stream</code>操作符不会改变源对象。它们会返回一个持有结果的新的Stream。</li>
-<li><code>Stream</code>是<strong>延迟执行</strong>的。就是说，他们在需要结果的时候才会执行。</li>
-</ul>
-</li>
-<li><p><code>stream</code>与<code>parallelStream</code>的区别是，后者可以并行执行过滤和统计操作。</p>
-<pre><code>//java8方式
-long count= words.parallelStream().filter(w-&gt;w.lenght()&gt;12).count();
-</code></pre></li>
-<li><p>使用<code>stream</code>，会通过三个阶段来建立一个操作流水线：</p>
-<ol>
-<li>创建一个<code>stream</code>。</li>
-<li>在一个或多个步骤中，指定将初始<code>stream</code>转换为另一个<code>stream</code>的中间操作。</li>
-<li>使用一个终止操作来产生一个结果。该操作会强制它之前的延迟操作立即执行。在这之后，该<code>Stream</code>就不会再被使用了。</li>
-</ol>
-</li>
-<li><p><code>stream</code>操作不会按元素的顺序调用执行。</p>
-</li>
-<li>数组也可以转化为<code>stream</code>。<code>Stream.of(contents.split(&quot;[\\P{L}]+&quot;))</code>;<code>of</code>方法可接收一个可变长度的参数，因此可构造任意个参数的<code>Stream</code>。<code>Stream&lt;String&gt; song = Stream.of(&quot;gently&quot;,&quot;down&quot;,&quot;the&quot;,&quot;stream&quot;);</code>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/06/02/JAVA8学习（二）/#more" class="more-link">阅读更多</a>
-          </div>
-        
         
       
       <div class="clearfix"></div>
@@ -329,419 +264,34 @@ long count= words.parallelStream().filter(w-&gt;w.lenght()&gt;12).count();
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-22T14:35:02.000Z"><a href="/2016/05/22/shell学习(五)/">2016-05-22</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/22/shell学习(五)/">shell学习(五)</a></h1>
-  
+<nav id="pagination" >
+    
+    
+    <a href="/2016/06/02/JAVA8学习（二）/" class="alignright next" >Next</a>
+    
+    <div class="clearfix"></div>
+</nav>
 
-    </header>
-    <div class="entry">
-      
-        <h2 id="linux中的信号"><a href="#linux中的信号" class="headerlink" title="linux中的信号"></a>linux中的信号</h2><ul>
-<li>软中断</li>
-<li>进程间异步通信</li>
-<li><code>man 7 signal</code> 查看系统中对信号的支持</li>
-<li>键盘组合键生成信号<ul>
-<li>终止进程： <code>SIGINT</code> <code>Ctrl+C</code></li>
-<li>暂停进程： <code>SIGSTP</code> <code>Ctrl+Z</code></li>
-</ul>
-</li>
-<li><code>man kill</code> ：查看kill命令的帮助</li>
-<li>程序中的信号处理<ul>
-<li>按照默认方式处理信号</li>
-<li>忽略信号</li>
-<li>按照自定义方式捕捉并处理信号
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/22/shell学习(五)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/06/03/JAVA8学习（三）/" data-title="JAVA8学习（三）" data-url="http://www.52brt.com/2016/06/03/JAVA8学习（三）/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
 
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(三)/">2016-05-20</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/20/shell学习(三)/">shell学习(三)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="shell中的输入输出重定向"><a href="#shell中的输入输出重定向" class="headerlink" title="shell中的输入输出重定向"></a>shell中的输入输出重定向</h2><ul>
-<li>标准输入是键盘，标准输出是终端显示器。</li>
-<li>输出重定向<ul>
-<li><code>command &gt; outputfile</code> //大于号两端要有空格分开</li>
-<li><code>command &gt;&gt; outputfile</code></li>
-</ul>
-</li>
-<li><p>一个例子</p>
-<pre><code>echo 22222 &gt; ./iotest
-echo 111 &gt; ./iotest //会把上一行覆盖掉
-echo 111 &gt;&gt; ./iotest //不会覆盖掉原有数据，会新起一行
-</code></pre></li>
-<li>输入重定向<ul>
-<li><code>command &lt; outputfile</code></li>
-</ul>
-</li>
-<li>例子： <code>cat &lt; iotest &gt; iotest2</code></li>
-<li><p>内联输入重定向</p>
-<pre><code>command &lt;&lt; marker
-data input
-marker
-</code></pre></li>
-<li><p>例子：</p>
-<pre><code>result = `bc &lt;&lt; EOF
-&gt;var1=3
-&gt;var2=4
-&gt;var3=var1+var2
-&gt;print var3
-&gt;EOF`
-
-echo $result
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/20/shell学习(三)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/">2016-05-20</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/">shell学习(四)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><ul>
-<li>参数之前用空格分隔</li>
-<li>位置参数：<code>$+position:$0,$1,$2....$9</code><ul>
-<li><code>$0</code> :程序名</li>
-<li><code>$1,$2....$9</code></li>
-<li><code>${10}</code> //大于10的需要如此处理</li>
-</ul>
-</li>
-<li><p><code>basename</code>:获取脚本的名字</p>
-<pre><code>#! /bin/bash
-echo `basename $0` //输出程序的直实名字，且不包含路径,即取最后一层的名字
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-19T14:35:02.000Z"><a href="/2016/05/19/shell学习(二)/">2016-05-19</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/19/shell学习(二)/">shell学习(二)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="shell编程中字符串的操作"><a href="#shell编程中字符串的操作" class="headerlink" title="shell编程中字符串的操作"></a>shell编程中字符串的操作</h2><ul>
-<li><p>连接字符串</p>
-<pre><code>str=hello
-str1=world
-连接起来：str=$str$str1、str = $str&apos; &apos;&quot;aa123&quot;、str = $str:
-</code></pre></li>
-<li><p>查看字符串长度：</p>
-<ul>
-<li><code>expr length &quot;hello&quot;</code></li>
-<li><code>expr length &quot;$str&quot;</code></li>
-<li>charcount= ` expr length “$str”`  //反引号，执行里面的代码</li>
-<li><code>echo $charcount</code></li>
-</ul>
-</li>
-<li>查看特定字符：<ul>
-<li><code>expr index &quot;$str&quot; &#39;h&#39;</code> #从1开始，不是0，只返回第一个。如果是查找多个字母，只返回这些字母的第一个查找到的位置</li>
-</ul>
-</li>
-<li>字符串截断：<ul>
-<li><code>expr substr &quot;$str&quot; 6 10</code> #获取指定位置指定长度的字符串</li>
-</ul>
-</li>
-<li>正则匹配<ul>
-<li><code>expr $str : REGEXP</code></li>
-<li><code>expr match $str REGEXP</code></li>
-<li><code>expr $str : &#39;.*&#39;  #返回长度</code></li>
-<li><code>expr $str : &#39;\(.*[0-9]\{5\}\)&#39;</code></li>
-<li><code>expr $str : &#39;\([a-zA-X: ]*\).*&#39;</code>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/19/shell学习(二)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-18T14:35:02.000Z"><a href="/2016/05/18/shell学习(一)/">2016-05-18</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/18/shell学习(一)/">shell学习(一)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="linux常用命令"><a href="#linux常用命令" class="headerlink" title="linux常用命令"></a>linux常用命令</h2><ul>
-<li><code>echo hello world</code></li>
-<li><code>echo &quot;hello world&quot;</code></li>
-<li><code>man</code> 查看linux命令手册。<code>man echo</code></li>
-<li><code>ls</code> 列出文件和目录。<code>ls -a</code>、<code>ls -l</code></li>
-<li><code>pwd</code>返回当前的工作目录</li>
-<li><code>mkdir test</code>创建新目录</li>
-<li><code>rm -d test</code>删除目录，<code>rm -rf test</code>删除非空的目录。<code>rm -rd test -v</code>输出过程</li>
-<li><code>touch test</code>创建一个文件</li>
-<li><code>cat test</code>查看文件内容</li>
-<li><code>echo helo world &gt; test</code>:输出一个流并将这个流输出到test中。</li>
-<li><code>more test</code>，可以分页，优化体验。<code>less test</code>，可以分页，还可以上下一行行移动</li>
-<li><code>cp test ../test1</code>拷贝文件</li>
-<li><code>mv test ../test1</code>移动或重命名文件</li>
-<li><code>rm test</code>删除文件
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/18/shell学习(一)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-15T14:06:32.000Z"><a href="/2016/05/15/centos6下共享文件/">2016-05-15</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/15/centos6下共享文件/">centos6下共享文件</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>1、首先安装smb服务：<code>yum install samba</code><br>2、将配置文件<code>/etc/samba/smb.conf</code>文件修改为：</p>
-<pre><code>[global]
-security=share
-dos charset=cp936
-unix charset=gb2312
-
-[szmacs]
-comment = share
-path = /data/macs
-browseable = yes
-guest ok = yes
-writable = yes
-</code></pre><p>3、关闭访火墙<code>iptables -F</code><br>4、关闭selinux：<code>setenforce 0</code><br>5、重启smb服务：<code>service smb restart</code><br>6、设置smb服务为随机启动：<code>chkconfig smb on</code></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-14T14:59:45.000Z"><a href="/2016/05/14/JAVA8学习（一）/">2016-05-14</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/14/JAVA8学习（一）/">JAVA8学习（一）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h2><ul>
-<li>第一个lembda表达式：<code>(String first,String second)-&gt;Integer.compare(first.length,second.length);</code><ul>
-<li>如果负责计算的代码无法用一个表达式表示，则可以用大括号括起来，并写明返回值。如：<pre><code>(String first,String second)-&gt;{
-    if(first.length&lt;second.length) return -1;
-    else return 1;
-    }
-</code></pre></li>
-<li>如果没有参数，仍然可以提供一对空的小括号：<code>()-&gt;{for(int i=0;i&lt;100;i++) System.out.println(i);}</code></li>
-<li>如果lambda表达式的参数类型是可以被推导的，那么就可以省略它们的类型，如：<code>Comparator&lt;String&gt; com=(first,second)-&gt;Integer.compare(first.length(),second.length());</code>,由于它被赋于一个字符串比较器，所以参数必须字符串。
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/14/JAVA8学习（一）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-11T01:06:32.000Z"><a href="/2016/05/11/docker网络学习/">2016-05-11</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/11/docker网络学习/">docker网络学习</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ul>
-<li><code>Docker</code>容器的跨主机连接，有三种方式：<ul>
-<li>使用网桥实现跨主机容器连接</li>
-<li>使用<code>Open vSwitch</code>实现跨主机容器连接</li>
-<li>使用<code>weave</code>实现跨主机容器连接
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/11/docker网络学习/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-<nav id="pagination">
-  
-  
-    <a href="/page/2/" class="alignright next">Next</a>
-  
-  <div class="clearfix"></div>
-</nav></div></div>
+</div></div>
     <aside id="sidebar" class="alignright">
   
 

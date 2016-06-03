@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Страница 5 | 我的后院自留地</title>
+  <title>Page 5 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -64,6 +64,61 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-06T14:06:32.000Z"><a href="/2015/12/06/新手学习Angularjs之一：基于Angularjs的第一个应用--todoList/">2015-12-06</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/06/新手学习Angularjs之一：基于Angularjs的第一个应用--todoList/">新手学习Angularjs之一：基于Angularjs的第一个应用--todoList</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<ol>
+<li>由于系统需要用到<code>bootstrap</code>、<code>angularjs</code>，首先使用下面命令进行安装<code>bower install bootstrap</code>、<code>bower install angularjs</code>。</li>
+<li><p>新建<code>index.html</code>,修改title并引入使用到的css及js，内容如下：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;./public/bootstrap/dist/css/bootstrap.min.css&quot;&gt;&lt;/link&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;./public/lib/angular/angular.js&quot;&gt;
+  &lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/06/新手学习Angularjs之一：基于Angularjs的第一个应用--todoList/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -477,54 +532,13 @@ writable = yes
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-09-13T14:35:02.000Z"><a href="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/">2015-09-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/">《Elasticsearch服务器开发》学习笔记（四）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第3章-搜索-一"><a href="#第3章-搜索-一" class="headerlink" title="第3章 搜索(一)"></a>第3章 搜索(一)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
-<hr>
-<ol>
-<li>查询：<code>curl -XGET &#39;localhost:9200/library/book/_search?q=title:crime&amp;pretty=true&#39;</code>，另外一种查询方式：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code></li>
-<li>分页和结果集大小：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;from&quot;:9,&quot;size&quot;:20,&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code><br>from:该属性指定我们希望在结果中返回的起始文档。它的默认值是0，表示想要得到从第一个文档开始的结果。<br>size:该属性指定了一次查询中返回的最大文档数，默认值是10.如果只对切面结果感兴趣，并不关心文档本身，可以把这个参数设置成0。</li>
-<li>ES可以返回版本信息的查询。查询命令如下：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;version&quot;:true,&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/page/4/" class="alignleft prev">Назад</a>
+    <a href="/page/4/" class="alignleft prev">Prev</a>
   
   
-    <a href="/page/6/" class="alignright next">Вперед</a>
+    <a href="/page/6/" class="alignright next">Next</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -533,7 +547,7 @@ writable = yes
 
   
 <div class="widget tag">
-  <h3 class="title">Метки</h3>
+  <h3 class="title">Tags</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -562,11 +576,11 @@ writable = yes
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>3</small></li>
+    <li><a href="/tags/java/">java</a><small>4</small></li>
   
-    <li><a href="/tags/java8/">java8</a><small>2</small></li>
+    <li><a href="/tags/java8/">java8</a><small>3</small></li>
   
-    <li><a href="/tags/lambda/">lambda</a><small>1</small></li>
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
   
     <li><a href="/tags/linux/">linux</a><small>11</small></li>
   
@@ -582,7 +596,7 @@ writable = yes
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   
-    <li><a href="/tags/stream/">stream</a><small>1</small></li>
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
   
     <li><a href="/tags/svg/">svg</a><small>1</small></li>
   
