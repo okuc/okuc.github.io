@@ -64,6 +64,90 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-14T14:59:45.000Z"><a href="/2016/05/14/JAVA8学习（一）/">2016-05-14</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/14/JAVA8学习（一）/">JAVA8学习（一）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h2><ul>
+<li>第一个lembda表达式：<code>(String first,String second)-&gt;Integer.compare(first.length,second.length);</code><ul>
+<li>如果负责计算的代码无法用一个表达式表示，则可以用大括号括起来，并写明返回值。如：<pre><code>(String first,String second)-&gt;{
+    if(first.length&lt;second.length) return -1;
+    else return 1;
+    }
+</code></pre></li>
+<li>如果没有参数，仍然可以提供一对空的小括号：<code>()-&gt;{for(int i=0;i&lt;100;i++) System.out.println(i);}</code></li>
+<li>如果lambda表达式的参数类型是可以被推导的，那么就可以省略它们的类型，如：<code>Comparator&lt;String&gt; com=(first,second)-&gt;Integer.compare(first.length(),second.length());</code>,由于它被赋于一个字符串比较器，所以参数必须字符串。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/14/JAVA8学习（一）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-11T01:06:32.000Z"><a href="/2016/05/11/docker网络学习/">2016-05-11</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/11/docker网络学习/">docker网络学习</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><code>Docker</code>容器的跨主机连接，有三种方式：<ul>
+<li>使用网桥实现跨主机容器连接</li>
+<li>使用<code>Open vSwitch</code>实现跨主机容器连接</li>
+<li>使用<code>weave</code>实现跨主机容器连接
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/11/docker网络学习/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -416,120 +500,6 @@ $(&apos;#example&apos;).tooltip(options)
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-01-02T14:06:32.000Z"><a href="/2016/01/02/《Bootstrap用户手册》学习笔记(三)/">2016-01-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/01/02/《Bootstrap用户手册》学习笔记(三)/">《Bootstrap用户手册》学习笔记(三)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第3章-Bootstrap内置的布局组件-1"><a href="#第3章-Bootstrap内置的布局组件-1" class="headerlink" title="第3章 Bootstrap内置的布局组件(1)"></a>第3章 Bootstrap内置的布局组件(1)</h2><ol>
-<li><p>除了前一章介绍的标记，<code>Bootstrap</code>还内置了一套灵活的组件，可用于设计用户界面、交互功能，等等。这些组件来自一个独立的 <code>javaScript</code>文件，而这个文件可以通过<code>Bootstrap</code>的自定义构建工具生成，因此可以只包含你需要的组件。一般会选择所有组件，这样就有了最大的灵活性。</p>
-</li>
-<li><p><strong>上下文菜单</strong>：下拉菜单以列表形式呈现一组选项，一般与上下文相关，可用于不同的元素、导航、按钮，等等。</p>
-<pre><code>&lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;dropdownMenu&quot;&gt;
-  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
-  &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;//分隔横线
-  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</code></pre><ul>
-<li><p><strong>右对齐</strong>：为<code>.dropdown-menu</code>添加<code>.pull-right</code>类，可以让下拉菜单右边缘与父对象右边缘对齐：</p>
-<pre><code>&lt;ul class=&quot;dropdown-menu pull-right&quot; role=&quot;menu&quot; aria-labelledby=&quot;dLabel&quot;&gt;
-  ...
-&lt;/ul&gt;
-</code></pre></li>
-<li><p><strong>子菜单</strong>：只要在当前下拉菜单的任意<code>&lt;li&gt;</code>元素上添加<code>.dropdown-submenu</code>即可实现子菜单。</p>
-<pre><code>&lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;dLabel&quot;&gt;
-  ...
-  &lt;li class=&quot;dropdown-submenu&quot;&gt;
-    &lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;More options&lt;/a&gt;
-    &lt;ul class=&quot;dropdown-menu&quot;&gt;
-      ...
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/01/02/《Bootstrap用户手册》学习笔记(三)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-01-01T14:06:32.000Z"><a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/">2016-01-01</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/">《Bootstrap用户手册》学习笔记(二)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第2章-Bootstrap预定义的CSS样式-2"><a href="#第2章-Bootstrap预定义的CSS样式-2" class="headerlink" title="第2章 Bootstrap预定义的CSS样式(2)"></a>第2章 Bootstrap预定义的CSS样式(2)</h2><ol>
-<li><p><strong>表单</strong> <code>Bootstrap</code>自带了基本的表单样式，不需要添加任务辅助类。例子如下：</p>
-<pre><code>&lt;form&gt;
-    &lt;fieldset&gt;
-         &lt;legend&gt;Legend&lt;/legend&gt;
-             &lt;label for=&quot;name&quot;&gt;Label name&lt;/label&gt;
-             &lt;input type=&quot;text&quot; id=&quot;name&quot;
-         placeholder=&quot;Type something…&quot;&gt;
-                &lt;span class=&quot;help-block&quot;&gt;Example block-level help text here.&lt;/span&gt;
-                &lt;label class=&quot;checkbox&quot; for=&quot;checkbox&quot;&gt;
-                    &lt;input type=&quot;checkbox&quot; id=&quot;checkbox&quot;&gt;Check me out
-                &lt;/label&gt;
-            &lt;button type=&quot;submit&quot; class=&quot;btn&quot;&gt;Submit&lt;/button&gt;
-     &lt;/fieldset&gt;
-&lt;/form&gt;
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -554,6 +524,8 @@ $(&apos;#example&apos;).tooltip(options)
   
     <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
   
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>2</small></li>
+  
     <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
   
     <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
@@ -574,9 +546,9 @@ $(&apos;#example&apos;).tooltip(options)
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>4</small></li>
+    <li><a href="/tags/java/">java</a><small>6</small></li>
   
-    <li><a href="/tags/java8/">java8</a><small>3</small></li>
+    <li><a href="/tags/java8/">java8</a><small>5</small></li>
   
     <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
   

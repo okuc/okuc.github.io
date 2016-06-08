@@ -70,6 +70,120 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-01-02T14:06:32.000Z"><a href="/2016/01/02/《Bootstrap用户手册》学习笔记(三)/">2016-01-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/01/02/《Bootstrap用户手册》学习笔记(三)/">《Bootstrap用户手册》学习笔记(三)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第3章-Bootstrap内置的布局组件-1"><a href="#第3章-Bootstrap内置的布局组件-1" class="headerlink" title="第3章 Bootstrap内置的布局组件(1)"></a>第3章 Bootstrap内置的布局组件(1)</h2><ol>
+<li><p>除了前一章介绍的标记，<code>Bootstrap</code>还内置了一套灵活的组件，可用于设计用户界面、交互功能，等等。这些组件来自一个独立的 <code>javaScript</code>文件，而这个文件可以通过<code>Bootstrap</code>的自定义构建工具生成，因此可以只包含你需要的组件。一般会选择所有组件，这样就有了最大的灵活性。</p>
+</li>
+<li><p><strong>上下文菜单</strong>：下拉菜单以列表形式呈现一组选项，一般与上下文相关，可用于不同的元素、导航、按钮，等等。</p>
+<pre><code>&lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;dropdownMenu&quot;&gt;
+  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;//分隔横线
+  &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><ul>
+<li><p><strong>右对齐</strong>：为<code>.dropdown-menu</code>添加<code>.pull-right</code>类，可以让下拉菜单右边缘与父对象右边缘对齐：</p>
+<pre><code>&lt;ul class=&quot;dropdown-menu pull-right&quot; role=&quot;menu&quot; aria-labelledby=&quot;dLabel&quot;&gt;
+  ...
+&lt;/ul&gt;
+</code></pre></li>
+<li><p><strong>子菜单</strong>：只要在当前下拉菜单的任意<code>&lt;li&gt;</code>元素上添加<code>.dropdown-submenu</code>即可实现子菜单。</p>
+<pre><code>&lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;dLabel&quot;&gt;
+  ...
+  &lt;li class=&quot;dropdown-submenu&quot;&gt;
+    &lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;More options&lt;/a&gt;
+    &lt;ul class=&quot;dropdown-menu&quot;&gt;
+      ...
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/01/02/《Bootstrap用户手册》学习笔记(三)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-01-01T14:06:32.000Z"><a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/">2016-01-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/">《Bootstrap用户手册》学习笔记(二)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第2章-Bootstrap预定义的CSS样式-2"><a href="#第2章-Bootstrap预定义的CSS样式-2" class="headerlink" title="第2章 Bootstrap预定义的CSS样式(2)"></a>第2章 Bootstrap预定义的CSS样式(2)</h2><ol>
+<li><p><strong>表单</strong> <code>Bootstrap</code>自带了基本的表单样式，不需要添加任务辅助类。例子如下：</p>
+<pre><code>&lt;form&gt;
+    &lt;fieldset&gt;
+         &lt;legend&gt;Legend&lt;/legend&gt;
+             &lt;label for=&quot;name&quot;&gt;Label name&lt;/label&gt;
+             &lt;input type=&quot;text&quot; id=&quot;name&quot;
+         placeholder=&quot;Type something…&quot;&gt;
+                &lt;span class=&quot;help-block&quot;&gt;Example block-level help text here.&lt;/span&gt;
+                &lt;label class=&quot;checkbox&quot; for=&quot;checkbox&quot;&gt;
+                    &lt;input type=&quot;checkbox&quot; id=&quot;checkbox&quot;&gt;Check me out
+                &lt;/label&gt;
+            &lt;button type=&quot;submit&quot; class=&quot;btn&quot;&gt;Submit&lt;/button&gt;
+     &lt;/fieldset&gt;
+&lt;/form&gt;
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/01/01/《Bootstrap用户手册》学习笔记(二)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">2015-12-31</a></time>
       
       
@@ -599,87 +713,6 @@ module.exports = router;
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-17T14:06:32.000Z"><a href="/2015/12/17/新手学习mongodb之六：普通索引/">2015-12-17</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/17/新手学习mongodb之六：普通索引/">新手学习mongodb之六：普通索引</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ol>
-<li><p>所有的索引信息被保存在<strong>system.indexes</strong>集合中，且默认总是为<code>_id</code>创建索引。<code>db.system.indexes.find()</code>可以查看当前数据库中创建的所有的索引。Mongodb使用的是B-树算法。Mongodb提供的索引类型为：</p>
-<ul>
-<li>Single Filed:单字段索引，在普通字段、子文档以及子文档的某个字段上建立的索引。</li>
-<li>Compound Index:复合索引，同时在多个字段上建立的索引。</li>
-<li>Multikey Index:多键索引，对数组建立的索引。</li>
-<li>Geospatial Index:地理空间索引，对地理位置数据库建立的索引{支持球面和平面}。</li>
-<li>Text Index：全文索引，对每一个词建立索引，支持全文搜索。</li>
-<li>Hashed Index：哈希索引，索引中存储的是被索引键的哈希值。
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/17/新手学习mongodb之六：普通索引/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-16T14:06:32.000Z"><a href="/2015/12/16/新手学习mongodb之五：游标及模糊查询/">2015-12-16</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/16/新手学习mongodb之五：游标及模糊查询/">新手学习mongodb之五：游标及模糊查询</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ol>
-<li>使用<code>find</code>函数进行查询时，MongoDB并不是一次返回结果集中的所有文档，而是以多条文档的形式分白费来返回查询结果，返回的文档会缓存到内存中。<br>分批的原则是不超过101个文档或1M的数据，以先达到的标准为主。如果101个文档大于1M，则会减少文档的数量，以小的为准，除第一次外，以后每次可以返回4M的文档。<br>这种批量返回结果的好处是，一方面，它可以减少客户端对服务器连接次数，从而减轻服务器的查询负担；另一方面，当查询结果集很大时，批量返回的结果的方式可以减少客户端的等待时间，提高数据的处理效率。<br>在没有建立索引的字段上进行排序，会把符合条件的全部加载到内存中进行排序，所以，一定要建立索引。
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/16/新手学习mongodb之五：游标及模糊查询/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -704,6 +737,8 @@ module.exports = router;
   
     <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
   
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>2</small></li>
+  
     <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
   
     <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
@@ -724,9 +759,9 @@ module.exports = router;
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>4</small></li>
+    <li><a href="/tags/java/">java</a><small>6</small></li>
   
-    <li><a href="/tags/java8/">java8</a><small>3</small></li>
+    <li><a href="/tags/java8/">java8</a><small>5</small></li>
   
     <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
   

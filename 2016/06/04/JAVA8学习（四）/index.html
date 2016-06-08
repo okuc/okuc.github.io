@@ -1,0 +1,370 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JAVA8学习（四） | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="JAVA8学习（四）"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="//archives">归档</a></li>
+    
+      <li><a href="//coding">编程技术</a></li>
+    
+      <li><a href="//bigData">大数据技术</a></li>
+    
+      <li><a href="//dataV">数据可视化</a></li>
+    
+      <li><a href="//about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-04T14:59:45.000Z"><a href="/2016/06/04/JAVA8学习（四）/">2016-06-04</a></time>
+      
+      
+  
+    <h1 class="title">JAVA8学习（四）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="JavaFX"><a href="#JavaFX" class="headerlink" title="JavaFX"></a>JavaFX</h2><ul>
+<li>在javaFx中，你可以在一个场景上放置任何你想要展现的东西。因此，你可以设计“演员”—即控件的形状的样式和行为。</li>
+<li>场景需要舞台，如果运行在桌面系统上，舞台就是一个顶经的窗口，如果作为一个applet运行，舞台就是一个长方形的区域。</li>
+<li>在任何Application类的子类中，我们都必须重写start方法，然后将场景作为一个参数传递给start方法。</li>
+</ul>
+<p>Button red = new Button(“red”);<br>red.setOnAction(event-&gt;message.setTextFile(Color.REd));</p>
+<ul>
+<li><p>对于大多数JavaFX控件来说，它们的事件处理方式是不同的，以一个滑块为例，当滑块被调整时，它的值就会发生改变。但是，不应该监听滑块发出的表示这些改变的底层事件，相反，滑块有个个JavaFX属性value，该属性会在发生改变时发起事件。<br><code>slider.valueProperty().addListener(property-&gt;message.setFont(new Font(slider.getValue())))</code><br>-<code>java.beans</code>包中的<code>Introspector</code>和<code>BeanInfo</code>类可以遍历一个类中的所有属性。</p>
+<a id="more"></a>
+<p>-<code>JavaFX text</code>属性有一个方法<code>Property&lt;String&gt; textProperty()</code>。你可以在这个<code>Property</code>对象上添加一个监听器。也就是说，<code>JavaFX</code>中事件不是由<code>bean</code>本身发出的。如<code>Greeting</code>中实现的一个属性<code>text</code>：</p>
+<pre><code>public class Greeting{
+    private StringProperty text = new SimpleStringProperty(&quot;&quot;);
+    public final StringProperty textProperty(){return text;}
+    public final void setText(String newValue){text.set(newValue);}
+    public final String getText(){return text.get();}
+
+}
+</code></pre><p><code>StringProperty</code>类用来包装一个字符串，它用来获取和设置所包装的字符串的方法以及管理监听器的方法。与此类拟的，还有<code>ntegerProperty</code>、<code>LongProperty</code>、<code>DoubleProperty</code>、<code>FloatProperty</code>、<code>BooleanProperty</code>。另外，<code>JavaFX</code>还提供了<code>ListProperty</code>、<code>MapProperty</code>、<code>SetProperty</code>类对于其它的所有对象，都可以使用<code>ObjectProperty&lt;T&gt;</code>，所有的这些类都是抽象类，分别对应具体的子类：<code>SimpleIntegerProperty</code>、<code>SimpleObjectProperty&lt;T&gt;</code></p>
+</li>
+<li><code>Property</code>的<code>get</code>、<code>set</code>使用的是原始类型，<code>getValue</code>、<code>setValue</code>使用的是包装类型。</li>
+<li>有两种监听器可以被汪厍到一个属性上。当属性被成功改为后，会通知一个<code>ChangeListener</code>监听器，它会告诉你新值和旧值。当属性性可能发生改变时，会调用一个<code>InvalidationListener</code>监听器，它只会告诉你旧的值。如果属性是延迟计算的，那点这两个监听器区别很关键。</li>
+<li><code>DoubleProperty</code>实现的是<code>Property&lt;Number&gt;</code>接口，而不是<code>Property&lt;Double&gt;</code>接口，因此，对于它，<code>ChangeListener</code>中新值和旧值是<code>Number</code>，需要使用<code>newValue.doubleValue()</code>来获取<code>double</code>值。</li>
+<li>JavaFX属性存在的目的就是为了绑定：当一个属性改变时自动更新另一个属性。<br>  billing.textProperty().bind(shipping.textProperty());//单向绑定<br>  billing.textProperty().bindBidirectional(shipping.textProperty());//双向绑定<br>要取消绑定，可以调用<code>unbind</code>或者<code>unbindBidirectional</code>方法。在许多情况下，一个属性为依赖于另一个属性，但是它们之前的关系会更加复杂，而且是通过计算做到的，为此<code>Bingdings</code>类为此提供了多个静态方法，如<code>Bindings.divide(scene.widthProperty(),2)</code>、<code>circle.centerXProperty().bin(Bindings.divide(scene.widthProperty(),2));</code>还可以<code>scene.widthProperty().divide(2)</code>。<br>A过大或过小时把B禁用：<code>B.disableProperty().bind(Bindings.lessThanOrEqual(A.widthProperty(),0));</code>、<code>B.disableProperty().bind(Bindings.greaterThanOrEqual(A.widthProperty(),100));</code></li>
+<li><p><code>Bindings</code>类提供的所有操作中，其中一个参数或两个参数同时实现了<code>Observable</code>接口或其子接口。<code>Observable</code>接口提供了添加和删除<code>InvalidationListener</code>的方法。<code>ObservableValue</code>接口添加了对<code>ChangeListener</code>的管理及一个<code>getValue</code>方法。它的子接口提供了获取各种类型的值的方法。<br><code>Bindings</code>类提供的操作如下：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">方法名                                                        |<span class="string">   参数</span><br><span class="line">add,subtract,multiply,divide,max,min                         </span>|<span class="string">  两个ObservableNumberValue、int、long、float或者double值</span><br><span class="line">negate                                                       </span>|<span class="string">  一个ObservableNumberValue值</span><br><span class="line">greaterThan,greaterThanOrEqual，lessThan，LessThan，lessThanOrEqual</span>|<span class="string">两个ObservableNumberValue、int、long、float或者double值，或者两个ObservableStringValue、String值</span><br><span class="line">equal，notEqual                                              </span>|<span class="string">  两个ObservableObjectValue、ObservableNumberValue、int、long、float或者double值</span><br><span class="line">equalIgnoreCase，notEqualIgnoreCase                          </span>|<span class="string">  两个ObservableStringValue、String值</span><br><span class="line">isEmpty，isNotEmpty                                          </span>|<span class="string">  一个Observable(list</span>|<span class="string">Map</span>|<span class="string">Set</span>|<span class="string">StringValue)值</span><br><span class="line">isNull,isNotNull                                             </span>|<span class="string"> 一个ObservableObjectValue值</span><br><span class="line">Length                                                       </span>|<span class="string"> 一个ObservableStringValue值</span><br><span class="line">Size                                                          </span>|<span class="string">  一个Observable(list</span>|<span class="string">Map</span>|<span class="string">Set)值</span><br><span class="line">and，or                                                       </span>|<span class="string">  两个ObservableBooleanValue值</span><br><span class="line">not                                                          </span>|<span class="string">  一个ObservableBooleanValue值</span><br><span class="line">convert                                                      </span>|<span class="string">  一个被转换为字符串绑定的ObservableValue值</span><br><span class="line">concat                                                        </span>|<span class="string">  一组将toString值 连接起来的对象。如果其中任何一个对象是ObservableValue，并且它的值发生了改变，那么整个连接起来的字符串也会发生改变。</span><br><span class="line">format                                                        </span>|<span class="string">  一个可选的语言环境参数，一个MessageFormat字符串，以及一组进行格式化的对象，如果其中任何一个对象是ObservableValue，并且它的值发生了改变，那么格式化后的字符串也会发生改变。</span><br><span class="line">valueAt(double</span>|<span class="string">float</span>|<span class="string">integer</span>|<span class="string">long)、ValutAt、stringValueAt     </span>|<span class="string">  一个ObservableList对象和一个索引，或者一个ObservableMap对象和一个键</span><br><span class="line">create(Boolean</span>|<span class="string">Double</span>|<span class="string">Float</span>|<span class="string">Integer</span>|<span class="string">Long</span>|<span class="string">Object</span>|<span class="string">String)Binding </span>|<span class="string"> 一个Callable对象和一组依赖</span><br><span class="line">select、select(Boolean</span>|<span class="string">Double</span>|<span class="string">Float</span>|<span class="string">Integer</span>|<span class="string">Long</span>|<span class="string">String)       </span>|<span class="string"> 一个Object或者ObservableValue对象，以及一组公共属性名，表示属性obj.p1.p2....pn</span><br><span class="line">when                                                           </span>|<span class="string"> 为条件操作生成一个构造器。根据ObservableBealeanValue b是否为true，绑定when(b).then(v1).otherwise(v2)会返回v1或v2.这里v1和v2可以是一般的值，也可以是observable对象。当二者为observable对象并且其中之一发生改变时，条件值会被重新计算。</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>除了用<code>Bindings</code>类的方法来计算属性，还有一个更简单的方式绑定属性的值。即将计算代码放到一个<code>lambda</code>表达式中，然后提供一个所依赖的属性列表，当这些属性中任何一个发生改变时，<code>lambda</code>表达式会被重新计算。如</p>
+<pre><code>larger.disableProperty().bind(createBooleanBinding(
+()-&gt;gauge.getWidth()&gt;=100,//当该属性改变时，
+gauge.widthProperty()));//会计算该表达式
+</code></pre><p>-在<code>JavaFX</code>中，除了用可以添加到任意面板(<code>panel</code>)中的布局管理器，还可以用窗格(<code>pane</code>)–一种带有策略的容器。如，一个<code>BorderPane</code>拥有5个区域：<code>Top</code>、<code>Bottom</code>、<code>Left</code>、<code>Right</code>和<code>Center</code>。</p>
+<pre><code>BorderPane pane = new BorderPane();
+pane.setTop(new Button(&quot;Top&quot;));
+pane.setLeft(new Button(&quot;Left&quot;));
+pane.setCenter(new Button(&quot;&quot;));
+pane.setRight(new Button(&quot;Right&quot;));
+pane.setBottom(new Button(&quot;Bottom&quot;));
+stage.setScene(new Scene(pane));
+</code></pre></li>
+<li><code>HBox</code>用来设置水平布局：<pre><code>HBox box = new HBox(10);//控件之间有10个像素的间隔
+box.getChildren().addAll(yesButton,noButton,maybeButton);
+</code></pre></li>
+<li><p><code>VBox</code>控件用来垂直布局控件。</p>
+<pre><code>VBox pane = new VBox(10);
+pane.getChilder().addAll(question,buttons);
+pane.setPadding(new Insets(10));//padding属性用来设置离边的距离，没有它，标签和按钮会紧靠到窗口的边框上。
+</code></pre></li>
+<li><p>在JavaFX中，控件的量度是以像素为单位指定的。但是现在这种方法并不合适，因为像素密度之间的差异可能会非常大。一种解决办法是命名用rem来计算面积，就如同在CSS3中一样（1rem或者root em是文档默信字体的高度）。</p>
+<pre><code>Final double rem = new Text(&quot;&quot;).getLayoutBounds().getHeight();
+pane.setPadding(new Insets(0.8 * rem));
+</code></pre></li>
+<li>JavaFx有一个GridPane，它等同于一个HTML表格，可以设置所有单元格的水平和垂直对齐方式，单元格也可以跨多个行和列。当从GridPane上添加一个子控件时，需要指定它的列索引和行索引（从上到下，从左到右的顺序），如<pre><code>pane.add(usernameLabel,0,0);
+pane.add(username,1,0);
+pane.add(passwordLabel,0,1);
+pane.add(password,1,1);
+</code></pre>如果子控件要占用多列或多行，可以在位置后指定要占用的列数或行数，如：<code>pane.add(buttons,0,2,2,1);</code>。如果希望子控件扩避孕药所有剩余的行和列，可以使用<code>GridPane.REMAINING</code>。要设置子控件的水平对齐方式，使用静态的<code>setHalignment</code>方法，然后传递子控件的引用和一个<code>HPos</code>枚举常量<code>LEFT</code>、<code>CENTER</code>或者<code>RIGHT</code>。<code>GridPane.setHalignment(usernameLabel,HPos.RIGHT());</code>同理，垂直对齐对应的是<code>setValignment</code>方法并使用<code>VPos</code>枚举中的<code>TOP</code>、<code>CENTER</code>或者<code>BOTTOM</code>。</li>
+<li>不要将按钮的HBox在表格中居中，否则会占用整个水平位置，且无法改变位置。应该将HBox中的内容设置为居中：<code>buttons.setAlignment(Pos.CENTER)</code></li>
+<li>在各行和各列间添加一间隔空间，并为表适配器的边缘增加一些间隔，代码如下：<pre><code>pane.setHgap(0.8 * rem);
+pane.setVgap(0.8 * rem);
+pane.setPadding(new Insets(0.8 * rem));
+</code></pre></li>
+<li>为了便于调试，可以使单元格的边界都显示出来：<code>pane.setGridLinewsVisible(true);</code>果希望看到每个子控件的边框，可以将其边框设置为可见。用CSS设置这一点非溶易：<code>buttons.setStyle(&quot;-fx-border-color:red;&quot;);</code></li>
+<li><code>JavaFX</code>自带的所有布局如下： <ul>
+<li><code>HBox，Vbox</code>：水平或垂直排列子控件</li>
+<li><code>GridPane</code>：以表格式形排列子控件，类似于<code>Swing</code>中的<code>GridBagLayout</code></li>
+<li><code>TitlePane</code>:以网格形式排列子控件，所有的控件大小都一样。类似于Swing中的<code>GridLayout</code>。</li>
+<li><code>BorderPane</code>：提供<code>Top</code>、<code>Bottom</code>、<code>Left</code>、<code>Right</code>及<code>Center</code>等区域，类似于<code>Swing</code>中的<code>BorderLayout</code>。</li>
+<li><code>FlowPane</code>：按照行流式排列子控件，当空间不足时则另起一行，类类似<code>Swing</code>中的<code>FlowLayout</code>。</li>
+<li><code>AnchorPane</code>：可以指定子控件的绝对位置，或者相对于面板边缘的相对位置。这是<code>SceneBuilder</code>布局工具中的默认布局。</li>
+<li><code>StackPane</code>：将子控件重叠排列。可以用来装饰其他控件，例如将一个按钮放在另一个彩色方块上面。</li>
+</ul>
+</li>
+<li><p><code>fxml</code>是描述界面的xml文件。可以通过下列的语句来加载该文件：</p>
+<pre><code>@Override
+public void start(Stage stage) throws Exception {
+    Parent root = FXMLLoader.load(getClass().getResource(&quot;FXMLDocument.fxml&quot;));
+
+    Scene scene = new Scene(root);
+
+    stage.setScene(scene);
+    stage.show();
+}
+</code></pre><p>在程序中，能过id属性查找控件：<code>TextField userName = (TextField) root.lookup(&quot;#username&quot;);</code>。还有一种方式，使用@FXML注解将控件对象注入到一个控制器类中。控制器类必须实现<code>Initializable</code>接口，在控制器类的<code>initialize</code>方法中，可以指定控件绑定和事件处理方法。任何类都可以作为一个控制器，甚至是FX应用本身。</p>
+<pre><code>public class FXMLDocumentController implements Initializable {
+
+    @FXML
+    private Label label;
+    @FXML
+    private Button button;
+
+    @FXML
+    private void handleButtonAction(ActionEvent event) {
+        System.out.println(&quot;You clicked me!&quot;);
+        label.setText(&quot;Hello World!&quot;);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
+
+}
+</code></pre></li>
+<li>在FXML文件中，使用fx:id，而不是id属性，将控制器的实例变量名提供给对应的控件元素。如下：<pre><code>&lt;AnchorPane id=&quot;AnchorPane&quot; prefHeight=&quot;200&quot; prefWidth=&quot;320&quot; xmlns:fx=&quot;http://javafx.com/fxml/1&quot; fx:controller=&quot;testjavafx.FXMLDocumentController&quot;&gt;
+    &lt;children&gt;
+        &lt;Button layoutX=&quot;126&quot; layoutY=&quot;90&quot; text=&quot;Click Me!&quot; onAction=&quot;#handleButtonAction&quot; fx:id=&quot;button&quot; /&gt;
+        &lt;Label layoutX=&quot;126&quot; layoutY=&quot;120&quot; minHeight=&quot;16&quot; minWidth=&quot;69&quot; fx:id=&quot;label&quot; /&gt;
+    &lt;/children&gt;
+&lt;/AnchorPane&gt;
+</code></pre></li>
+<li>如果控制器没有默认构造方法，可以通过如下方式来设置它：<pre><code>FXMLLoader loader = new FXMLLOader(getClass().getResource());
+loader.setController(new Controller(service));
+Parent root = (Parent) loader.load();
+</code></pre>加载<code>FXML</code>文件之后，会创建场景图形，并且会将已命名的控制对象注入到控制器对象的注解字段中，然后调用它的<code>initialize</code>方法。</li>
+<li><code>JavaFX</code>还允许<code>CSS</code>来改变用户界面的可视化展现，通常这比使用<code>FXML</code>属性或者调用<code>Java</code>方法更方便。<strong>每个JavaFX控件和形状的CSSod名，都是将对应的Java类名的首字母小写形成的。</strong>手动加载一个<code>CSS</code>样式表：<pre><code>Scene scene = new Scene(Pane);
+Scene.getStylesheets().add(&quot;scene.css&quot;);
+</code></pre>在样式表中，可以引用任何拥有<code>ID</code>的控件。如：<pre><code>GridPane pane = new GridPane();
+pane.setId(&quot;pane&quot;);
+</code></pre>不要在代码中设置任何<code>padding</code>或者<code>spacing</code>属性，要使用<code>CSS</code>来实现这一点：<pre><code>#pane｛
+ -fx-padding:0.5em;
+ -fx-hgap:0.5em;
+ -fx-vgap:0.5em;
+ -fx-background-image:url(&quot;metal.jpg&quot;);
+｝
+</code></pre>这些<code>css</code>不是通用的，是<code>FX</code>特定的，以<code>-fx-</code>开头，可以在官方查看<code>JavaFX CSS</code>手册。<br>不要为ID指定样式，而是应该使用CSS类，如下：<pre><code>HBox buttons = new HBox();
+buttons.getStyleClass().add(&quot;buttonrow&quot;);
+</code></pre>然后使用CSS的类符号来设置其样式：<pre><code>.buttonrow{
+   -fx-spacing:0.5em;
+}
+</code></pre>还可以在FXML布局中使用CSS，如向面板添加一个样式表：<code>&lt;GridPane id=&quot;pane&quot; stylesheets=&quot;scene.css&quot;&gt;</code>。在FXML代码中使用id或者styleClass，如：<code>&lt;HBox styleClass=&quot;buttonrow&quot;&gt;</code>,但是CSS是无法调整控件的对齐方式的。<br>还可以手机应用一个CSS样式：<code>buttons.setStyle(&quot;-fx-border-color:red;&quot;)</code></li>
+<li>JavaFX定义了大量动画和特效，可以很简单的使用他们。</li>
+<li>JavaFX不仅有Swing中的多选框、标签页面板、树和表格控件，还有Swing中没有日期选择框和折叠控件，及十余种图表类型供选持和定制，具体可参考文档。</li>
+<li>JavaFX的<code>WebView</code>调用了一个嵌入式的本地<code>Webkit</code>窗口。它还利用了开源的<code>GStreamer</code>框架，用来处理音视频。</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/java/">java</a>, <a href="/tags/java8/">java8</a>, <a href="/tags/JavaFX/">JavaFX</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2016/06/04/JAVA8学习（五）/" class="alignleft prev" >Prev</a>
+    
+    
+    <a href="/2016/06/03/JAVA8学习（三）/" class="alignright next" >Next</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/06/04/JAVA8学习（四）/" data-title="JAVA8学习（四）" data-url="http://www.52brt.com/2016/06/04/JAVA8学习（四）/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>2</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>6</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>5</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
