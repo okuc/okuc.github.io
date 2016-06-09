@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 2 | 我的后院自留地</title>
+  <title>Seite 2 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -64,6 +64,51 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-15T14:06:32.000Z"><a href="/2016/05/15/centos6下共享文件/">2016-05-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/15/centos6下共享文件/">centos6下共享文件</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>1、首先安装smb服务：<code>yum install samba</code><br>2、将配置文件<code>/etc/samba/smb.conf</code>文件修改为：</p>
+<pre><code>[global]
+security=share
+dos charset=cp936
+unix charset=gb2312
+
+[szmacs]
+comment = share
+path = /data/macs
+browseable = yes
+guest ok = yes
+writable = yes
+</code></pre><p>3、关闭访火墙<code>iptables -F</code><br>4、关闭selinux：<code>setenforce 0</code><br>5、重启smb服务：<code>service smb restart</code><br>6、设置smb服务为随机启动：<code>chkconfig smb on</code></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="coding">
   
   <div class="post-content">
@@ -448,65 +493,13 @@ $(&apos;#example&apos;).tooltip(options)
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-01-03T14:06:32.000Z"><a href="/2016/01/03/《Bootstrap用户手册》学习笔记(四)/">2016-01-03</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/01/03/《Bootstrap用户手册》学习笔记(四)/"></a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第3章-Bootstrap内置的布局组件-2"><a href="#第3章-Bootstrap内置的布局组件-2" class="headerlink" title="第3章 Bootstrap内置的布局组件(2)"></a>第3章 Bootstrap内置的布局组件(2)</h2><ol>
-<li><p><strong>标签</strong>：标签非常适合显示计数结果、提示信息等 内容。</p>
-<pre><code>&lt;span class=&quot;label&quot;&gt;Default&lt;/span&gt;
-&lt;span class=&quot;label label-success&quot;&gt;Success&lt;/span&gt;
-&lt;span class=&quot;label label-warning&quot;&gt;Warning&lt;/span&gt;
-&lt;span class=&quot;label label-important&quot;&gt;Important&lt;/span&gt;
-&lt;span class=&quot;label label-info&quot;&gt;Info&lt;/span&gt;
-&lt;span class=&quot;label label-inverse&quot;&gt;Inverse&lt;/span&gt;
-</code></pre></li>
-<li><p><strong>圆标签</strong>与标签类似，主要区别在于它们的两头更圆。它的颜色与标签的颜色是一样的。</p>
-<pre><code>&lt;span class=&quot;badge&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;badge badge-success&quot;&gt;2&lt;/span&gt;
-&lt;span class=&quot;badge badge-warning&quot;&gt;4&lt;/span&gt;
-&lt;span class=&quot;badge badge-important&quot;&gt;6&lt;/span&gt;
-&lt;span class=&quot;badge badge-info&quot;&gt;8&lt;/span&gt;
-&lt;span class=&quot;badge badge-inverse&quot;&gt;10&lt;/span&gt;
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/01/03/《Bootstrap用户手册》学习笔记(四)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/" class="alignleft prev">Prev</a>
+    <a href="/" class="alignleft prev">Vorherige Seite</a>
   
   
-    <a href="/page/3/" class="alignright next">Next</a>
+    <a href="/page/3/" class="alignright next">Nächste Seite</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -522,9 +515,11 @@ $(&apos;#example&apos;).tooltip(options)
   
     <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
   
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
     <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
   
-    <li><a href="/tags/JavaFX/">JavaFX</a><small>2</small></li>
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
   
     <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
   
@@ -546,9 +541,9 @@ $(&apos;#example&apos;).tooltip(options)
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>6</small></li>
+    <li><a href="/tags/java/">java</a><small>7</small></li>
   
-    <li><a href="/tags/java8/">java8</a><small>5</small></li>
+    <li><a href="/tags/java8/">java8</a><small>6</small></li>
   
     <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
   
@@ -579,6 +574,8 @@ $(&apos;#example&apos;).tooltip(options)
     <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
   
     <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
   
     <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
   

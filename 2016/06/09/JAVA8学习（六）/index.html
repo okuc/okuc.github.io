@@ -1,0 +1,376 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JAVA8学习（六） | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="JAVA8学习（六）"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="//archives">归档</a></li>
+    
+      <li><a href="//coding">编程技术</a></li>
+    
+      <li><a href="//bigData">大数据技术</a></li>
+    
+      <li><a href="//dataV">数据可视化</a></li>
+    
+      <li><a href="//about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-09T14:59:45.000Z"><a href="/2016/06/09/JAVA8学习（六）/">2016-06-09</a></time>
+      
+      
+  
+    <h1 class="title">JAVA8学习（六）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h2><ul>
+<li><code>java5</code>提供了强大的<code>java.util.concurrent</code>包，该包为我们提供了线程安全的集合和线程池，使得许多应用开发人员不必使用锁或者启动新线程，就可以编写并发程序。</li>
+<li><code>java5</code>开始<code>java.util.concurrent.atomic</code>包提供了用于支持无锁可变变量的类，保证多线程并发访问同一个实例，也能正确计算并返回正确的值。如：<pre><code>public static AtomicLong nextNumber = new AtomicLong();
+//在某些线程中
+long id= nexNumber.incrementAndGet();//会自动将AtomicLong的值加1，并返回增加后的值。
+</code></pre></li>
+<li><p><code>java5</code>中提供了很多设置、增加、减少值的原子操作，但是如果想要进行更复杂的更新操作，必须使用<code>compareAndSet</code>方法。如想追踪由不同线程所监测的最大值，则下面的代码是行不通的：</p>
+<pre><code>public static AtomicLong nextNumber = new AtomicLong();
+//在某些线程中
+largest.set(Math.max(largest.get(),observed)) //错误，竟争条件，非原子性操作。
+
+do{
+    oldValue = largest.get();
+    newValue = Math.max(oldValue,observed);
+}while(!largest.compareAndSet(oldValue,newValue));//正确方式，每个线程每次都取新旧值判断，只有符合要求时才会赋值。如果是java8,可以如下写：
+largest.updateAndGet(x-&gt;Math.max(x,observed));
+largest.accumulateAndGet(observed,Math::max);//accumulateAndGet方法通过一个二元运算符将原子值和传入的参数组合起来。
+</code></pre><p>除了它之外，Java8还提供了返回原始值的<code>getAndUpdate</code>方法和<code>getAndaccumulateAndGet</code>方法。</p>
+</li>
+<li><code>AtomicInteger</code>、<code>AtomicIntegerArray</code>、<code>AtomicIntegerFieldupdater</code>、<code>AtomicLongArray</code>、<code>AtomicLongFieldUpdater</code>、<code>AtomicRefernce</code>、<code>AtomicReferenceArray</code>和<code>AtomicReferenceFieldUpdater</code>类都提供了这些方法。<a id="more"></a></li>
+<li><p>并发量很大时，大量线程访问同一个原子值，由于乐观锁更新需要太多次重试，因此会导致性能严重下降。所以，java8提供了<code>LongAdder</code>、<code>LongAccumulator</code>来解决该问题。<code>LongAdder</code>由多个变量组成，这些变量累加的值即为当前值。多个线程可以更新不同的被加数，当线程数量增加时会自动增加新的被加数。由于通常情况下都是直到所有工作完成后才需要总的和，所以这种方法效率很高。如果环境中存在高度竟争，应当用<code>LongAdder</code>代替<code>AtomicLong</code>。<code>Increment</code>方法将计数器自增1，<code>add</code>方法用来加上某个数，<code>sum</code>方法用来获取总和值。</p>
+<pre><code>final LongAdder adder = new LongAdder();
+for(...)
+  pool.submit(()-&gt;{
+    while(...){
+      ...
+      if(...)adder.increment();
+    }
+  });
+  ...
+  long total = adder.sum());
+</code></pre></li>
+<li><p><code>LongAccumulate</code>将拆分，最后求和的思想带到了任意的累加操作中，在构造方法中需要提供操作类型及其中立元素。<code>accumulate</code>用来与新值相加，<code>get</code>方法用来获取当前值。下列代码上<code>LongAdder</code>是一致的。</p>
+<pre><code>LongAccumulator adder = new LongAccumulator(Long::sum,0);
+//在某些线程中。。。。
+adder.accumulate(value)
+</code></pre></li>
+<li>除<code>LongAdder</code>类和<code>LongAccumulator</code>类以后，java8还提供了<code>DoubleAdder</code>类和<code>DoubleAccumulator</code>类，它们的工作方式基本类似，不过是用于<code>double</code>类型的值。</li>
+<li>Java8还添加了一个<code>StampedLock</code>类，来实现乐观读。</li>
+<li>从Java5开始，<code>ConcurrentHasMap</code>已经变成了并发编程的主力军，因为它是线程安全的。但是如果元素超过了两百万个数据项的映射，<code>size</code>方法已经不够用了，因为它返回的是<code>int</code>值，所以java8引入了一个<code>mappingCount</code>的方法，用来返回一个反映大小的long型值。</li>
+<li><p>在<code>ConcurrentHasMap</code>中更新某个值，为了保证原子操作，有三种方法，</p>
+<pre><code>do{
+    oldValue = map.get(word);
+    newValue = oldValue ==null?1:oldValue+1;
+}while(!map.replace(word,oldValue,newValue));
+</code></pre><p>还可以使用<code>ConcurrentHashMap&lt;String,AtomicLong&gt;</code>,或者在java8中使用<code>ConcurrentHashMap(String,LongAdder)</code>,更新后的代码如下所示：</p>
+<pre><code>map.putIfAbsent(word,new LongAdder());//确保存在一个LongAdder对象，以便我们用于原子自增。
+map.get(word).increment();//这两条可以合并：map.putIfAbsent(word,new LongAdder()).increment();
+</code></pre></li>
+<li>Java8提供了许多可以更方便进行原子更新的方法。<code>compute</code>方法可以通过一个键和一个函数来计算出新的值，如<code>map.compute(word,(k,v)-&gt;v==null?1:v+1)</code>。<code>ConcurrentHashMpa</code>还提供了<code>computeIfPresent</code>和<code>computeIfAbsent</code>方法，分别在已经存在值和不存在值的情况下，才计算新值。<code>map.computeIfAbsent(word,k-&gt;new LongAdder()).increment();</code>当新增数据项时，使用<code>merge</code>更好，它允许默认值，第二次调用才会使用函数。<code>map.merge(word,1L,(existingValue,newValue)-&gt;existingValue+newValue);</code>或者<code>map.merge(word,1L,Long::sum);</code></li>
+<li>如果传递组<code>compute</code>或者<code>merge</code>方法的函数返回<code>null</code>，那么已有的数据项会被删除。</li>
+<li>当你使用<code>compute</code>或者<code>merge</code>方法时，请牢记你所提供的函数不应该进行大量操作。</li>
+</ul>
+<h2 id="批量数据操作"><a href="#批量数据操作" class="headerlink" title="批量数据操作"></a>批量数据操作</h2><ul>
+<li>java8中可以并发哈希映射提供了批量数据操作，多线程中也可以安全的执行。在操作过程中不需要冻结映射的一个快照，除非你恰好知道在这段时间内映射没有被修改，否则你应该将该结果看作是映射状态的一个近似值</li>
+<li><p>批量数据操作有三类：</p>
+<ul>
+<li><code>search</code>会对每个键和（或）值应用一个函数，直到该函数返回一个非<code>null</code>的结果。然后<code>search</code>会终止并返回该函数的结果</li>
+<li><code>reduce</code>会通过提供的累积函数，将所有的键和（或）值组合起来</li>
+<li><code>forEach</code>会对所有键和（或）值应用一个函数</li>
+<li>每个操作又有下面4个版本：<ul>
+<li><code>searchKeys/reduceKeys/forEachKey</code>:对键操作</li>
+<li><code>searchvalues/reducevalues/forEachvalue</code>:对键操作</li>
+<li><code>search/reduce/forEach</code>:对键和值操作</li>
+<li><code>searchEntries/reduceEntries/forEachEntry</code>:对<code>Map.Entry</code>对象操作。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>在使用上述几种操作时，你需要指定一个并行阀值。如果映射包含的元素数量超过了这个阀值，批量操作就以并行方式进行。如果你希望批量数据操作在一个线程中运行，请使用<code>Long.Max_VALUE</code>作为阀值。如果希望批量操作尽可能多的使用线程，则使用<code>1</code>作为阀值。</p>
+</li>
+<li><code>search</code>方法的几个版本如下：<ul>
+<li><code>U searchKeys(long threshold,BiFunction&lt;? super K,? extends U&gt; f)</code></li>
+<li><code>U searchValues(long threshold,BiFunction&lt;? super V,? extends U&gt; f)</code></li>
+<li><code>U search(long threshold,BiFunction&lt;? super K,? super K,? extends U&gt; f)</code></li>
+<li><code>U searchEntries(long threshold,BiFunction&lt;Map.Entry&lt;K,V&gt;,? extends U&gt; f)</code></li>
+</ul>
+</li>
+<li>如查找第一个出现超过<code>1000</code>次的单词，需要搜索键和值：<code>String result = map.search(threshold,(k,v)_&gt;v&gt;1000?k:null);</code>它会返回第一个匹配的元素，如果没有则返回<code>null</code>。</li>
+<li><code>forEach</code>有两种形式，第一种是对每个数据简单地应用一个消费者函数。<code>map.forEach(threshold,(k,v)-&gt;System.out.println(k+&quot;-&gt;&quot;+v));</code>第二种形式会额外接受一个转换器函数，首先会应用该转换器函数，然后将其结果传递给消费者。<pre><code>map.forEach(threshold,
+  (k,v)-&gt;k+&quot;-&gt;&quot;+v,//转换器
+  System.out::println);//消费者
+</code></pre>转换器也可以当作过滤器，当转换器函数返回<code>null</code>，值将会被跳过。如打印值较大的数据项：<code>map.forEach(threshold,(k,v)-&gt;v&gt;1000?K=&quot;-&gt;&quot;+v:null,System.out::println);</code>前者是过滤器和转换器，如果返回<code>null</code>则不会打印。</li>
+<li><code>reduce</code>操作将其输入与一个累加函数结合起来。例如，计算所有值的总和：<code>Long sum = map.reduceValues(threshold,Long::sum);</code>同<code>forEach</code>一样，也可以提供一个换器函数：<pre><code>Integer maxlength=map.reduceKeys(threshold,
+String::length,//转换器
+Integer::max);//累加器
+</code></pre>这里同样也可以作为过滤器，通过返回<code>null</code>来排除不想要的输入，如计算值大于<code>1000</code>的数据项的个数，代码如下：<pre><code>Long count = map.reduceValues(threshold,v-&gt;v&gt;1000?1L:null,Long::sum);
+</code></pre></li>
+<li>如果<code>reduce</code>所有数据项都被过滤掉了，则会返回<code>null</code>。</li>
+<li>对于<code>int</code>、<code>long</code>和<code>double</code>类型的输出，<code>reduce</code>操作提供了专门的方法，分别以<code>ToInt</code>、<code>ToLong</code>和<code>ToDouble</code>后辍结层。你需要将转入转换为原始类型值，并指定一个默认值和累加器函数，当映射为空时会返回默认值。<pre><code>long sum = map.reduceValusesToLong(threshold,
+Long::longValue，//转成原始类型，
+0，//空映射的默认值
+Long::sum)//原始类型累加器。
+</code></pre></li>
+<li>如果想使用一个大的、线程安全的Set，可以用虚假值构造一个<code>ConcurrentHashMap</code>。静态方法<code>newKeySet</code>会返回一个<code>Set&lt;K&gt;</code>对象，实际上就是对<code>ConcurrentHashMap&lt;K,Boolean&gt;</code>对象的封装（所有的映射值都是<code>Boolean.TRUE</code>,不用关心，因为是当作<code>Set</code>用）。<code>Set&lt;String&gt; words = ConcurrentHashMap.&lt;String&gt;newKeySet();</code>,可以用<code>keySet</code>方法返回所有键的<code>Set</code>，该<code>Set</code>是可变的。Java8中又给<code>ConcurrentHashMap</code>添加了另一个<code>keyset</code>方法，它可以接受一个默认值，以便用于向<code>Set</code>中添加元素。<pre><code>Set&lt;String&gt; words = map.keySet(1L);
+words.add(&quot;Java&quot;);
+</code></pre></li>
+</ul>
+<h2 id="并行数组操作"><a href="#并行数组操作" class="headerlink" title="并行数组操作"></a>并行数组操作</h2><ul>
+<li>Arrays类现在有了许多并行化的操作。静态方法Arrays.parallelSort可以对原始类型数组或者对象数组进行排序。如：<pre><code>String contents = new String(Files.readAllBytes(Paths.get(&quot;alice.txt&quot;)),StandardCharsets.UTF_8);//将文本内容读取到字符串中
+String[] words=contents.split(&quot;[\\P{L}]+&quot;);//根拓非字母字符对字符串进行分隔
+Arrays.parallelSort(words);
+</code></pre>对对象排序，你可以提供一个<code>Comparator</code>对象。对于所有这些方法，你可以提供一个范围值，如：<br><code>Arrays.paralleSort(Values,values.length.length/2,values.length);//对上半部分排序</code><br>方法<code>parallelSetAll</code>会将数组中的值按照一个函数的计算结果过滤出来。该函数会获得元素索引，并计算该位置处的值。<br>方法<code>parallelPrefix</code>方法将数组中的每个元素替换为指定关联操作前辍的累积。</li>
+</ul>
+<h2 id="可完成的Future"><a href="#可完成的Future" class="headerlink" title="可完成的Future"></a>可完成的Future</h2><ul>
+<li>这个接口用来异步执行程序，即不等待返回，先去做一些其他的事情，再来接受返回。</li>
+<li>java8提供了<code>CompletableFuture&lt;T&gt;</code>类，它有一个<code>thenApply</code>，来对前边返回的结果进行后续处理。如：<pre><code>CompletableFuture&lt;String&gt; contents = readPage(url);
+CompletableFuture&lt;List&lt;String&gt;&gt; links = contents.thenApply(Parser::getLinks);
+</code></pre>在上述例子中，<code>thenApply</code>方法不会被阻塞。它会返回另一个<code>Future</code>对象。当第一个<code>Future</code>对象完成时，它的结果会发给<code>getLinks</code>方法，该方法的返回值会成为最终结果。</li>
+<li><code>Future</code>对象的流水线如下，通常由静态方法<code>supplyAsync</code>来创建一个<code>CompletableFuture</code>对象，该方法需要一个<code>Supplier&lt;T&gt;</code>参数，即一个无参数，返回类型T的函数。该函数会在另一个线程中被调用。如：<code>CompletableFuture&lt;String&gt; contents = CompletableFuture.supplyAsync(()-&gt;blockingReadPage(url));</code></li>
+<li><code>CompletableFuture</code>还有一个静态方法<code>runAsync</code>，它接受一个<code>Runnable</code>对象作为参数，返回一个<code>CompletableFuture&lt;Void&gt;</code>对象。当你只是一个接一个地执行操作，而不需要在操作之间传递数据时，可以使用它.</li>
+<li>所有以<code>Asyn</code>c结尾的方法都有两种形式,一种会在普通的<code>ForkJoinPool</code>中运行所提供的操作.另一种需要提供一个<code>java.util.concurrent.Executor</code>作为参数，并在该指定的<code>executor</code>对象中执行操作。</li>
+<li>接下来可以调用<code>thenApply</code>或者<code>thenApplyAsync</code>方法，在同一个线程或者另一个线程中运行另一个操作。不管使用那一个方法，都需要提供一个函数，并且会得到一个<code>CompletableFuture&lt;U&gt;</code>对象，其中<code>U</code>表示希望函数的返回类型。一个完整的子如下：<pre><code>CompletableFuture&lt;Void&gt; links = CompletableFuture.supplyAsync(()-&gt;blockingReadPage(url))
+.thenApply(Parser::getLinks)//继续处理
+.thenAccept(system.out::println);//处理结果
+</code></pre>在理想情况下，永远不需要调用<code>Future</code>对象的<code>get</code>方法。直接用<code>thenAccept</code>处理即可。</li>
+<li>为了使用可完成的<code>Future</code>，Java8提供了大量的方法。每个方法其实都有两个对应的异步方法，即常用的<code>ForkJoinPool</code>，另一个则使用<code>Executor</code>作为参数。下面只列一种：<ul>
+<li><code>thenApply</code>:<code>Function&lt;? super T,U&gt;</code>:为结果提供一个函数</li>
+<li><code>thenCompose</code>:<code>Function&lt;? super T,CompletableFuture&lt;U&gt;&gt;</code>：对结果调用一个函数，并执行返回的<code>Future</code>对象</li>
+<li><code>handle</code>:<code>Function&lt;(T,Throwable)),U&gt;</code>：处理结果或者错误</li>
+<li><code>whenAccept</code>:<code>T-&gt;void</code>：同thenApply类似，结果为<code>void</code>类型</li>
+<li><code>whenComplete</code>:<code>(T,THrowable)-&gt;void</code>：同<code>handle</code>类似，结果为<code>void</code>类型</li>
+<li><code>thenRun:Runnable</code>：执行返回<code>void</code>的<code>Runnable</code>对象</li>
+</ul>
+</li>
+<li>可以组成多个Future的方法<ul>
+<li><code>thenCombine</code>:<code>CompletableFuture&lt;U&gt;，(T,U)-&gt;V</code>：执行两个对象，并将结果按照指定的函数组合起来</li>
+<li><code>thenAcceptBoth</code>：<code>CompletableFuture&lt;U&gt;，(T,U)-&gt;Void</code>：同<code>thenCombine</code>类拟，但是结果为<code>void</code>类型</li>
+<li><code>runAfterBoth</code>：<code>CompletableFuture&lt;U&gt;，Runnable</code>：在两个对象完成后，执行<code>Runnable</code>对象</li>
+<li><code>applyToEither</code>：<code>CompletableFuture&lt;U&gt;，T-&gt;V</code>:当其中一个对象的结果可用时，将结果传递给指定的函数</li>
+<li><code>acceptEither</code>：<code>CompletableFuture&lt;U&gt;，T-&gt;Void</code>：同a<code>pplyToEither</code>类似，但是结果为<code>void</code>类型</li>
+<li><code>runAfterEither</code>：<code>CompletableFuture&lt;?&gt;，Runnable</code>：在其中一个对象结束后执行<code>Runnable</code>对象</li>
+<li><code>static allOf</code>：<code>CompletableFuture&lt;?&gt;，...</code>:在所有的<code>Future</code>对象结束后结束，并返回<code>void</code>结果</li>
+<li><code>static anyOf</code>：<code>CompletableFuture&lt;?&gt;，...</code>：在任何一个<code>Future</code>对象结束后结束，并返回<code>void</code>结果</li>
+<li>上述方法中，前三个方法会并行运行两个操作，然后将结果组合到一起。后三个会并行运行两个操作，只要其中一个返回，就返回该结果，并忽略其他结果。最后静态方法<code>allOf</code>和<code>AnyOf</code>可以接受一组可结束的<code>Future</code>对象，并返回一个<code>completableFuture&lt;Void&gt;</code>结果，当这些<code>Future</code>对象全部结束，或者它们中的任意一个结束时，该结果都会结束。没有结果会被传播出去.</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/java/">java</a>, <a href="/tags/java8/">java8</a>, <a href="/tags/多线程/">多线程</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    
+    <a href="/2016/06/08/JAVA8学习（五）/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/06/09/JAVA8学习（六）/" data-title="JAVA8学习（六）" data-url="http://www.52brt.com/2016/06/09/JAVA8学习（六）/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>7</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>6</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

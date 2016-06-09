@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 5 | 我的后院自留地</title>
+  <title>Seite 5 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -89,6 +89,46 @@ var _hmt = _hmt || [];
         
           <div class="alignleft">
             <a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">2015-12-08</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">新手学习Angularjs之三：几种service的区别</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<p>Angularjs有几种自定义服务的方法：<code>value</code>、<code>constant</code>、<code>factory</code>、<code>service</code>、<code>provider</code>,那么他们有什么区别呢？</p>
+<ul>
+<li><code>value</code>:这个方法是用来定义变量的，类似其他编程语言中定义的变量。</li>
+<li><code>constant</code>:这个则是类似其他编程语言中定义的常量，一旦定义，就不能被修改。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -470,67 +510,13 @@ OpenJDK 64-Bit Server VM (build 24.79-b02, mixed mode)
 
 
 
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-09-30T14:59:45.000Z"><a href="/2015/09/30/Linux折腾记(2)-CentOS6下匿名共享可读写文件夹/">2015-09-30</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/09/30/Linux折腾记(2)-CentOS6下匿名共享可读写文件夹/">Linux折腾记(2)-CentOS6下匿名共享可读写文件夹</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>想把windows上的一些资料定时备份到linux，首先想到的就是利用共享文件夹的方式，折腾了一番，最终还是搞成功了。过程如下：</p>
-<ol>
-<li>首先安装<code>samba</code>及<code>samba-client</code>,中间不管提问什么，一路<code>y</code>即可。<pre><code>yum install samba samba-client
-</code></pre></li>
-<li>在<code>home</code>下创建文件夹<code>test</code>。<pre><code>mkdir /home/test
-</code></pre></li>
-<li><p>将<code>/etc/samba/smb.conf</code>文件中的内容替换成。</p>
-<pre><code>[global]
-security=share
-dos charset=cp936
-unix charset=gb2312
-
-[mygitback]
-comment = share
-path = /home/test
-browseable = yes
-guest ok = yes
-writable = yes
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/09/30/Linux折腾记(2)-CentOS6下匿名共享可读写文件夹/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/page/4/" class="alignleft prev">Prev</a>
+    <a href="/page/4/" class="alignleft prev">Vorherige Seite</a>
   
   
-    <a href="/page/6/" class="alignright next">Next</a>
+    <a href="/page/6/" class="alignright next">Nächste Seite</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -546,9 +532,11 @@ writable = yes
   
     <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
   
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
     <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
   
-    <li><a href="/tags/JavaFX/">JavaFX</a><small>2</small></li>
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
   
     <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
   
@@ -570,9 +558,9 @@ writable = yes
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>6</small></li>
+    <li><a href="/tags/java/">java</a><small>7</small></li>
   
-    <li><a href="/tags/java8/">java8</a><small>5</small></li>
+    <li><a href="/tags/java8/">java8</a><small>6</small></li>
   
     <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
   
@@ -603,6 +591,8 @@ writable = yes
     <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
   
     <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
   
     <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
   

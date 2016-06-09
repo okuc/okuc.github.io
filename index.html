@@ -70,11 +70,66 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-06-04T14:59:45.000Z"><a href="/2016/06/04/JAVA8学习（五）/">2016-06-04</a></time>
+        <time datetime="2016-06-09T14:59:45.000Z"><a href="/2016/06/09/JAVA8学习（六）/">2016-06-09</a></time>
       
       
   
-    <h1 class="title"><a href="/2016/06/04/JAVA8学习（五）/">JAVA8学习（五）</a></h1>
+    <h1 class="title"><a href="/2016/06/09/JAVA8学习（六）/">JAVA8学习（六）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h2><ul>
+<li><code>java5</code>提供了强大的<code>java.util.concurrent</code>包，该包为我们提供了线程安全的集合和线程池，使得许多应用开发人员不必使用锁或者启动新线程，就可以编写并发程序。</li>
+<li><code>java5</code>开始<code>java.util.concurrent.atomic</code>包提供了用于支持无锁可变变量的类，保证多线程并发访问同一个实例，也能正确计算并返回正确的值。如：<pre><code>public static AtomicLong nextNumber = new AtomicLong();
+//在某些线程中
+long id= nexNumber.incrementAndGet();//会自动将AtomicLong的值加1，并返回增加后的值。
+</code></pre></li>
+<li><p><code>java5</code>中提供了很多设置、增加、减少值的原子操作，但是如果想要进行更复杂的更新操作，必须使用<code>compareAndSet</code>方法。如想追踪由不同线程所监测的最大值，则下面的代码是行不通的：</p>
+<pre><code>public static AtomicLong nextNumber = new AtomicLong();
+//在某些线程中
+largest.set(Math.max(largest.get(),observed)) //错误，竟争条件，非原子性操作。
+
+do{
+    oldValue = largest.get();
+    newValue = Math.max(oldValue,observed);
+}while(!largest.compareAndSet(oldValue,newValue));//正确方式，每个线程每次都取新旧值判断，只有符合要求时才会赋值。如果是java8,可以如下写：
+largest.updateAndGet(x-&gt;Math.max(x,observed));
+largest.accumulateAndGet(observed,Math::max);//accumulateAndGet方法通过一个二元运算符将原子值和传入的参数组合起来。
+</code></pre><p>除了它之外，Java8还提供了返回原始值的<code>getAndUpdate</code>方法和<code>getAndaccumulateAndGet</code>方法。</p>
+</li>
+<li><code>AtomicInteger</code>、<code>AtomicIntegerArray</code>、<code>AtomicIntegerFieldupdater</code>、<code>AtomicLongArray</code>、<code>AtomicLongFieldUpdater</code>、<code>AtomicRefernce</code>、<code>AtomicReferenceArray</code>和<code>AtomicReferenceFieldUpdater</code>类都提供了这些方法。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/09/JAVA8学习（六）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-08T14:59:45.000Z"><a href="/2016/06/08/JAVA8学习（五）/">2016-06-08</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/08/JAVA8学习（五）/">JAVA8学习（五）</a></h1>
   
 
     </header>
@@ -101,7 +156,7 @@ long millis = timeElapsed.toMillis();
       
         
           <div class="alignleft">
-            <a href="/2016/06/04/JAVA8学习（五）/#more" class="more-link">阅读更多</a>
+            <a href="/2016/06/08/JAVA8学习（五）/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -552,56 +607,11 @@ str1=world
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-15T14:06:32.000Z"><a href="/2016/05/15/centos6下共享文件/">2016-05-15</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/15/centos6下共享文件/">centos6下共享文件</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>1、首先安装smb服务：<code>yum install samba</code><br>2、将配置文件<code>/etc/samba/smb.conf</code>文件修改为：</p>
-<pre><code>[global]
-security=share
-dos charset=cp936
-unix charset=gb2312
-
-[szmacs]
-comment = share
-path = /data/macs
-browseable = yes
-guest ok = yes
-writable = yes
-</code></pre><p>3、关闭访火墙<code>iptables -F</code><br>4、关闭selinux：<code>setenforce 0</code><br>5、重启smb服务：<code>service smb restart</code><br>6、设置smb服务为随机启动：<code>chkconfig smb on</code></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
   
-    <a href="/page/2/" class="alignright next">Next</a>
+    <a href="/page/2/" class="alignright next">Nächste Seite</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -617,9 +627,11 @@ writable = yes
   
     <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
   
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
     <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
   
-    <li><a href="/tags/JavaFX/">JavaFX</a><small>2</small></li>
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
   
     <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
   
@@ -641,9 +653,9 @@ writable = yes
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>6</small></li>
+    <li><a href="/tags/java/">java</a><small>7</small></li>
   
-    <li><a href="/tags/java8/">java8</a><small>5</small></li>
+    <li><a href="/tags/java8/">java8</a><small>6</small></li>
   
     <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
   
@@ -674,6 +686,8 @@ writable = yes
     <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
   
     <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
   
     <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
   
