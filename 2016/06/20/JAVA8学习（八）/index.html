@@ -1,0 +1,383 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JAVA8学习（八） | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="JAVA8学习（八）"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="//archives">归档</a></li>
+    
+      <li><a href="//coding">编程技术</a></li>
+    
+      <li><a href="//bigData">大数据技术</a></li>
+    
+      <li><a href="//dataV">数据可视化</a></li>
+    
+      <li><a href="//about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-20T14:59:45.000Z"><a href="/2016/06/20/JAVA8学习（八）/">2016-06-20</a></time>
+      
+      
+  
+    <h1 class="title">JAVA8学习（八）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><strong>字符串连接</strong>：<pre><code>String joined = String.join(&quot;/&quot;,&quot;usr&quot;,&quot;local&quot;,&quot;bin&quot;);//&quot;usr/local/bin&quot;;
+System.out.println(joined);
+String ids = String.join(&quot;,&quot;,ZoneId.getAvailableZoneIds());
+System.out.println(ids);//将所有的时区标识，由逗号分隔
+</code></pre></li>
+<li><code>java5</code>中，7种原始类型的包装类（不包含Boolean）都提供了一个静态字段<code>SIZE</code>，用来表示该类型以<code>bit</code>为单位的长度。在<code>Java8</code>中，它们都提供了一个<code>BYTES</code>字段，以<code>byte</code>为单位来表过该类型的长度，以便于用于无法被8整除的情况。</li>
+<li>为了在流操作中进行聚合操作，<code>Short</code>、<code>Integer</code>、<code>Long</code>、<code>Float</code>和<code>Double</code>这5种类型，现在分别提供了静态方法<code>sum</code>、<code>max</code>、<code>min</code>，用来在流操作中作为聚合函数使用。出于相同的原因，<code>Boolean</code>类现在也包含了静态方法<code>logicalAnd</code>、<code>logicalOr</code>、<code>logicalXor</code>。</li>
+<li><code>Integer</code>类现在支持无符号数学计算。静态方法<code>Byte.toUnsignedInt(b)</code>来获取一个从<code>0</code>到<code>255</code>的值。一般使用无符号数字，会丢失负数并获得原来两范围的正数。<code>Byte</code>和<code>Short</code>类中添增了<code>toUnsignedInt</code>方法，而<code>Byte</code>、<code>Short</code>、<code>Integer</code>类中新增了<code>toUnsignedLong</code>方法。</li>
+<li><code>Integer</code>和<code>Long</code>类中新增了处理无符号值的<code>compareUnsigned</code>、<code>divideUnsigned</code>和<code>remainderUnsigned</code>方法。由于大于<code>Integer.MAX_VALUE</code>的无符号整数相乘会导致溢出，所以应该调<code>toUnsignedLong</code>将它们作为长整型值相乘。</li>
+<li><code>Float</code>和<code>Double</code>类现在新增了静态方法<code>isFinite</code>,如果<code>x</code>不是正无穷大、负无穷大或者<code>NaN</code>(非数字)，那么<code>Double.isFinite(x)</code>将返回<code>true</code>。</li>
+<li><code>BigInteger</code>类增加了实例方法<code>（long|int|short|byte）ValueExact</code>，分别用来返回<code>long</code>、<code>int</code>、<code>short</code>或者<code>byte</code>，并且当值不在目标范围内时抛出一个<code>ArithmeticExcepiont</code>异常。<a id="more"></a></li>
+<li><strong>Math</strong>类提供了一些方法来进行精确的算术计算，并且当结果溢出时抛出一个异常。如，默认情况下，<code>100000*100000</code>会计算出错误的结果<code>14100065408</code>，而<code>multiplyExact(100000,100000)</code>会抛出一个异常。</li>
+<li><code>Math</code>类中新增的方法为<code>（add|subtract|multiply|increment|decrement|negate）Exact</code>,参数为<code>int</code>和<code>long</code>类型的值。<code>toIntExact</code>方法可以将一个<code>long</code>值转换为等价的<code>int</code>值。</li>
+<li><code>floorMod</code>和<code>floorDiv</code>方法旨在解决一个长期存在的整型余数问题。即如果遇到负数时，得到的结果为负的问题。</li>
+<li>为<code>double</code>和<code>float</code>参数定义的<code>nextDown</code>方法会返回比指定数字小，但最接近于指定数字的浮点数字。如要生成一个小于<code>b</code>的数字，但是又恰好产生了<code>b</code>，那么可以返回<code>Math.nextDown(b)</code>。（<code>java6</code>中存在对应的<code>Math.nextUp</code>方法）</li>
+<li><strong>集合</strong>中除了<code>stream</code>、<code>parellelStream</code>和<code>spliterator</code>方法以外，<code>Java8</code>中添加到集合类和接口中的其他方法如下：<ul>
+<li><code>Iterable</code>:<code>forEach</code></li>
+<li><code>Collection</code>:<code>removeIf</code>：和<code>filter</code>方法正好相反。</li>
+<li><code>List</code>:<code>replaceAll</code>,<code>sort</code></li>
+<li><code>Map</code>:<code>forEach</code>,<code>replace</code>,<code>replaceAll</code>,<code>remove(key,value)</code>(只有当key到value的映身存在时才删除)，<code>putIfAbsent</code>，<code>compute</code>，<code>computeIf（Absent|Pressent）</code>、<code>merge</code></li>
+<li><code>Iterator</code>：<code>forEachRemaining</code>：用于将剩余的函数传递给一个函数</li>
+<li><code>BitSet</code>：<code>Stream</code>：<code>BitSet</code>有一个方法可以生成集合中的所有元素，返回一个由<code>int</code>值组成的流。</li>
+</ul>
+</li>
+<li>利用接口也能拥有具体实现方法的特点，<code>Comparator</code>接口新增了许多有用的方法。<ul>
+<li>静态方法<code>comparing</code>可以接受一个”键提取器”函数，将某类型T映射为一个可比较类型（如<code>String</code>）。该函数会应用于进行比较的对象，随后会对返回的键进行比较。<code>Arrays.sort(people，Comparator.comparing(Person::getName));</code>还可以将比较器通过<code>thenComparing</code>方法连接起来，来进行多级比较。如：<code>Arrays.sort(people，Comparator.comparing(Person::getName).thenComparing(Person::getFirstName));</code>如果第一个比较器比较出来是相同的，则使用第二个比较器进行比较。下面是按人员的姓名长度来排序：<code>Arrays.sort(people,Comparator.comparing(Person::getName,(s,t)-&gt;Integer.compare(s.length(),t.length())))</code></li>
+<li><code>comparing</code>和<code>thenComparing</code>方法都有可以避免<code>int</code>、<code>long</code>、或者<code>double</code>值装箱/拆箱的重载形式。如<code>Arrays.sort(people,Comparator.comparing(p-&gt;p.getName().length()))</code></li>
+<li>如果键函数可以返回<code>null</code>，可以用<code>nullsFirst</code>和<code>nullsLast</code>方法，它们可以对已有的比较器进行修改，当遇到<code>null</code>时不会抛出异常，而是看作小于或大于正常值的值。如某人没有中间名字，<code>getMiddleName</code>方法会返回<code>null</code>。那么你可以使用<code>Comparator.comparing(Person::getMiddleName(),Comparator.nullsFirst(...))</code>。在这个例子中，<code>Comparator</code>需要一个比较器来比较两个字符串。<code>naturalOrder</code>可以为任何实现<code>Comparable</code>接口的类生成一个比较器。因此我们需要使用<code>Comparator.&lt;String&gt;naturalOrder()</code>。完整代码如下：<code>Arrays.sort(people,comparing(Person::getMiddleName,nullsFirst(naturalOrder())));</code>静态方法<code>reverseOrder</code>可以得到自然排序的相反顺序。要颠倒任何比较器，可以使用实例方法<code>reversed</code>。例如：<code>naturalOrder().reversed(),reverseOrder()</code>结果一样。</li>
+<li><code>Java6</code>引入了<code>NavigableSet</code>和<code>NavigableMap</code>接口，通过利用元素和键的排序，对于任意指定<code>v</code>，能够高效定位<code>&gt;=v</code>或<code>&gt;v</code>的最小值，或者<code>&lt;=v</code>或<code>&lt;v</code>的最大值。现在<code>Collections</code>类也通过方法<code>（unmodifiable|synchronized|checked|empty）Navigable(Set|Map)</code>支持这些接口。</li>
+<li><code>Collections</code>还提供了一个被大家忽略的方法<code>checkedQueue</code>。当你插入一个错误类型的元素时，会抛出一个<code>ClassCastExcaption</code>异常。</li>
+<li><code>Collections</code>还提供了<code>emptySorted(Set|Map)</code>方法来返回有序集合的轻量级实例，同<code>Java5</code>中添加的<code>empty(Set|Map)</code>方法类似。</li>
+</ul>
+</li>
+<li>为了延迟读取一个文件中的行，可以使用<code>Files.lines</code>方法。它会产生一个包含字符串的流，每个字符串就是文件的一行。如下例中找到条一个包含<code>password</code>的行：<pre><code>Stream&lt;String&gt; lines = Files.lines(path);
+Optional&lt;String&gt; passwordEntry = lines.filter(s-&gt;s.contains(&quot;password&quot;)).findFirst();
+</code></pre></li>
+<li><code>Files.lines</code>默认以<code>UTF-8</code>打开文件，而<code>FileReader</code>默认会以本地字符编码打开文件，从而导致可移植性问题。也可以通过提供<code>Charset</code>参数来指定其他的编码。</li>
+<li>关闭文件使用java7中的方法：<pre><code>try(Stream&lt;String&gt; lines = Files.lines(path)){
+Optional&lt;String&gt; passwordEntry = lines.filter(s-&gt;s.contains(&quot;password&quot;)).findFirst();
+...
+}//这里首先会关闭流，然后紧接着关闭文件
+</code></pre>当一个流调用其他流时，<code>close</code>方法也会被递归调用。 因此，还可以这么写：<pre><code>try(Stream&lt;String&gt; filteredLines = Files.lines(path).filter(s-&gt;s.contains(&quot;password&quot;))){
+Optional&lt;String&gt; passwordEntry = filteredLines.findFirst();
+...
+}
+</code></pre>当<code>filteredLines</code>关闭时，首先关闭底层的流，从而关闭底层的文件。<br>如果当读取流文件时发生了一个<code>IOException</code>，那么该异常会被包装为一个<code>UncheckedIOException</code>异常，并被抛出。因为流没有声明会抛出任何检查异常，所以这么做是必须的。<br>如果希望按行<strong>读取文件以外的其他来源</strong>，可以考虑用<code>Buffered Reader.lines</code>方法。<pre><code>try(BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))){
+    stream&lt;String&gt; lines = reader.lines();
+}
+</code></pre>通过该方法，可以只关闭流，而不关闭<code>reader</code>。出于该原因，必须将<code>BufferedReader</code>对象（而非<code>Stream</code>对象）放在<code>try</code>的头部。</li>
+<li>静态方法<code>Files.list</code>可以返回一个读取指定目录中项目的<code>Stream&lt;Path&gt;</code>对象。由于不会延迟读取目录，所以可以高效地处理拥有大量项目的目录。由于读取目录会涉及关闭一个系统资源，所以应该使用<code>try</code>语句。</li>
+<li><code>DirectoryStream</code>对象，是Java7为实现高效遍历大目录所引入的。该 接口与Java8中的流没有关系，但是由于它实现了<code>Iterable</code>接口，所以可以用于增强的<code>for</code>循环中。<pre><code>try(DirectoryStream stream = Files.newDirectoryStream(pathToDirectory)){
+    for(Path entry:stream){
+        ...
+    }
+}
+</code></pre>在<code>java8</code>中，值需要<code>Files.list</code>。但是<code>list</code>不会处理目录的子目录，要处理，应使用<code>Files.walk</code>方法：<pre><code>try(Stream&lt;path&gt; entries = Files.walk(pathToRoot)){
+    //包含所有子目录，按照深度优先的顺序遍历
+}
+</code></pre>还可以通过<code>Files.walk(pathToRoot,depth)</code>来限制要访问的目录树的深度。这两个<code>walk</code>方法以接受一个<code>FileVisitOption</code>类型的可变参数，但是目前只有一个选项可供选择：按照符号链接读取的<code>FOLLOW_LINKS</code>。如果要对<code>walk</code>返回的路径进行过滤，并且过滤条件中包含了目录中存储的文件属性，如大小、创建时间、类型等，就该使用<code>find</code>方法来代替<code>walk</code>方法。</li>
+<li><strong>Base64</strong> 编码可以将一组字节序列编码为一个（更长的）可打印的ASCII字符序列。它经常用于电子邮件消息中的二进制数据，以及”基本的”HTTP认证。<code>Java8</code>提供了一个标准的编码器和解码器。</li>
+<li>Base64使用64个字符来编码6bit信息：<ul>
+<li>26个大写字母A…Z</li>
+<li>26个小写字母a…z</li>
+<li>10个数字0…9</li>
+<li>2个符号+和-（基本的）或者-和——（对于URL和文件名来说都是安全的）</li>
+</ul>
+</li>
+<li>一般来说，编码后的字符串没有换行符，但是电子邮件使用的MIME标准要求每76个字符要使用一个”\r\n”换行符。</li>
+<li>要进行Base64编码，可以使用Base64类的静态方法<code>getEncoder</code>，<code>getUrlEncode</code>，或者<code>getMimeEncoder</code>来获得一个<code>Base64.Encoder</code>对象。该类包含了对字符数组或者<code>NIO ByteBuffer</code>进行编码的方法。如：<pre><code>Base64.Encoder encoder = Base64.getEncoder();
+String original = username + &quot;:&quot; + oasswirdl
+Strubg encoded = encoder.encodeToString(original.getBytes(StandardCharsets.UTF_8));
+</code></pre>还可以包装一个输出流，所有发送给他的数据都会自进行编码：<pre><code>Path originalPath = ...,encodedPath=...;
+Base64.Encoder encoder = Base64.getMimeEncoder();
+try(OutputStream output = Files.newOutputStream(encodePath)){
+    Files.copy(originalPath,encode,wrap(output));
+}
+</code></pre>要进行解码，只需要将这些操作颠倒过来：<pre><code>Path decodePath = ...,encodedPath=...;
+Base64.Encoder encoder = Base64.getMimeEncoder();
+try(OutputStream output = Files.newOutputStream(encodePath)){
+    Files.copy(decodePath,encode,wrap(output));
+}
+</code></pre></li>
+<li><strong>注解</strong>在java8中也得到了两点改进：可重复的注解及可用于类型的注解。反身也得到了加强，在java8中能够得到方法参的名称。</li>
+<li>可重复的注解：在java第一次引入注解时，它们只能用来标注方法和字段。例如：<pre><code>@PostConstruct public void fetchData(){...} //在构造函数之后调用
+@Resource(&quot;jdbc:derby:sample&quot;) private Connection conn;//在这里注入资源
+</code></pre>由于java原来相同的注解不允许在一个字段上，所以如复合主键，为了避免用多次，只能这样做：<pre><code>@Entity
+@PrimaryKeyJoinColumns({
+@PrimaryKeyJoinColumn(name=&quot;ID&quot;),
+@primaryKeyJoinColumn(name=&quot;REGION&quot;)
+})
+public class Item {...}
+</code></pre>而现在，只要使用的框架已经支持了可重复的注解。</li>
+<li><p>可用于类型的注解：在Java8之前，注解只能被标注在一个声明上。声明是用来定义某个新名称的代码段。以下是一些声明的例子，用粗体标注了声明的名称。</p>
+<pre><code>@Entity public class Person {...}
+@SuppressWarnings(&quot;unchecked&quot;) List&lt;Person&gt; people = query.getResultList();
+</code></pre><p>在java8中可以在任何类型上标注注解，对对于常见的错误工具非常有用。如在永远不希望为<code>null</code>的变量上标注了<code>@NonNull</code>注解，那么工具就可以检查出下面的代码是正确的：</p>
+<pre><code>private @NonNull List&lt;String&gt; names = new ArrayList&lt;&gt;;
+...
+names.add(&quot;Fred&quot;);//不可能出现空指针异常
+</code></pre><p>如果是<code>list</code>中的元素不能为<code>null</code>：<code>private List&lt;@NonNull String&gt; names;</code><br>如是允许为<code>null</code>，则用<code>@Nullable。</code><br><code>checker</code>框架（<code>http://types.cs.washington.edu/checker-framework</code>）中的空指针检查程序会假设所有的非局部变量隐式标注了<code>@NonNull</code>注解。<br>上述的注解不是java标准。</p>
+</li>
+<li>用于类型的注解可以出现在以下地方：<ul>
+<li>用于泛型类型参数：<code>List&lt;@NonNull String&gt;</code>、<code>Comparator、&lt;@NonNull String&gt;reverseOrder()</code></li>
+<li>用于所有的数组：<code>String[] @NonNull [] words (words[i][j]不是null)</code>、<code>String @NonNull [][]words(words 不是null)</code>、<code>String[] @NonNull[] words(words[i]不是null)</code></li>
+<li>用于父类和接口：<code>class Image Implements @Rectangular Shape</code>。</li>
+<li>用于调用构造函数：<code>new @Path String(&quot;/usr/bin&quot;)</code></li>
+<li>用于强制类型转换和<code>Instanceof</code>检查：<code>(@Path String) input</code>、<code>if(input instanceof @Path String)</code>(这些注解只用于外部工具，它们不会对类型转换或instanceof的检查行为带来任何影响。)</li>
+<li>用于定义抛出的异常：<code>public Person read() throws @Localized IOException</code>。</li>
+<li>用于通配符和类型绑定：<code>List&lt;@ReadOnly ? extends Person&gt;</code>、<code>List&lt;? extends @ReadOnly&gt;Person</code></li>
+<li>用于方法和构造函数引用：<code>@Immutable Person::getName</code><br>注解不能标注到<code>class</code>上，不能标注到<code>import</code>上。不能在注解上在标明注解。</li>
+</ul>
+</li>
+<li>注解用于方法参数反射。以前不能获取参数名称，现在可以了。如：<pre><code>Person getEmployee(@PathParam(&quot;dept&quot;) Long dept,@QueryParam(&quot;id&quot;) Long id)
+</code></pre>现在可以写为：<pre><code>Person getEmployee(@PathParam Long dept,@QueryParam Long id)
+</code></pre>但是这样写不幸的是，为了获取类文件中的必需信息，你需要使用<code>javac -parameters SourceFile.java</code>的方式来编译源代码。</li>
+<li><code>Objects</code>类新增了两个静态的<code>predicate</code>方法<code>isNull</code>和<code>nonNull</code>，这两个方法在使用流的时候非常实用。<code>stream.anyMatch(Objects::isNull)</code>,检测是否包含<code>null</code>值；<code>stream.filter(Objects::nonNull)</code>会获取所有非null的对象。</li>
+<li><code>Java.util.Logger</code>类新增了<code>log</code>、<code>logp</code>、<code>severe</code>、<code>warning</code>、<code>info</code>、<code>config</code>、<code>fine</code>、<code>finer</code>和<code>finest</code>等方法，并且支持了延迟构造消息。</li>
+<li>以前，<code>logger.finest(&quot;x:&quot;+x+&quot;,y:&quot;+y)</code>不管最终输不输出日志，消息字符串都会格式化。现在，用<code>logger.finest(()-&gt;&quot;x:&quot;+x+&quot;,y:&quot;+y);</code>则会需要时才去执行。</li>
+<li><code>Objects</code>类的<code>requireNonNull</code>也增加了一个延迟计算消息字符串的版本。<code>this.directions=Objects.requireNonNull(directions,()-&gt;&quot;directions for &quot; + this.goal +&quot; must not be null&quot;);</code>通常<code>directions</code>不会是<code>null</code>，因此可以直接将<code>this.directions</code>设置为<code>directions</code>。如果<code>directions</code>为<code>null</code>，则执行<code>lambda</code>表达式,并且会抛出个<code>NullPointerException</code>异常，异常的消息为返回的字符串。</li>
+<li><strong>正则表达式</strong>：<code>java7</code>引入的命名捕获组，在<code>java8</code>中，可以在<code>Matche</code>r类的<code>start</code>、<code>end</code>和<code>group</code>方法中使用名称：<pre><code>Matcher matcher = pattern.matcher(input);
+if(matcher.matches()){
+    String city = matcher.group(&quot;city&quot;)
+}
+</code></pre><code>Pattern</code>类增加了一个<code>splitAsStream</code>方法，可以将一个<code>CharSequence</code>按照正则表达式进行分隔：<pre><code>String contents = new String(Files.readAllBytes(path),StandardCharsets.UTF_8);
+Stream&lt;String&gt; words = Pattern.compile(&quot;[\\P{L}]+&quot;).splitAsStream(contents);
+</code></pre>所有非字符的字符序列现在都是单词分隔符。<br>方法<code>asPredicate</code>方法用来过滤匹配正则表达式的字符串：<pre><code>Stream&lt;String&gt; acronyms = words.filter(Pattern.compile(&quot;[A-Z]{2,}&quot;).asPredicate());
+</code></pre></li>
+<li>一个语言环境最多由五部分组成：<ul>
+<li>一种语言。由两个或三个小写字母指定，如：<code>en</code>、<code>de</code>等。</li>
+<li>一个脚本。由4个字母（第一个字母大写）指定，如<code>Latn(Latin)</code>、<code>Cyrl(Cyrillic)</code>等。</li>
+<li>一个国家。由两个大写字母或三个数字指定，如<code>US</code>(<code>United States</code>)或<code>CH</code>(<code>Swizerland</code>)</li>
+<li>一个可选的变量,变量不再是通用的。</li>
+<li>一个可选的扩展。扩展描述了各个地区的日成、数字等本地偏好。<code>Unicode</code>标准指定了一些这类的扩展。这些扩展由u-作为开头，然后是两个字母代码，用来指定该扩展是否用来处理日历(<code>ca</code>)、数字(<code>nu</code>)或其他类型。</li>
+</ul>
+</li>
+<li><code>Java7</code>之后，可以直接调用<code>Locale.forLanguageTag(&quot;en-US&quot;)</code>。Java8添加了一些用于根据用户需求查找语言环境的方法。</li>
+<li>语言范围是一个表示用户所需语言特性的字符串，其中可以用<code>*</code>作为通配符。如：一个居住在瑞士的说德语的人，可以喜欢德国和瑞士的东西，这时，需要创建两个<code>Locale.LanguageRange</code>对象，分别用字符串”de”和”*-CH”来表示：<pre><code>List&lt;Locale.LanguageRange&gt; ranges = Stream.of(&quot;de&quot;,&quot;*-CH&quot;).map(Local.LanguageRange::new).collect(Collectors.toList());//一个包含指定字符串的Locale.LanguageRange对象列表
+List&lt;Locale&gt; matches = Locale.fileter(ranges,Arrays.asList(Locale.getAvailableLocales()));//匹配的语言环境是：de,de-CH,de-AT,de-LU，de-DE，de-GR，fr-GR。。。。
+</code></pre>静态方法<code>lookup</code>只能找到最佳匹配的语言环境：<pre><code>Locale bestMatch = Locale.lookup(ranges,locales);
+</code></pre></li>
+<li><strong>JDBC</strong><code>Java</code>8中<code>JDBC</code>已经升级到了4.2，提供了一些<code>java.sql</code>包中的<code>Date</code>、<code>Time</code>和<code>Timestamp</code>类与<code>java.time</code>包下的<code>LocalDate</code>、<code>LocalTime</code>和<code>LocalDateTime</code>类相互进行转换的方法。<br><code>Statement</code>为<code>Statement</code>和<code>ResultSet</code>指定了一个泛型方法<code>getObject(column,type)</code>,其中<code>type</code>是一个<code>Class</code>实例。例如：<code>URL url = result.getObject(&quot;link&quot;,URL.class)</code>可以将一个<code>DATALink</code>获取为<code>URL</code>。此外，<code>JAVA8</code>还为其新增了一个对应的<code>setObject</code>方法。</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/java/">java</a>, <a href="/tags/java8/">java8</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    
+    <a href="/2016/06/10/JAVA8学习（七）/" class="alignright next" >Siguiente</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/06/20/JAVA8学习（八）/" data-title="JAVA8学习（八）" data-url="http://www.52brt.com/2016/06/20/JAVA8学习（八）/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Etiquetas</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
+  
+    <li><a href="/tags/Nashorn/">Nashorn</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>9</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>8</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

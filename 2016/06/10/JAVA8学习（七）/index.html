@@ -1,0 +1,390 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JAVA8学习（七） | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="JAVA8学习（七）"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="//archives">归档</a></li>
+    
+      <li><a href="//coding">编程技术</a></li>
+    
+      <li><a href="//bigData">大数据技术</a></li>
+    
+      <li><a href="//dataV">数据可视化</a></li>
+    
+      <li><a href="//about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-10T14:59:45.000Z"><a href="/2016/06/10/JAVA8学习（七）/">2016-06-10</a></time>
+      
+      
+  
+    <h1 class="title">JAVA8学习（七）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><code>java8</code>提供了一个命令行工具<code>jjs</code>。你只需要启动它，并执行<code>JavaScript</code>命令即可启动：<pre><code>jjs
+jjs&gt;&apos;Hello,World&apos;
+Hello,World
+jjs&gt;&apos;Hello,World.length
+5
+</code></pre></li>
+<li>在<code>js</code>中定义字符串可以是单引号也可以是双引号。每行后边可以加分号也可以不加。</li>
+<li>在<code>jjs</code>中定义函数并调用它们<pre><code>jjs&gt;function factorial(n){return n&lt;=1?1:n*factorial(n-1)}
+function factorial(n){return n&lt;=1?1:n*factorial(n-1)}
+jjs&gt;factorial(10)
+3628800
+</code></pre>-<code>jjs</code>中调用<code>java</code>的方法<pre><code>var input = new java.util.Scanner(new java.net.URL(&apos;http://horstmann.com&apos;).openStream())
+input.useDelimiter(&apos;$&apos;)
+var contents = input.next()
+contents
+</code></pre></li>
+<li><code>jjs</code>又被称为<code>REPL</code>，可以用这种方式来学习<code>java API</code>，但是它没有<code>Scala</code>做得那么好。因为它的自动提示不友好，不能提示。可以尝试安装<code>rlwrap jjs</code>或在<code>Emacs</code>中运行<code>jjs</code>来解决这一问题。</li>
+<li>在<code>Java</code>中，可以使用<code>Java6</code>中引入的脚本引擎机制来运行一个<code>Nashorn</code>脚本。通过脚本引擎，可以执行任何JVM语言的脚本，如<code>Groovy</code>、<code>JRuby</code>、<code>Jython</code>。此外，还有另外一些脚本引擎用于支持任何<code>JVM</code>以外的语言，如<code>PHP</code>、<code>Scheme</code>。</li>
+<li><code>java8</code>中运行<code>nashorn</code>的示例如下：<pre><code>ScriptEngineManager manager = new ScriptEngineManager();//获取注册的引擎管理器
+ScriptEngin engin = manager.getEngineByName(&quot;nashorn&quot;);//通过名称获取指定引擎
+Object result = engine.vale(&quot;&apos;Hello,world!&apos;.length&quot;);
+System.out.println(result);
+</code></pre><a id="more"></a></li>
+<li>为了在脚本中使用<code>Java</code>对象，需要使用<code>ScriptEngine</code>接口中的<code>put</code>方法。如：将<code>JavaFX</code>的<code>stage</code>对象设为可见，你可以命名用<code>js</code>来访问它：<pre><code>public void start(Stage stage){
+ engine.put(&quot;stage&quot;,stage);
+ engine.eval(script);//脚本代码可以访问stage对象
+}
+</code></pre>除了将变量置于全局作用域外，还可以将它们汇聚到一个<code>Bindings</code>对象中，然后把该对象传到<code>eval</code>方法中：<pre><code>Binding scope = engine.createBindings();
+scope.put(&quot;stage&quot;,stage);
+engine.eval(script,scope);
+</code></pre>当这些绑定对象只是临时用于某次<code>eval</code>方法调用时，这种方式就很有用。如上述传入后，<code>js</code>中就可以这么调用：<pre><code>stage.setTitle(&apos;Hello&apos;);
+stage.title = &apos;Hello&apos;;//二者等价
+</code></pre><code>Nashorn</code>为<code>getter</code>和<code>setter</code>方法提供一个方便的属性语法。如果表达式<code>stage.title</code>发生在<code>=</code>操作符的左侧，那么它就会被转为调用<code>setTitle</code>方法，否则，会被转为调用<code>stage.getTitle()</code>方法。<br>还可以用JS中的方括号语法来访问属性：<pre><code>stage[&apos;title&apos;]=&apos;Hello&apos;
+</code></pre></li>
+<li>js中没有方法生载的概念，方法的名称必须都是唯一的，但是可以拥有任意数量、类型的参数。<code>Nashorn</code>会试图根据参数的数目和类型来选择正确的<code>Java</code>方法。如果出现多个匹配方法，可以通过如下代码手动选择正确的方法：下例指定了删除<br><code>list[&#39;remove(Object)&#39;](1)</code></li>
+<li>当你希望在<code>JavaScript</code>中构造对象时（而不是通过脚本引擎传递对象），你需要访问<code>java</code>的包，有两种方法：<ul>
+<li>通用使用点符号，全局对象<code>java</code>、<code>javax</code>、<code>javafx</code>、<code>com</code>、<code>org</code>、和<code>edu</code>可以用来表示包和类对像，如<code>var javaNetPackage=java.net</code> //一个javaPackage对象。<code>var URL= java.net.URL</code> //一个JavaClass类对象。</li>
+<li>如果需要访问一个不是由以上标识符开头的包，可以通过<code>Package</code>对象来查找它：<code>Package.ch.cern</code></li>
+<li>还可以调用<code>java.type</code>函数。<code>var URL = Java.type(&#39;java.net.URL&#39;)</code>。由于它稍快一点，并且拥有更好的错误检查。所以后续都是用得此方法</li>
+</ul>
+</li>
+<li>Nashorn文档建议统一在脚本文件的顶部定义类对象，<pre><code>var URL = Java.type(&apos;java.net.URL&apos;)
+var JMath = Java.type(&apos;java.lang.Math&apos;)//这个名称是为了防止与JS中的Math对象冲突
+</code></pre>一旦定义了对象，就可以直接用了：<pre><code>JMath.floorMod(-3,10)
+</code></pre>构造对象：<pre><code>var url = new URL(&apos;http://horstmann.com&apos;);//当然本文一开始的做法也是可以的
+</code></pre></li>
+<li>同时使用<code>java.type</code>和<code>new</code>，需要加一对额外的括号：<code>var url = new (Java.type(&#39;java.net.URL&#39;))(&#39;http://horstmann.com&#39;)</code></li>
+<li>如果是内部类，也可以用点符号：<code>var entry = new java.util.AbstractMap.SimpleEntry(&#39;helllo&#39;,42)</code>,还可以使用<code>Java.type</code>：<code>var Entry = Java.type(&#39;java.util.AbstractMap$SimpleEntry&#39;)</code></li>
+<li><code>Nashorn</code>中的字符串也是<code>JS</code>对象：<code>&#39;Hello&#39;.slice(-2)</code>//返回<code>&#39;lo&#39;</code>,这里我们调用了<code>js</code>方法<code>slice</code>,<code>java</code>中没有这样的方法，但是，<code>&#39;Hello&#39;.compareTo(&#39;World&#39;)</code>也能工作，它是调用的java中的方法。js字符串会被转化为一个Jave字符串，一般来说，当一个<code>JS字符串</code>被传递给一个<code>Java方法</code>时，会被转为一个<code>Java字符串</code>。当一个<code>js对象</code>会被传递给参数为<code>String类型</code>的<code>Java方法</code>时，它都会被转换为一个字符串：<pre><code>var path = java.nio.file.Paths.get(/home/)//一个JS RegExp对象被转化为一个Java字符串
+</code></pre></li>
+<li>JS并没有明确对整数提供支持，JS中的<code>Number</code>类型等同于Java中的<code>double</code>类型，如传递给接收<code>int</code>或<code>long</code>型的java方法，小数部分会自动被丢弃。</li>
+<li>一个例子：<pre><code>var price =10
+java.lang.String.format(&apos;Price:%.2f&apos;,Number(price))//由于price是整数，不处理的话，这儿会转为了一个整数对象，而格式化中的f只能用于浮点数，所以会失败，必须处理。
+</code></pre></li>
+<li>要使用java数组，有以下步聚：<ul>
+<li>创建类对象：<code>var intArray = Java.type(&#39;int[]&#39;)</code>、<code>var StringArray = Java.type(&#39;java.lang.String[]&#39;)</code></li>
+<li>调用new操作符，并提供数组的长度<code>var numbers = new intArray(10)</code>//一个原始类型的int[]数组 <code>var names = new StringArray(10)</code>//一个String类型的引用数组</li>
+<li>像平常一样使用方括号来获取值：<code>numbers[10] =42</code> <code>print(numbers[0])</code> <code>for each(var elem in names)进行处理</code>  <code>for(var i in names) 对i和names[i]进行一些处理</code></li>
+</ul>
+</li>
+<li>JS中的数组是分散得，即可以中间空隔元素，直接打印：<pre><code>var names = []
+names[0] = &apos;Fred&apos;
+names[2] = &apos;Barney&apos;
+</code></pre>初始化了一个JS数组，那么循环<code>for(var i in names) print(i)</code>,会打印0和2</li>
+<li>使用<code>Java.to</code>方法，可以将JS数组转换为Java的数组<code>var javaNames = Java.to(names,StringArray)</code>//一个String[]数组；<code>Java.from</code>方法，则相反：<code>var jsNumbers = Java.from(numbers)</code></li>
+<li>对于Java中的重载，可以命名用<code>Java.to</code>方法来解决：<pre><code>java.util.Arrays.toString(Java.to([1,2,3],Java.type(&apos;int[]&apos;)))
+java.util.Arrays.toString(Java.to([1,2,3],&apos;int[]&apos;))
+</code></pre></li>
+<li><code>Nashorn</code>为<code>java</code>列表和映身提供了”语法糖”，可以对任何<code>Java List</code>对象使用方法括号，来调用<code>get</code>和<code>set</code>方法。<pre><code>var names = java.util.Arrays.asList(&apos;Fred&apos;、&apos;Wilma&apos;、&apos;Barney&apos;);
+var first= names[0]
+names[0]=&apos;Duke&apos;
+</code></pre>对java映射也可以使用方括号：<pre><code>var scores = new java.util.HashMap
+scores[&apos;Fred&apos;]=10//调用scores.put(&apos;Fred&apos;,10)
+</code></pre>遍历<pre><code>for(var key in scores) ...
+for each(var value in scores)...
+</code></pre>如果希望同时处理键和值，如下：<pre><code>for each(var e in scores.entrySet()) 处理e.key 和 e.value
+</code></pre></li>
+<li>lambda表达式：js提供了匿名函数，如：<pre><code>var square = function(x){return x*x}//右边是一个匿名函数
+var result = square(2)//()操作符会调用该函数
+</code></pre></li>
+<li>可以将一个匿名函数作为一个java的函数式接口参数：<code>java.util.Arrays.sort(words,function(a,b){return java.lang.Integer.compare(a.length,b.length)})</code>//按照单词长度对数组按照升序排列。还有一种简化的表达方式：<code>java.util.Arrays.sort(words,function(a,b) java.lang.Integer.compare(a.length,b.length))</code>，这种简化方式不是官方JS语言标准。</li>
+<li>要继承一个<code>Java</code>类，或者实现一个<code>java</code>接口，需要使用<code>Java.extend</code>函数。此外，还需要提供父类或接口的类对象，以及一个包含你希望重写或实现的方法的JS对象。<pre><code>var RandomInterator = java.extend(java.util.Iterator,{next:funtion()Math.random(),hasNext:function()true})//RandomInterator是一个类对象
+var iter = new RandomIterator()//使用它来构造一个类实例
+</code></pre></li>
+<li><code>Nashorn</code>允许定义接口或抽象类的匿名子类。当在<code>new javaClassObject</code>后面跟随一个<code>JavaScript</code>对象时，会返回所继承类的一个对象。例如：<pre><code>var iter = new java.util.Iterator{
+next:funtion()Math.random(),hasNext:function()true
+}
+</code></pre>如果父类型是抽像的，且只有一个抽象方法（具体类不可使用下列方式），你甚至不用指定方法名称，相反，只需要把函数看作一个构造函数的参数那样传递进去即可：<pre><code>var task = new java.lang.Runnable(function(){print(&apos;Hello&apos;)})//task是一个实现了Runnable接口的匿名类的对象
+</code></pre></li>
+<li>希望为子类添加实例变量，可以直接添加到JS对象中：<pre><code>var iter = new java.util.Iterator{ count:10，
+next:funtion(){this.count--;return Math.random()},hasNext:function()this.count&gt;0
+}
+</code></pre></li>
+<li>我们在重定方法时可以调用父类的方法，但是，<code>Java.super（obj）</code>会产生一个可供调用其父类方法的对象，但是你必须保证该对象是可用的。<code>Java.super</code>的方式只适用于定义单独的对象，而不能用于定义子类。否则，定义的子类中只能获得定议该对象的JS对象，而不是<code>java</code>代理.调用父类中的方式有两种：<code>Java.super(arr).add(x)</code>,<code>arr.super$add(x)</code></li>
+<li><p>JS中异常的捕获如下：</p>
+<pre><code>try{
+ var first = list.get(0);
+ ...
+
+}catch(e){
+ if(e instanceof java.lang.IndexOutOfBoundException) print(&apos;list is empty&apos;)
+}
+</code></pre></li>
+<li><strong><code>Shell脚本</code></strong>：由于Java调用外部脚本太烦冗，所以<code>Nashorn</code>设计者希望考虑使用<code>JavaScript</code>脚本来编写这些脚本。不仅语法相对于Java更轻量，而且<code>Nashorn</code>还专门为<code>shell</code>开发人员提供了一些便利。</li>
+<li>要在Nashorn中使用脚本扩展，使用以下命令：<pre><code>jjs -scripting 或者 jrunscript，
+</code></pre>然后就可以使用反引号来执行shell命令<pre><code>`ls -al`
+</code></pre>上述命令的标准输出和标准错误流会被捕获到<code>$OUT</code>和<code>$ERR</code>中，命令的退出码被保存在<code>$EXIT</code>中（一般退出码0表示命令执行成功，非0代码用来描述错误条件）<br>还可以将由反引号包着的命令赋给一变量，以获取命令的输出<pre><code>var output = `ls -al`
+</code></pre>如果希望为命令提供标准输入，可以使用：<pre><code>$EXEC(命令，输入)
+$EXEC(&apos;grep -v class&apos;，`ls -al`)
+</code></pre>例如，该命令会将<code>ls -al</code>的输出传递给<code>grep -v class;</code></li>
+<li><strong>字符串插值</strong>：在被双引号和反引号包裹的字符串中，会计算<code>${...}</code>中的表达式。这种特性被称为”字符串插值”。例如：<pre><code>var cmd = &quot;javac -classpath ${classpath} ${mainclass}.java&quot;
+$EXEC(cmd)
+</code></pre>或者：<pre><code> `javac -classpath ${classpath} ${mainclass}.java`
+var ,message = &quot;The current time is ${java.time.Instant.now()}&quot;
+</code></pre>上面的语句会将变量<code>classpath</code>和<code>mainclass</code>的内容插入到命令中。<br>还可以使用脚本中的内嵌文档：<pre><code>name=&apos;myapp&apos;
+dir=&apos;/opt/apps/myapp&apos;
+$EXEC(&apos;asadmin&apos;,&lt;&lt;END)
+start-domain
+start-database
+deploy ${name} ${dor}
+exit
+END
+</code></pre><code>&lt;&lt;END表示插入由下一行开始到END行结束的字符串</code>。字符串插值和here文档只能用于脚本模式下。</li>
+<li>脚本也可以提脚本命令行参数，由于<code>jjs</code>中允许包含多个脚本，所以需要用<code>--</code>将脚本文件和参数分开。<pre><code>jjs script1.js script2.js -- arg1 grg2 arg3
+</code></pre>如果只有一个脚本，可以：<code>jrunscript -f script.js arg1 arg2 arg3</code><br>脚本第一行是<code>#!</code>及脚本解释器的位置。如：<pre><code>#!/opt/java/bin/jjs
+</code></pre>或<pre><code>#!/opt/java/bin/jrunscript -f
+</code></pre>然后将该脚本设为可执行，并通过<code>path/script.js</code>来运行。当一个脚本以<code>#!</code>符号开始时，会自动启动脚本模式</li>
+<li>如果脚本中有参数，且在<code>#!</code>符号后使用<code>jjs</code>，那么脚本用户需要提供–：<code>path/script.js -- arg1 grg2 arg3</code>。一般用户都不喜欢这样的方式，所以最好使用<code>jrunscript</code>。</li>
+<li><p>脚本文件中，获取参数数组的命令行参数如下：</p>
+<pre><code>var deployCommand = &quot;deploy ${arguments[0]} ${arguments[1]}&quot;
+</code></pre><p>如果是<code>jjs</code>，也可以使用<code>$ARG</code>来代替<code>arguments</code>.如果脚本中的变量也是通过字符串插值来定义的，你需要两个$符号：</p>
+<pre><code>var deployCommand = &quot;deploy ${$ARG[0]} ${$ARG[1]}&quot;
+</code></pre><p>在脚本中，可以通过ENV来获取<code>Shell</code>的环境变量：</p>
+<pre><code>var javaHome = $ENV.JAVA_HOME
+</code></pre><p>在脚本中，可以通过<code>readLine</code>函数来提示用户输入内容：</p>
+<pre><code>var userName = readLine(&apos;Username:&apos;)
+</code></pre><p>输入密码，则用<code>var password= java.lang.System.console().readPassword(&#39;Password:&#39;)</code><br>最后可以用<code>exit函数</code>来退出脚本，还可以提供一个退出代码：<code>if(username.length==0) exit(1)</code></p>
+</li>
+<li><p><strong>Nashonr 和 JavaFX</strong>，Nashorn提供了一个简便方式来启动<code>JavaFx</code>应用程序。只需要将<code>Application</code>子类<code>start</code>  方法中的代码放在脚本中即可，使用<code>$STAGE</code>来获取<code>Stage</code>参数。你甚直不需要调用<code>Stage</code>对象的<code>show</code>方法–脚本自动调用它。例子如下：</p>
+<pre><code>var message = new javafx.scene.control.Lable(&quot;Hello,JavaFX!&quot;);
+message.font = new javafx.scene.text.Font(100);
+$STAGE.scene = new javafx.scene.Scene(message);
+$STAGE.title = &quot;Hello&quot;;
+</code></pre><p>运行命令如下：<code>jjs -fx myJavaFxApp.js</code></p>
+</li>
+<li>FX属性有两个监听器接口，<code>InvalidationListener</code>和<code>ChangeListener</code>,它们两个都通过<code>addListener</code>方法被绑定到属性上。在Java中，调用<code>addListenner</code>和一个lambda表达式，编译器能够从参数类型中判断出要添加那个监听器。但是在JS中，没法实现。所以，需要不用lambda表达式，把完整的包名类名都写上。</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/java/">java</a>, <a href="/tags/java8/">java8</a>, <a href="/tags/Nashorn/">Nashorn</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2016/06/20/JAVA8学习（八）/" class="alignleft prev" >Anterior</a>
+    
+    
+    <a href="/2016/06/09/JAVA8学习（六）/" class="alignright next" >Siguiente</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/06/10/JAVA8学习（七）/" data-title="JAVA8学习（七）" data-url="http://www.52brt.com/2016/06/10/JAVA8学习（七）/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Etiquetas</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
+  
+    <li><a href="/tags/Nashorn/">Nashorn</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>9</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>8</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

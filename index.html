@@ -70,6 +70,112 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-06-20T14:59:45.000Z"><a href="/2016/06/20/JAVA8学习（八）/">2016-06-20</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/20/JAVA8学习（八）/">JAVA8学习（八）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><strong>字符串连接</strong>：<pre><code>String joined = String.join(&quot;/&quot;,&quot;usr&quot;,&quot;local&quot;,&quot;bin&quot;);//&quot;usr/local/bin&quot;;
+System.out.println(joined);
+String ids = String.join(&quot;,&quot;,ZoneId.getAvailableZoneIds());
+System.out.println(ids);//将所有的时区标识，由逗号分隔
+</code></pre></li>
+<li><code>java5</code>中，7种原始类型的包装类（不包含Boolean）都提供了一个静态字段<code>SIZE</code>，用来表示该类型以<code>bit</code>为单位的长度。在<code>Java8</code>中，它们都提供了一个<code>BYTES</code>字段，以<code>byte</code>为单位来表过该类型的长度，以便于用于无法被8整除的情况。</li>
+<li>为了在流操作中进行聚合操作，<code>Short</code>、<code>Integer</code>、<code>Long</code>、<code>Float</code>和<code>Double</code>这5种类型，现在分别提供了静态方法<code>sum</code>、<code>max</code>、<code>min</code>，用来在流操作中作为聚合函数使用。出于相同的原因，<code>Boolean</code>类现在也包含了静态方法<code>logicalAnd</code>、<code>logicalOr</code>、<code>logicalXor</code>。</li>
+<li><code>Integer</code>类现在支持无符号数学计算。静态方法<code>Byte.toUnsignedInt(b)</code>来获取一个从<code>0</code>到<code>255</code>的值。一般使用无符号数字，会丢失负数并获得原来两范围的正数。<code>Byte</code>和<code>Short</code>类中添增了<code>toUnsignedInt</code>方法，而<code>Byte</code>、<code>Short</code>、<code>Integer</code>类中新增了<code>toUnsignedLong</code>方法。</li>
+<li><code>Integer</code>和<code>Long</code>类中新增了处理无符号值的<code>compareUnsigned</code>、<code>divideUnsigned</code>和<code>remainderUnsigned</code>方法。由于大于<code>Integer.MAX_VALUE</code>的无符号整数相乘会导致溢出，所以应该调<code>toUnsignedLong</code>将它们作为长整型值相乘。</li>
+<li><code>Float</code>和<code>Double</code>类现在新增了静态方法<code>isFinite</code>,如果<code>x</code>不是正无穷大、负无穷大或者<code>NaN</code>(非数字)，那么<code>Double.isFinite(x)</code>将返回<code>true</code>。</li>
+<li><code>BigInteger</code>类增加了实例方法<code>（long|int|short|byte）ValueExact</code>，分别用来返回<code>long</code>、<code>int</code>、<code>short</code>或者<code>byte</code>，并且当值不在目标范围内时抛出一个<code>ArithmeticExcepiont</code>异常。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/20/JAVA8学习（八）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-10T14:59:45.000Z"><a href="/2016/06/10/JAVA8学习（七）/">2016-06-10</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/10/JAVA8学习（七）/">JAVA8学习（七）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><code>java8</code>提供了一个命令行工具<code>jjs</code>。你只需要启动它，并执行<code>JavaScript</code>命令即可启动：<pre><code>jjs
+jjs&gt;&apos;Hello,World&apos;
+Hello,World
+jjs&gt;&apos;Hello,World.length
+5
+</code></pre></li>
+<li>在<code>js</code>中定义字符串可以是单引号也可以是双引号。每行后边可以加分号也可以不加。</li>
+<li>在<code>jjs</code>中定义函数并调用它们<pre><code>jjs&gt;function factorial(n){return n&lt;=1?1:n*factorial(n-1)}
+function factorial(n){return n&lt;=1?1:n*factorial(n-1)}
+jjs&gt;factorial(10)
+3628800
+</code></pre>-<code>jjs</code>中调用<code>java</code>的方法<pre><code>var input = new java.util.Scanner(new java.net.URL(&apos;http://horstmann.com&apos;).openStream())
+input.useDelimiter(&apos;$&apos;)
+var contents = input.next()
+contents
+</code></pre></li>
+<li><code>jjs</code>又被称为<code>REPL</code>，可以用这种方式来学习<code>java API</code>，但是它没有<code>Scala</code>做得那么好。因为它的自动提示不友好，不能提示。可以尝试安装<code>rlwrap jjs</code>或在<code>Emacs</code>中运行<code>jjs</code>来解决这一问题。</li>
+<li>在<code>Java</code>中，可以使用<code>Java6</code>中引入的脚本引擎机制来运行一个<code>Nashorn</code>脚本。通过脚本引擎，可以执行任何JVM语言的脚本，如<code>Groovy</code>、<code>JRuby</code>、<code>Jython</code>。此外，还有另外一些脚本引擎用于支持任何<code>JVM</code>以外的语言，如<code>PHP</code>、<code>Scheme</code>。</li>
+<li><code>java8</code>中运行<code>nashorn</code>的示例如下：<pre><code>ScriptEngineManager manager = new ScriptEngineManager();//获取注册的引擎管理器
+ScriptEngin engin = manager.getEngineByName(&quot;nashorn&quot;);//通过名称获取指定引擎
+Object result = engine.vale(&quot;&apos;Hello,world!&apos;.length&quot;);
+System.out.println(result);
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/10/JAVA8学习（七）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-06-09T14:59:45.000Z"><a href="/2016/06/09/JAVA8学习（六）/">2016-06-09</a></time>
       
       
@@ -386,6 +492,53 @@ long count= words.parallelStream().filter(w-&gt;w.lenght()&gt;12).count();
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/">2016-05-20</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/">shell学习(四)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><ul>
+<li>参数之前用空格分隔</li>
+<li>位置参数：<code>$+position:$0,$1,$2....$9</code><ul>
+<li><code>$0</code> :程序名</li>
+<li><code>$1,$2....$9</code></li>
+<li><code>${10}</code> //大于10的需要如此处理</li>
+</ul>
+</li>
+<li><p><code>basename</code>:获取脚本的名字</p>
+<pre><code>#! /bin/bash
+echo `basename $0` //输出程序的直实名字，且不包含路径,即取最后一层的名字
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(三)/">2016-05-20</a></time>
       
       
@@ -447,171 +600,11 @@ echo $result
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/">2016-05-20</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/">shell学习(四)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><ul>
-<li>参数之前用空格分隔</li>
-<li>位置参数：<code>$+position:$0,$1,$2....$9</code><ul>
-<li><code>$0</code> :程序名</li>
-<li><code>$1,$2....$9</code></li>
-<li><code>${10}</code> //大于10的需要如此处理</li>
-</ul>
-</li>
-<li><p><code>basename</code>:获取脚本的名字</p>
-<pre><code>#! /bin/bash
-echo `basename $0` //输出程序的直实名字，且不包含路径,即取最后一层的名字
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-19T14:35:02.000Z"><a href="/2016/05/19/shell学习(二)/">2016-05-19</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/19/shell学习(二)/">shell学习(二)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="shell编程中字符串的操作"><a href="#shell编程中字符串的操作" class="headerlink" title="shell编程中字符串的操作"></a>shell编程中字符串的操作</h2><ul>
-<li><p>连接字符串</p>
-<pre><code>str=hello
-str1=world
-连接起来：str=$str$str1、str = $str&apos; &apos;&quot;aa123&quot;、str = $str:
-</code></pre></li>
-<li><p>查看字符串长度：</p>
-<ul>
-<li><code>expr length &quot;hello&quot;</code></li>
-<li><code>expr length &quot;$str&quot;</code></li>
-<li>charcount= ` expr length “$str”`  //反引号，执行里面的代码</li>
-<li><code>echo $charcount</code></li>
-</ul>
-</li>
-<li>查看特定字符：<ul>
-<li><code>expr index &quot;$str&quot; &#39;h&#39;</code> #从1开始，不是0，只返回第一个。如果是查找多个字母，只返回这些字母的第一个查找到的位置</li>
-</ul>
-</li>
-<li>字符串截断：<ul>
-<li><code>expr substr &quot;$str&quot; 6 10</code> #获取指定位置指定长度的字符串</li>
-</ul>
-</li>
-<li>正则匹配<ul>
-<li><code>expr $str : REGEXP</code></li>
-<li><code>expr match $str REGEXP</code></li>
-<li><code>expr $str : &#39;.*&#39;  #返回长度</code></li>
-<li><code>expr $str : &#39;\(.*[0-9]\{5\}\)&#39;</code></li>
-<li><code>expr $str : &#39;\([a-zA-X: ]*\).*&#39;</code>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/19/shell学习(二)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-18T14:35:02.000Z"><a href="/2016/05/18/shell学习(一)/">2016-05-18</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/18/shell学习(一)/">shell学习(一)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="linux常用命令"><a href="#linux常用命令" class="headerlink" title="linux常用命令"></a>linux常用命令</h2><ul>
-<li><code>echo hello world</code></li>
-<li><code>echo &quot;hello world&quot;</code></li>
-<li><code>man</code> 查看linux命令手册。<code>man echo</code></li>
-<li><code>ls</code> 列出文件和目录。<code>ls -a</code>、<code>ls -l</code></li>
-<li><code>pwd</code>返回当前的工作目录</li>
-<li><code>mkdir test</code>创建新目录</li>
-<li><code>rm -d test</code>删除目录，<code>rm -rf test</code>删除非空的目录。<code>rm -rd test -v</code>输出过程</li>
-<li><code>touch test</code>创建一个文件</li>
-<li><code>cat test</code>查看文件内容</li>
-<li><code>echo helo world &gt; test</code>:输出一个流并将这个流输出到test中。</li>
-<li><code>more test</code>，可以分页，优化体验。<code>less test</code>，可以分页，还可以上下一行行移动</li>
-<li><code>cp test ../test1</code>拷贝文件</li>
-<li><code>mv test ../test1</code>移动或重命名文件</li>
-<li><code>rm test</code>删除文件
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/18/shell学习(一)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
   
-    <a href="/page/2/" class="alignright next">Nächste Seite</a>
+    <a href="/page/2/" class="alignright next">Siguiente</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -620,7 +613,7 @@ str1=world
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -632,6 +625,8 @@ str1=world
     <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
   
     <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
+  
+    <li><a href="/tags/Nashorn/">Nashorn</a><small>1</small></li>
   
     <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
   
@@ -653,9 +648,9 @@ str1=world
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>7</small></li>
+    <li><a href="/tags/java/">java</a><small>9</small></li>
   
-    <li><a href="/tags/java8/">java8</a><small>6</small></li>
+    <li><a href="/tags/java8/">java8</a><small>8</small></li>
   
     <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
   
