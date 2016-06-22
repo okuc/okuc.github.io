@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Página 6 | 我的后院自留地</title>
+  <title>Page 6 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -64,6 +64,46 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-10-21T14:06:32.000Z"><a href="/2015/10/21/svg中节点顺序的替代解决方案/">2015-10-21</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/10/21/svg中节点顺序的替代解决方案/">svg中节点顺序的替代解决方案</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>如果你的前端页面图形是使用svg画的，那么有一个问题很有可能遇到的，就是节点间先后顺序的问题。由于svg元素没有z-index属性，画的顺序决定了显示的顺序，所以当你拖拽一个节点时，很容易会发生，该节点与其他节点重合时会跑到其他节点下面的尴尬。</p>
+<p>###raphaeljs下解决方案<br>如果你使用的是<code>raphaeljs</code>，那么恭喜你，这都不是事，<code>raphaeljs</code>中提供了如下方法，直接操作就可以了！</p>
+<pre><code>element.toBack()
+element.toFront()
+</code></pre><p>当然，如果你没有使用svg，那么悄悄的把<code>raphaeljs</code>用起来也不错哦。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/10/21/svg中节点顺序的替代解决方案/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="coding">
   
   <div class="post-content">
@@ -488,47 +528,13 @@ eno1 5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03 802-3-ethernet eno1
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-08-21T13:26:27.000Z"><a href="/2015/08/21/在批处理-bat-中设置java程序的内存参数/">2015-08-21</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/08/21/在批处理-bat-中设置java程序的内存参数/">在批处理(bat)中设置java程序的内存参数</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>最近做一个java的桌面程序，竟然内存溢出了。由于是将启动命令<code>java -jar XXX.jar</code>写在了批处理中,所以竟一时想不起来如何设置程序运行参数了。以前是天天在eclipse的开发环境中设置，在tomcat的启动批处理中设置，在各种开源软件的启动脚本中设置，可是要在这么的一个简单命令中设置，竟然失忆了，不会了。。。<br>于是乎，百度了一番，才猛然间想了起来，原来，如此简单，添加后的示例如下，权当记录一下，谨防以后再忘记吧。</p>
-<pre><code>java  -Xms800m -Xmx800m -XX:PermSize=128M -XX:MaxNewSize=256m -XX:MaxPermSize=256m  -jar  XXX.jar
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/page/5/" class="alignleft prev">Anterior</a>
+    <a href="/page/5/" class="alignleft prev">Prev</a>
   
   
-    <a href="/page/7/" class="alignright next">Siguiente</a>
+    <a href="/page/7/" class="alignright next">Next</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -537,7 +543,7 @@ eno1 5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03 802-3-ethernet eno1
 
   
 <div class="widget tag">
-  <h3 class="title">Etiquetas</h3>
+  <h3 class="title">Tags</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -572,9 +578,11 @@ eno1 5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03 802-3-ethernet eno1
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>9</small></li>
+    <li><a href="/tags/java/">java</a><small>10</small></li>
   
     <li><a href="/tags/java8/">java8</a><small>8</small></li>
+  
+    <li><a href="/tags/kafka/">kafka</a><small>1</small></li>
   
     <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
   
