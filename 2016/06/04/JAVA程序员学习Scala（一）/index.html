@@ -1,0 +1,374 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JAVA程序员学习Scala（一） | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="JAVA程序员学习Scala（一）"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="//archives">归档</a></li>
+    
+      <li><a href="//coding">编程技术</a></li>
+    
+      <li><a href="//bigData">大数据技术</a></li>
+    
+      <li><a href="//dataV">数据可视化</a></li>
+    
+      <li><a href="//about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-04T14:59:45.000Z"><a href="/2016/06/04/JAVA程序员学习Scala（一）/">2016-06-04</a></time>
+      
+      
+  
+    <h1 class="title">JAVA程序员学习Scala（一）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><code>Scala</code>环境设置，将<code>bin</code>目录加到<code>path</code>中即可。</li>
+<li>命令行中，输入<code>scala</code>进入<code>Shell</code>环境，<code>Ctrl+A</code>回到行首，<code>Ctrl+E</code>到达行尾，如果没敲完，就回车，会出现<code>|</code>，提示你继续输入。<code>:quit</code>或者<code>exit</code>退出<code>shell</code>。</li>
+<li>也可以在命令行中，直接输入<code>scala -e &quot;println(\&quot;Hello \&quot;+args(0)+\&quot;,\&quot;+args(1))&quot; Buddy &quot;welcome to Scals</code>,<strong>没测试通过</strong></li>
+<li>还可以使用<code>:load</code>选项把它载入<code>shell</code>。<code>:load script.scala</code>。<code>scala Helloworld.scala</code>。<code>scala后</code>边的参数可以是脚本，也可以是目标文件(<code>.class</code>文件)。在给它传递<code>Java</code>属性的时候，可以用<code>-Dproperty=value</code>格式。在文件前边加上<code>-avaecompiled</code>选项，<code>Scala</code>工具会把字节码存成一个<code>Jar</code>文件。</li>
+<li><p>在类<code>Unix</code>的<code>shell</code>上，可以写脚本：</p>
+<pre><code>#!/usr/bin/env scala
+!#
+println(&quot;hello &quot;+args(0))
+ 然后添加执行权限：chmod +x Script.scala即可直接执行。./Sript.scala okuc。okuc是参数。
+- 在windows上，可以在bat批处理中带参数的方式，如下：
+echo off
+cls
+call scala %1
+pause
+</code></pre></li>
+<li><p>一个简单的例子：</p>
+<pre><code>for(i&lt;-1 to 3){//包括3
+  print(i+&quot;,&quot;)
+}
+println(&quot;Scala Rocks!!!&quot;)
+
+for(i&lt;-1 until 3){//不包括3
+  print(i+&quot;,&quot;)
+}
+println(&quot;Scala Rocks!!!&quot;)
+</code></pre><a id="more"></a></li>
+<li><code>val</code>用来定义不可变的变量（引用或本身不可变）。<code>var</code>定义变量。在<code>Scala</code>中应该尽量用<code>val</code>而不是<code>var</code>。</li>
+<li>如果一个方法有0到1个参数，点和括号是可以丢掉的。如果有一个以上参数，则必须使用括号，但是点仍然是可选的。<code>a+b</code>实际上是<code>a.+(b)</code>，<code>1 to 3</code>实际上是<code>1.to(3)</code></li>
+<li><code>foreach()</code>更帖近函数式的风格执行循环<pre><code>(1 to 3).foreach(){i=&gt;print(i,&quot;,&quot;)}//以一个函数值作为参数，所以，在括号里面提供一段代码体，接收一个实参，在这个例子中命名为i。=&gt;将左边的参数列表和右边的实现分离开来。
+println(&quot;Scala Rocks!!!&quot;)
+</code></pre></li>
+<li>scala中一切都视为对象。下面是一个scala的Int实例，将其传给java.util.ArrayList的ensureCapcity()方法,这个方法需要传入一个Java基本类型int。<br>class ScalaInt{<br>  def playWithInt(){<pre><code>val capacity:Int=10
+val list = new java.util.ArrayList[String]
+list.ensureCapacity(capacity)
+</code></pre>  }<br>}<br>在这段代码中，<code>Scala</code>悄悄地把<code>Scala.Int</code>当作<code>java</code>的基本类型<code>Int</code>。其结果是不会在运行时因为类型转换而换来性能损耗。当<code>scala</code>确定<code>Int</code>无法满足需求时，就会悄悄地应用<code>intWrapper()</code>方法把<code>Int</code>转换为<code>scala.runtime.RichInt</code>，然后调用它的<code>to()</code>方法。如<code>1.to(2)</code>。类似的还有<code>RichInt</code>，<code>RichDouble</code>，<code>RichBoolean</code>之类的类，叫富包装类。这些类表示<code>Java</code>的基本类型和字符串，它们提供一些便捷的方法，可以在<code>Scala</code>类里使用。</li>
+<li><p>在<code>Java</code>中，如果一个函数要返回多个值，一般要么封装成个<code>bean</code>返回，要么返回数组或<code>List</code>，<code>Scala</code>提供了一种更简单的方式：元组和多重赋值。</p>
+<ul>
+<li><p>元组是一个不变的对象序列，可以用逗号分隔的值进行创建。元组可以同时赋给多个<code>var</code>或<code>val</code>，如下所示：</p>
+<pre><code>def getPersonInfo(primaryKey : Int) = {
+    //假设用primaryKey获取一个人的信息
+    //返回3个对象的元组
+    (&quot;Venkat&quot;,&quot;Subramaniam&quot;,&quot;venkats@agiledeveloper.com&quot;)
+}
+
+val(firstName,lastName,emailAddress) = getPersonInfo(1)
+println(&quot;First Name is&quot;+firstName)
+println(&quot;Last Name is&quot;+lastName)
+println(&quot;Email Name is&quot;+emailAddress)
+
+val info =  = getPersonInfo(1)
+println(&quot;First Name is&quot;+info._1)
+println(&quot;Last Name is&quot;+info._2)
+println(&quot;Email Name is&quot;+info._3)
+</code></pre></li>
+</ul>
+</li>
+<li><p><code>Scala</code>的字符串不过是<code>java.lang.String</code>,你可以按照<code>Java</code>的方式使用字符串，不过，<code>Scala</code>还为使用字符串提供了一些额外的便利。它可以自动把<code>String</code>转成<code>scala.runtime.RichString</code>，这些就可以无缝的使用诸如<code>capitalize()</code>、<code>lines()</code>和<code>reverse</code>这样的一些便捷的方法。但要注意：<code>&quot;mom&quot;.reverse==&quot;mom&quot;</code>的结果是<code>false</code>，最终比较的是<code>RichString</code>的实例和<code>String</code>的实例。不过<code>&quot;mom&quot;.reverse.toString === &quot;mom&quot;</code>的结果是true。<br>在<code>Scala</code>中创建多行字符串，只要把多行字符串放在3个双引号间可：<code>&quot;&quot;&quot;...&quot;&quot;&quot;</code>。且允许这种方式中间嵌入双引号，如果不想把代码里的缩进带到字符，可以用<code>RichString</code>的便 捷方法<code>stripMargin()</code>。这种表示方式对于需要转义的字符特别有效，不用转义了。</p>
+<pre><code>val str = &quot;&quot;&quot;这是一个多行字符a“afd”asdf&quot;&quot;&quot;
+println(str)
+</code></pre></li>
+<li>Scala有一些默认做法，会让代码更简洁，更易读写。<ul>
+<li>它支持脚本，无需将所有的代码都放到类里。</li>
+<li><code>return</code>是可选的。方法调用会自动返回最后求值的表达式。</li>
+<li>分号是可选的。</li>
+<li>类和方法默认是<code>public</code>。</li>
+<li>Scala提供了轻量级的语法创建<code>JavaBean</code>。</li>
+<li>不会强制捕获一些不关心的异常。</li>
+</ul>
+</li>
+<li>默认情况下，Scala会导入两个包和<code>scala.Predef</code>对象，以及相应的类和成员。只要用类名，就可以引用这些预导入的包。Scala按如下顺序将内容全部导入：<ul>
+<li><code>java.lang</code></li>
+<li><code>scala</code></li>
+<li><code>scala.Predef</code></li>
+<li><code>Scala</code>从低到高的优先级如下：<code>|``^``&amp;``&lt;、&gt;``=、!``:``+、-``*、/、%</code></li>
+</ul>
+</li>
+<li>Scala中，赋值运算<code>(a=b)</code>的对果是<code>Unit</code>，在java里，赋值的结果是a的值，因此，java中的连续赋值是不能用的。如<code>a=b=c</code>。</li>
+<li><p>Scala中，<code>==</code>一律表示对值的比较，与java中基本类型是对值，复合类型是对引用比较不同。scala中这点由<code>Any</code>类（Scala所有的类都是从它派生而来）把<code>==()</code>实现在final得到的保证。想对引用进行比较，可以用<code>eq</code>方法：</p>
+<pre><code>val str1=&quot;hello&quot;
+val str2=&quot;hello&quot;
+val str3=new String(&quot;hello&quot;)
+
+println(str1==str2)//true
+println(str1 eq str2)//true
+println(str1==str3)//true
+println(str1 eq str2)//flase
+</code></pre></li>
+<li>Scala需要在<code>{}</code>代码块之前放个分号，不然就会出现问题。其他的分号可以不写。</li>
+<li>Scala的访问修饰符不同于java：<ul>
+<li>如果不指定任何访问修饰符，Java默认为包内可见。而Scala默认为<code>public</code>。</li>
+<li>java要么对当前包所有的类可见，要么对任何一个都不可见。而Scala可以对可见性进行细粒度的控制。</li>
+<li>java的<code>protected</code>很宽容。它包括了任何包的派生类加上当前包的任何类。<code>Scala</code>的<code>Protect</code>只有派生类可以访问。</li>
+<li>java的封装是在类一级，<code>Scala</code>默认也是如此，不过，也可以限制为当前实例，就像<code>Ruby</code>所提供的一样。</li>
+</ul>
+</li>
+<li><p>Scala默认都是<code>public</code>：</p>
+<pre><code>class Microwave{
+    def start() = println(&quot;started&quot;)
+    def stop() = println(&quot;stopped&quot;)
+    private def turnTable()=println(&quot;turning table&quot;)
+}
+
+var micorwave = new Microwave
+microwave.start()
+microwave.turnTable()//ERROR,错误，外部不能访问
+</code></pre></li>
+<li>Scala的<code>Protected</code>只对本类及其派生类可见<pre><code>package automobiles
+class Vehicle{
+  protected def checkEngine(){}
+}
+class Car extends Vehicle{
+  def start(){checkEngine() /*OK*/}
+  def tow(car:Car){
+    car.checkEngine()//ok
+  }
+  def tow(vehicle:Vehicle){
+    vehicle.checkEngine()//ERROR
+  }
+}
+class GasStation{
+  def fillGas(vehicle:Vehicle){
+    vehicle.checkEngine()//ERROR
+ }
+}
+</code></pre></li>
+<li>scala中<code>private</code>和<code>protected</code>修饰符可以指定额外的参数。这个参数可以是<code>this</code>，也可以是外围类的名字或包的名字，以表示它只有谁可以访问。</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/java/">java</a>, <a href="/tags/Scala/">Scala</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2016/06/04/JAVA8学习（四）/" class="alignleft prev" >Prev</a>
+    
+    
+    <a href="/2016/06/03/JAVA8学习（三）/" class="alignright next" >Next</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/06/04/JAVA程序员学习Scala（一）/" data-title="JAVA程序员学习Scala（一）" data-url="http://www.52brt.com/2016/06/04/JAVA程序员学习Scala（一）/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
+  
+    <li><a href="/tags/Nashorn/">Nashorn</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/Scala/">Scala</a><small>2</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>13</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>9</small></li>
+  
+    <li><a href="/tags/kafka/">kafka</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

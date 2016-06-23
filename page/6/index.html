@@ -70,6 +70,86 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-12-05T14:06:32.000Z"><a href="/2015/12/05/Node.js的项目创建及依赖维护工作/">2015-12-05</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>要编写nodejs项目，则一般使用向导生成工程样板，然后修改工程样板，达到自已的目地，也有的直接编写各类文件。本人将自已常的生成工程样板的方式在此分享一下，高手请直接飘过。。。。。<br>在此假定我们node及npm环境已经安装配置完成，可以直接使用。</p>
+<p>###使用npm向导创建nodejs样板工程</p>
+<ol>
+<li>创建一目录<code>nodejs-demo</code>，并在命令行中切换到该目录下。输入<code>npm init</code>，按要求输入工程名称、版本号、描述、入口等就可以了。一般直接使用默认就可以，但是有两点，入口现在一般添<code>bin/www</code>,关键词直接输入项目关键字或不输都可以。</li>
+<li>使用命令<code>yum install -g bower</code>安装<code>bower</code>。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/05/Node.js的项目创建及依赖维护工作/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-03T14:06:32.000Z"><a href="/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">2015-12-03</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境_更新版</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>曾经在去年写过一篇过于在windos下搭建node.js工作环境的文章（原文详见：<a href="http://www.52brt.com/2014/11/26/windows%E4%B8%8B%E6%90%AD%E5%BB%BAnode.js%E5%8F%8Anpm%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83/">windows下搭建node.js及npm的工作环境</a>），现在看来,可能当时有些地方写得不妥，所以，特意重新编写了此篇。</p>
+<p>下面就把我的一些搭建过程说一下：</p>
+<ol>
+<li>下载node.js。在<a href="https://nodejs.org/en/">https://nodejs.org/en/</a>下载最新版的node.exe文件，我下载时是<code>v5.1 stable</code>,直接下载地址如下:<a href="https://nodejs.org/dist/v5.1.0/node-v5.1.0-x64.msi">https://nodejs.org/dist/v5.1.0/node-v5.1.0-x64.msi</a>。</li>
+<li>不同于上次，由于本次我们使用的是安装包，上述安装包已经包含了npm，所以，不用再单独下载npm。下载完成后，直接双击进行安装，建议不要安装在C盘下，在这儿，我安装到了F盘<code>nodejs</code>文件夹下。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-11-21T14:35:02.000Z"><a href="/2015/11/21/Emmet常用缩写简要笔记/">2015-11-21</a></time>
       
       
@@ -438,103 +518,6 @@ writable = yes
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-08-30T01:06:32.000Z"><a href="/2015/08/30/centos7常用命令/">2015-08-30</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/08/30/centos7常用命令/">centos7常用命令</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>记录centos7下的一些常用命令!</p>
-<p>###网络相关</p>
-<ul>
-<li>关闭防火墙：<pre><code>systemctl stop firewalld.service#停止firewall
-systemctl disable firewalld.service#禁止firewall开机启动
-</code></pre></li>
-<li><p>配置DNS服务</p>
-<ul>
-<li><p>命令行方式</p>
-<pre><code>1. nmcli connection show #显示当前网络连接
-NAME UUID                                 TYPE           DEVICE
-eno1 5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03 802-3-ethernet eno1
-
-2. nmcli con mod eno1 ipv4.dns &quot;114.114.114.114 8.8.8.8&quot; #修改当前网络连接对应的DNS服务器，这里的网络连接可以用名称或者UUID来标识
-3. nmcli con up eno1#将dns配置生效
-</code></pre></li>
-</ul>
-<ul>
-<li>直接修改文件方式
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/08/30/centos7常用命令/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-08-27T17:23:41.000Z"><a href="/2015/08/28/java连接远程HBase/">2015-08-28</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/08/28/java连接远程HBase/">java连接远程HBase 1.1.1</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>由于工作需要用到<code>HBase</code>，今晚使用<code>HBase 1.1.1</code>小试牛刀了一把。<code>HBase 1.1.1</code>运行环境为<code>CentOS7.0</code>，java客户端运行环境为<code>Win10</code>，服务端jdk版本为<code>1.8</code>，客户端jdk版本为<code>1.7</code>。</p>
-<p><strong>提示：本文最后可下载源代码</strong></p>
-<p>具体步骤如下：</p>
-<ol>
-<li>下载<code>HBase 1.1.1</code>,下载地址如下：<a href="http://mirrors.cnnic.cn/apache/hbase/1.1.1/hbase-1.1.1-bin.tar.gz">http://mirrors.cnnic.cn/apache/hbase/1.1.1/hbase-1.1.1-bin.tar.gz</a>。</li>
-<li>使用<code>tar -xvf hbase-1.1.1-bin.tar.gz</code>解压。<strong>我使用的是root用户</strong></li>
-<li>进入到解压后的bin目录中，使用<code>./start-hbase.sh</code>启动Hbase，启动成功会显示如下提示：<pre><code>starting master, logging to /home/soft/hbase-1.1.1/bin/../logs/hbase-root-master-MiWiFi-R1CM.out
-</code></pre><strong>由于没有作任何设置，此时，所有数据都保存在临时环境中，一旦重启就会丢失。</strong>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/08/28/java连接远程HBase/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -567,6 +550,8 @@ eno1 5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03 802-3-ethernet eno1
   
     <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
   
+    <li><a href="/tags/Scala/">Scala</a><small>2</small></li>
+  
     <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
   
     <li><a href="/tags/centos/">centos</a><small>7</small></li>
@@ -585,7 +570,7 @@ eno1 5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03 802-3-ethernet eno1
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>11</small></li>
+    <li><a href="/tags/java/">java</a><small>13</small></li>
   
     <li><a href="/tags/java8/">java8</a><small>9</small></li>
   

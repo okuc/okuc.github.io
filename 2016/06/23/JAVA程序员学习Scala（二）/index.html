@@ -1,0 +1,347 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JAVA程序员学习Scala（二） | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="JAVA程序员学习Scala（二）"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="//archives">归档</a></li>
+    
+      <li><a href="//coding">编程技术</a></li>
+    
+      <li><a href="//bigData">大数据技术</a></li>
+    
+      <li><a href="//dataV">数据可视化</a></li>
+    
+      <li><a href="//about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-23T14:59:45.000Z"><a href="/2016/06/23/JAVA程序员学习Scala（二）/">2016-06-23</a></time>
+      
+      
+  
+    <h1 class="title">JAVA程序员学习Scala（二）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><code>Scala</code>的<code>actor</code>提供了一种基于事件的轻量级线程。只要使用<code>scala.actors.Actor</code>伴生对象的<code>actor()</code>方法，就可以创建一个<code>actor</code>。它接受一个函数值/闭包做参数，一创建好就开始运行。用!()方法给<code>actor</code>发消息，用<code>receive()</code>方法从<code>actor</code>接收消息。<code>receive()</code>也可以闭包为参数，通常用模式匹配处理接收到的消息。</li>
+<li>如果想要遍历容器里的元素，执行一些操作，<code>Scala</code>程序库已经内建了这个方法，<code>foldLeft()</code>,也就是<code>/:</code>方法：<pre><code>val sum = (0 /: (1 to number)){(sum,i)=&gt;sum+i}
+</code></pre></li>
+<li>如果<code>scala</code>类及其引用的类在不同的目录，比如在<code>entities</code>目录中，可以在<code>scala</code>的<code>sourcepath</code>选项里面指定这个目录：<code>scala -sourcepath entities:. userPerson.scala</code>。<code>userPerson.scala</code>用到了<code>entities</code>中的<code>Person.scala</code>类。如果类是以编译过的形式存在不同的目录下，就要使用<code>classpath</code>选项。<code>scalac -d . -classpath LocationOfPersonClassFile UsePersonClass.scala</code>//-d用来说明字节码存放地点。</li>
+<li>如果想在<code>java</code>中运行，只要在<code>classpath</code>里指定<code>scala-library.jar</code>文件。<pre><code>scalac -sourcepath . UsePersonClass.scala
+java -classpath /opt/scala/scala-2.7.4.final/lib/scala-library.jar:. UsePerson
+</code></pre><a id="more"></a></li>
+<li>在<code>Scala</code>里，可以直接使用<code>Java</code>类。如果不是在默认的包中，则需要引入：<pre><code>import java.util.Date
+import java.lang.reflect._
+println(&quot;Today is&quot;+new Date())
+val methods = getClass.getMethod()
+method.foreach{method:Method=&gt;println(method.getName())}
+</code></pre></li>
+<li>如果想用的<code>Java</code>类是你自已创建的，或是来自第三方，请确保<code>scalac</code>的<code>classpath</code>指向字节码的位置。如一个<code>java</code>类的包名为<code>investments</code>，编译后的字节码位于名为<code>classses/investments</code>的目录下，可以这样编译<code>Scala</code>文件：<pre><code>scalac -classpath calsses UseInvestment.scala
+scala -classpath classes:. UseInvestment
+</code></pre>也可以使用<code>java</code>如下运行：<pre><code>java -classpath /opt/scala/scala-2.7.4.final/lib/scala-library.jar:classes:. UseInvestment
+</code></pre></li>
+<li>如果<code>java</code>代码有方法或字段的名字（如<code>trait</code>或<code>yield</code>等）与<code>Scala</code>的关键字冲突，调用他们时会导致<code>Scala</code>编译器死掉。解决方法是，把冲突的方法/变量放到反引号里。<code>val theYield1 = investment.\</code>yield``</li>
+<li><code>Scala</code>提供了与<code>Java</code>之间完整的双向互操作性。默认情况下，<code>Scala</code>并不遵循<code>JavaBean</code>的约定，要用<code>@scala.reflect.BeanProperty</code>这个注解生成符合<code>JavaBean</code>约定的<code>getter</code>和<code>setter</code>。还可以从<code>Scala</code>类继承<code>Java</code>类，不过，要运行使用了<code>Scala</code>类的<code>Java</code>代码，<code>classpath</code>里需要有<code>scala-library.jar</code>。</li>
+<li><p><code>java</code>代码中如果用到了<code>scala</code>代码：</p>
+<pre><code>package automobiles
+class Car (val year:Int){
+private[this] var miles:Int=0
+def drive(distance:Int){miles+=distance}
+overide def toString():String=&quot;year:&quot;+year+&quot; miles:&quot;+miles
+}
+
+package automobiles.users;
+improt automobiles.Car;
+public class UserCar{
+ public static void main(String[] args){
+    Car car = new Car(2009);
+    System.out.println(car);
+    car.drive(10);
+    System.out.println(car);
+ }
+}
+</code></pre><p>我们用<code>scalac</code>编译<code>Scala</code>代码，用<code>javac</code>编译<code>Java</code>代码：</p>
+<pre><code>scalac -d classed Car.scala
+javac -d classes -classpath classe UseCar.java
+java -calsspath /opt/scala/scala-2.7.4.final/lib/scala-library.jar:classes automobiles.users.UseCar
+</code></pre><p>但是，<code>Scala</code>类有些方法接收闭包，这些方法在<code>Java</code>里就不能用，因为<code>java</code>不支闭包。（<code>java8</code>中未知）。如下<code>sumulat</code>e，就不能用，但是，我们可以用<code>run()</code>方法：</p>
+<pre><code>class Equipment{
+def simulate(input:int)(calculator:Int=&gt;Int):Int={
+    calculator(input)
+}
+def run(duration:Int){
+    println(&quot;running&quot;)
+}
+}
+</code></pre></li>
+<li>没有方法实现的<code>trait</code>在字节码层面上就是简单的接口。<code>Scala</code>不支持<code>interface</code>关键字。因此，想在<code>Scala</code>里创建接口，就创建一个没有实现的<code>trait</code>。如：<pre><code>trait Writable{
+    def write(message:String):Unit
+}
+</code></pre>java中，可以直接实现它：<pre><code>public class AWritableJavaClass implements Writable{
+    public void write(String message){}
+}
+</code></pre>如果<code>trait</code>有方法实现，<code>java</code>类就不能实现这个<code>trait/interface</code>。</li>
+<li><p><code>Scala</code>将对象(单例对象或伴生对象)编译成一个”单例类”，这个类的名字末尾有一个特殊的<code>$</code>符。<br><code>Scala</code>把单例对象编译到一个单例类（它用的是<code>Java</code>的静态方法）中，此外，还会创建一个普通的类，它把调用传给单例类。</p>
+<pre><code>object Single{//它会编译成两个类
+    def greet(){println(&quot;Hello from Signle&quot;)}
+}
+
+public class SingleUser{//java调用它就像调用static方法一样。
+    public static void main(String[] args){
+        Single.great();
+    }
+}
+</code></pre><p>伴生对象：</p>
+<pre><code> class Buddy{
+    def greet(){println(&quot;Hello from Buddy class&quot;)}
+ }
+ object Buddy{//编译后边加添加$
+    def greet(){println(&quot;Hello from Buddy object&quot;)}
+ }
+
+public class BuddyUser{//访问伴生对象需要特殊符号MODULE$
+    public static void main(String[] args){
+        new Buddy().greet();
+        Buddy$.MODULE$.greet();
+    }
+}
+</code></pre></li>
+<li><p><code>Scala</code>类可以继承<code>Java</code>类，反之也可以。在<code>Scala</code>中没有<code>throws</code>子句，任意方法都可以抛出异常，无需显式声明成方法签名的一部分。不过，如果在<code>Java</code>中重写这样的方法，试图抛出异常，就会陷入麻烦。</p>
+<pre><code>absstract class Bird{
+    def fly()
+}
+class Ostrich extends Bird{
+    def fly(){
+        throw new NoFlyException
+    }
+}
+
+class NoFlyException extends Exception{}
+</code></pre><p>上述<code>scala</code>代码是完全没有问题的，不过，如果在<code>java</code>中实现该声明，则会出来问题，为了解决此类问题，<code>Scala</code>提供了一个后门，定义<code>@throws</code>注解，把<code>scala</code>的接口声明改成如下，就可以了：</p>
+<pre><code>abstact class Bird{
+    @throws(calssOf[NoFlyException])def fly();
+}
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/java/">java</a>, <a href="/tags/Scala/">Scala</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2016/06/24/JAVA8学习（九）/" class="alignleft prev" >Prev</a>
+    
+    
+    <a href="/2016/06/22/外网访问内网kafka访问不到问题的解决/" class="alignright next" >Next</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/06/23/JAVA程序员学习Scala（二）/" data-title="JAVA程序员学习Scala（二）" data-url="http://www.52brt.com/2016/06/23/JAVA程序员学习Scala（二）/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
+  
+    <li><a href="/tags/Nashorn/">Nashorn</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/Scala/">Scala</a><small>2</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>13</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>9</small></li>
+  
+    <li><a href="/tags/kafka/">kafka</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

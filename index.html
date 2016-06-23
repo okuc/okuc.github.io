@@ -119,6 +119,49 @@ try(Resource res = ...){
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-06-23T14:59:45.000Z"><a href="/2016/06/23/JAVA程序员学习Scala（二）/">2016-06-23</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/23/JAVA程序员学习Scala（二）/">JAVA程序员学习Scala（二）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><code>Scala</code>的<code>actor</code>提供了一种基于事件的轻量级线程。只要使用<code>scala.actors.Actor</code>伴生对象的<code>actor()</code>方法，就可以创建一个<code>actor</code>。它接受一个函数值/闭包做参数，一创建好就开始运行。用!()方法给<code>actor</code>发消息，用<code>receive()</code>方法从<code>actor</code>接收消息。<code>receive()</code>也可以闭包为参数，通常用模式匹配处理接收到的消息。</li>
+<li>如果想要遍历容器里的元素，执行一些操作，<code>Scala</code>程序库已经内建了这个方法，<code>foldLeft()</code>,也就是<code>/:</code>方法：<pre><code>val sum = (0 /: (1 to number)){(sum,i)=&gt;sum+i}
+</code></pre></li>
+<li>如果<code>scala</code>类及其引用的类在不同的目录，比如在<code>entities</code>目录中，可以在<code>scala</code>的<code>sourcepath</code>选项里面指定这个目录：<code>scala -sourcepath entities:. userPerson.scala</code>。<code>userPerson.scala</code>用到了<code>entities</code>中的<code>Person.scala</code>类。如果类是以编译过的形式存在不同的目录下，就要使用<code>classpath</code>选项。<code>scalac -d . -classpath LocationOfPersonClassFile UsePersonClass.scala</code>//-d用来说明字节码存放地点。</li>
+<li>如果想在<code>java</code>中运行，只要在<code>classpath</code>里指定<code>scala-library.jar</code>文件。<pre><code>scalac -sourcepath . UsePersonClass.scala
+java -classpath /opt/scala/scala-2.7.4.final/lib/scala-library.jar:. UsePerson
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/23/JAVA程序员学习Scala（二）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-06-22T14:59:45.000Z"><a href="/2016/06/22/外网访问内网kafka访问不到问题的解决/">2016-06-22</a></time>
       
       
@@ -425,6 +468,68 @@ long millis = timeElapsed.toMillis();
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-06-04T14:59:45.000Z"><a href="/2016/06/04/JAVA程序员学习Scala（一）/">2016-06-04</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/04/JAVA程序员学习Scala（一）/">JAVA程序员学习Scala（一）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><code>Scala</code>环境设置，将<code>bin</code>目录加到<code>path</code>中即可。</li>
+<li>命令行中，输入<code>scala</code>进入<code>Shell</code>环境，<code>Ctrl+A</code>回到行首，<code>Ctrl+E</code>到达行尾，如果没敲完，就回车，会出现<code>|</code>，提示你继续输入。<code>:quit</code>或者<code>exit</code>退出<code>shell</code>。</li>
+<li>也可以在命令行中，直接输入<code>scala -e &quot;println(\&quot;Hello \&quot;+args(0)+\&quot;,\&quot;+args(1))&quot; Buddy &quot;welcome to Scals</code>,<strong>没测试通过</strong></li>
+<li>还可以使用<code>:load</code>选项把它载入<code>shell</code>。<code>:load script.scala</code>。<code>scala Helloworld.scala</code>。<code>scala后</code>边的参数可以是脚本，也可以是目标文件(<code>.class</code>文件)。在给它传递<code>Java</code>属性的时候，可以用<code>-Dproperty=value</code>格式。在文件前边加上<code>-avaecompiled</code>选项，<code>Scala</code>工具会把字节码存成一个<code>Jar</code>文件。</li>
+<li><p>在类<code>Unix</code>的<code>shell</code>上，可以写脚本：</p>
+<pre><code>#!/usr/bin/env scala
+!#
+println(&quot;hello &quot;+args(0))
+ 然后添加执行权限：chmod +x Script.scala即可直接执行。./Sript.scala okuc。okuc是参数。
+- 在windows上，可以在bat批处理中带参数的方式，如下：
+echo off
+cls
+call scala %1
+pause
+</code></pre></li>
+<li><p>一个简单的例子：</p>
+<pre><code>for(i&lt;-1 to 3){//包括3
+  print(i+&quot;,&quot;)
+}
+println(&quot;Scala Rocks!!!&quot;)
+
+for(i&lt;-1 until 3){//不包括3
+  print(i+&quot;,&quot;)
+}
+println(&quot;Scala Rocks!!!&quot;)
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/04/JAVA程序员学习Scala（一）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-06-03T14:59:45.000Z"><a href="/2016/06/03/JAVA8学习（三）/">2016-06-03</a></time>
       
       
@@ -468,125 +573,6 @@ long millis = timeElapsed.toMillis();
 
 
 
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-06-02T14:59:45.000Z"><a href="/2016/06/02/JAVA8学习（二）/">2016-06-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/02/JAVA8学习（二）/">JAVA8学习（二）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="Stream-API"><a href="#Stream-API" class="headerlink" title="Stream API"></a>Stream API</h2><ul>
-<li><p>要统计一本书的长单词，做法如下：</p>
-<pre><code>String contents = new String(Files.readAllBytes(Paths.get(&quot;alice.txt&quot;)),StandardCharsets.UTF_8);
-List&lt;String&gt; words = Arrays.asList(contents.split(&quot;[\\P{L}]+&quot;));//将字符串分隔成字母，非字母被认为是分隔符
-
-//传统方式
-int count=0;
-for(String w:words){
-    if(w.length()&gt;12)count++;
-}
-
-//java8方式
-long count= words.stream().filter(w-&gt;w.lenght()&gt;12).count();
-</code></pre></li>
-<li><p><code>Stream</code>与集合的区别如下：</p>
-<ul>
-<li><code>Stream</code>自已不会存储元素。元素可能被存储在底层的集合中，或者根据需要产生出来。</li>
-<li><code>Stream</code>操作符不会改变源对象。它们会返回一个持有结果的新的Stream。</li>
-<li><code>Stream</code>是<strong>延迟执行</strong>的。就是说，他们在需要结果的时候才会执行。</li>
-</ul>
-</li>
-<li><p><code>stream</code>与<code>parallelStream</code>的区别是，后者可以并行执行过滤和统计操作。</p>
-<pre><code>//java8方式
-long count= words.parallelStream().filter(w-&gt;w.lenght()&gt;12).count();
-</code></pre></li>
-<li><p>使用<code>stream</code>，会通过三个阶段来建立一个操作流水线：</p>
-<ol>
-<li>创建一个<code>stream</code>。</li>
-<li>在一个或多个步骤中，指定将初始<code>stream</code>转换为另一个<code>stream</code>的中间操作。</li>
-<li>使用一个终止操作来产生一个结果。该操作会强制它之前的延迟操作立即执行。在这之后，该<code>Stream</code>就不会再被使用了。</li>
-</ol>
-</li>
-<li><p><code>stream</code>操作不会按元素的顺序调用执行。</p>
-</li>
-<li>数组也可以转化为<code>stream</code>。<code>Stream.of(contents.split(&quot;[\\P{L}]+&quot;))</code>;<code>of</code>方法可接收一个可变长度的参数，因此可构造任意个参数的<code>Stream</code>。<code>Stream&lt;String&gt; song = Stream.of(&quot;gently&quot;,&quot;down&quot;,&quot;the&quot;,&quot;stream&quot;);</code>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/06/02/JAVA8学习（二）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-22T14:35:02.000Z"><a href="/2016/05/22/shell学习(五)/">2016-05-22</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/22/shell学习(五)/">shell学习(五)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="linux中的信号"><a href="#linux中的信号" class="headerlink" title="linux中的信号"></a>linux中的信号</h2><ul>
-<li>软中断</li>
-<li>进程间异步通信</li>
-<li><code>man 7 signal</code> 查看系统中对信号的支持</li>
-<li>键盘组合键生成信号<ul>
-<li>终止进程： <code>SIGINT</code> <code>Ctrl+C</code></li>
-<li>暂停进程： <code>SIGSTP</code> <code>Ctrl+Z</code></li>
-</ul>
-</li>
-<li><code>man kill</code> ：查看kill命令的帮助</li>
-<li>程序中的信号处理<ul>
-<li>按照默认方式处理信号</li>
-<li>忽略信号</li>
-<li>按照自定义方式捕捉并处理信号
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/22/shell学习(五)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -617,6 +603,8 @@ long count= words.parallelStream().filter(w-&gt;w.lenght()&gt;12).count();
   
     <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
   
+    <li><a href="/tags/Scala/">Scala</a><small>2</small></li>
+  
     <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
   
     <li><a href="/tags/centos/">centos</a><small>7</small></li>
@@ -635,7 +623,7 @@ long count= words.parallelStream().filter(w-&gt;w.lenght()&gt;12).count();
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>11</small></li>
+    <li><a href="/tags/java/">java</a><small>13</small></li>
   
     <li><a href="/tags/java8/">java8</a><small>9</small></li>
   

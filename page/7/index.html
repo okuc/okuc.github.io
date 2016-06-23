@@ -70,6 +70,103 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-08-30T01:06:32.000Z"><a href="/2015/08/30/centos7常用命令/">2015-08-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/30/centos7常用命令/">centos7常用命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>记录centos7下的一些常用命令!</p>
+<p>###网络相关</p>
+<ul>
+<li>关闭防火墙：<pre><code>systemctl stop firewalld.service#停止firewall
+systemctl disable firewalld.service#禁止firewall开机启动
+</code></pre></li>
+<li><p>配置DNS服务</p>
+<ul>
+<li><p>命令行方式</p>
+<pre><code>1. nmcli connection show #显示当前网络连接
+NAME UUID                                 TYPE           DEVICE
+eno1 5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03 802-3-ethernet eno1
+
+2. nmcli con mod eno1 ipv4.dns &quot;114.114.114.114 8.8.8.8&quot; #修改当前网络连接对应的DNS服务器，这里的网络连接可以用名称或者UUID来标识
+3. nmcli con up eno1#将dns配置生效
+</code></pre></li>
+</ul>
+<ul>
+<li>直接修改文件方式
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/08/30/centos7常用命令/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-27T17:23:41.000Z"><a href="/2015/08/28/java连接远程HBase/">2015-08-28</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/28/java连接远程HBase/">java连接远程HBase 1.1.1</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>由于工作需要用到<code>HBase</code>，今晚使用<code>HBase 1.1.1</code>小试牛刀了一把。<code>HBase 1.1.1</code>运行环境为<code>CentOS7.0</code>，java客户端运行环境为<code>Win10</code>，服务端jdk版本为<code>1.8</code>，客户端jdk版本为<code>1.7</code>。</p>
+<p><strong>提示：本文最后可下载源代码</strong></p>
+<p>具体步骤如下：</p>
+<ol>
+<li>下载<code>HBase 1.1.1</code>,下载地址如下：<a href="http://mirrors.cnnic.cn/apache/hbase/1.1.1/hbase-1.1.1-bin.tar.gz">http://mirrors.cnnic.cn/apache/hbase/1.1.1/hbase-1.1.1-bin.tar.gz</a>。</li>
+<li>使用<code>tar -xvf hbase-1.1.1-bin.tar.gz</code>解压。<strong>我使用的是root用户</strong></li>
+<li>进入到解压后的bin目录中，使用<code>./start-hbase.sh</code>启动Hbase，启动成功会显示如下提示：<pre><code>starting master, logging to /home/soft/hbase-1.1.1/bin/../logs/hbase-root-master-MiWiFi-R1CM.out
+</code></pre><strong>由于没有作任何设置，此时，所有数据都保存在临时环境中，一旦重启就会丢失。</strong>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/08/28/java连接远程HBase/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-08-22T14:35:02.000Z"><a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/">2015-08-22</a></time>
       
       
@@ -395,6 +492,8 @@ mysql-community-release-el7-5.noarch
   
     <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
   
+    <li><a href="/tags/Scala/">Scala</a><small>2</small></li>
+  
     <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
   
     <li><a href="/tags/centos/">centos</a><small>7</small></li>
@@ -413,7 +512,7 @@ mysql-community-release-el7-5.noarch
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>11</small></li>
+    <li><a href="/tags/java/">java</a><small>13</small></li>
   
     <li><a href="/tags/java8/">java8</a><small>9</small></li>
   
