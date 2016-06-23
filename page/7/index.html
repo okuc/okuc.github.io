@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 7 | 我的后院自留地</title>
+  <title>Страница 7 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -64,6 +64,60 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-22T14:35:02.000Z"><a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/">2015-08-22</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/">《Elasticsearch服务器开发》学习笔记（三）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第2章-映射配置-二"><a href="#第2章-映射配置-二" class="headerlink" title="第2章 映射配置(二)"></a>第2章 映射配置(二)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
+<hr>
+<ol>
+<li>lucene 4.0后，允许修改默认的基于TF/IDF的算法。4.0还附加了相似度模型，允许在文档中使用不同的评分公式。</li>
+<li><p>为每个字段设置不同的相似度模型。如下例子：</p>
+<pre><code>{
+   &quot;mappings&quot;:{
+       &quot;post&quot;:{
+           “properties”：{
+               “id”：{“type”：“long”，“store”：“yes”，“precision_step”：“0”}，
+               “name”：{“type”：“string”，“store”：“yes”，“index”：“analyzed”,&quot;similarity&quot;:&quot;BM25&quot;}，
+               “published”：{“type”：“date”，“store”：“yes”，“precision_step”：“0”}，
+               “contents”：{“type”：“long”，“store”：“no”，“index”：“analyzed”},&quot;similarity&quot;:&quot;BM25&quot;
+               }
+           }
+     }
+
+}
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -314,7 +368,7 @@ mysql-community-release-el7-5.noarch
 
 <nav id="pagination">
   
-    <a href="/page/6/" class="alignleft prev">Prev</a>
+    <a href="/page/6/" class="alignleft prev">Назад</a>
   
   
   <div class="clearfix"></div>
@@ -324,7 +378,7 @@ mysql-community-release-el7-5.noarch
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Метки</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -359,9 +413,9 @@ mysql-community-release-el7-5.noarch
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>10</small></li>
+    <li><a href="/tags/java/">java</a><small>11</small></li>
   
-    <li><a href="/tags/java8/">java8</a><small>8</small></li>
+    <li><a href="/tags/java8/">java8</a><small>9</small></li>
   
     <li><a href="/tags/kafka/">kafka</a><small>1</small></li>
   

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 5 | 我的后院自留地</title>
+  <title>Страница 5 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -64,6 +64,56 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-13T14:06:32.000Z"><a href="/2015/12/13/轻松在eclipse中将maven项目布署到tomcat上/">2015-12-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/13/轻松在eclipse中将maven项目布署到tomcat上/">轻松在eclipse中将maven项目布署到tomcat上</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在eclipse中导入已经建好的maven项目后，往往会出现无法布署到tomcat上的情况，此时，该怎么办呢？</p>
+<ol>
+<li><p>右键项目名，选择<code>Properties</code>。在弹出的页面中，左侧选择<code>Project Facets</code>,在右侧的列表中，选中<code>Dynamic Web Module</code>、<code>Java</code>、<code>JavaScript</code>三项，然后点击右下角的<code>Apply</code>按扭。</p>
+</li>
+<li><p>左侧选择<code>Deployment Assembly</code>,在左则，配置好依赖：</p>
+<ul>
+<li><code>/src/main/java</code>–&gt;<code>WEB-INF/classes</code></li>
+<li><code>/src/main/resources</code>–&gt;<code>WEB-INF/classes</code></li>
+<li><code>/src/main/webapp</code>–&gt;<code>/</code></li>
+<li><code>/src/test/java</code>–&gt;<code>WEB-INF/classes</code></li>
+<li><p><code>Maven Dependencies</code>–&gt;<code>WEB-INF/lib</code></p>
+<p>然后点击右下角的<code>Apply</code>按扭。</p>
+</li>
+</ul>
+</li>
+<li><p>点击<code>OK</code>按扭返回，这回，可以直接在项目名上点击右键，选择<code>Run AS</code> -&gt; <code>Run on Server</code>了。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -199,6 +249,43 @@ appModule.directive(&apos;hello&apos;, function() {
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/">2015-12-08</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/">新手学习Angularjs之四：常用的绑定命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<p><code>ng-bind</code>、<code>ng-model</code>、<code>｛{}｝</code>这三个命令如果还不明白，请参考这里<a href="http://www.52brt.com/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">新手学习Angularjs之二：ng-bind、ng-model、大括号的区别</a>,下面，我们重点来看以下几个命令：<code>ng-show/hide</code>、<code>ng-if</code>、<code>ng-submit</code>、<code>ng-disabled</code>、<code>ng-checked</code>、<code>ng-src</code>、<code>ng-href</code>、<code>ng-class</code>、<code>ng-selected</code>、<code>ng-change</code>几个命令。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">2015-12-08</a></time>
       
       
@@ -221,43 +308,6 @@ appModule.directive(&apos;hello&apos;, function() {
         
           <div class="alignleft">
             <a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/">2015-12-08</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/">新手学习Angularjs之四：常用的绑定命令</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
-<p><code>ng-bind</code>、<code>ng-model</code>、<code>｛{}｝</code>这三个命令如果还不明白，请参考这里<a href="http://www.52brt.com/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">新手学习Angularjs之二：ng-bind、ng-model、大括号的区别</a>,下面，我们重点来看以下几个命令：<code>ng-show/hide</code>、<code>ng-if</code>、<code>ng-submit</code>、<code>ng-disabled</code>、<code>ng-checked</code>、<code>ng-src</code>、<code>ng-href</code>、<code>ng-class</code>、<code>ng-selected</code>、<code>ng-change</code>几个命令。</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -446,74 +496,13 @@ appModule.directive(&apos;hello&apos;, function() {
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-11-21T14:35:02.000Z"><a href="/2015/11/21/Emmet常用缩写简要笔记/">2015-11-21</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/11/21/Emmet常用缩写简要笔记/">Emmet常用缩写简要笔记</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>emmet可谓前端开发神器，特别是在前端页台和后端服务分离化，restful大肆流行的今天，掌握点emmet还是有必要的。现将一些常用知识点简单记录如下。</p>
-<ol>
-<li><p>初始化文档。</p>
-<ul>
-<li><p><code>html:5</code> 或<code>!</code>：用于HTML5文档类型。生成的代码如下，<strong>注意</strong>,生成后需要把<code>lang=&quot;en&quot;</code>改为<code>lang=&quot;zh-cn&quot;</code>，再把’title’改成相对应的文档标题就可以了。</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;Document&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre></li>
-<li><code>html:xt</code>：用于XHTML过渡文档类型。</li>
-<li><code>html:4s</code>：用于HTML4严格文档类型。</li>
-</ul>
-</li>
-<li>子代：<code>&gt;</code>用来表示子代。代码<code>div&gt;ul&gt;li</code>可以生成的代码：<pre><code>&lt;div&gt;
-    &lt;ul&gt;
-        &lt;li&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/div&gt;
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/11/21/Emmet常用缩写简要笔记/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/page/4/" class="alignleft prev">Prev</a>
+    <a href="/page/4/" class="alignleft prev">Назад</a>
   
   
-    <a href="/page/6/" class="alignright next">Next</a>
+    <a href="/page/6/" class="alignright next">Вперед</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -522,7 +511,7 @@ appModule.directive(&apos;hello&apos;, function() {
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Метки</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -557,9 +546,9 @@ appModule.directive(&apos;hello&apos;, function() {
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>10</small></li>
+    <li><a href="/tags/java/">java</a><small>11</small></li>
   
-    <li><a href="/tags/java8/">java8</a><small>8</small></li>
+    <li><a href="/tags/java8/">java8</a><small>9</small></li>
   
     <li><a href="/tags/kafka/">kafka</a><small>1</small></li>
   

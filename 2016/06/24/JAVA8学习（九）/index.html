@@ -1,0 +1,347 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JAVA8学习（九） | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="JAVA8学习（九）"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="//archives">归档</a></li>
+    
+      <li><a href="//coding">编程技术</a></li>
+    
+      <li><a href="//bigData">大数据技术</a></li>
+    
+      <li><a href="//dataV">数据可视化</a></li>
+    
+      <li><a href="//about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-24T14:59:45.000Z"><a href="/2016/06/24/JAVA8学习（九）/">2016-06-24</a></time>
+      
+      
+  
+    <h1 class="title">JAVA8学习（九）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><strong>try-with-resources</strong> Java7提供了一个简单实用的代码格式，如下：<br>打开一个资源<pre><code>try{
+    使用该资源
+}finally{
+    关闭该资源
+}
+</code></pre>其中资源所属的类必须实现了AutoCloseable接口。该接口只有一个方法：<code>void close() throws Exception</code><pre><code>try-with-resources语句的最简单形式如下所示：
+try(Resource res = ...){
+   使用res
+}
+</code></pre>当<code>try</code>语句块退出时，会自动调用<code>res.close()</code>方法。下面是一个经典示例—-读取一个文件中的所有单词：<pre><code>try(Scanner in = new Scanner(Paths.get(&quot;/usr/share/dict/words&quot;))){
+   while(in.hasNext()) System.out.println(in.next().toLowerCase());
+}
+</code></pre>当代码块像往常一样退出或者发生异常时，都会调用<code>in.close()</code>方法，就如同之前<code>finally</code>一样<br>在Java7中，可以在同一个<code>catch</code>分支中捕获多个异常类型，如<code>catch(FileNotFoundException|UnknownHostException ex)</code>。<br>对于反射方法的异常，Java7单独引进了一个新的父类：<code>ReflectiveOperationException</code>。<a id="more"></a></li>
+<li>文件操作<code>Path</code>：是一个含有多个目录名称的序列，也可能带着一个文件名。路径的第一部分可能是一个根目录，根目录的权限则取决于文件系统。静态方法Paths可以接受一个或多个字符串，然后它将这些字符串用文件系统默认的路径分隔符（windows为<code>\</code>,UNIX为<code>/</code>）连接起来。也可以给<code>Paths.get</code>方法提供一个含有分隔符的字符串：<pre><code>Path absolute = Paths.get(&quot;,&quot;,&quot;home&quot;,&quot;cay&quot;)
+Path relative = Paths.get(&quot;myprog&quot;,&quot;conf&quot;,&quot;user.properties&quot;)
+Path homeDirectory = Path.get(&quot;/home/cay&quot;)
+</code></pre></li>
+<li>组合或解析路径是一个很常见的工作。调用<code>p.resolve(q)</code>会返回一个符合以下规则的路径：<ul>
+<li>如果<code>q</code>是一个绝对路径，那么返黑历史的结果就是<code>q</code></li>
+<li>否则，根据文件系玄参的规则，结果就是”<code>p然后q</code>“<pre><code>Path configPaht = homeDirectory.resolve(&quot;myprog/conf/user.properties&quot;);
+Path configPaht = homeDirectory.resolve(Paths.get()&quot;myprog/conf/user.properties&quot;));//结果与上述相同
+</code></pre></li>
+</ul>
+</li>
+<li>针对某个路径的父目录进行解析，并产生一个兄弟路径：<code>Path tempPath = workPath.resolveSibling(&quot;temp&quot;);</code></li>
+<li><code>relativize</code>方法与<code>resolve</code>方法相反，调用<code>p.relativize(r)</code>会产生路径<code>q</code>，<code>q</code>可以通过调用<code>p.resolve(q)</code>来产生路径<code>r</code>。如：<code>Paths.get(&quot;/home/cay&quot;).relativize(Paths.get(&quot;/home/fred/myprog&quot;))//结果是../fred/myprog</code></li>
+<li><code>normalize</code>方法会去掉所有冗余的目录：<code>/home/cay/../fred/./myprog</code> 调用<code>normalize</code>会返回路径：<code>/home/fred/myprog</code>.</li>
+<li><code>toAbsolutePath</code>方法会返回指定路径的绝对路径。</li>
+<li><code>Path</code>接口的其他方法：<ul>
+<li><code>Path p = Paths.get(&quot;/home&quot;,&quot;cay&quot;,&quot;myprog.properties&quot;);</code></li>
+<li><code>Path parent = p.getParent();//获得路长，为/home/cay</code></li>
+<li><code>Path file = p.getFilename();//获得文件名，为Myprog.properties</code></li>
+<li><code>Path root = p.getRoot();//获得起始路径，相对于原始路径为null</code></li>
+</ul>
+</li>
+<li><code>Files</code>可以快速实现一些<strong>常用文件操作</strong>：<ul>
+<li><code>byte[] bytes = Files.readAllBytes(path);//读取文本所有内容</code></li>
+<li><code>string content = new String(bytes,StandardCharsets.UTF_8);//读取为字符串</code></li>
+<li><code>List&lt;String&gt; lines = Files.readAllLines(path);//按行读取文件</code></li>
+<li><code>Files.write(path,content.getBytes(StandardCharsets.UTF_8));//将字符串写入文件</code></li>
+<li><code>Files.write(path,lines);//按照行来写入文件</code></li>
+<li><code>Files.write(path,lines,StandardOpenOption.APPEND);//将文件追加到内容</code></li>
+</ul>
+</li>
+<li><p>对于<strong>大文件</strong>，仍然可以使用<code>stream</code>或<code>reader/writer</code>类。</p>
+<pre><code>InputStream in = Files.newInputStream(path);
+OutputStream in = Files.newOutputStream(path);
+Reader reader = Files.newBufferedReader(path);
+Writer writer = Files.newBufferedWriter(path);
+
+Files.copy(in,path);//将流中的内容保存到文件中。
+Files.copy(path,out);//将文件中的内容复制到流中。
+</code></pre></li>
+<li><strong>创建文件和目录</strong>：<ul>
+<li><code>Files.createDirectory(path);</code>要求除最后目录外的其他目录都存在。</li>
+<li>要同时创建这个目录，可以<code>Files.createDirectories(path);</code></li>
+<li>可以用如下代码创建一空白文件:<code>Files.createFile(path);</code></li>
+<li><code>File.exists(path)</code>方法会检查是否存在指定的文件或目录。</li>
+</ul>
+</li>
+<li><code>Files</code>类提供一些方便的方法，用来在由用户或系统指定的位置创建临时文件或目录：<pre><code>Path newPath = Files.createTempFile(dir,prefix,suffix);
+Path newPath = Files.createTempFile(prefix,suffix);
+Path newPath = Files.createTempFile(dir,prefix);
+Path newPath = Files.createTempFile(prefix);
+</code></pre><code>dir</code>是一个<code>path</code>对象，并且字符串<code>prefix</code>和<code>suffix</code>都有可能是<code>null</code>。</li>
+<li><p><strong>复制、移动和删除文件</strong>,如果目标文件或目录存在的话，复制和移动将会失败。如果希望覆盖，可以用<code>REPLACE_EXISTING</code>选项。如果希望复制所有的文件属性，可以使用<code>COPY_ATTRIBUTES</code>选项，也可以同时提供这两个选项：<br><code>Files.copy(fromPath,toPath,StandardCopyOption.REPLACE_EXISTING,StandardCopyOption.COPY_ATTRIBUTES);</code></p>
+<pre><code>`Files.copy(fromPath,toPath);`
+`Files.move(fromPath,toPath);`
+</code></pre><p>可以指定使用原子方式来执行移动操作，要么成功，要么源文件仍然存在：</p>
+<pre><code>Files.move(fromPath,toPath,StandardCopyOption.ATOMIC_MOVE);
+</code></pre></li>
+<li>删除文件，用<code>Files.delete(path);Files.deleteIfExists(path);</code></li>
+<li>安全的<code>null</code>值相等测试：<code>Objects.equals(a,b)</code>，如果<code>a</code>和<code>b</code>都是<code>null</code>，则返回<code>true</code>;如果只有<code>a</code>为<code>null</code>，则返回<code>false</code>；其他情况返回<code>a.equals(b)</code></li>
+<li>计算哈希码时，对于<code>null</code>对象，哈希码会返回<code>0</code>，java7中引入的可变参数的<code>Obejcts.hash</code>，允许指定任意个对比象，并且他们的哈希码会被自动组合起来：<pre><code>return Objects.hash(first,last);
+</code></pre></li>
+<li><code>toString</code>方法，<code>String.valueOf(obj)</code>,如果<code>obj</code>为<code>null</code>，则会返回字符串<code>nul</code>l，如果不想这样，可以使用<code>Object.toString(obj,&quot;&quot;);</code></li>
+<li>比数数值类型对像时，因为允许返回任意的正值和负值，所以存在溢出的风险。在java7之后，可以用静态方法Integer.compare来实现：<pre><code>public int compareTo(Point other){
+    int diff = Integer.compare(x,other.x);//没有溢出的风险
+    if(diff != 0) return diff;
+    return Integer.compare(y,other,y);
+}
+</code></pre><code>Long</code>,<code>short</code>,<code>Byte</code>,<code>Boolean</code>也都提供了各自的静态方法<code>compare。</code></li>
+<li>java7之后，支持带加号的字符串转为<code>int</code>，如：<code>int n=Integer.parseInt(&quot;+1&quot;);</code>这个问题在<code>int</code>,<code>long</code>,<code>short</code>,<code>byte</code>和<code>BigInter</code>中的方法都被修复了。</li>
+<li>全局<code>Logger：Logger.getGlobal();</code>它可以在任何时候替代<code>System.out.println();</code></li>
+<li><code>Objects</code>类提供了<code>requireNonNull</code>方法以便于检查参数是否为<code>null</code>。<pre><code>Objects.requireNonNull(directions);//如果directions为null会换出异常，所以可以加入第二个字符串参数，添加异常信息。
+</code></pre></li>
+<li>java5中之前，只有的<code>Runtime.exe</code>方法来执行Java程序，java5中新增了<code>ProcessBuilder</code>类，加强了对操作系统进程的控制，尤其是通过<code>ProcessBuilder</code>，可以改变工作目录。<br>java7中添加了一些新的方法：<pre><code>ProcessBuilder builder = new ProcessBuilder(&quot;grep&quot;,&quot;-o&quot;,&quot;[A-Za-z_][A-Za-z_0-9]&quot;);
+bilder.redirectInput(Paths.get(&quot;Hello,.java&quot;).toFile());
+bilder.redirectOutput(Paths.get(&quot;identifiers.txt&quot;).toFile());
+Process process = builder.start();
+process.waitFor();
+</code></pre>从java8开始，<code>waitFor</code>方法，可以带时间：<code>boolean completed = process.waitFor(1,TimeUnit.MINUTES);</code><br>Java7中新增的<code>ProcessBuilder</code>的<code>inheritIO</code>方法。它能将进程的标准输入、输出和错误流设置为Java程序的标准输入、输出和错误流。如：<pre><code>ProcessBuilder builder = new ProcessBuilder(&quot;ls&quot;,&quot;-al&quot;);
+builder.inheritIO();
+builder.start().waitFor();
+</code></pre>如上的<code>ls</code>命令将会被发送到<code>System.out</code>。<br>-java7中<code>URLClassloader</code>类实现了<code>AutoCloseable</code>接口，所以，加载类，可以使用<code>try-with-resources</code>方法了。</li>
+<li><p><code>BitSet</code>是一个表示<code>bit</code>序列的整数集合。该集合可以根据整数i来设置第i个bit位的值。这使得集合操作非常高效。求并集、交集、补集只不过是简单的按位或、与、非运算。java7中添加了一些构造<code>BitSet</code>的方法：</p>
+<pre><code>byte[] bytes = {(byte)0b10101100,(byte)0b00101000};
+BitSet primes = BitSet.valueOf(bytes);//{2,3,4,5,11,13}
+long[] longs = {0x1000101116L,0x1L,0x1L,0L,0X1L};
+BitSet powersOfTwo = Bitset.ValueOf(longs);//{1,2,4,8,16,32,64,128,256}
+</code></pre><p>如果想获得对应的引用类型，则调用<code>toByteArra</code>y和<code>toLongArray</code>方法。java8中，<code>BitSet</code>提供了可以返回<code>IntStream</code>的<code>stream</code>方法。</p>
+<pre><code>byte[] bytes = powersOfTwo.toByteArray();//[0b00010110,1,1,0,1,0,0,0,1,...]
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/java/">java</a>, <a href="/tags/java8/">java8</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    
+    <a href="/2016/06/22/外网访问内网kafka访问不到问题的解决/" class="alignright next" >Вперед</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/06/24/JAVA8学习（九）/" data-title="JAVA8学习（九）" data-url="http://www.52brt.com/2016/06/24/JAVA8学习（九）/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Метки</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
+  
+    <li><a href="/tags/Nashorn/">Nashorn</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>11</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>9</small></li>
+  
+    <li><a href="/tags/kafka/">kafka</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

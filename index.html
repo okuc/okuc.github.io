@@ -70,6 +70,55 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-06-24T14:59:45.000Z"><a href="/2016/06/24/JAVA8学习（九）/">2016-06-24</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/24/JAVA8学习（九）/">JAVA8学习（九）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><strong>try-with-resources</strong> Java7提供了一个简单实用的代码格式，如下：<br>打开一个资源<pre><code>try{
+    使用该资源
+}finally{
+    关闭该资源
+}
+</code></pre>其中资源所属的类必须实现了AutoCloseable接口。该接口只有一个方法：<code>void close() throws Exception</code><pre><code>try-with-resources语句的最简单形式如下所示：
+try(Resource res = ...){
+   使用res
+}
+</code></pre>当<code>try</code>语句块退出时，会自动调用<code>res.close()</code>方法。下面是一个经典示例—-读取一个文件中的所有单词：<pre><code>try(Scanner in = new Scanner(Paths.get(&quot;/usr/share/dict/words&quot;))){
+   while(in.hasNext()) System.out.println(in.next().toLowerCase());
+}
+</code></pre>当代码块像往常一样退出或者发生异常时，都会调用<code>in.close()</code>方法，就如同之前<code>finally</code>一样<br>在Java7中，可以在同一个<code>catch</code>分支中捕获多个异常类型，如<code>catch(FileNotFoundException|UnknownHostException ex)</code>。<br>对于反射方法的异常，Java7单独引进了一个新的父类：<code>ReflectiveOperationException</code>。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/24/JAVA8学习（九）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-06-22T14:59:45.000Z"><a href="/2016/06/22/外网访问内网kafka访问不到问题的解决/">2016-06-22</a></time>
       
       
@@ -538,78 +587,11 @@ long count= words.parallelStream().filter(w-&gt;w.lenght()&gt;12).count();
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(三)/">2016-05-20</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/20/shell学习(三)/">shell学习(三)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="shell中的输入输出重定向"><a href="#shell中的输入输出重定向" class="headerlink" title="shell中的输入输出重定向"></a>shell中的输入输出重定向</h2><ul>
-<li>标准输入是键盘，标准输出是终端显示器。</li>
-<li>输出重定向<ul>
-<li><code>command &gt; outputfile</code> //大于号两端要有空格分开</li>
-<li><code>command &gt;&gt; outputfile</code></li>
-</ul>
-</li>
-<li><p>一个例子</p>
-<pre><code>echo 22222 &gt; ./iotest
-echo 111 &gt; ./iotest //会把上一行覆盖掉
-echo 111 &gt;&gt; ./iotest //不会覆盖掉原有数据，会新起一行
-</code></pre></li>
-<li>输入重定向<ul>
-<li><code>command &lt; outputfile</code></li>
-</ul>
-</li>
-<li>例子： <code>cat &lt; iotest &gt; iotest2</code></li>
-<li><p>内联输入重定向</p>
-<pre><code>command &lt;&lt; marker
-data input
-marker
-</code></pre></li>
-<li><p>例子：</p>
-<pre><code>result = `bc &lt;&lt; EOF
-&gt;var1=3
-&gt;var2=4
-&gt;var3=var1+var2
-&gt;print var3
-&gt;EOF`
-
-echo $result
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/20/shell学习(三)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
   
-    <a href="/page/2/" class="alignright next">Next</a>
+    <a href="/page/2/" class="alignright next">Вперед</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -618,7 +600,7 @@ echo $result
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Метки</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -653,9 +635,9 @@ echo $result
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>10</small></li>
+    <li><a href="/tags/java/">java</a><small>11</small></li>
   
-    <li><a href="/tags/java8/">java8</a><small>8</small></li>
+    <li><a href="/tags/java8/">java8</a><small>9</small></li>
   
     <li><a href="/tags/kafka/">kafka</a><small>1</small></li>
   

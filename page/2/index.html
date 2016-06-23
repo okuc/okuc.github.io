@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 2 | 我的后院自留地</title>
+  <title>Страница 2 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
@@ -99,6 +99,73 @@ echo `basename $0` //输出程序的直实名字，且不包含路径,即取最�
         
           <div class="alignleft">
             <a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(三)/">2016-05-20</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/20/shell学习(三)/">shell学习(三)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="shell中的输入输出重定向"><a href="#shell中的输入输出重定向" class="headerlink" title="shell中的输入输出重定向"></a>shell中的输入输出重定向</h2><ul>
+<li>标准输入是键盘，标准输出是终端显示器。</li>
+<li>输出重定向<ul>
+<li><code>command &gt; outputfile</code> //大于号两端要有空格分开</li>
+<li><code>command &gt;&gt; outputfile</code></li>
+</ul>
+</li>
+<li><p>一个例子</p>
+<pre><code>echo 22222 &gt; ./iotest
+echo 111 &gt; ./iotest //会把上一行覆盖掉
+echo 111 &gt;&gt; ./iotest //不会覆盖掉原有数据，会新起一行
+</code></pre></li>
+<li>输入重定向<ul>
+<li><code>command &lt; outputfile</code></li>
+</ul>
+</li>
+<li>例子： <code>cat &lt; iotest &gt; iotest2</code></li>
+<li><p>内联输入重定向</p>
+<pre><code>command &lt;&lt; marker
+data input
+marker
+</code></pre></li>
+<li><p>例子：</p>
+<pre><code>result = `bc &lt;&lt; EOF
+&gt;var1=3
+&gt;var2=4
+&gt;var3=var1+var2
+&gt;print var3
+&gt;EOF`
+
+echo $result
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/20/shell学习(三)/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -490,51 +557,13 @@ npm config set cache &quot;/home/okuc/nodejs/node cache&quot;
 
 
 
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-03-10T14:59:45.000Z"><a href="/2016/03/10/hexo博客笔记源码恢复记/">2016-03-10</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/03/10/hexo博客笔记源码恢复记/">hexo博客笔记源码恢复记</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>  一直信赖金山快盘，所以当我的旧硬件空间不够时，毫不犹豫的删除掉了本地的博客内容。等我拷贝上新的内容，同步下来文件时，才发现，近两个月的内容，竟然没有同步。强烈谴责某山，太不负责任了，论坛上也没有人管，没有人问。无耐只有自已想法了。试了n种方案，感沉下面这种方案是工作量最小的，现在步骤记录如下：</p>
-<p>1、首先从博客户把编译后的｀index.html｀下载下来。找到属于<code>markdown</code>的一部分。主要是位于<code>&lt;div class=&quot;entry&quot;&gt;...&lt;/div&gt;</code>中，结尾处在<code>&lt;footer&gt;</code>上边。</p>
-<p>2.将上述片断的<code>html代码片断</code>拷到网页<a href="">http://tool.lu/markdown/</a>中，转成<code>markdown</code>。<br>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/03/10/hexo博客笔记源码恢复记/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/" class="alignleft prev">Prev</a>
+    <a href="/" class="alignleft prev">Назад</a>
   
   
-    <a href="/page/3/" class="alignright next">Next</a>
+    <a href="/page/3/" class="alignright next">Вперед</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -543,7 +572,7 @@ npm config set cache &quot;/home/okuc/nodejs/node cache&quot;
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Метки</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -578,9 +607,9 @@ npm config set cache &quot;/home/okuc/nodejs/node cache&quot;
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>10</small></li>
+    <li><a href="/tags/java/">java</a><small>11</small></li>
   
-    <li><a href="/tags/java8/">java8</a><small>8</small></li>
+    <li><a href="/tags/java8/">java8</a><small>9</small></li>
   
     <li><a href="/tags/kafka/">kafka</a><small>1</small></li>
   
