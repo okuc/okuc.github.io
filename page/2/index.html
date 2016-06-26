@@ -70,6 +70,55 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-06-03T14:59:45.000Z"><a href="/2016/06/03/JAVA8学习（三）/">2016-06-03</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/03/JAVA8学习（三）/">JAVA8学习（三）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="lambda编程"><a href="#lambda编程" class="headerlink" title="lambda编程"></a>lambda编程</h2><ul>
+<li><p>延迟执行：所有的lambda表达式都是延迟执行的。如果你需要立即执行某一段代码，就没必要使用lambda表达式了。延迟执行的原因有多种：</p>
+<ul>
+<li>在另一个线程中运行代码。</li>
+<li>多次运行代码。</li>
+<li>在某个算法的正确点上运行代码（排序中的比较）</li>
+<li>当某些情况发生时运行代码（按扭被点击，数据达到）</li>
+<li>只有在需要的时候才运行代码。<br>以日志为例，如果一个日志传入了多个变量，则一般调用<code>info</code>时会先把变量累加起来，然后再判断是否需要输出<code>info级别</code>的日志，如果根本不需要，就完全不必要执行变量累加操作。所以，可以修改成<code>lambda</code>表达式：<pre><code>public static void info(Logger logger,Supplier&lt;String&gt; message){
+    if(logger.isLoggable(level.INFO))
+        logger.info(message.get());
+}
+</code></pre></li>
+</ul>
+<p>改造后，调用的方法如下：<code>logger.info(()-&gt;&quot;x:&quot;+x+&quot;,y:&quot;+y)</code></p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/03/JAVA8学习（三）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-06-02T14:59:45.000Z"><a href="/2016/06/02/JAVA8学习（二）/">2016-06-02</a></time>
       
       
@@ -539,56 +588,6 @@ writable = yes
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-04-21T01:06:32.000Z"><a href="/2016/04/21/dockerfile指令学习/">2016-04-21</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/04/21/dockerfile指令学习/">dockerfile指令学习</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ul>
-<li><code>FROM</code>：它必须针对已经存在的镜像，且是基础镜像来操作。而且它必须是第一条非注释指令。</li>
-<li>第一个<code>dockfile</code>文件，文件名必须为：<code>Dockerfile</code>,内容如下,然后使用<code>docker build -t okuc/okuc_test .</code>命令执行：<pre><code>#First Dockerfile
-FROM centos:6.6
-MAINTAINER okuc &quot;okuc@live.cn&quot;
-RUN yum install -y java
-EXPOSE 80
-</code></pre></li>
-<li><code>MAINTAINER &lt;name&gt;</code>:指定镜像的作者信息，包含镜像的所有者和联系信息。</li>
-<li><code>RUN</code>指定当前镜像中运行的命令。<ul>
-<li>RUN <command> (shell模式)<pre><code>/bin/sh -c command
-RUN echo hello
-</code></pre></li>
-<li>RUN [“executable”,”param1”,”param2”] (exec模式)<pre><code>RUN[&quot;/bin/bash&quot;,&quot;-c&quot;,&quot;echo hello&quot;]
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/04/21/dockerfile指令学习/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -621,7 +620,7 @@ RUN echo hello
   
     <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
   
-    <li><a href="/tags/Scala/">Scala</a><small>2</small></li>
+    <li><a href="/tags/Scala/">Scala</a><small>3</small></li>
   
     <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
   
@@ -641,7 +640,7 @@ RUN echo hello
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>13</small></li>
+    <li><a href="/tags/java/">java</a><small>14</small></li>
   
     <li><a href="/tags/java8/">java8</a><small>9</small></li>
   

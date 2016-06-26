@@ -119,6 +119,71 @@ try(Resource res = ...){
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-06-23T14:59:45.000Z"><a href="/2016/06/23/JAVA程序员学习Scala（三）/">2016-06-23</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/23/JAVA程序员学习Scala（三）/">JAVA程序员学习Scala（三）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><p><code>JUnit</code>和<code>TestNG</code>都可以用来测试<code>Scala</code>。<code>ScalaTest</code>是专门用来测试<code>Scala</code>的。下载地址如下：<a href="http://www.scalatest.org/">http://www.scalatest.org/</a></p>
+<pre><code>class CanaryTest extends org.scalatest.Suite{    
+    def testOK(){
+        assert(true)
+    }
+}
+(new CanaryTest).execute()
+</code></pre></li>
+<li><p><code>ScalaTest</code>提人工的<code>Runner</code>类可以用来执行多个测试套件。你可以指定<code>Runner</code>运行那些套件，不运行那些套件，还可以附加不同的<code>reporter</code>，用以显示测试结果。</p>
+<pre><code>class ListTest extends org.scalatest.Suite{
+    def testListEmpty(){
+        var list = new java.util.ArrayList[Integer]
+        assert(0==list.size)
+    }
+
+    def testListAdd(){
+        val list = new java.util.ArrayList[Interger]
+        list.add(1)
+        list add 4
+        assert(2 == list.size)
+    }
+}
+</code></pre><p>使用如下命令进行编译并进行：</p>
+<pre><code>scalac -classpath $SCALATEST ListTest.scala
+scala -classpath $SCALATEST:. org.scalatest.tools.Runner -P .
+</code></pre><p><code>-p</code>选项指定了<code>Runner</code>到那个目录下查找测试套件。因为我们没有指定某个具体的测试套件，所以它就会把给定路径下所有编译后的测试套件全部都装载进来。运行结果将会是一个界面<br>如果对命令行情有独钟，还可以用<code>-o</code>选项把测试执行结果定向到标准输出，而不是<code>GUI</code>显示。</p>
+<pre><code>scalac -classpath $SCALATEST ListTest.scala
+scala -classpath $SCALATEST:. org.scalatest.tools.Runner -P . -o
+</code></pre><p><code>-f</code>选项还可以把结果重定义到文件。如果需要记录结果，在持续集成中进行处理，这个选项就相当有用。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/23/JAVA程序员学习Scala（三）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-06-23T14:59:45.000Z"><a href="/2016/06/23/JAVA程序员学习Scala（二）/">2016-06-23</a></time>
       
       
@@ -524,55 +589,6 @@ println(&quot;Scala Rocks!!!&quot;)
 
 
 
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-06-03T14:59:45.000Z"><a href="/2016/06/03/JAVA8学习（三）/">2016-06-03</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/03/JAVA8学习（三）/">JAVA8学习（三）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="lambda编程"><a href="#lambda编程" class="headerlink" title="lambda编程"></a>lambda编程</h2><ul>
-<li><p>延迟执行：所有的lambda表达式都是延迟执行的。如果你需要立即执行某一段代码，就没必要使用lambda表达式了。延迟执行的原因有多种：</p>
-<ul>
-<li>在另一个线程中运行代码。</li>
-<li>多次运行代码。</li>
-<li>在某个算法的正确点上运行代码（排序中的比较）</li>
-<li>当某些情况发生时运行代码（按扭被点击，数据达到）</li>
-<li>只有在需要的时候才运行代码。<br>以日志为例，如果一个日志传入了多个变量，则一般调用<code>info</code>时会先把变量累加起来，然后再判断是否需要输出<code>info级别</code>的日志，如果根本不需要，就完全不必要执行变量累加操作。所以，可以修改成<code>lambda</code>表达式：<pre><code>public static void info(Logger logger,Supplier&lt;String&gt; message){
-    if(logger.isLoggable(level.INFO))
-        logger.info(message.get());
-}
-</code></pre></li>
-</ul>
-<p>改造后，调用的方法如下：<code>logger.info(()-&gt;&quot;x:&quot;+x+&quot;,y:&quot;+y)</code></p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/06/03/JAVA8学习（三）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -603,7 +619,7 @@ println(&quot;Scala Rocks!!!&quot;)
   
     <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
   
-    <li><a href="/tags/Scala/">Scala</a><small>2</small></li>
+    <li><a href="/tags/Scala/">Scala</a><small>3</small></li>
   
     <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
   
@@ -623,7 +639,7 @@ println(&quot;Scala Rocks!!!&quot;)
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>13</small></li>
+    <li><a href="/tags/java/">java</a><small>14</small></li>
   
     <li><a href="/tags/java8/">java8</a><small>9</small></li>
   

@@ -1,0 +1,425 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JAVA程序员学习Scala（三） | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="JAVA程序员学习Scala（三）"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="//archives">归档</a></li>
+    
+      <li><a href="//coding">编程技术</a></li>
+    
+      <li><a href="//bigData">大数据技术</a></li>
+    
+      <li><a href="//dataV">数据可视化</a></li>
+    
+      <li><a href="//about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-23T14:59:45.000Z"><a href="/2016/06/23/JAVA程序员学习Scala（三）/">2016-06-23</a></time>
+      
+      
+  
+    <h1 class="title">JAVA程序员学习Scala（三）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><p><code>JUnit</code>和<code>TestNG</code>都可以用来测试<code>Scala</code>。<code>ScalaTest</code>是专门用来测试<code>Scala</code>的。下载地址如下：<a href="http://www.scalatest.org/" target="_blank" rel="external">http://www.scalatest.org/</a></p>
+<pre><code>class CanaryTest extends org.scalatest.Suite{    
+    def testOK(){
+        assert(true)
+    }
+}
+(new CanaryTest).execute()
+</code></pre></li>
+<li><p><code>ScalaTest</code>提人工的<code>Runner</code>类可以用来执行多个测试套件。你可以指定<code>Runner</code>运行那些套件，不运行那些套件，还可以附加不同的<code>reporter</code>，用以显示测试结果。</p>
+<pre><code>class ListTest extends org.scalatest.Suite{
+    def testListEmpty(){
+        var list = new java.util.ArrayList[Integer]
+        assert(0==list.size)
+    }
+
+    def testListAdd(){
+        val list = new java.util.ArrayList[Interger]
+        list.add(1)
+        list add 4
+        assert(2 == list.size)
+    }
+}
+</code></pre><p>使用如下命令进行编译并进行：</p>
+<pre><code>scalac -classpath $SCALATEST ListTest.scala
+scala -classpath $SCALATEST:. org.scalatest.tools.Runner -P .
+</code></pre><p><code>-p</code>选项指定了<code>Runner</code>到那个目录下查找测试套件。因为我们没有指定某个具体的测试套件，所以它就会把给定路径下所有编译后的测试套件全部都装载进来。运行结果将会是一个界面<br>如果对命令行情有独钟，还可以用<code>-o</code>选项把测试执行结果定向到标准输出，而不是<code>GUI</code>显示。</p>
+<pre><code>scalac -classpath $SCALATEST ListTest.scala
+scala -classpath $SCALATEST:. org.scalatest.tools.Runner -P . -o
+</code></pre><p><code>-f</code>选项还可以把结果重定义到文件。如果需要记录结果，在持续集成中进行处理，这个选项就相当有用。</p>
+<a id="more"></a></li>
+<li><code>ScalaTest</code>提供了一个简单的<code>assert()</code>方法。它会检查作为参数的表达式执行结果是否为<code>true</code>，如果是<code>true</code>，则会安静的返回，否则抛出<code>AssertionError</code>。<pre><code>assert(2 == List().size)//看不出是什么错误
+assert(2===list().size)能看出来是什么错误
+assert(2===List().size,&quot;Unexpected size of List&quot;)//更人性化的错误提示
+</code></pre></li>
+<li>如果要检查两个值是否相同（<code>JUnit</code>的<code>assertEquals()</code>方法一样），你就会喜欢<code>ScalaTest</code>的<code>expect()</code>方法：<code>expect(2,&quot;Unexpected List size&quot;){List().size}</code>。<code>expect()</code>方法接收的是一个期望值，一个可选的消息，一个闭包。闭包里是要执行的表达式，<code>expect()</code>方法会判断执行结果跟给定期望值是否相等。如果不相等就会抛出<code>AssertionError</code>。</li>
+<li>异常测试用来确保被测的代码单元可以抛出预期的异常<pre><code>def testGetOnEmptyList(){
+    try{
+        val list = new java.util.ArrayList[Integer]
+        list.get(0)//应该抛出异常
+        fail(&quot;Expected exception for getting element from empty list&quot;)//不抛出异常代码走到这，就标明失败。
+    }
+    catch{
+        case ex:IndexOutOfBoundsException =&gt; // :)Success
+    }
+}
+</code></pre>如果我们用<code>ScalaTest</code>的<code>intercept()</code>方法，就不用这么麻烦：<pre><code>def testGetOnEmptyList_Concise(){
+    val list = new java.util.ArrayList[Integer]
+   intercept[IndexOutOfBoundsException] {
+    list.get(0)
+    }
+}
+</code></pre></li>
+<li><p><code>ScalaTest</code>提供了一个<code>trait</code>:<code>BeforeAndAfter</code>，可以把它混入到测试套件中，为测试提供<code>beforeEach()</code>和<code>afterEach()</code>方法。这两个方法跟<code>JUnit</code>的<code>setUp()</code>、<code>tearDown()</code>相同：<code>beforeEach()</code>会在每个测试运行之前自动运行，<code>afterEach()</code>则会在测试之后运行。<code>BeforeAndAfter</code>还提供了<code>beforeAll()</code>和<code>afterAll()</code>方法，它们都会执行一次，前者在套件中任何测试都还没有被运行之前执行，后者则是所有测试运行完毕后执行。</p>
+<pre><code>class ShareCodeImperative extends org.scalatest.Suite with org.scalatest.BeforeAndAfter{
+    var list:java.util.ArrayList[Integer] = _
+    override def beforeEach(){list = new Java.util.ArrayList[Integer]}
+    override def afterEach(){list = null}
+    def testListEmptyOnCreate(){
+        expect(0,&quot;Expected size to be 0&quot;){list.size()}
+    }
+    def testGetOnEmptyList(){
+        intercept[IndexOutOfBoundException]{list.get(0)}
+    }
+}
+
+(new ShareCodeImperative).execute()
+</code></pre></li>
+<li><p><strong>用闭包共享代码</strong></p>
+<pre><code>class ShareCodeFunctional extends org.scalatest.Suite{
+    def withList(testFunction:(java.util.ArrayList[Integer]=&gt;Unit){
+        var list = new java.util.ArrayList[Integer]
+        try{
+            testFunction(list)
+        }finally{
+            //perform any necessary cleanup here after return
+        }
+    }
+    def testListEmptyOnCreate(){
+        withList{list=&gt;expect(0,&quot;Expected size to be 0&quot;){list.size()}}
+    }
+    def testGetOnEmptyList(){
+        withList{
+            list =&gt; intercept[IndexOutOfBoundsException]{list.get(0)}
+        }
+    }
+}
+
+(new ShareCodeFunctional).execute()
+</code></pre><p><code>withList()</code>接收闭包做参数。</p>
+</li>
+<li><p><code>ScalaTest</code>提供的<code>FunSuite</code>编写函数式风格的测试，在命名测试的时候也会更加灵活。我们不再是写测试方法，而是调用一外名叫<code>test()</code>的方法，给它提供一个有意的测试名字和一个闭包–闭包中是测试的主体。</p>
+<pre><code>class UsingFunSuite extends org.scalatest.FunSuite{
+    def withList(testFunction:(java.util.ArrayList[Integer])=&gt;Unit){
+        val list = new java.util.ArrayList[Integer]
+        try{
+            testFunction(list)
+        }finally{
+            //perform any necessary cleanup here after return
+        }
+    }
+
+    test(&quot;Check if the list is Empty On Creation&quot;){
+        withList{list=&gt;expect(0,&quot;Expected size to be 0&quot;){list.size()}}
+    }
+    test(&quot;Get must throw exception when called on an empty list&quot;){
+        withList{
+            list =&gt; intercept[IndexOutOfBoundsException]{list.get(0)}
+        }
+    }
+}
+(new UsingFunSuite).execute()
+</code></pre></li>
+<li><p><strong>用<code>JUnit</code>运行<code>ScalaTest</code></strong><code>JUnit3Suite</code>和<code>TestNGSuite</code>可以让你即用上<code>ScalaTest</code>那种简洁的主法和众多特性，还可以用<code>JUnit</code>或<code>TestNG</code>运行测试。你可以用<code>ScalaTest</code>的<code>assert()</code>、<code>expect()</code>和<code>intercept()</code>,还有上面提到的函数风格共享代码，这样写成的测试，不管是<code>ScalaTest</code>还是<code>JUnit</code>都可以运行。不过它只支持<code>JUnit3.x</code>,不支持<code>Junit4.0</code>。</p>
+<pre><code>class UsingJUnit3Suite extends org.scalatest.junit.JUnit3Suite{
+def withList(testFunction:(java.util.ArrayList[Integer]=&gt;Unit){
+        var list = new java.util.ArrayList[Integer]
+        try{
+            testFunction(list)
+        }finally{
+            //perform any necessary cleanup here after return
+        }
+    }
+    def testListEmptyOnCreate(){
+        withList{list=&gt;expect(0,&quot;Expected size to be 0&quot;){list.size()}}
+    }
+    def testGetOnEmptyList(){
+        withList{
+            list =&gt; intercept[IndexOutOfBoundsException]{list.get(0)}
+        }
+    }
+}
+</code></pre><p>用以下代码运行：</p>
+<pre><code>object RunJUnitTest{
+    def main(args:Array[String])=junit.textui.TestRunner.run(classOf[UsingJunit3Suite]);
+}
+</code></pre><p>分别用<code>scala</code>和<code>java</code>运行如下：</p>
+<pre><code>scalac -classpath $SCALATET:$JUNITJAR:. UsingJUnit3Suite.scala Run3JUnitTest.scala
+scala -calsspath $SCALATEST:$JUNITJAR:. org.scalatest.tools.Runner -o -p . -s UsingJUnit3Suite
+java -classpath $SCALALIBRARY:$SCALATEST:$JUNITJAR:. RunJUnitTest
+</code></pre></li>
+<li><p><code>scala</code>可以和<code>java</code>一样抛出异常，也可以<code>try</code>捕获异常。不过，<code>scala</code>不强制捕获异常，像<code>Thread.sleep(1000);</code>直接写就行，不用放在<code>try</code>块中。</p>
+<pre><code>def taxFor(amount:Double):String={
+    if(amount&lt;0) throw new IllegalArgumentException(&quot;Amount must be greater than zero&quot;)
+    if(amount&lt;0.1) throw new RuntimeException(&quot;Amount too small to be taxed&quot;)
+    if(amount&gt;1000000)throw new Exception(&quot;Amount too large...&quot;)
+    &quot;Tax for $&quot;+amount+&quot;is $&quot;+amount*0.8
+}
+for(amount&lt;-List(100.0,0.09,-2.0,1000001.0)){
+    try{
+        println(taxFor(amount))
+    }cath{
+       case ex:IllegalArgumentException=》println(ex.getMessage())
+       case ex:RuntimeException=&gt;{
+            println{&quot;Dont bother reporting...&quot;+ex.getMessage()}
+       }
+    }
+}
+</code></pre><p><code>scala</code>也支持<code>finally</code>块。</p>
+<pre><code>def taxFor(amount:Double):String={
+    if(amount&lt;0) throw new IllegalArgumentException(&quot;Amount must be greater than zero&quot;)
+    if(amount&lt;0.1) throw new RuntimeException(&quot;Amount too small to be taxed&quot;)
+    if(amount&gt;1000000)throw new Exception(&quot;Amount too large...&quot;)
+    &quot;Tax for $&quot;+amount+&quot;is $&quot;+amount*0.8
+}
+for(amount&lt;-List(100.0,0.09,-2.0,1000001.0)){
+    try{
+        println(taxFor(amount))
+    }cath{
+       case ex:IllegalArgumentException=》println(ex.getMessage())
+       case ex:RuntimeException=&gt;{
+            println{&quot;Dont bother reporting...&quot;+ex.getMessage()}
+       case_=&gt;println(&quot;Somthing went wrong&quot;);//捕获所有的异常
+       }
+    }
+}
+</code></pre><p>在处理异常时，需注意顺序，<code>scala</code>严格按顺序处理。如把在最前边捕获<code>Exception</code>异常，那么后边的<code>case</code>全部都不管用。因为<code>Exception</code>匹配了所有的异常。</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/java/">java</a>, <a href="/tags/Scala/">Scala</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2016/06/24/JAVA8学习（九）/" class="alignleft prev" >Prev</a>
+    
+    
+    <a href="/2016/06/23/JAVA程序员学习Scala（二）/" class="alignright next" >Next</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/06/23/JAVA程序员学习Scala（三）/" data-title="JAVA程序员学习Scala（三）" data-url="http://www.52brt.com/2016/06/23/JAVA程序员学习Scala（三）/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
+  
+    <li><a href="/tags/Nashorn/">Nashorn</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/Scala/">Scala</a><small>3</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>14</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>9</small></li>
+  
+    <li><a href="/tags/kafka/">kafka</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
