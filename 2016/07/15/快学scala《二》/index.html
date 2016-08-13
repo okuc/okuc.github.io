@@ -1,0 +1,400 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>快学scala二 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="快学scala二"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-07-15T14:59:45.000Z"><a href="/2016/07/15/快学scala《二》/">2016-07-15</a></time>
+      
+      
+  
+    <h1 class="title">快学scala二</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="数组操作"><a href="#数组操作" class="headerlink" title="数组操作"></a>数组操作</h2><ol>
+<li><p>定义长度不变的数组：</p>
+<pre><code>var nums = new Array[Int](10) //10个整数的数组，所有元素初始化为0
+var a = new Array[String](10)//10个元素的字符串数组，所有元素初始化为null
+var s = Array(&quot;Hello&quot;,&quot;World&quot;)//长度为2的Array[String],类型是推导出来的，已提供初始值，不需要new
+s(0)=&quot;Goodbye&quot;  //使用()而不是[]来访问元素
+</code></pre></li>
+<li><p>变长数组，<code>Java</code>有<code>ArrayList</code>，<code>C++</code>有<code>vector</code>。<code>Scala</code>中的等效数据结构为<code>ArrayBufferi</code></p>
+<a id="more"></a>
+<pre><code>improt scala.collection.mutable.Arraybuffer
+var b=ArrayBuffer[int]()  //或者new ArrayBuffer[Int] ,一个空的数组缓冲，准备存放整数
+b+=1  //ArrayBuffer(1),用+=在末端添加元素
+b+=(1,2,3,5)  //ArrayBuffer(1,1,2,3,5),在尾端添加多个元素，以括号包起来
+b++=Array(8,13,21)  //ArrayBuffer(1,1,2,3,4,8,13,21),可以用++=操作符追加任何集合
+b.trimEnd(5)  //ArrayBuffer(1,1,2),移除最后5个元素
+</code></pre><p>  在任意位置插入元素</p>
+<pre><code>b.insert(2,6) //ArrayBuffer(1,1,6,2),在下载2之前插入
+b.insert(2,7,8,9) //ArrayBuffer(1,1,7,8,9,6,2),你可以插入任意多的元素
+b.remove(2) //ArrayBuffer(1,1,8,9,6,2)
+b.remove(2,3) //ArrayBuffer(1,1,2)，第二个参数的函数是要移除多少个元素
+</code></pre><p>有时需要构建一个Array，但是长度未知，所以要先构建一个数组缓冲，然后调用：</p>
+<pre><code>b.toArray //Array(1,1,2),数组转为数组缓冲的函数是a.toBuffer。
+</code></pre></li>
+<li><p>遍历数组及数组缓冲</p>
+<pre><code>for(i &lt;- 0 until a.length)  //i的取值是0到a.length-1，实际是0.until(a.length),它是个Range(1,2...a.length-1)
+  println(i+&quot;: &quot;+a(i))
+
+0 until (a.length,2) //Range(0,2,4...)，每两个元素一跳
+
+(0 util a.length).reverse  //(...,2,1,0),倒序遍历
+
+for(elem &lt;- a) println(elem) //不需要用到数组下标
+</code></pre><p> <code>util</code>是<code>RichInt</code>类的方法，返回所有小于（但不包括）上限的数字。</p>
+</li>
+<li><p>数组转换</p>
+<pre><code>val a=Array(2,3,5,7,11)
+val result = for(elem&lt;-a)yield 2*elem   //Array(4,6,10...)
+
+for(elem &lt;- a if elem %2==0) yield 2*elem  //添加过滤条件，还可以写为a.filter(_%2==0).map(2*_),或a.filter{_%2==0}.map{2*_}
+</code></pre><p><code>for(...)yield</code>创建一个类型与原始集合相同的新集合。从数组出发，得到一个新的数组；从数组缓冲出发，得到新的数组缓冲</p>
+</li>
+<li><p>保留数组中第一个负数，删除掉其他的负数</p>
+<pre><code>var first = true
+val indexes = for(i&lt;-0 until a.length if first ||a(i)&gt;=0) yield{
+  if(a(i)&lt;0) first = false;
+  i
+} //收集需要保留的下标
+
+for(j&lt;-0 until indexes.length) a(j)= a(indexes(j))
+a.timeEnd(a.length -indexes.length)  ///将元素移动新的位置中，并去掉后边的元素。
+</code></pre></li>
+<li><p>常用算法</p>
+<pre><code>Array(1,7,2,9).sum   //对ArrayBuffer同样适用,还有min、max
+val b = ArrayBuffer(1,7,2,9)
+val bSorted = b.sorted(_&lt;_) //b没有改变，重新生成了新的数组；bSorted是ArrayBuffer(1,2,7,9)。还可以b.sourted(_&gt;_)
+scala.util.Sorting.quickSort(a)//a现在是Array(1,2,7,9)，这个方法直接对数组排序，但不能对数组缓冲排序。对于min、max、quickSort方法，元素类型必须支持比较操作，这包括了数字、字符串以及其他带有Ordered特质的类型。
+a.mkString(&quot; and &quot;)//&quot;1 and 2 and 7 and 9&quot;
+a.mkString(&quot;&lt;&quot;,&quot;,&quot;,&quot;&gt;&quot;)//&quot;&lt;1,2,7,9&gt;&quot;
+</code></pre><p> <code>数组.toStirng</code>会打印出引用地址，<code>数组缓冲.toString</code>会打印出数组缓冲。</p>
+</li>
+<li><p>多维数组</p>
+<pre><code>val matrix = Array.ofDim[Double](3,4) //三行，四列
+matrix(row)(column) = 42 //该问其中的元素
+
+var triangle = new Array[Array[int]](10)
+for(i&lt;-0 unitl triangle.length)//创建一不规则多维数组
+  triangle(i) = new Array[int](i+1)
+</code></pre></li>
+<li><p><code>scala</code>中引入<code>scala.collection.JavaConversions.bufferAsJavaList</code>,就可以把<code>ArrayBuffer</code>当作<code>java</code>中的<code>List</code>来用，作为参数传入到<code>java</code>方法中。<br><code>scala.collection.JavaConversions.asScalaBuffer</code>引入这个类，可以把<code>java</code>返回的<code>List</code>自动转换成一个<code>Buffer</code>。</p>
+</li>
+</ol>
+<h2 id="映射和元组"><a href="#映射和元组" class="headerlink" title="映射和元组"></a>映射和元组</h2><ol>
+<li>构造不可变映射<code>Map[String,int]</code>：val scores = Map(“Alice”-&gt;10,”Bob”-&gt;3,”Cindy”-&gt;8)</li>
+<li><p>构造可变Map：</p>
+<pre><code>val scores = scala.collection.mutable.Map(&quot;Alice&quot;-&gt;10,&quot;Bob&quot;-&gt;3,&quot;Cindy&quot;-&gt;8)
+val scores = scala.collection.mutable.Map[String,int] //空的映身集合。
+val scores = Map((&quot;Alice&quot;,10),(&quot;Bob&quot;,3),(&quot;Cindy&quot;,8))
+</code></pre></li>
+<li><p>映射操作：</p>
+<pre><code>val bobsScore = scores(&quot;Bob&quot;)//如果键不存在，则会抛出异常
+val bobsScore = if(scores.contains(&quot;Bob&quot;)) scores(&quot;Bob&quot;) else 0 //可以简写为：val bobsScore = scores.getOrElse(&quot;Bob&quot;,0)
+//下面是更新和增加新的值，此处假设他是可变的
+scores(&quot;Bob&quot;)=10
+scores(&quot;Fred&quot;)=7
+scores +=(&quot;Bob&quot;-&gt;10,&quot;Fred&quot;-&gt;7) //同时操作多个元素
+scores-=“Alice” //移除某个值
+//假如scores是不可变的，我们可以如下操作：
+
+val newScores = scores + (&quot;Bob&quot;-&gt;10,&quot;Fred&quot;-&gt;7) //更新过的新映射。newScores映射包含了与scores相同的映射关系，此外“Bob”被更新，“Fred”被添加了进来。
+
+var scores = 。。。
+scores = scores +(&quot;Bob&quot;-&gt;10,&quot;Fred&quot;-&gt;7)  //操作var变量
+
+scores = scores - &quot;Alice&quot; //从不可映射中移除某个键
+</code></pre></li>
+<li><p>映射操作：</p>
+<pre><code>for((k,v)&lt;-映射)
+soures.keySet //获取键集合
+source.values //获取值集合
+
+for((k,v)&lt;-映射) yield(v,k) //反转集合
+</code></pre></li>
+<li><p>如果想要排序的集合，可以使用如下：</p>
+<pre><code>val scores = scala.collection.mutable.sortedMap(&quot;Alice&quot;-&gt;10,&quot;Bob&quot;-&gt;3,&quot;Cindy&quot;-&gt;8)
+</code></pre></li>
+<li><p>如果要按插入的顺序访问所有的键：使用<code>LinkedHashMap</code></p>
+</li>
+<li><p>与java互操作：</p>
+<pre><code>//从java转到scala
+import scala.collection.JavaConversions.mapAsScalaMap
+val scores:Scala.collection.mutable.map[String,Int] = new java.util.TreeMap(String,Int)
+
+//从java.util.Properties到Map[String,String]的转换：
+import scala.collection.JavaConversions.propertiesAsScalaMap
+val props:scala.collection.Map[String,String] = System.getProperties()
+
+//从scala到java
+
+import scala.collection.JavaConversions.mapAsJavaMap
+import java.awt.font.TextAttribute._//会引入下面的映射用到的键
+val attrs = Map(FAMILY-&gt;&quot;Serif&quot;,SIZE-&gt;12) //Scala映射
+val font = new java.awt.Font(attrs) //该方法预期一个Java映射
+</code></pre></li>
+<li><p>元组是不同类型的值的聚集，元组的值是通过将单个的值包含在圆括号中构成的。<code>（1，3.14，&quot;Fred&quot;）</code>是一个元组类型为：<code>Tuple3[Int,Double,java.lang.String]</code>。<code>val t = (1,3.14,&quot;Fred&quot;)</code>，可以用<code>_1、_2、_3</code>访问其组元，<code>t._2</code>。<strong>元组组元从1开始，而不是0</strong></p>
+<pre><code>val (first,second,third)=t //将first设为1，second设为3.14，third设为“Fred”
+val (first,second,_)=t //第三个部件不需要
+</code></pre><p>元组用于函数需要返回多个值的情况。如StringOps的partition方法返回的是一对字符串，分别包含了满足某个条件和不清足该条件的字符。</p>
+<pre><code>&quot;New York&quot;.partition(_.isUpper) //转出对偶(&quot;NY&quot;,&quot;ew ork&quot;)
+</code></pre></li>
+<li><p>拉链操作：</p>
+<pre><code>val symbols = Array(&quot;&lt;&quot;,&quot;-&quot;,&quot;&gt;&quot;)
+val counts = Array(2,10,2)
+val pairs = symbols.zip(counts)
+
+//上述三行代码的结果是：Array((&quot;&lt;&quot;,2),(&quot;-&quot;,10),(&quot;&gt;&quot;,2)),然后这些数组就能一起被处理
+
+for((s,n)&lt;-pairs) Console.print(s*n) //会打印&lt;&lt;----------&gt;&gt;
+
+pairs.toMap，可以转成键值对
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/scala/">scala</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2016/07/21/制作centos6下的ambari离线安装源/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2016/07/04/快学scala《一》/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/07/15/快学scala《二》/" data-title="快学scala二" data-url="http://www.52brt.com/2016/07/15/快学scala《二》/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="hidden" name="q" value="site:www.52brt.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
+  
+    <li><a href="/tags/Nashorn/">Nashorn</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/Scala/">Scala</a><small>3</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/ambari/">ambari</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hadoop/">hadoop</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>15</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>9</small></li>
+  
+    <li><a href="/tags/kafka/">kafka</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/scala/">scala</a><small>2</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

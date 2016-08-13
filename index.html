@@ -6,7 +6,7 @@
   <title>我的后院自留地</title>
   <meta name="author" content="okuc">
   
-  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql">
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -48,15 +48,15 @@ var _hmt = _hmt || [];
     
       <li><a href="//">首页</a></li>
     
-      <li><a href="//archives">归档</a></li>
+      <li><a href="/archives">归档</a></li>
     
-      <li><a href="//coding">编程技术</a></li>
+      <li><a href="/coding">编程技术</a></li>
     
-      <li><a href="//bigData">大数据技术</a></li>
+      <li><a href="/bigData">大数据技术</a></li>
     
-      <li><a href="//dataV">数据可视化</a></li>
+      <li><a href="/dataV">数据可视化</a></li>
     
-      <li><a href="//about">关于</a></li>
+      <li><a href="/about">关于</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -70,37 +70,31 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-06-24T14:59:45.000Z"><a href="/2016/06/24/JAVA8学习（九）/">2016-06-24</a></time>
+        <time datetime="2016-07-21T14:59:45.000Z"><a href="/2016/07/21/制作centos6下的ambari离线安装源/">2016-07-21</a></time>
       
       
   
-    <h1 class="title"><a href="/2016/06/24/JAVA8学习（九）/">JAVA8学习（九）</a></h1>
+    <h1 class="title"><a href="/2016/07/21/制作centos6下的ambari离线安装源/">制作centos6下的ambari离线安装源</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <ul>
-<li><strong>try-with-resources</strong> Java7提供了一个简单实用的代码格式，如下：<br>打开一个资源<pre><code>try{
-    使用该资源
-}finally{
-    关闭该资源
-}
-</code></pre>其中资源所属的类必须实现了AutoCloseable接口。该接口只有一个方法：<code>void close() throws Exception</code><pre><code>try-with-resources语句的最简单形式如下所示：
-try(Resource res = ...){
-   使用res
-}
-</code></pre>当<code>try</code>语句块退出时，会自动调用<code>res.close()</code>方法。下面是一个经典示例—-读取一个文件中的所有单词：<pre><code>try(Scanner in = new Scanner(Paths.get(&quot;/usr/share/dict/words&quot;))){
-   while(in.hasNext()) System.out.println(in.next().toLowerCase());
-}
-</code></pre>当代码块像往常一样退出或者发生异常时，都会调用<code>in.close()</code>方法，就如同之前<code>finally</code>一样<br>在Java7中，可以在同一个<code>catch</code>分支中捕获多个异常类型，如<code>catch(FileNotFoundException|UnknownHostException ex)</code>。<br>对于反射方法的异常，Java7单独引进了一个新的父类：<code>ReflectiveOperationException</code>。
+        <p>之前制用的ambari离线安装源比较久了，spark版片也较旧。最近想把一些工作迁移动spark上来，但发现之前制的ambari安装源spark版本太低，于是决定制作一个新的离线安装源。网络上关于怎么制作的教程也比较多了，可是感觉许多都不适合本人，总有遗漏的地方，所以就特意记录了此次制作方式。本次制作的安装源基于ambari2.2.1，所使用的linux为centos6.6，jdk版本为java8。</p>
+<p>步聚如下：</p>
+<ol>
+<li><p>下载所需文件，建议使用迅雷下载，毕竟接近6个多G。下载地址如下：</p>
+<ul>
+<li>HDP2.4.0.0文件:<a href="http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.4.0.0/HDP-2.4.0.0-centos6-rpm.tar.gz">http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.4.0.0/HDP-2.4.0.0-centos6-rpm.tar.gz</a></li>
+<li>HDP-UTILS1.1.0.20文件:<a href="http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos6/HDP-UTILS-1.1.0.20-centos6.tar.gz">http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos6/HDP-UTILS-1.1.0.20-centos6.tar.gz</a></li>
+<li><p>ambari2.2.1文件文件:<a href="http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.2.1.0/ambari-2.2.1.0-centos6.tar.gz">http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.2.1.0/ambari-2.2.1.0-centos6.tar.gz</a></p>
       
     </div>
     <footer>
       
         
           <div class="alignleft">
-            <a href="/2016/06/24/JAVA8学习（九）/#more" class="more-link">阅读更多</a>
+            <a href="/2016/07/21/制作centos6下的ambari离线安装源/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -119,11 +113,94 @@ try(Resource res = ...){
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-06-23T14:59:45.000Z"><a href="/2016/06/23/JAVA程序员学习Scala（三）/">2016-06-23</a></time>
+        <time datetime="2016-07-15T14:59:45.000Z"><a href="/2016/07/15/快学scala《二》/">2016-07-15</a></time>
       
       
   
-    <h1 class="title"><a href="/2016/06/23/JAVA程序员学习Scala（三）/">JAVA程序员学习Scala（三）</a></h1>
+    <h1 class="title"><a href="/2016/07/15/快学scala《二》/">快学scala二</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="数组操作"><a href="#数组操作" class="headerlink" title="数组操作"></a>数组操作</h2><ol>
+<li><p>定义长度不变的数组：</p>
+<pre><code>var nums = new Array[Int](10) //10个整数的数组，所有元素初始化为0
+var a = new Array[String](10)//10个元素的字符串数组，所有元素初始化为null
+var s = Array(&quot;Hello&quot;,&quot;World&quot;)//长度为2的Array[String],类型是推导出来的，已提供初始值，不需要new
+s(0)=&quot;Goodbye&quot;  //使用()而不是[]来访问元素
+</code></pre></li>
+<li><p>变长数组，<code>Java</code>有<code>ArrayList</code>，<code>C++</code>有<code>vector</code>。<code>Scala</code>中的等效数据结构为<code>ArrayBufferi</code></p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/07/15/快学scala《二》/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-07-04T14:59:45.000Z"><a href="/2016/07/04/快学scala《一》/">2016-07-04</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/07/04/快学scala《一》/">快学scala一</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>1、在<code>Scala</code>中，每个表达式都有返回值和类型<code>val s= if(x&gt;0) 1 else -1</code></p>
+<p>2、所有的类都继随于<code>Any</code>， 空类型为<code>Unit</code>，写作<code>()</code></p>
+<p>3、语句终止不需要有分号，语句较长的话，要确保第一行以一下不能用作语句结尾的符号结尾。如`+。</p>
+<p>4、<code>｛｝</code>块包含一系列的表达式。块中最后一个表达式的值就是块的值。<code>{r=rn;n-=1}</code>最后是一个赋值操作，所以这个块的返回值为<code>Unit</code>。java中赋值操作是有返回值的，返回值是这个赋的值</p>
+<p>5、<code>print(“Answer:”+42),println(“aaa”);</code>还可以<code>printf(“Hello,%s!You are %d years old.\n”,”Fred”,42)</code><br>6、读取控制台输入：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/07/04/快学scala《一》/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-26T14:59:45.000Z"><a href="/2016/06/26/JAVA程序员学习Scala（三）/">2016-06-26</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/26/JAVA程序员学习Scala（三）/">JAVA程序员学习Scala（三）</a></h1>
   
 
     </header>
@@ -165,7 +242,56 @@ scala -classpath $SCALATEST:. org.scalatest.tools.Runner -P . -o
       
         
           <div class="alignleft">
-            <a href="/2016/06/23/JAVA程序员学习Scala（三）/#more" class="more-link">阅读更多</a>
+            <a href="/2016/06/26/JAVA程序员学习Scala（三）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-24T14:59:45.000Z"><a href="/2016/06/24/JAVA8学习（九）/">2016-06-24</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/24/JAVA8学习（九）/">JAVA8学习（九）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><strong>try-with-resources</strong> Java7提供了一个简单实用的代码格式，如下：<br>打开一个资源<pre><code>try{
+    使用该资源
+}finally{
+    关闭该资源
+}
+</code></pre>其中资源所属的类必须实现了AutoCloseable接口。该接口只有一个方法：<code>void close() throws Exception</code><pre><code>try-with-resources语句的最简单形式如下所示：
+try(Resource res = ...){
+   使用res
+}
+</code></pre>当<code>try</code>语句块退出时，会自动调用<code>res.close()</code>方法。下面是一个经典示例—-读取一个文件中的所有单词：<pre><code>try(Scanner in = new Scanner(Paths.get(&quot;/usr/share/dict/words&quot;))){
+   while(in.hasNext()) System.out.println(in.next().toLowerCase());
+}
+</code></pre>当代码块像往常一样退出或者发生异常时，都会调用<code>in.close()</code>方法，就如同之前<code>finally</code>一样<br>在Java7中，可以在同一个<code>catch</code>分支中捕获多个异常类型，如<code>catch(FileNotFoundException|UnknownHostException ex)</code>。<br>对于反射方法的异常，Java7单独引进了一个新的父类：<code>ReflectiveOperationException</code>。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/24/JAVA8学习（九）/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -434,170 +560,22 @@ largest.accumulateAndGet(observed,Math::max);//accumulateAndGet方法通过一�
 
 
 
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-06-08T14:59:45.000Z"><a href="/2016/06/08/JAVA8学习（五）/">2016-06-08</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/08/JAVA8学习（五）/">JAVA8学习（五）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="新的日期和时间API"><a href="#新的日期和时间API" class="headerlink" title="新的日期和时间API"></a>新的日期和时间API</h2><h2 id="时间线"><a href="#时间线" class="headerlink" title="时间线"></a>时间线</h2><ul>
-<li><code>Java</code>日期和时间<code>API</code>规范要求<code>Java</code>使用如下年1月1日， 时标：<ul>
-<li>每天都有<code>86400</code>秒</li>
-<li>每天正午与官方时间准确匹配</li>
-<li>其他时间也要以一种精确定义的方式与其紧密匹配</li>
-</ul>
-</li>
-<li><code>Java</code>中，一个<code>Instant</code>对象表示时间轴上的一个点。原点（元年）为<code>1970</code>,<code>UNIX/POSIX</code>时间也使用了一样的约定。从86400秒进行计算，向前向后分别以纳秒为单位。</li>
-<li><code>Instant</code>的最大值（<code>Instant.MAX</code>）表示<code>1000000000年的12月31日</code>。静态方法<code>Instant.now()</code>会近回当前的瞬时点。可以使用<code>equals</code>和<code>compareTo</code>方法来比较两个瞬时点，以便将它们作为时间戳使用。</li>
-<li>要计算两个瞬时点之间的时间距离，你可以使用静态方法Duration.between.<pre><code>Instant start = Instant.now();
-runAlgorithm();
-Instant end = Instant.now();
-Duration timeElapsed = Duration.between(start,end);
-long millis = timeElapsed.toMillis();
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/06/08/JAVA8学习（五）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-06-04T14:59:45.000Z"><a href="/2016/06/04/JAVA8学习（四）/">2016-06-04</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/04/JAVA8学习（四）/">JAVA8学习（四）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="JavaFX"><a href="#JavaFX" class="headerlink" title="JavaFX"></a>JavaFX</h2><ul>
-<li>在javaFx中，你可以在一个场景上放置任何你想要展现的东西。因此，你可以设计“演员”—即控件的形状的样式和行为。</li>
-<li>场景需要舞台，如果运行在桌面系统上，舞台就是一个顶经的窗口，如果作为一个applet运行，舞台就是一个长方形的区域。</li>
-<li>在任何Application类的子类中，我们都必须重写start方法，然后将场景作为一个参数传递给start方法。</li>
-</ul>
-<p>Button red = new Button(“red”);<br>red.setOnAction(event-&gt;message.setTextFile(Color.REd));</p>
-<ul>
-<li><p>对于大多数JavaFX控件来说，它们的事件处理方式是不同的，以一个滑块为例，当滑块被调整时，它的值就会发生改变。但是，不应该监听滑块发出的表示这些改变的底层事件，相反，滑块有个个JavaFX属性value，该属性会在发生改变时发起事件。<br><code>slider.valueProperty().addListener(property-&gt;message.setFont(new Font(slider.getValue())))</code><br>-<code>java.beans</code>包中的<code>Introspector</code>和<code>BeanInfo</code>类可以遍历一个类中的所有属性。</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/06/04/JAVA8学习（四）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-06-04T14:59:45.000Z"><a href="/2016/06/04/JAVA程序员学习Scala（一）/">2016-06-04</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/04/JAVA程序员学习Scala（一）/">JAVA程序员学习Scala（一）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ul>
-<li><code>Scala</code>环境设置，将<code>bin</code>目录加到<code>path</code>中即可。</li>
-<li>命令行中，输入<code>scala</code>进入<code>Shell</code>环境，<code>Ctrl+A</code>回到行首，<code>Ctrl+E</code>到达行尾，如果没敲完，就回车，会出现<code>|</code>，提示你继续输入。<code>:quit</code>或者<code>exit</code>退出<code>shell</code>。</li>
-<li>也可以在命令行中，直接输入<code>scala -e &quot;println(\&quot;Hello \&quot;+args(0)+\&quot;,\&quot;+args(1))&quot; Buddy &quot;welcome to Scals</code>,<strong>没测试通过</strong></li>
-<li>还可以使用<code>:load</code>选项把它载入<code>shell</code>。<code>:load script.scala</code>。<code>scala Helloworld.scala</code>。<code>scala后</code>边的参数可以是脚本，也可以是目标文件(<code>.class</code>文件)。在给它传递<code>Java</code>属性的时候，可以用<code>-Dproperty=value</code>格式。在文件前边加上<code>-avaecompiled</code>选项，<code>Scala</code>工具会把字节码存成一个<code>Jar</code>文件。</li>
-<li><p>在类<code>Unix</code>的<code>shell</code>上，可以写脚本：</p>
-<pre><code>#!/usr/bin/env scala
-!#
-println(&quot;hello &quot;+args(0))
- 然后添加执行权限：chmod +x Script.scala即可直接执行。./Sript.scala okuc。okuc是参数。
-- 在windows上，可以在bat批处理中带参数的方式，如下：
-echo off
-cls
-call scala %1
-pause
-</code></pre></li>
-<li><p>一个简单的例子：</p>
-<pre><code>for(i&lt;-1 to 3){//包括3
-  print(i+&quot;,&quot;)
-}
-println(&quot;Scala Rocks!!!&quot;)
-
-for(i&lt;-1 until 3){//不包括3
-  print(i+&quot;,&quot;)
-}
-println(&quot;Scala Rocks!!!&quot;)
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/06/04/JAVA程序员学习Scala（一）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
   
-    <a href="/page/2/" class="alignright next">Next</a>
+    <a href="/page/2/" class="alignright next">Nächste Seite</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
     <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="hidden" name="q" value="site:www.52brt.com">
+  </form>
+</div>
+
   
 
   
@@ -623,6 +601,8 @@ println(&quot;Scala Rocks!!!&quot;)
   
     <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
   
+    <li><a href="/tags/ambari/">ambari</a><small>1</small></li>
+  
     <li><a href="/tags/centos/">centos</a><small>7</small></li>
   
     <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
@@ -637,9 +617,11 @@ println(&quot;Scala Rocks!!!&quot;)
   
     <li><a href="/tags/express/">express</a><small>4</small></li>
   
+    <li><a href="/tags/hadoop/">hadoop</a><small>1</small></li>
+  
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
   
-    <li><a href="/tags/java/">java</a><small>14</small></li>
+    <li><a href="/tags/java/">java</a><small>15</small></li>
   
     <li><a href="/tags/java8/">java8</a><small>9</small></li>
   
@@ -658,6 +640,8 @@ println(&quot;Scala Rocks!!!&quot;)
     <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/scala/">scala</a><small>2</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   

@@ -1,0 +1,371 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>制作centos6下的ambari离线安装源 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="制作centos6下的ambari离线安装源"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-07-21T14:59:45.000Z"><a href="/2016/07/21/制作centos6下的ambari离线安装源/">2016-07-21</a></time>
+      
+      
+  
+    <h1 class="title">制作centos6下的ambari离线安装源</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>之前制用的ambari离线安装源比较久了，spark版片也较旧。最近想把一些工作迁移动spark上来，但发现之前制的ambari安装源spark版本太低，于是决定制作一个新的离线安装源。网络上关于怎么制作的教程也比较多了，可是感觉许多都不适合本人，总有遗漏的地方，所以就特意记录了此次制作方式。本次制作的安装源基于ambari2.2.1，所使用的linux为centos6.6，jdk版本为java8。</p>
+<p>步聚如下：</p>
+<ol>
+<li><p>下载所需文件，建议使用迅雷下载，毕竟接近6个多G。下载地址如下：</p>
+<ul>
+<li>HDP2.4.0.0文件:<a href="http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.4.0.0/HDP-2.4.0.0-centos6-rpm.tar.gz" target="_blank" rel="external">http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.4.0.0/HDP-2.4.0.0-centos6-rpm.tar.gz</a></li>
+<li>HDP-UTILS1.1.0.20文件:<a href="http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos6/HDP-UTILS-1.1.0.20-centos6.tar.gz" target="_blank" rel="external">http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos6/HDP-UTILS-1.1.0.20-centos6.tar.gz</a></li>
+<li><p>ambari2.2.1文件文件:<a href="http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.2.1.0/ambari-2.2.1.0-centos6.tar.gz" target="_blank" rel="external">http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.2.1.0/ambari-2.2.1.0-centos6.tar.gz</a></p>
+<a id="more"></a>
+<p>2.在centos6.6中，安装httpd服务并起动该服务。<br>  yum install httpd //安装该服务，问题直接按y即可。<br>  netstat -nltp | grep 80 //查看80端口是否已使用<br>  vi /etc/httpd/conf/httpd.conf //如果80端口被占用，则把Listen 80 改为其他端口<br>  service httpd start //起动服务<br>安装完成后在浏览器中访问<a href="http://192.168.90.215/" target="_blank" rel="external">http://192.168.90.215/</a>即可看到页面。<br>3.在centos6.6下的/var/www/html目录中，新建ambari文件夹。<br>4.将步骤1中获取得三个压缩包解压后放到ambari目录下，最终形成的目录结构如下：</p>
+<p>  [root@ambari ambari]# tree<br>  .<br>  ├── AMBARI-2.2.1.0<br>  │   ├── centos6<br>  │   │   └── 2.2.1.0-161<br>  │   │       ├── ambari<br>  │   │       │   ├── ambari-agent-2.2.1.0-161.x86_64.rpm<br>  │   │       │   ├── ambari-metrics-collector-2.2.1.0-161.x86_64.rpm<br>  │   │       │   ├── ambari-metrics-common-2.2.1.0-161.noarch.rpm<br>  │   │       │   ├── ambari-metrics-hadoop-sink-2.2.1.0-161.x86_64.rpm<br>  │   │       │   ├── ambari-metrics-monitor-2.2.1.0-161.x86_64.rpm<br>  │   │       │   └── ambari-server-2.2.1.0-161.x86_64.rpm<br>  │   │       ├── build.id<br>  │   │       ├── build_metadata.txt<br>  │   │       ├── changelog.txt<br>  │   │       ├── repodata<br>  │   │       │   ├── 0b7c0703e400fdfdc3e3f6ff5f3c379df0f74a988113cd555506a733e77796a7-filelists.sqlite.bz2<br>  │   │       │   ├── 2fc2ae744e0cd0c5c79267eaf476f66358cc929e37997aecdf62848a3bba18bd-primary.sqlite.bz2<br>  │   │       │   ├── 60f8479134185418567cf1c56ec907eb281e250004408d19745bed7731a4394b-other.sqlite.bz2<br>  │   │       │   ├── 68148706ed4f1e9893c76a8256ac20624ab4e2d26d519d5d3f6519991443440a-filelists.xml.gz<br>  │   │       │   ├── 83b13a574ff3aa027d9e2249c15078016aba5aaa69b07e4b2cfeafbf68387906-other.xml.gz<br>  │   │       │   ├── b3183adcbd7f77a43d0fa148d761ef980c08afef6469ce1e0760f5cc5eb1b077-primary.xml.gz<br>  │   │       │   └── repomd.xml<br>  │   │       ├── RPM-GPG-KEY<br>  │   │       │   └── RPM-GPG-KEY-Jenkins<br>  │   │       └── smartsense<br>  │   │           └── smartsense-hst-1.2.1.0-161.x86_64.rpm<br>  │   ├── OSL.txt<br>  │   └── setup_repo.sh<br>  ├── HDP<br>  │   └── centos6<br>  │       └── 2.x<br>  │           └── updates<br>  │               └── 2.4.0.0<br>  │                   ├── accumulo<br>  │                   │   ├── accumulo_2_4_0_0_169-1.7.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── accumulo_2_4_0_0_169-conf-standalone-1.7.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── accumulo_2_4_0_0_169-source-1.7.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   └── accumulo_2_4_0_0_169-test-1.7.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   ├── atlas<br>  │                   │   ├── atlas-metadata_2_4_0_0_169-0.5.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   └── atlas-metadata_2_4_0_0_169-hive-plugin-0.5.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── bigtop-jsvc<br>  │                   │   ├── bigtop-jsvc-1.0.10.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   └── bigtop-jsvc-debuginfo-1.0.10.2.4.0.0-169.el6.x86_64.rpm<br>  │                   ├── bigtop-tomcat<br>  │                   │   └── bigtop-tomcat-6.0.44-1.el6.noarch.rpm<br>  │                   ├── build_changelog.txt<br>  │                   ├── build.id<br>  │                   ├── build_metadata.txt<br>  │                   ├── calcite<br>  │                   ├── datafu<br>  │                   │   └── datafu_2_4_0_0_169-1.3.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── falcon<br>  │                   │   ├── falcon_2_4_0_0_169-0.6.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   └── falcon_2_4_0_0_169-doc-0.6.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── flume<br>  │                   │   ├── flume_2_4_0_0_169-1.5.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   └── flume_2_4_0_0_169-agent-1.5.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── hadoop<br>  │                   │   ├── hadoop_2_4_0_0_169-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-client-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-conf-pseudo-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-doc-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-hdfs-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-hdfs-datanode-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-hdfs-fuse-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-hdfs-journalnode-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-hdfs-namenode-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-hdfs-secondarynamenode-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-hdfs-zkfc-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-httpfs-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-httpfs-server-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-libhdfs-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-mapreduce-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-mapreduce-historyserver-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-source-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-yarn-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-yarn-nodemanager-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-yarn-proxyserver-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hadoop_2_4_0_0_169-yarn-resourcemanager-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   └── hadoop_2_4_0_0_169-yarn-timelineserver-2.7.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   ├── hadooplzo<br>  │                   │   ├── hadooplzo_2_4_0_0_169-0.6.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   └── hadooplzo_2_4_0_0_169-native-0.6.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   ├── hbase<br>  │                   │   ├── hbase_2_4_0_0_169-1.1.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── hbase_2_4_0_0_169-doc-1.1.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── hbase_2_4_0_0_169-master-1.1.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── hbase_2_4_0_0_169-regionserver-1.1.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── hbase_2_4_0_0_169-rest-1.1.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── hbase_2_4_0_0_169-thrift-1.1.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   └── hbase_2_4_0_0_169-thrift2-1.1.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── HDP-2.4.0.0-centos6-m2-artifacts.tar<br>  │                   ├── hdpbn.repo<br>  │                   ├── hdp-partial-build.repo<br>  │                   ├── hdp_private.repo<br>  │                   ├── hdp_public.repo<br>  │                   ├── hdp.repo<br>  │                   ├── hdp-select<br>  │                   │   └── hdp-select-2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── hive<br>  │                   │   ├── hive_2_4_0_0_169-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── hive_2_4_0_0_169-hcatalog-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── hive_2_4_0_0_169-hcatalog-server-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── hive_2_4_0_0_169-jdbc-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── hive_2_4_0_0_169-metastore-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── hive_2_4_0_0_169-server-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── hive_2_4_0_0_169-server2-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── hive_2_4_0_0_169-webhcat-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   └── hive_2_4_0_0_169-webhcat-server-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── hue<br>  │                   │   ├── hue-2.6.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hue-beeswax-2.6.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hue-common-2.6.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hue-hcatalog-2.6.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hue-oozie-2.6.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── hue-pig-2.6.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   └── hue-server-2.6.1.2.4.0.0-169.el6.x86_64.rpm<br>  │                   ├── kafka<br>  │                   │   └── kafka_2_4_0_0_169-0.9.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── knox<br>  │                   │   └── knox_2_4_0_0_169-0.6.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── mahout<br>  │                   │   ├── mahout_2_4_0_0_169-0.9.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   └── mahout_2_4_0_0_169-doc-0.9.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── oozie<br>  │                   │   ├── oozie_2_4_0_0_169-4.2.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   └── oozie_2_4_0_0_169-client-4.2.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── phoenix<br>  │                   │   └── phoenix_2_4_0_0_169-4.4.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── pig<br>  │                   │   └── pig_2_4_0_0_169-0.15.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── ranger<br>  │                   │   ├── ranger_2_4_0_0_169-admin-0.5.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── ranger_2_4_0_0_169-debuginfo-0.5.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── ranger_2_4_0_0_169-hbase-plugin-0.5.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── ranger_2_4_0_0_169-hdfs-plugin-0.5.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── ranger_2_4_0_0_169-hive-plugin-0.5.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── ranger_2_4_0_0_169-kafka-plugin-0.5.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── ranger_2_4_0_0_169-kms-0.5.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── ranger_2_4_0_0_169-knox-plugin-0.5.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── ranger_2_4_0_0_169-solr-plugin-0.5.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── ranger_2_4_0_0_169-storm-plugin-0.5.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   ├── ranger_2_4_0_0_169-usersync-0.5.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   └── ranger_2_4_0_0_169-yarn-plugin-0.5.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   ├── repodata<br>  │                   │   ├── 41ca810aded633c445691c8de16b86f4f1e14388d856d6e79e3f29994c1eeef4-other.sqlite.bz2<br>  │                   │   ├── 4446be975894b6d8a1cee9a783409335bc8a831a9c3c166152b406f465fce6b0-primary.xml.gz<br>  │                   │   ├── 60eaf21e5b569842f7af58ae155422a20a9b4d764f9e8796e2947df13695bb6b-filelists.sqlite.bz2<br>  │                   │   ├── 694fb2f4e1d0dd472d85b19cb9bd73d1292a872d5980f378741f3b99c5b8c6b8-primary.sqlite.bz2<br>  │                   │   ├── a3ad843dc0d0260704953f9e05ee282e2911cb2f9b03544f47a9b4fc83a6d61b-filelists.xml.gz<br>  │                   │   ├── d8e5b9c52923cd44adfac3c73a47ab36dc64246be34808cd5b7f0070f9397906-other.xml.gz<br>  │                   │   └── repomd.xml<br>  │                   ├── RPM-GPG-KEY<br>  │                   │   └── RPM-GPG-KEY-Jenkins<br>  │                   ├── slider<br>  │                   │   └── slider_2_4_0_0_169-0.80.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── slider-app-packages<br>  │                   │   ├── accumulo<br>  │                   │   │   └── slider-accumulo-app-package-1.7.0.2.4.0.0-169.zip<br>  │                   │   ├── command-logger<br>  │                   │   │   └── command-logger-slider-package.zip<br>  │                   │   ├── hbase<br>  │                   │   │   └── slider-hbase-app-package-1.1.2.2.4.0.0-169.zip<br>  │                   │   ├── pkg-list_bn.txt<br>  │                   │   ├── pkg-list_private.txt<br>  │                   │   ├── pkg-list_public.txt<br>  │                   │   ├── pkg-list.txt<br>  │                   │   └── storm<br>  │                   │       └── slider-storm-app-package-0.10.0.2.4.0.0-169.zip<br>  │                   ├── spark<br>  │                   │   ├── spark_2_4_0_0_169-1.6.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── spark_2_4_0_0_169-master-1.6.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── spark_2_4_0_0_169-python-1.6.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── spark_2_4_0_0_169-worker-1.6.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   └── spark_2_4_0_0_169-yarn-shuffle-1.6.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── sqoop<br>  │                   │   ├── sqoop_2_4_0_0_169-1.4.6.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   └── sqoop_2_4_0_0_169-metastore-1.4.6.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── storm<br>  │                   │   ├── storm_2_4_0_0_169-0.10.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   │   └── storm_2_4_0_0_169-slider-client-0.10.0.2.4.0.0-169.el6.x86_64.rpm<br>  │                   ├── tez<br>  │                   │   └── tez_2_4_0_0_169-0.7.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── vrpms<br>  │                   │   ├── accumulo<br>  │                   │   │   ├── accumulo-1.7.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── accumulo-conf-standalone-1.7.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── accumulo-source-1.7.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   └── accumulo-test-1.7.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── atlas-metadata<br>  │                   │   ├── datafu<br>  │                   │   │   └── datafu-1.3.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── falcon<br>  │                   │   │   ├── falcon-0.6.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   └── falcon-doc-0.6.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── flume<br>  │                   │   │   ├── flume-1.5.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   └── flume-agent-1.5.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── hadoop<br>  │                   │   │   ├── hadoop-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-client-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-conf-pseudo-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-doc-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-hdfs-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-hdfs-datanode-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-hdfs-fuse-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-hdfs-journalnode-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-hdfs-namenode-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-hdfs-secondarynamenode-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-hdfs-zkfc-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-httpfs-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-httpfs-server-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-libhdfs-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-mapreduce-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-mapreduce-historyserver-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-source-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-yarn-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-yarn-nodemanager-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-yarn-proxyserver-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hadoop-yarn-resourcemanager-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   └── hadoop-yarn-timelineserver-2.7.1.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── hadooplzo<br>  │                   │   │   ├── hadooplzo-0.6.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   └── hadooplzo-native-0.6.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── hbase<br>  │                   │   │   ├── hbase-1.1.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hbase-doc-1.1.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hbase-master-1.1.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hbase-regionserver-1.1.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hbase-rest-1.1.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hbase-thrift-1.1.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   └── hbase-thrift2-1.1.2.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── hive<br>  │                   │   │   ├── hive-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hive-hcatalog-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hive-hcatalog-server-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hive-jdbc-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hive-metastore-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hive-server-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hive-server2-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── hive-webhcat-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   └── hive-webhcat-server-1.2.1000.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── kafka<br>  │                   │   │   └── kafka-0.9.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── knox<br>  │                   │   │   └── knox-0.6.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── mahout<br>  │                   │   │   ├── mahout-0.9.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   └── mahout-doc-0.9.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── oozie<br>  │                   │   │   ├── oozie-4.2.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   └── oozie-client-4.2.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── phoenix<br>  │                   │   │   └── phoenix-4.4.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── pig<br>  │                   │   │   └── pig-0.15.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── ranger<br>  │                   │   │   ├── ranger-admin-0.5.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── ranger-debuginfo-0.5.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── ranger-hbase-plugin-0.5.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── ranger-hdfs-plugin-0.5.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── ranger-hive-plugin-0.5.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── ranger-kafka-plugin-0.5.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── ranger-kms-0.5.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── ranger-knox-plugin-0.5.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── ranger-solr-plugin-0.5.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── ranger-storm-plugin-0.5.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── ranger-usersync-0.5.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   └── ranger-yarn-plugin-0.5.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── slider<br>  │                   │   │   └── slider-0.80.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── spark<br>  │                   │   │   ├── spark-1.6.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── spark-master-1.6.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── spark-python-1.6.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   ├── spark-worker-1.6.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   └── spark-yarn-shuffle-1.6.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── sqoop<br>  │                   │   │   ├── sqoop-1.4.6.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   └── sqoop-metastore-1.4.6.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── storm<br>  │                   │   │   ├── storm-0.10.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   │   └── storm-slider-client-0.10.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── tez<br>  │                   │   │   └── tez-0.7.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   ├── zeppelin<br>  │                   │   │   └── zeppelin-0.6.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   │   └── zookeeper<br>  │                   │       ├── zookeeper-3.4.6.2.4.0.0-169.el6.noarch.rpm<br>  │                   │       └── zookeeper-server-3.4.6.2.4.0.0-169.el6.noarch.rpm<br>  │                   ├── zeppelin<br>  │                   │   └── zeppelin_2_4_0_0_169-0.6.0.2.4.0.0-169.el6.noarch.rpm<br>  │                   └── zookeeper<br>  │                       ├── zookeeper_2_4_0_0_169-3.4.6.2.4.0.0-169.el6.noarch.rpm<br>  │                       └── zookeeper_2_4_0_0_169-server-3.4.6.2.4.0.0-169.el6.noarch.rpm<br>  └── HDP-UTILS-1.1.0.20</p>
+<pre><code>└── repos
+    └── centos6
+        ├── epel-release-6-8.noarch.rpm
+        ├── extjs
+        │   └── extjs-2.2-1.noarch.rpm
+        ├── fping
+        │   └── fping-2.4b2-10.el6.x86_64.rpm
+        ├── ganglia
+        │   ├── ganglia-debuginfo-3.5.0-99.x86_64.rpm
+        │   ├── ganglia-devel-3.5.0-99.x86_64.rpm
+        │   ├── ganglia-gmetad-3.5.0-99.x86_64.rpm
+        │   ├── ganglia-gmond-3.5.0-99.x86_64.rpm
+        │   ├── ganglia-gmond-modules-python-3.5.0-99.x86_64.rpm
+        │   ├── ganglia-web-3.5.7-99.noarch.rpm
+        │   └── libganglia-3.5.0-99.x86_64.rpm
+        ├── hadoop-lzo
+        │   ├── hadoop-lzo-0.6.0-1.x86_64.rpm
+        │   └── hadoop-lzo-native-0.6.0-1.x86_64.rpm
+        ├── libconfuse
+        │   └── libconfuse-2.7-4.el6.x86_64.rpm
+        ├── lucid
+        │   └── lucidworks-hdpsearch-2.3-4.noarch.rpm
+        ├── lzo
+        │   ├── lzo-2.06-1.el6.x86_64.rpm
+        │   ├── lzo-debuginfo-2.06-1.el6.x86_64.rpm
+        │   ├── lzo-devel-2.06-1.el6.x86_64.rpm
+        │   └── lzo-minilzo-2.06-1.el6.x86_64.rpm
+        ├── mysql-connector-java
+        │   ├── mysql-connector-java-5.1.29-1.noarch.rpm
+        │   └── mysql-connector-java-5.1.37-1.noarch.rpm
+        ├── nagios
+        │   ├── nagios-3.5.0-99.x86_64.rpm
+        │   ├── nagios-debuginfo-3.5.0-99.x86_64.rpm
+        │   ├── nagios-devel-3.5.0-99.x86_64.rpm
+        │   └── nagios-www-3.5.0-99.x86_64.rpm
+        ├── nagios-plugins
+        │   ├── nagios-plugins-1.4.9-1.x86_64.rpm
+        │   └── nagios-plugins-debuginfo-1.4.9-1.x86_64.rpm
+        ├── pdsh
+        │   ├── compat-readline5-5.2-17.1.el6.x86_64.rpm
+        │   ├── libgenders-1.14-2.el6.rf.x86_64.rpm
+        │   └── pdsh-2.27-1.el6.rf.x86_64.rpm
+        ├── perl
+        │   ├── perl-Crypt-DES-2.05-9.el6.x86_64.rpm
+        │   └── perl-Net-SNMP-5.2.0-4.el6.noarch.rpm
+        ├── repodata
+        │   ├── 1513a536197339e9c70b985584370bb1a9ff9240a738fa9d581615da546392a7-filelists.xml.gz
+        │   ├── 4310cb10d1082d906520b3683e66b22d158627a5e9b922a8f83825d25a5b47ef-primary.xml.gz
+        │   ├── 7fd58b2be8c4f83dc8fa527736863d1aa4999069909489b3cf49f91ddd0b02dc-primary.sqlite.bz2
+        │   ├── 806d8d7de713e4e1525ba65158661f916ef96105736259dd2bfa13654202ffab-other.xml.gz
+        │   ├── ba67967d38ccbc4f8e971dc6c1edc5d2d8539a05ce375b4ff55a7315625dd8f3-filelists.sqlite.bz2
+        │   ├── daa78a35fd36fc248e5108fb5477b5127c328f6cf82f15babdd24eae795e27e1-other.sqlite.bz2
+        │   └── repomd.xml
+        ├── RPM-GPG-KEY
+        │   └── RPM-GPG-KEY-Jenkins
+        ├── rrdtool
+        │   ├── lua-rrdtool-1.4.5-1.el6.x86_64.rpm
+        │   ├── perl-rrdtool-1.4.5-1.el6.x86_64.rpm
+        │   ├── python-rrdtool-1.4.5-1.el6.x86_64.rpm
+        │   ├── rrdtool-1.4.5-1.el6.x86_64.rpm
+        │   ├── rrdtool-debuginfo-1.4.5-1.el6.x86_64.rpm
+        │   ├── rrdtool-devel-1.4.5-1.el6.x86_64.rpm
+        │   ├── ruby-rrdtool-1.4.5-1.el6.x86_64.rpm
+        │   └── tcl-rrdtool-1.4.5-1.el6.x86_64.rpm
+        └── snappy
+            ├── snappy-1.0.5-1.el6.i686.rpm
+            ├── snappy-1.0.5-1.el6.x86_64.rpm
+            ├── snappy-devel-1.0.5-1.el6.i686.rpm
+            └── snappy-devel-1.0.5-1.el6.x86_64.rpm
+</code></pre></li>
+</ul>
+</li>
+<li><p>在ambari目录下，执行如下命令<code>createrepo ./</code>。如果提示<code>createrepo</code>命令不存在，直接<code>yum install createrepo</code>即可。</p>
+</li>
+<li><p>制作三个repo文件</p>
+<p>ambari.repo:</p>
+<pre><code>[Updates-ambari-2.2.1.0]
+name=ambari-2.2.1.0 - Updates
+baseurl=http://192.168.90.215/ambari/AMBARI-2.2.1.0/centos6/2.2.1.0-161
+gpgcheck=0
+gpgkey=http://public-repo-1.hortonworks.com/ambari/centos6/RPM-GPG-KEY/RPM-GPG-KEY-Jenkins
+enabled=1
+priority=1
+</code></pre><p>hdp.repo:</p>
+<pre><code>[HDP-2.3.0.0]
+name=HDP Version - HDP-2.3.0.0
+baseurl=http://192.168.90.215/ambari/HDP/centos6/2.x/updates/2.4.0.0
+gpgcheck=0
+gpgkey=http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.3.0.0/RPM-GPG-KEY/RPM-GPG-KEY-Jenkins
+enabled=1
+priority=1
+</code></pre><p>hdp-util.repo:</p>
+<pre><code>[HDP-UTILS-1.1.0.20]
+name=HDP Utils Version - HDP-UTILS-1.1.0.20
+baseurl=http://192.168.90.215/ambari/HDP-UTILS-1.1.0.20/repos/centos6
+gpgcheck=0
+gpgkey=http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.3.0.0/RPM-GPG-KEY/RPM-GPG-KEY-Jenkins
+enabled=1
+priority=1
+</code></pre></li>
+<li><p>将repo拷贝到需要安装的机器上，愉快的玩耍吧。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/java/">java</a>, <a href="/tags/ambari/">ambari</a>, <a href="/tags/hadoop/">hadoop</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    
+    <a href="/2016/07/15/快学scala《二》/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/07/21/制作centos6下的ambari离线安装源/" data-title="制作centos6下的ambari离线安装源" data-url="http://www.52brt.com/2016/07/21/制作centos6下的ambari离线安装源/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="hidden" name="q" value="site:www.52brt.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
+  
+    <li><a href="/tags/Nashorn/">Nashorn</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/Scala/">Scala</a><small>3</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/ambari/">ambari</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hadoop/">hadoop</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>15</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>9</small></li>
+  
+    <li><a href="/tags/kafka/">kafka</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/scala/">scala</a><small>2</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
