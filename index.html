@@ -70,6 +70,47 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-09-01T14:59:45.000Z"><a href="/2016/09/01/快学scala《三》/">2016-09-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/09/01/快学scala《三》/">快学scala三</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><ol>
+<li><p>在<code>Scala</code>中，类并不声明为<code>public</code>。<code>Scala</code>源文件可以包含多个类，所有这些类都具有公有可见性。</p>
+<p> calss Counter{<br>   private var value=0//必须初始化字段<br>   def increment(){ value +=1} //方法默认是公有的<br>   def current()=value<br> }</p>
+<p>调用时，可以带括号，也可以不带。建议在改值器调用时添加小插号，对取值器不用。如果在定义中不使用小括号，那么使用者就必须用<code>MyCounter.current</code>，不带圆括号。</p>
+</li>
+<li><p><code>scala</code>对每个字段都提供<code>getter</code>和<code>setter</code>方法。如果我们对自动提供的这两个方法不满意，还可以重新定义。如果字段是<code>val</code>,则只会生成getter方法。若不需要这两个方法，则将字段声明为：<code>private[this]</code>，这个声明将导致本字段只能本对象可用，对于其他实例则不可用。<code>private[类名]</code>允许指定可以访问该字段的指定类的方法。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/09/01/快学scala《三》/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-07-21T14:59:45.000Z"><a href="/2016/07/21/制作centos6下的ambari离线安装源/">2016-07-21</a></time>
       
       
@@ -178,6 +219,46 @@ s(0)=&quot;Goodbye&quot;  //使用()而不是[]来访问元素
         
           <div class="alignleft">
             <a href="/2016/07/04/快学scala《一》/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-07-04T14:59:45.000Z"><a href="/2016/07/04/正式启用新域名www.okuc.xyz/">2016-07-04</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/07/04/正式启用新域名www.okuc.xyz/">快学scala一</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>1、在<code>Scala</code>中，每个表达式都有返回值和类型<code>val s= if(x&gt;0) 1 else -1</code></p>
+<p>2、所有的类都继随于<code>Any</code>， 空类型为<code>Unit</code>，写作<code>()</code></p>
+<p>3、语句终止不需要有分号，语句较长的话，要确保第一行以一下不能用作语句结尾的符号结尾。如`+。</p>
+<p>4、<code>｛｝</code>块包含一系列的表达式。块中最后一个表达式的值就是块的值。<code>{r=rn;n-=1}</code>最后是一个赋值操作，所以这个块的返回值为<code>Unit</code>。java中赋值操作是有返回值的，返回值是这个赋的值</p>
+<p>5、<code>print(“Answer:”+42),println(“aaa”);</code>还可以<code>printf(“Hello,%s!You are %d years old.\n”,”Fred”,42)</code><br>6、读取控制台输入：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/07/04/正式启用新域名www.okuc.xyz/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -446,132 +527,18 @@ System.out.println(ids);//将所有的时区标识，由逗号分隔
 
 
 
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-06-10T14:59:45.000Z"><a href="/2016/06/10/JAVA8学习（七）/">2016-06-10</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/10/JAVA8学习（七）/">JAVA8学习（七）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ul>
-<li><code>java8</code>提供了一个命令行工具<code>jjs</code>。你只需要启动它，并执行<code>JavaScript</code>命令即可启动：<pre><code>jjs
-jjs&gt;&apos;Hello,World&apos;
-Hello,World
-jjs&gt;&apos;Hello,World.length
-5
-</code></pre></li>
-<li>在<code>js</code>中定义字符串可以是单引号也可以是双引号。每行后边可以加分号也可以不加。</li>
-<li>在<code>jjs</code>中定义函数并调用它们<pre><code>jjs&gt;function factorial(n){return n&lt;=1?1:n*factorial(n-1)}
-function factorial(n){return n&lt;=1?1:n*factorial(n-1)}
-jjs&gt;factorial(10)
-3628800
-</code></pre>-<code>jjs</code>中调用<code>java</code>的方法<pre><code>var input = new java.util.Scanner(new java.net.URL(&apos;http://horstmann.com&apos;).openStream())
-input.useDelimiter(&apos;$&apos;)
-var contents = input.next()
-contents
-</code></pre></li>
-<li><code>jjs</code>又被称为<code>REPL</code>，可以用这种方式来学习<code>java API</code>，但是它没有<code>Scala</code>做得那么好。因为它的自动提示不友好，不能提示。可以尝试安装<code>rlwrap jjs</code>或在<code>Emacs</code>中运行<code>jjs</code>来解决这一问题。</li>
-<li>在<code>Java</code>中，可以使用<code>Java6</code>中引入的脚本引擎机制来运行一个<code>Nashorn</code>脚本。通过脚本引擎，可以执行任何JVM语言的脚本，如<code>Groovy</code>、<code>JRuby</code>、<code>Jython</code>。此外，还有另外一些脚本引擎用于支持任何<code>JVM</code>以外的语言，如<code>PHP</code>、<code>Scheme</code>。</li>
-<li><code>java8</code>中运行<code>nashorn</code>的示例如下：<pre><code>ScriptEngineManager manager = new ScriptEngineManager();//获取注册的引擎管理器
-ScriptEngin engin = manager.getEngineByName(&quot;nashorn&quot;);//通过名称获取指定引擎
-Object result = engine.vale(&quot;&apos;Hello,world!&apos;.length&quot;);
-System.out.println(result);
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/06/10/JAVA8学习（七）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-06-09T14:59:45.000Z"><a href="/2016/06/09/JAVA8学习（六）/">2016-06-09</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/09/JAVA8学习（六）/">JAVA8学习（六）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h2><ul>
-<li><code>java5</code>提供了强大的<code>java.util.concurrent</code>包，该包为我们提供了线程安全的集合和线程池，使得许多应用开发人员不必使用锁或者启动新线程，就可以编写并发程序。</li>
-<li><code>java5</code>开始<code>java.util.concurrent.atomic</code>包提供了用于支持无锁可变变量的类，保证多线程并发访问同一个实例，也能正确计算并返回正确的值。如：<pre><code>public static AtomicLong nextNumber = new AtomicLong();
-//在某些线程中
-long id= nexNumber.incrementAndGet();//会自动将AtomicLong的值加1，并返回增加后的值。
-</code></pre></li>
-<li><p><code>java5</code>中提供了很多设置、增加、减少值的原子操作，但是如果想要进行更复杂的更新操作，必须使用<code>compareAndSet</code>方法。如想追踪由不同线程所监测的最大值，则下面的代码是行不通的：</p>
-<pre><code>public static AtomicLong nextNumber = new AtomicLong();
-//在某些线程中
-largest.set(Math.max(largest.get(),observed)) //错误，竟争条件，非原子性操作。
-
-do{
-    oldValue = largest.get();
-    newValue = Math.max(oldValue,observed);
-}while(!largest.compareAndSet(oldValue,newValue));//正确方式，每个线程每次都取新旧值判断，只有符合要求时才会赋值。如果是java8,可以如下写：
-largest.updateAndGet(x-&gt;Math.max(x,observed));
-largest.accumulateAndGet(observed,Math::max);//accumulateAndGet方法通过一个二元运算符将原子值和传入的参数组合起来。
-</code></pre><p>除了它之外，Java8还提供了返回原始值的<code>getAndUpdate</code>方法和<code>getAndaccumulateAndGet</code>方法。</p>
-</li>
-<li><code>AtomicInteger</code>、<code>AtomicIntegerArray</code>、<code>AtomicIntegerFieldupdater</code>、<code>AtomicLongArray</code>、<code>AtomicLongFieldUpdater</code>、<code>AtomicRefernce</code>、<code>AtomicReferenceArray</code>和<code>AtomicReferenceFieldUpdater</code>类都提供了这些方法。
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/06/09/JAVA8学习（六）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
   
-    <a href="/page/2/" class="alignright next">Next</a>
+    <a href="/page/2/" class="alignright next">Siguiente</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="search" name="q" results="0" placeholder="Buscar">
     <input type="hidden" name="q" value="site:www.52brt.com">
   </form>
 </div>
@@ -580,7 +547,7 @@ largest.accumulateAndGet(observed,Math::max);//accumulateAndGet方法通过一�
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -641,7 +608,7 @@ largest.accumulateAndGet(observed,Math::max);//accumulateAndGet方法通过一�
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>2</small></li>
+    <li><a href="/tags/scala/">scala</a><small>4</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   

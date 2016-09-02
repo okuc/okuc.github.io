@@ -1,0 +1,407 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>快学scala三 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="快学scala三"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-09-01T14:59:45.000Z"><a href="/2016/09/01/快学scala《三》/">2016-09-01</a></time>
+      
+      
+  
+    <h1 class="title">快学scala三</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><ol>
+<li><p>在<code>Scala</code>中，类并不声明为<code>public</code>。<code>Scala</code>源文件可以包含多个类，所有这些类都具有公有可见性。</p>
+<p> calss Counter{<br>   private var value=0//必须初始化字段<br>   def increment(){ value +=1} //方法默认是公有的<br>   def current()=value<br> }</p>
+<p>调用时，可以带括号，也可以不带。建议在改值器调用时添加小插号，对取值器不用。如果在定义中不使用小括号，那么使用者就必须用<code>MyCounter.current</code>，不带圆括号。</p>
+</li>
+<li><p><code>scala</code>对每个字段都提供<code>getter</code>和<code>setter</code>方法。如果我们对自动提供的这两个方法不满意，还可以重新定义。如果字段是<code>val</code>,则只会生成getter方法。若不需要这两个方法，则将字段声明为：<code>private[this]</code>，这个声明将导致本字段只能本对象可用，对于其他实例则不可用。<code>private[类名]</code>允许指定可以访问该字段的指定类的方法。</p>
+<a id="more"></a>
+<p> class Person{<br>   var age=0 //定义了一个私有的age字段，scala会提供相应的getter和setter方法，这两个方法是公有的。如果我们将age明确声明为private，则这个方法也是私有的。<br> }</p>
+<p> println(fred.age)<br> fred.age =21</p>
+<p> class Person{<br>   private var privateAge=0<br>   def age = privateAge<br>   def age_=(newValue:Int){</p>
+<pre><code>if(newValue &gt; privateAge) privateAge=newValue
+</code></pre><p>   }<br> }</p>
+<p> println(fred.age)<br> fred.age =21</p>
+</li>
+<li><p>查看编译后的java文件：</p>
+<p> scalac Person.scala<br> javap -private Person</p>
+<p> 综上：</p>
+<ul>
+<li><code>var foo:Scala</code>自动合成一个<code>getter</code>和一个<code>setter</code></li>
+<li><code>val foo:Scala</code>自动合成一个<code>getter</code></li>
+<li>由你来定义<code>foo</code>和<code>foo_=</code>方法</li>
+<li>由你来定义<code>foo</code>方法</li>
+<li><code>Scala</code>类中定义的字段是私有字段，加上<code>getter</code>方法和<code>setter</code>方法。（<code>val</code>不会有<code>setter</code>方法）</li>
+</ul>
+</li>
+<li><p><code>Scala</code>会提供<code>getter</code>和<code>setter</code>方法，但是命名规则不是<code>JavaBeans</code>规范所定义的。如果想让他生成所定义的，可以使用<code>@BeanProperty</code>注解。</p>
+<p> import scala.reflect.BeanProperty</p>
+<p> class Person{<br>   @BeanProperty var name:String = _<br> }</p>
+<p>上述代码将会生成四个方法：</p>
+<ul>
+<li><code>name:String</code></li>
+<li><code>name_=(newValue:String):Unit</code></li>
+<li><code>getName():String</code></li>
+<li><code>setName(newValue:String):Unit</code></li>
+</ul>
+</li>
+<li><p>如果以主构造器参数定义了某字段，并且需要<code>java</code>版的<code>getter</code>和<code>setter</code>方法，这样做就可以：”<code>class Person(@BeanProperty var name:String)</code>“</p>
+</li>
+<li>针对字段生成的方法：<ul>
+<li><code>val/var name</code>:公有的<code>name</code>、<code>name_=()</code>(仅限于<code>var</code>)，它在实现一个可以被公开访问并且背后是以字段形式保存的属性</li>
+<li><code>@BeanProperty val/var name</code>:公有的<code>name</code>、<code>getName()</code>、<code>name_=</code>(仅限于<code>var</code>)、<code>setName(...)</code>(仅限于<code>var</code>),它用来与<code>JavaBean</code>互操作</li>
+<li><code>private val/var name</code>:私有的<code>name</code>、<code>name_=</code>(仅限于<code>var</code>)，用于将字段访问限制在本的方法，和<code>java</code>一样，尽量使用<code>private</code>，除非你真的需要一个公有的属性。</li>
+<li><code>private[this] val/var name</code>:<code>无</code>，它不生成任何方法，用于将字段访问限制在同一个对象上调用的方法，并不经常用到</li>
+<li><code>private[类名] val/var name</code>:依赖于具体实现，将访问权赋予外部类，并不经常用到。</li>
+</ul>
+</li>
+<li><p><code>Scala</code>的构造器有主构造器和辅助构造器组成。</p>
+<ul>
+<li><p>辅构造器：辅助构造器的名称为<code>this</code>,每一个辅助构造器都必须以一个对先前已定义的其他辅助构造器或主构造器的调用开始。</p>
+<p>   class Person{</p>
+<pre><code>private var name = &quot;&quot;
+def this(name:String){//一个辅助构造器
+   this();//调用主构造器
+   this.name = name
+}
+</code></pre><p>   }</p>
+</li>
+<li><p>主构造器与类名交织在一起，参数直接放到类名之后，主构造器的参数值在被始初始化时传入，一个类如果没有显式定义主构造器则自动拥有一个无参的主构造器。</p>
+<p>   class Person(val name:String,val age:Int){ //主构造器的字段会被编译成类中的字段，其值被初始化成构造时传入的参数。</p>
+<pre><code>//(...)中的内容就是主构造器的参数
+println(&quot;Just constructed another person&quot;) //主构造器的一部分
+def defscription = name +&quot; is &quot;+ age + &quot;years old&quot;
+</code></pre><p>   }<br>   class Person(val name:String=””,val age:Int=0) //使用默认参数值<br>   class Person(val name:String,private var age:Int) //第二个参数为private类型的<br>   class Person private(val id:int){…}//主构造方法是私有的，不允许外部调用</p>
+<p>构造函数参数也可以是普通方法参数，不带<code>val</code>或<code>var</code>。针对主构造器参数对应生成的字段和方法如下：</p>
+<ul>
+<li><code>name:String</code>:对象私有字段。如果没有方法使用<code>name</code>，则没有该字段。</li>
+<li><code>private val/var name:String</code>:私有字段，私有的<code>getter/setter</code>方法。</li>
+<li><code>val/var name:String</code>:私有字段，公有的<code>getter/setter</code>方法。</li>
+<li><code>@BeanProperty val/var name:String</code>:私有字段，公有的<code>Scala</code>版和<code>JavaBeans</code>版的<code>getter/setter</code>方法</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>嵌套类：在<code>scala</code>中，任何语法结构中都可以嵌套任何语法结构。可以在函数中定义函数，可以在类中定义类。对于两个不同的对象来说，其内部类也是两个不同的类。<strong>java中的内部类从属于外部类，而scala中的内部类是独立的，可以新建内部对象，new a.innerobj</strong>,如可以在不同的网络中添加各自的成员，但是不能跨网络添加成员。</p>
+</li>
+</ol>
+<h2 id="object语法结构"><a href="#object语法结构" class="headerlink" title="object语法结构"></a>object语法结构</h2><ol>
+<li>如果需要某个类的单个实例或者想为其他值或函数找一个可以挂靠的地方时，就需要用到<code>object</code>。</li>
+<li><p><code>scala</code>没有静态方法或静态字段，对象定义了某个类的单个实例，包含了想要的特性，可以达到静态字段或方法的目的。</p>
+<pre><code>object Accounts{
+    private var lastNumber =0;
+    def newUniqueNumber() = {lastNumber +=1;lastNumber}
+}
+</code></pre></li>
+<li><p><code>scala</code>中的对象相当于<code>Java</code>中存放单例对象的地方，如存放工具函数或常量，高效地共享单个不可变实例。对象拥有类的所有特性，只有一个例外：你不能提供构造函数。</p>
+</li>
+<li>在Java中，一些类即有静态方法又有实例方法。在<code>Scala</code>中，可以通过类及与类同名的伴生对象来达到同样的目的。类和它的伴生对象可以相到访问私有特性，它们必须存在于同一个源文件中。类访问伴对像中的方法，不能直接写<code>方法名</code>调用，得<code>对象类名.方法名</code></li>
+<li><p><code>object</code>对象可以扩展类以及一个或多个特质。一个有用的使用场景是结出可被共享的缺省对象。如：</p>
+<pre><code>abstract class UndoableAction(val description:String){
+  def undo():Unit
+  def redo():Unit
+}
+
+object DoNothingAction extends UndoableAction(&quot;Do nothing&quot;){
+  override def undo(){}
+  override def redo(){}
+}
+</code></pre><p><code>DoNothingAction</code>对象可以被所有需要这个缺省行为的地方共用。</p>
+<pre><code>val actions = Map(&quot;open&quot;-&gt;DoNothingAction,&quot;save&quot;-&gt;DoNothingAction,。。。)
+</code></pre></li>
+<li><p><code>Object(参数1，..,参数n)</code>这样的表达式实际调用的是伴生类的对象。如<code>Array</code>对象定义了<code>apply</code>方法，则可以如下调用：<code>Array(&quot;Marry&quot;,&quot;head&quot;,&quot;a&quot;,&quot;little&quot;,&quot;lamb&quot;)</code>,相对于构造器，这种写法方便很多。</p>
+<p><code>Array(100)</code>是调用的<code>apply(100)</code>,输出一个单元素（整数100）的<code>Array[int]</code>;而<code>new Array(100)</code>是调用的构造器<code>this(100)</code>,结果是<code>Array[Nothing]</code>,它包含100个元素。</p>
+<p>示例如下：</p>
+<pre><code>class Account private(val id:Int,initialBalance:Double){
+  private var balance = initialBalance
+  ...
+}
+
+object Account{//伴生对象
+
+  def apply(initialBalance :Double) =
+    new Account(newUniqueNumber(),initialBalance)
+
+}
+
+val acct = Account(1000,0)
+</code></pre></li>
+<li><p>应用程序对象，每个scala都必须从一个对象的main方法开始，这个方法的类型为<code>Array[String]=&gt;Unit</code>:</p>
+<pre><code>object Hello{
+  def main(args:Array[String]){
+    println(&quot;Hello,World!&quot;)
+  }
+}
+</code></pre><p> 除此之外，也可以扩展scala的<code>App特质</code>，然后将程序代码放入构造器方法体内：</p>
+<pre><code>object Hello extends App{
+    println(&quot;Hello,World!&quot;)
+}
+</code></pre><p> 如果你需要命令行参数，则可以通过<code>args属性</code>得到：</p>
+<pre><code>object Hello extends App{
+  if(args.length&gt;0)
+    println(&quot;Hello,&quot;+args(0))
+  else
+    println(&quot;Hello,World!&quot;)
+}
+</code></pre><p>如果在调用该应用程序时设置了<code>scala.time</code>选项的话，程序退出时会显示逝去的时间：</p>
+<pre><code>$scalac Hello.scala
+$scala -Dscala.time Hello fred
+</code></pre></li>
+<li><p>Scala中没有枚举类型，不过，标准类库提供了一个<code>Enumeration助手类</code>，可以用于产生枚举。</p>
+<pre><code>object TrafficLightColor extends Enumeration{
+    val Red,Yellow,Green = Value//【定义三个变量，并使用Value初始化。每次调用都会返回内部类的新实例，该内部类也叫做Value。或者，也可以向Value方法传入ID、名称、或者两个参数都传：
+    //val Red = Value(0,&quot;Stop&quot;)
+    //val Yellow = Value(10) //名称为&quot;Yellow&quot;
+    //val Green = Value(&quot;Go&quot;)//ID为11，如果id不指定，则id值会在前一个枚举值基础上加一，从0开始。
+}
+</code></pre><p>定义完成后，可以使用<code>TrafficLightColor.Red</code>、<code>TrafficLightColor.Yellow</code>等来引用枚举值。枚举的类型是<code>TrafficLightColor.Value</code>而不是<code>TrafficLightColor</code>–后者是握有这些值的对象。<br>对<code>TrafficLightColor.values</code>的调用输出所有枚举值的集：<code>for(c&lt;-TrafficLightColor.values) println(c.id+&quot;: &quot;+c)</code><br>通过枚举的ID或名称来进行查找定位，以下两段代码都输出<code>TrafficLightColor.red</code>对象</p>
+<pre><code>TrafficLightColor(0)//将调用Enumeration.apply
+TrafficLightColor.withName(&quot;red&quot;)
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/scala/">scala</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    
+    <a href="/2016/07/21/制作centos6下的ambari离线安装源/" class="alignright next" >Siguiente</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/09/01/快学scala《三》/" data-title="快学scala三" data-url="http://www.52brt.com/2016/09/01/快学scala《三》/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Buscar">
+    <input type="hidden" name="q" value="site:www.52brt.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Etiquetas</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
+  
+    <li><a href="/tags/Nashorn/">Nashorn</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/Scala/">Scala</a><small>3</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/ambari/">ambari</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hadoop/">hadoop</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>15</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>9</small></li>
+  
+    <li><a href="/tags/kafka/">kafka</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/scala/">scala</a><small>4</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

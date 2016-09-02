@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 4 | 我的后院自留地</title>
+  <title>Página 4 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
@@ -64,6 +64,89 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-01-05T14:06:32.000Z"><a href="/2016/01/05/TinkerPop3 API 简明笔记（一）/">2016-01-05</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/01/05/TinkerPop3 API 简明笔记（一）/">TinkerPop3 API 简明笔记（一）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li><p><code>Lambda</code>:尽量避免使用，防止死循环。</p>
+<ul>
+<li><code>map</code>：<code>g.V(1).out().map {it.get().value(&#39;name&#39;)}</code> 等同于 <code>g.V(1).out().values(&#39;name&#39;)</code>，查询标识为1的节点所指向的节点的名字。</li>
+<li><code>filter</code>:过滤。<code>g.V().filter {it.get().label() == &#39;person&#39;}</code> 等同于 <code>g.V().hasLabel(&#39;person&#39;)</code>,查找类型（标签）为person的节点。</li>
+<li><code>sideEffect</code>:执行某些操作，并把源数据传递给下一步。<code>g.V().hasLabel(&#39;person&#39;).sideEffect(System.out.&amp;println)</code> 。</li>
+<li><code>branch</code>相当于<code>if</code>操作，<code>g.V().branch(values(&#39;name&#39;)).option(&#39;marko&#39;, values(&#39;age&#39;)). option(none, values(&#39;name&#39;))</code>等同于<code>g.V().choose(has(&#39;name&#39;,&#39;marko&#39;),values(&#39;age&#39;),values(&#39;name&#39;))</code>，如果名称为<code>marko</code>，则获取出年龄，否则执行第二步，获取名字。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/01/05/TinkerPop3 API 简明笔记（一）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-01-04T14:06:32.000Z"><a href="/2016/01/04/《Bootstrap用户手册》学习笔记(五)/">2016-01-04</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/01/04/《Bootstrap用户手册》学习笔记(五)/">《Bootstrap用户手册》学习笔记(五)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第-4-章Bootstrap支持的JavaScript插件-2"><a href="#第-4-章Bootstrap支持的JavaScript插件-2" class="headerlink" title="第 4 章Bootstrap支持的JavaScript插件(2)"></a>第 4 章Bootstrap支持的JavaScript插件(2)</h2><ol>
+<li><p><strong>提示条</strong>可以用来给出链接说明或（与标签连用）给出缩写词的的全称。这个插件最初的原型是<code>Jason Frame</code>的<code>jQuery.tipsy</code>插件。但<br>目前这个提示条利用<code>Bootstrap JavaScript API</code>可以不使用图片，而且有<code>CSS</code>动画。</p>
+<p><strong>用法</strong>给<code>&lt;a&gt;</code>元素添加<code>rel=&quot;tooltip&quot;</code>就可以添加提示条，<code>&lt;a&gt;</code>元素的<code>title</code>属性值就是提示条的内容。下面两个例子分别使用<code>Bootstrap Data API</code>和<code>JavaScript</code>来创建提示条：</p>
+<pre><code>&lt;a href=&quot;#&quot; rel=&quot;tooltip&quot; title=&quot;This is the tooltip&quot;&gt;Tooltip Example&lt;/a&gt;
+$(&apos;#example&apos;).tooltip(options)
+</code></pre><p><strong>选项</strong>与其他插件一样，提示条也可以通过<code>Data API</code>或 <code>JavaScript</code>来设置。只不过在使用数据属性时，选项名称前面要加上<code>data-</code>，比如<code>title</code>就要变成<code>data-title</code>。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/01/04/《Bootstrap用户手册》学习笔记(五)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -236,49 +319,6 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">2015-12-31</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">《Bootstrap用户手册》学习笔记(一)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第1章-Bootstrap提供的网站框架"><a href="#第1章-Bootstrap提供的网站框架" class="headerlink" title="第1章 Bootstrap提供的网站框架"></a>第1章 Bootstrap提供的网站框架</h2><ol>
-<li><p><code>Bootstrap</code>中有几种默认样式需要注意，它们专门针对排版和链接。</p>
-<ul>
-<li>从<code>body</code>中去掉了<code>margin</code>,这样内容就会紧贴浏览器窗口边缘。</li>
-<li>为<code>body</code>应用了<code>background-color:white;</code>。</li>
-<li><code>Bootstrap</code>以<code>@baseFontFamily</code>、<code>@baseFontSize</code>、<code>@baseLineHeight</code>属性作为排版的基准，确保整个网站的标题及其他内容的行高一致。</li>
-<li><p><code>Bootstrap</code>通过<code>@linkColor</code>设置全局链接颜色，只在<code>:hover</code>状态下给链接添加下划线。</p>
-<p>要改变默认颜色，可以直接修改相应<code>.less</code>文件中的全局变量值。要么修改<code>scaffolding.less</code>文件，要么修改你自已的样式表。</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/新手学习Express4之四：数据库集成/">2015-12-31</a></time>
       
       
@@ -313,6 +353,49 @@ console.log(result.rows[0]);
         
           <div class="alignleft">
             <a href="/2015/12/31/新手学习Express4之四：数据库集成/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">2015-12-31</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/">《Bootstrap用户手册》学习笔记(一)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第1章-Bootstrap提供的网站框架"><a href="#第1章-Bootstrap提供的网站框架" class="headerlink" title="第1章 Bootstrap提供的网站框架"></a>第1章 Bootstrap提供的网站框架</h2><ol>
+<li><p><code>Bootstrap</code>中有几种默认样式需要注意，它们专门针对排版和链接。</p>
+<ul>
+<li>从<code>body</code>中去掉了<code>margin</code>,这样内容就会紧贴浏览器窗口边缘。</li>
+<li>为<code>body</code>应用了<code>background-color:white;</code>。</li>
+<li><code>Bootstrap</code>以<code>@baseFontFamily</code>、<code>@baseFontSize</code>、<code>@baseLineHeight</code>属性作为排版的基准，确保整个网站的标题及其他内容的行高一致。</li>
+<li><p><code>Bootstrap</code>通过<code>@linkColor</code>设置全局链接颜色，只在<code>:hover</code>状态下给链接添加下划线。</p>
+<p>要改变默认颜色，可以直接修改相应<code>.less</code>文件中的全局变量值。要么修改<code>scaffolding.less</code>文件，要么修改你自已的样式表。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/31/《Bootstrap用户手册》学习笔记(一)/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -632,114 +715,20 @@ module.exports = router;
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-21T14:06:32.000Z"><a href="/2015/12/21/新手学习mongodb之九：聚合管道/">2015-12-21</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/21/新手学习mongodb之九：聚合管道/">新手学习mongodb之九：聚合管道</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ol>
-<li><p>聚合操作主要秀于批量数据处理，往往将记录按条件进行分组，然后在每组上分别进行一系列操作，如，求最大最小值、平均值、求和等。</p>
-<pre><code>db.orders.aggregate([
-{
-    $group:{
-    _id:&quot;$cust_id&quot;,
-    total:{$sum:&quot;$price&quot;}
-},{$sort:{total:1}}}])
-</code></pre><p>聚合操作能够对记录进行复杂处理，主要用于数理统计和数据挖掘。在MongoDB中，聚合操作的输入是集合中的文档，输出可以是一条或多条文档。</p>
-<p>MongoDB提供了强大的聚合功能，针对聚合操作提供了三种方式：</p>
-<ul>
-<li>聚合管道(Aggregation Pipeline)</li>
-<li>单目的聚合操作(Single Purpose Aggregation Operation)</li>
-<li>MapReduce编程模型
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/21/新手学习mongodb之九：聚合管道/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-20T14:06:32.000Z"><a href="/2015/12/20/新手学习mongodb之八：GridFS文件存储/">2015-12-20</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/20/新手学习mongodb之八：GridFS文件存储/">新手学习mongodb之：GridFS文件存储</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ol>
-<li><p>文件系统是操作系统用来组织磁盘文件的方法和数据结构，计算机通过文件系统来存储管理数据。</p>
-<p>典型的系统有<code>UFS(Unix File System)</code>，<code>EXT(Extended file system)</code>及<code>NTFS(New Technology File System)</code>等。</p>
-</li>
-<li><p>分布式文件系统，将固定存储于单台机器上的文件系统，扩展到多台机器上，每个节点负责存储部分数据，众多的存储节点组成一个文件系统网络，各个节点之间通过网络进行信和数据传输。</p>
-<ul>
-<li><code>NFS(Network File System)</code>：相当于<code>RPC Service</code>，使用者可以像使用本地文件系统一样来访问远程的文件。</li>
-<li><code>HDFS(Hadoop File System)</code>:采用<code>master/slave</code>架构设计，可以运行于廉价的普通硬件之上，适合超大数据集的应用程序。</li>
-<li><code>TFS(Taobao File System)</code>：适合海量非结构化的小文件存储，采用HA架构；文件名可以直接映射到物理地址。</li>
-<li><p><code>FastDFS</code>：轻量级的分布式文件系统；采用对等架构设计；可以根据文件ID迅速定位文件。</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/20/新手学习mongodb之八：GridFS文件存储/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/page/3/" class="alignleft prev">Prev</a>
+    <a href="/page/3/" class="alignleft prev">Anterior</a>
   
   
-    <a href="/page/5/" class="alignright next">Next</a>
+    <a href="/page/5/" class="alignright next">Siguiente</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="search" name="q" results="0" placeholder="Buscar">
     <input type="hidden" name="q" value="site:www.52brt.com">
   </form>
 </div>
@@ -748,7 +737,7 @@ module.exports = router;
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -809,7 +798,7 @@ module.exports = router;
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>2</small></li>
+    <li><a href="/tags/scala/">scala</a><small>4</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   

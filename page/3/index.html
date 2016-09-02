@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 3 | 我的后院自留地</title>
+  <title>Página 3 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
@@ -64,6 +64,119 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-19T14:35:02.000Z"><a href="/2016/05/19/shell学习(二)/">2016-05-19</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/19/shell学习(二)/">shell学习(二)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="shell编程中字符串的操作"><a href="#shell编程中字符串的操作" class="headerlink" title="shell编程中字符串的操作"></a>shell编程中字符串的操作</h2><ul>
+<li><p>连接字符串</p>
+<pre><code>str=hello
+str1=world
+连接起来：str=$str$str1、str = $str&apos; &apos;&quot;aa123&quot;、str = $str:
+</code></pre></li>
+<li><p>查看字符串长度：</p>
+<ul>
+<li><code>expr length &quot;hello&quot;</code></li>
+<li><code>expr length &quot;$str&quot;</code></li>
+<li>charcount= ` expr length “$str”`  //反引号，执行里面的代码</li>
+<li><code>echo $charcount</code></li>
+</ul>
+</li>
+<li>查看特定字符：<ul>
+<li><code>expr index &quot;$str&quot; &#39;h&#39;</code> #从1开始，不是0，只返回第一个。如果是查找多个字母，只返回这些字母的第一个查找到的位置</li>
+</ul>
+</li>
+<li>字符串截断：<ul>
+<li><code>expr substr &quot;$str&quot; 6 10</code> #获取指定位置指定长度的字符串</li>
+</ul>
+</li>
+<li>正则匹配<ul>
+<li><code>expr $str : REGEXP</code></li>
+<li><code>expr match $str REGEXP</code></li>
+<li><code>expr $str : &#39;.*&#39;  #返回长度</code></li>
+<li><code>expr $str : &#39;\(.*[0-9]\{5\}\)&#39;</code></li>
+<li><code>expr $str : &#39;\([a-zA-X: ]*\).*&#39;</code>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/19/shell学习(二)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-18T14:35:02.000Z"><a href="/2016/05/18/shell学习(一)/">2016-05-18</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/18/shell学习(一)/">shell学习(一)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="linux常用命令"><a href="#linux常用命令" class="headerlink" title="linux常用命令"></a>linux常用命令</h2><ul>
+<li><code>echo hello world</code></li>
+<li><code>echo &quot;hello world&quot;</code></li>
+<li><code>man</code> 查看linux命令手册。<code>man echo</code></li>
+<li><code>ls</code> 列出文件和目录。<code>ls -a</code>、<code>ls -l</code></li>
+<li><code>pwd</code>返回当前的工作目录</li>
+<li><code>mkdir test</code>创建新目录</li>
+<li><code>rm -d test</code>删除目录，<code>rm -rf test</code>删除非空的目录。<code>rm -rd test -v</code>输出过程</li>
+<li><code>touch test</code>创建一个文件</li>
+<li><code>cat test</code>查看文件内容</li>
+<li><code>echo helo world &gt; test</code>:输出一个流并将这个流输出到test中。</li>
+<li><code>more test</code>，可以分页，优化体验。<code>less test</code>，可以分页，还可以上下一行行移动</li>
+<li><code>cp test ../test1</code>拷贝文件</li>
+<li><code>mv test ../test1</code>移动或重命名文件</li>
+<li><code>rm test</code>删除文件
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/18/shell学习(一)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -410,103 +523,20 @@ sudo cp －r ./usr /
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-01-05T14:06:32.000Z"><a href="/2016/01/05/TinkerPop3 API 简明笔记（一）/">2016-01-05</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/01/05/TinkerPop3 API 简明笔记（一）/">TinkerPop3 API 简明笔记（一）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ol>
-<li><p><code>Lambda</code>:尽量避免使用，防止死循环。</p>
-<ul>
-<li><code>map</code>：<code>g.V(1).out().map {it.get().value(&#39;name&#39;)}</code> 等同于 <code>g.V(1).out().values(&#39;name&#39;)</code>，查询标识为1的节点所指向的节点的名字。</li>
-<li><code>filter</code>:过滤。<code>g.V().filter {it.get().label() == &#39;person&#39;}</code> 等同于 <code>g.V().hasLabel(&#39;person&#39;)</code>,查找类型（标签）为person的节点。</li>
-<li><code>sideEffect</code>:执行某些操作，并把源数据传递给下一步。<code>g.V().hasLabel(&#39;person&#39;).sideEffect(System.out.&amp;println)</code> 。</li>
-<li><code>branch</code>相当于<code>if</code>操作，<code>g.V().branch(values(&#39;name&#39;)).option(&#39;marko&#39;, values(&#39;age&#39;)). option(none, values(&#39;name&#39;))</code>等同于<code>g.V().choose(has(&#39;name&#39;,&#39;marko&#39;),values(&#39;age&#39;),values(&#39;name&#39;))</code>，如果名称为<code>marko</code>，则获取出年龄，否则执行第二步，获取名字。
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/01/05/TinkerPop3 API 简明笔记（一）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-01-04T14:06:32.000Z"><a href="/2016/01/04/《Bootstrap用户手册》学习笔记(五)/">2016-01-04</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/01/04/《Bootstrap用户手册》学习笔记(五)/">《Bootstrap用户手册》学习笔记(五)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="第-4-章Bootstrap支持的JavaScript插件-2"><a href="#第-4-章Bootstrap支持的JavaScript插件-2" class="headerlink" title="第 4 章Bootstrap支持的JavaScript插件(2)"></a>第 4 章Bootstrap支持的JavaScript插件(2)</h2><ol>
-<li><p><strong>提示条</strong>可以用来给出链接说明或（与标签连用）给出缩写词的的全称。这个插件最初的原型是<code>Jason Frame</code>的<code>jQuery.tipsy</code>插件。但<br>目前这个提示条利用<code>Bootstrap JavaScript API</code>可以不使用图片，而且有<code>CSS</code>动画。</p>
-<p><strong>用法</strong>给<code>&lt;a&gt;</code>元素添加<code>rel=&quot;tooltip&quot;</code>就可以添加提示条，<code>&lt;a&gt;</code>元素的<code>title</code>属性值就是提示条的内容。下面两个例子分别使用<code>Bootstrap Data API</code>和<code>JavaScript</code>来创建提示条：</p>
-<pre><code>&lt;a href=&quot;#&quot; rel=&quot;tooltip&quot; title=&quot;This is the tooltip&quot;&gt;Tooltip Example&lt;/a&gt;
-$(&apos;#example&apos;).tooltip(options)
-</code></pre><p><strong>选项</strong>与其他插件一样，提示条也可以通过<code>Data API</code>或 <code>JavaScript</code>来设置。只不过在使用数据属性时，选项名称前面要加上<code>data-</code>，比如<code>title</code>就要变成<code>data-title</code>。</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/01/04/《Bootstrap用户手册》学习笔记(五)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/page/2/" class="alignleft prev">Prev</a>
+    <a href="/page/2/" class="alignleft prev">Anterior</a>
   
   
-    <a href="/page/4/" class="alignright next">Next</a>
+    <a href="/page/4/" class="alignright next">Siguiente</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="search" name="q" results="0" placeholder="Buscar">
     <input type="hidden" name="q" value="site:www.52brt.com">
   </form>
 </div>
@@ -515,7 +545,7 @@ $(&apos;#example&apos;).tooltip(options)
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -576,7 +606,7 @@ $(&apos;#example&apos;).tooltip(options)
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>2</small></li>
+    <li><a href="/tags/scala/">scala</a><small>4</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   

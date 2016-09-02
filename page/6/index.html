@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 6 | 我的后院自留地</title>
+  <title>Página 6 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
@@ -70,28 +70,81 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">2015-12-08</a></time>
+        <time datetime="2015-12-10T14:06:32.000Z"><a href="/2015/12/10/新手学习Angularjs之六：使用Directive自定义控件/">2015-12-10</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">新手学习Angularjs之三：几种service的区别</a></h1>
+    <h1 class="title"><a href="/2015/12/10/新手学习Angularjs之六：使用Directive自定义控件/">新手学习Angularjs之六：使用Directive自定义控件</a></h1>
   
 
     </header>
     <div class="entry">
       
         <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
-<p>Angularjs有几种自定义服务的方法：<code>value</code>、<code>constant</code>、<code>factory</code>、<code>service</code>、<code>provider</code>,那么他们有什么区别呢？</p>
-<ul>
-<li><code>value</code>:这个方法是用来定义变量的，类似其他编程语言中定义的变量。</li>
-<li><code>constant</code>:这个则是类似其他编程语言中定义的常量，一旦定义，就不能被修改。
+<h2 id="一、一般自定义组件"><a href="#一、一般自定义组件" class="headerlink" title="一、一般自定义组件"></a>一、一般自定义组件</h2><p>首先来一个简单的例子：</p>
+<pre><code>&lt;html ng-app=&apos;app&apos;&gt;
+ &lt;body&gt;
+ &lt;hello&gt;&lt;/hello&gt;
+ &lt;/body&gt;
+ &lt;script src=&quot;../angular-1.0.3/angular.min.js&quot;&gt;&lt;/script&gt;
+ &lt;script src=&quot;HelloDirect.js&quot;&gt;&lt;/script&gt;
+&lt;/html&gt;
+
+
+var appModule = angular.module(&apos;app&apos;, []);
+appModule.directive(&apos;hello&apos;, function() {
+ return {
+ restrict: &apos;E&apos;,
+ template: &apos;&lt;div&gt;Hi there&lt;/div&gt;&apos;,
+ replace: true
+ };
+});
+</code></pre>
       
     </div>
     <footer>
       
         
           <div class="alignleft">
-            <a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/#more" class="more-link">阅读更多</a>
+            <a href="/2015/12/10/新手学习Angularjs之六：使用Directive自定义控件/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-09T14:06:32.000Z"><a href="/2015/12/09/新手学习Angularjs之五：$http服务的简单用法/">2015-12-09</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/09/新手学习Angularjs之五：$http服务的简单用法/">新手学习Angularjs之五：$http服务的简单用法</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<p>Angularjs也提交了与后台交互的神器<code>$http</code>,所以，如果你的程序需要与后台交互，那么只需要使用此方法就可以，而无须自已编写<code>XMLHttpRequest</code>程序。</p>
+<p><code>$http</code>也支持两种调用方式：<code>链式调用</code>及<code>普通调用</code>。下面我们来看一看这两种调用方式：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/09/新手学习Angularjs之五：$http服务的简单用法/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -129,6 +182,46 @@ var _hmt = _hmt || [];
         
           <div class="alignleft">
             <a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">2015-12-08</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">新手学习Angularjs之三：几种service的区别</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
+<p>Angularjs有几种自定义服务的方法：<code>value</code>、<code>constant</code>、<code>factory</code>、<code>service</code>、<code>provider</code>,那么他们有什么区别呢？</p>
+<ul>
+<li><code>value</code>:这个方法是用来定义变量的，类似其他编程语言中定义的变量。</li>
+<li><code>constant</code>:这个则是类似其他编程语言中定义的常量，一旦定义，就不能被修改。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -418,112 +511,20 @@ element.toFront()
 
 
 
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-10-12T14:59:45.000Z"><a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/">2015-10-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/">CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>正常运行的mysql，忽然报出了<code>The Table ‘XXX’ is full Query</code>的错误，于是，又开始了一番折腾之旅。下面简单的记录一下：</p>
-<p>###排查原因</p>
-<ol>
-<li>对服务进行重启<code>service mysqld stop</code>，结果起不来了。报出的以下错误：<code>Timeout error occurred trying to start MySQL Daemon</code>。</li>
-<li><p>baidu的一番，毫无收获。接下来，经过XXX，顺便到访问到了google，得到了一个可能的答案：磁盘空间不足。第一念头是，不可能呀，这可是2T的硬盘，而且也没有多少数据。念头归念头，还是查询一下，眼见为证：</p>
-<pre><code>[root@htzh199 ~]# df -lh
-Filesystem            Size  Used Avail Use% Mounted on
-/dev/mapper/vg_htzh199-lv_root
-                       50G   50G   0G  100% /
-tmpfs                  16G   72K   16G   1% /dev/shm
-/dev/sda2             477M   33M  419M   8% /boot
-/dev/sda1             200M  264K  200M   1% /boot/efi
-/dev/mapper/vg_htzh199-lv_home
-                      1.8T  284G  1.4T  17% /home
-</code></pre><p>由上面的数据可以看出，根目录<code>/</code>只有50G，且已经使用完了。由此也可以推测，没有空间可用的可能性非常大。</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/10/12/Linux折腾记(4)-CentOS6下mysql中The Table ‘XXX’ is full Query问题的解决/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-10-10T14:59:45.000Z"><a href="/2015/10/10/Linux折腾记(3)-CentOS6下安装Oracle JDK8/">2015-10-10</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/10/10/Linux折腾记(3)-CentOS6下安装Oracle JDK8/">Linux折腾记(3)-CentOS6下安装Oracle JDK8</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>CentOS6中自带了openJDK1.7，由于XXX原因，一般还是要手动更改成Oracle JDK。本文描述的即是这一过程。</p>
-<p>首先，要查看一下你安装的版本中，是否自动安装了openJDK,如果没有，恭喜你，可以直接进行安装了。查询命令如下：</p>
-<pre><code>[root@okuc6 ~]# java -version
-java version &quot;1.7.0_79&quot;
-OpenJDK Runtime Environment (rhel-2.5.5.4.el6-x86_64 u79-b14)
-OpenJDK 64-Bit Server VM (build 24.79-b02, mixed mode)
-</code></pre><p>如上，如果返回的结果中还了OpenJDK字样，那就先卸载吧。<br>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/10/10/Linux折腾记(3)-CentOS6下安装Oracle JDK8/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/page/5/" class="alignleft prev">Prev</a>
+    <a href="/page/5/" class="alignleft prev">Anterior</a>
   
   
-    <a href="/page/7/" class="alignright next">Next</a>
+    <a href="/page/7/" class="alignright next">Siguiente</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="search" name="q" results="0" placeholder="Buscar">
     <input type="hidden" name="q" value="site:www.52brt.com">
   </form>
 </div>
@@ -532,7 +533,7 @@ OpenJDK 64-Bit Server VM (build 24.79-b02, mixed mode)
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Etiquetas</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -593,7 +594,7 @@ OpenJDK 64-Bit Server VM (build 24.79-b02, mixed mode)
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>2</small></li>
+    <li><a href="/tags/scala/">scala</a><small>4</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   
