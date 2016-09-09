@@ -70,6 +70,73 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(三)/">2016-05-20</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/20/shell学习(三)/">shell学习(三)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="shell中的输入输出重定向"><a href="#shell中的输入输出重定向" class="headerlink" title="shell中的输入输出重定向"></a>shell中的输入输出重定向</h2><ul>
+<li>标准输入是键盘，标准输出是终端显示器。</li>
+<li>输出重定向<ul>
+<li><code>command &gt; outputfile</code> //大于号两端要有空格分开</li>
+<li><code>command &gt;&gt; outputfile</code></li>
+</ul>
+</li>
+<li><p>一个例子</p>
+<pre><code>echo 22222 &gt; ./iotest
+echo 111 &gt; ./iotest //会把上一行覆盖掉
+echo 111 &gt;&gt; ./iotest //不会覆盖掉原有数据，会新起一行
+</code></pre></li>
+<li>输入重定向<ul>
+<li><code>command &lt; outputfile</code></li>
+</ul>
+</li>
+<li>例子： <code>cat &lt; iotest &gt; iotest2</code></li>
+<li><p>内联输入重定向</p>
+<pre><code>command &lt;&lt; marker
+data input
+marker
+</code></pre></li>
+<li><p>例子：</p>
+<pre><code>result = `bc &lt;&lt; EOF
+&gt;var1=3
+&gt;var2=4
+&gt;var3=var1+var2
+&gt;print var3
+&gt;EOF`
+
+echo $result
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/20/shell学习(三)/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-05-19T14:35:02.000Z"><a href="/2016/05/19/shell学习(二)/">2016-05-19</a></time>
       
       
@@ -481,48 +548,6 @@ npm config set cache &quot;/home/okuc/nodejs/node cache&quot;
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-03-10T14:35:02.000Z"><a href="/2016/03/10/Linux折腾记(5)-centos7下安装markdown编辑器haroopad-v0.13.1-x64/">2016-03-10</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/03/10/Linux折腾记(5)-centos7下安装markdown编辑器haroopad-v0.13.1-x64/">Linux折腾记(5)-centos7下安装markdown编辑器haroopad-v0.13.1-x64</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>安装上了windos10和centos7双系统，想找一款比较不错的<code>markdown</code>双系统，找来找去，最终决定安装<code>haroopad</code>，安装过程如下：</p>
-<p>1.首先是下载。我安装的目前最新版本<code>haroopad-v0.13.1-x64.tar.gz</code>,下载地址如下：<a href="https://bitbucket.org/rhiokim/haroopad-download/downloads/haroopad-v0.13.1-x64.tar.gz">haroopad-v0.13.1-x64.tar.gz</a>。<br>  如果想安装其他版本，可以在此查找下载更多的安装包：<a href="https://bitbucket.org/rhiokim/haroopad-download/downloads/">https://bitbucket.org/rhiokim/haroopad-download/downloads/</a>。</p>
-<p>2.下载完成后，使用如下命令解压<code>tar -zxvf haroopad-v0.13.1-x64.tar.gz</code>。</p>
-<p>3.下面就解压出来的<code>data.tar.gz</code>进行再次解压，并释放到合适的地方。<strong>注意:下边的几步都需要root权限。</strong></p>
-<pre><code>tar -zxvf data.tar.gz
-sudo cp －r ./usr /
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/03/10/Linux折腾记(5)-centos7下安装markdown编辑器haroopad-v0.13.1-x64/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -606,7 +631,7 @@ sudo cp －r ./usr /
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>3</small></li>
+    <li><a href="/tags/scala/">scala</a><small>4</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   

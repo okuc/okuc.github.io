@@ -70,6 +70,53 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-06-20T14:59:45.000Z"><a href="/2016/06/20/JAVA8学习（八）/">2016-06-20</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/20/JAVA8学习（八）/">JAVA8学习（八）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><strong>字符串连接</strong>：<pre><code>String joined = String.join(&quot;/&quot;,&quot;usr&quot;,&quot;local&quot;,&quot;bin&quot;);//&quot;usr/local/bin&quot;;
+System.out.println(joined);
+String ids = String.join(&quot;,&quot;,ZoneId.getAvailableZoneIds());
+System.out.println(ids);//将所有的时区标识，由逗号分隔
+</code></pre></li>
+<li><code>java5</code>中，7种原始类型的包装类（不包含Boolean）都提供了一个静态字段<code>SIZE</code>，用来表示该类型以<code>bit</code>为单位的长度。在<code>Java8</code>中，它们都提供了一个<code>BYTES</code>字段，以<code>byte</code>为单位来表过该类型的长度，以便于用于无法被8整除的情况。</li>
+<li>为了在流操作中进行聚合操作，<code>Short</code>、<code>Integer</code>、<code>Long</code>、<code>Float</code>和<code>Double</code>这5种类型，现在分别提供了静态方法<code>sum</code>、<code>max</code>、<code>min</code>，用来在流操作中作为聚合函数使用。出于相同的原因，<code>Boolean</code>类现在也包含了静态方法<code>logicalAnd</code>、<code>logicalOr</code>、<code>logicalXor</code>。</li>
+<li><code>Integer</code>类现在支持无符号数学计算。静态方法<code>Byte.toUnsignedInt(b)</code>来获取一个从<code>0</code>到<code>255</code>的值。一般使用无符号数字，会丢失负数并获得原来两范围的正数。<code>Byte</code>和<code>Short</code>类中添增了<code>toUnsignedInt</code>方法，而<code>Byte</code>、<code>Short</code>、<code>Integer</code>类中新增了<code>toUnsignedLong</code>方法。</li>
+<li><code>Integer</code>和<code>Long</code>类中新增了处理无符号值的<code>compareUnsigned</code>、<code>divideUnsigned</code>和<code>remainderUnsigned</code>方法。由于大于<code>Integer.MAX_VALUE</code>的无符号整数相乘会导致溢出，所以应该调<code>toUnsignedLong</code>将它们作为长整型值相乘。</li>
+<li><code>Float</code>和<code>Double</code>类现在新增了静态方法<code>isFinite</code>,如果<code>x</code>不是正无穷大、负无穷大或者<code>NaN</code>(非数字)，那么<code>Double.isFinite(x)</code>将返回<code>true</code>。</li>
+<li><code>BigInteger</code>类增加了实例方法<code>（long|int|short|byte）ValueExact</code>，分别用来返回<code>long</code>、<code>int</code>、<code>short</code>或者<code>byte</code>，并且当值不在目标范围内时抛出一个<code>ArithmeticExcepiont</code>异常。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/20/JAVA8学习（八）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-06-10T14:59:45.000Z"><a href="/2016/06/10/JAVA8学习（七）/">2016-06-10</a></time>
       
       
@@ -234,6 +281,49 @@ long millis = timeElapsed.toMillis();
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-06-04T14:59:45.000Z"><a href="/2016/06/04/JAVA8学习（四）/">2016-06-04</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/04/JAVA8学习（四）/">JAVA8学习（四）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="JavaFX"><a href="#JavaFX" class="headerlink" title="JavaFX"></a>JavaFX</h2><ul>
+<li>在javaFx中，你可以在一个场景上放置任何你想要展现的东西。因此，你可以设计“演员”—即控件的形状的样式和行为。</li>
+<li>场景需要舞台，如果运行在桌面系统上，舞台就是一个顶经的窗口，如果作为一个applet运行，舞台就是一个长方形的区域。</li>
+<li>在任何Application类的子类中，我们都必须重写start方法，然后将场景作为一个参数传递给start方法。</li>
+</ul>
+<p>Button red = new Button(“red”);<br>red.setOnAction(event-&gt;message.setTextFile(Color.REd));</p>
+<ul>
+<li><p>对于大多数JavaFX控件来说，它们的事件处理方式是不同的，以一个滑块为例，当滑块被调整时，它的值就会发生改变。但是，不应该监听滑块发出的表示这些改变的底层事件，相反，滑块有个个JavaFX属性value，该属性会在发生改变时发起事件。<br><code>slider.valueProperty().addListener(property-&gt;message.setFont(new Font(slider.getValue())))</code><br>-<code>java.beans</code>包中的<code>Introspector</code>和<code>BeanInfo</code>类可以遍历一个类中的所有属性。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/04/JAVA8学习（四）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-06-04T14:59:45.000Z"><a href="/2016/06/04/JAVA程序员学习Scala（一）/">2016-06-04</a></time>
       
       
@@ -278,49 +368,6 @@ println(&quot;Scala Rocks!!!&quot;)
         
           <div class="alignleft">
             <a href="/2016/06/04/JAVA程序员学习Scala（一）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-06-04T14:59:45.000Z"><a href="/2016/06/04/JAVA8学习（四）/">2016-06-04</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/04/JAVA8学习（四）/">JAVA8学习（四）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="JavaFX"><a href="#JavaFX" class="headerlink" title="JavaFX"></a>JavaFX</h2><ul>
-<li>在javaFx中，你可以在一个场景上放置任何你想要展现的东西。因此，你可以设计“演员”—即控件的形状的样式和行为。</li>
-<li>场景需要舞台，如果运行在桌面系统上，舞台就是一个顶经的窗口，如果作为一个applet运行，舞台就是一个长方形的区域。</li>
-<li>在任何Application类的子类中，我们都必须重写start方法，然后将场景作为一个参数传递给start方法。</li>
-</ul>
-<p>Button red = new Button(“red”);<br>red.setOnAction(event-&gt;message.setTextFile(Color.REd));</p>
-<ul>
-<li><p>对于大多数JavaFX控件来说，它们的事件处理方式是不同的，以一个滑块为例，当滑块被调整时，它的值就会发生改变。但是，不应该监听滑块发出的表示这些改变的底层事件，相反，滑块有个个JavaFX属性value，该属性会在发生改变时发起事件。<br><code>slider.valueProperty().addListener(property-&gt;message.setFont(new Font(slider.getValue())))</code><br>-<code>java.beans</code>包中的<code>Introspector</code>和<code>BeanInfo</code>类可以遍历一个类中的所有属性。</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/06/04/JAVA8学习（四）/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -507,78 +554,11 @@ long count= words.parallelStream().filter(w-&gt;w.lenght()&gt;12).count();
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(三)/">2016-05-20</a></time>
+        <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(四)/">2016-05-20</a></time>
       
       
   
-    <h1 class="title"><a href="/2016/05/20/shell学习(三)/">shell学习(三)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="shell中的输入输出重定向"><a href="#shell中的输入输出重定向" class="headerlink" title="shell中的输入输出重定向"></a>shell中的输入输出重定向</h2><ul>
-<li>标准输入是键盘，标准输出是终端显示器。</li>
-<li>输出重定向<ul>
-<li><code>command &gt; outputfile</code> //大于号两端要有空格分开</li>
-<li><code>command &gt;&gt; outputfile</code></li>
-</ul>
-</li>
-<li><p>一个例子</p>
-<pre><code>echo 22222 &gt; ./iotest
-echo 111 &gt; ./iotest //会把上一行覆盖掉
-echo 111 &gt;&gt; ./iotest //不会覆盖掉原有数据，会新起一行
-</code></pre></li>
-<li>输入重定向<ul>
-<li><code>command &lt; outputfile</code></li>
-</ul>
-</li>
-<li>例子： <code>cat &lt; iotest &gt; iotest2</code></li>
-<li><p>内联输入重定向</p>
-<pre><code>command &lt;&lt; marker
-data input
-marker
-</code></pre></li>
-<li><p>例子：</p>
-<pre><code>result = `bc &lt;&lt; EOF
-&gt;var1=3
-&gt;var2=4
-&gt;var3=var1+var2
-&gt;print var3
-&gt;EOF`
-
-echo $result
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/20/shell学习(三)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/">2016-05-20</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/">shell学习(四)</a></h1>
+    <h1 class="title"><a href="/2016/05/20/shell学习(四)/">shell学习(四)</a></h1>
   
 
     </header>
@@ -602,7 +582,7 @@ echo `basename $0` //输出程序的直实名字，且不包含路径,即取最�
       
         
           <div class="alignleft">
-            <a href="/2016/05/20/shell学习(四)(DESKTOP-H8EP07V的冲突版本)/#more" class="more-link">阅读更多</a>
+            <a href="/2016/05/20/shell学习(四)/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -698,7 +678,7 @@ echo `basename $0` //输出程序的直实名字，且不包含路径,即取最�
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>3</small></li>
+    <li><a href="/tags/scala/">scala</a><small>4</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   

@@ -70,6 +70,62 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-09-09T14:59:45.000Z"><a href="/2016/09/09/快学scala《四》/">2016-09-09</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/09/09/快学scala《四》/">快学scala四</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="包和引入"><a href="#包和引入" class="headerlink" title="包和引入"></a>包和引入</h2><ol>
+<li><p>包：</p>
+<pre><code>package com{
+  package horstmann{
+    package impatient{
+      class Employee
+      ...
+    }
+  }
+}
+</code></pre><p>上述的类<code>Employee</code>可以在任意的位置以<code>com.horstmann.impatient.Employee</code>访问</p>
+<p>同一个包可以定义在多个文件中，如上述的包定义在<code>Employee</code>文件中，则<code>Manager.scala</code>文件也可定义此包：</p>
+<pre><code>package com{
+  package horstmann{
+    package impatient{
+      class Manager
+      ...
+    }
+  }
+}
+</code></pre><p>源文件的目录和包之彰没有强制的关联关系，上述两个类可以放在不同的目录下，当然，在一个源文件中也可以有两个不同的包。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/09/09/快学scala《四》/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-09-04T14:59:45.000Z"><a href="/2016/09/04/正式启用新域名www.okuc.xyz/">2016-09-04</a></time>
       
       
@@ -473,53 +529,6 @@ java.nio.channels.ClosedChannelException
 
 
 
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-06-20T14:59:45.000Z"><a href="/2016/06/20/JAVA8学习（八）/">2016-06-20</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/20/JAVA8学习（八）/">JAVA8学习（八）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ul>
-<li><strong>字符串连接</strong>：<pre><code>String joined = String.join(&quot;/&quot;,&quot;usr&quot;,&quot;local&quot;,&quot;bin&quot;);//&quot;usr/local/bin&quot;;
-System.out.println(joined);
-String ids = String.join(&quot;,&quot;,ZoneId.getAvailableZoneIds());
-System.out.println(ids);//将所有的时区标识，由逗号分隔
-</code></pre></li>
-<li><code>java5</code>中，7种原始类型的包装类（不包含Boolean）都提供了一个静态字段<code>SIZE</code>，用来表示该类型以<code>bit</code>为单位的长度。在<code>Java8</code>中，它们都提供了一个<code>BYTES</code>字段，以<code>byte</code>为单位来表过该类型的长度，以便于用于无法被8整除的情况。</li>
-<li>为了在流操作中进行聚合操作，<code>Short</code>、<code>Integer</code>、<code>Long</code>、<code>Float</code>和<code>Double</code>这5种类型，现在分别提供了静态方法<code>sum</code>、<code>max</code>、<code>min</code>，用来在流操作中作为聚合函数使用。出于相同的原因，<code>Boolean</code>类现在也包含了静态方法<code>logicalAnd</code>、<code>logicalOr</code>、<code>logicalXor</code>。</li>
-<li><code>Integer</code>类现在支持无符号数学计算。静态方法<code>Byte.toUnsignedInt(b)</code>来获取一个从<code>0</code>到<code>255</code>的值。一般使用无符号数字，会丢失负数并获得原来两范围的正数。<code>Byte</code>和<code>Short</code>类中添增了<code>toUnsignedInt</code>方法，而<code>Byte</code>、<code>Short</code>、<code>Integer</code>类中新增了<code>toUnsignedLong</code>方法。</li>
-<li><code>Integer</code>和<code>Long</code>类中新增了处理无符号值的<code>compareUnsigned</code>、<code>divideUnsigned</code>和<code>remainderUnsigned</code>方法。由于大于<code>Integer.MAX_VALUE</code>的无符号整数相乘会导致溢出，所以应该调<code>toUnsignedLong</code>将它们作为长整型值相乘。</li>
-<li><code>Float</code>和<code>Double</code>类现在新增了静态方法<code>isFinite</code>,如果<code>x</code>不是正无穷大、负无穷大或者<code>NaN</code>(非数字)，那么<code>Double.isFinite(x)</code>将返回<code>true</code>。</li>
-<li><code>BigInteger</code>类增加了实例方法<code>（long|int|short|byte）ValueExact</code>，分别用来返回<code>long</code>、<code>int</code>、<code>short</code>或者<code>byte</code>，并且当值不在目标范围内时抛出一个<code>ArithmeticExcepiont</code>异常。
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/06/20/JAVA8学习（八）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -601,7 +610,7 @@ System.out.println(ids);//将所有的时区标识，由逗号分隔
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>3</small></li>
+    <li><a href="/tags/scala/">scala</a><small>4</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   
