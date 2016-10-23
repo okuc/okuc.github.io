@@ -70,6 +70,87 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-03-12T14:35:02.000Z"><a href="/2016/03/12/Linux折腾记(6)-centos7下快捷搭建nodejs开发环境/">2016-03-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/12/Linux折腾记(6)-centos7下快捷搭建nodejs开发环境/">Linux折腾记(6)-centos7下快捷搭建nodejs开发环境</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>闲话少说，直接上步骤。</p>
+<ol>
+<li>安装<code>epel-release</code>，命令如下：｀sudo yum install epel-release｀。</li>
+<li>安装<code>nodejs</code>，命令如下：｀sudo yum install nodejs｀。</li>
+<li>安装<code>npm</code>，命令如下：｀sudo yum install npm｀。</li>
+<li>设置缓存目录和全局模块的存放路径，在<code>/home/okuc/nodejs</code>下建立<code>node global</code>及<code>node cache</code>两个文件夹。同时在终端命令行中，执行如下命令：<pre><code>npm config set prefix &quot;/home/okuc/nodejs/node global&quot;
+npm config set cache &quot;/home/okuc/nodejs/node cache&quot;
+</code></pre>为了查看是否执行成功，可使用如下命令查看：<code>npm config get prefix</code>。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/03/12/Linux折腾记(6)-centos7下快捷搭建nodejs开发环境/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-10T14:59:45.000Z"><a href="/2016/03/10/hexo博客笔记源码恢复记/">2016-03-10</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/10/hexo博客笔记源码恢复记/">hexo博客笔记源码恢复记</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>  一直信赖金山快盘，所以当我的旧硬件空间不够时，毫不犹豫的删除掉了本地的博客内容。等我拷贝上新的内容，同步下来文件时，才发现，近两个月的内容，竟然没有同步。强烈谴责某山，太不负责任了，论坛上也没有人管，没有人问。无耐只有自已想法了。试了n种方案，感沉下面这种方案是工作量最小的，现在步骤记录如下：</p>
+<p>1、首先从博客户把编译后的｀index.html｀下载下来。找到属于<code>markdown</code>的一部分。主要是位于<code>&lt;div class=&quot;entry&quot;&gt;...&lt;/div&gt;</code>中，结尾处在<code>&lt;footer&gt;</code>上边。</p>
+<p>2.将上述片断的<code>html代码片断</code>拷到网页<a href="">http://tool.lu/markdown/</a>中，转成<code>markdown</code>。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/03/10/hexo博客笔记源码恢复记/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-03-10T14:35:02.000Z"><a href="/2016/03/10/Linux折腾记(5)-centos7下安装markdown编辑器haroopad-v0.13.1-x64/">2016-03-10</a></time>
       
       
@@ -450,95 +531,6 @@ console.log(result.rows[0]);
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-30T14:06:32.000Z"><a href="/2015/12/30/新手学习Express4之三：错误处理、调试Express及使用代理 /">2015-12-30</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/30/新手学习Express4之三：错误处理、调试Express及使用代理 /">新手学习Express4之三：错误处理、调试Express及使用代理</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><ol>
-<li><p>定义错误处理中间件和定义其他中间件一样，除了需要 4 个参数，而不是 3 个，其签名如下 <code>(err, req, res, next)</code> 。</p>
-<pre><code>app.use(function(err, req, res, next) {
-console.error(err.stack);
-res.status(500).send(&apos;Something broke!&apos;);
-});
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/30/新手学习Express4之三：错误处理、调试Express及使用代理 /#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-28T14:06:32.000Z"><a href="/2015/12/28/新手学习Express4之二：中间件与模板引擎/">2015-12-28</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/28/新手学习Express4之二：中间件与模板引擎/">新手学习Express4之二：中间件与模板引擎</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><ol>
-<li><p>中件间是一个可访问请求对象<code>req</code>和响应对象<code>res</code>的函数，在<code>Express</code>应用的请求-响应循环里，下一个内联的中间件通常用变量<code>next</code>表示。</p>
-<p>如果当前中间件没有终结请求-响应循环，则必须调用<code>next()</code>方法将控制权交给下一个中间件，否则请求就会挂起。</p>
-<p>使用可选择挂载路径，可在应用级别或路由级别装载中间件。</p>
-</li>
-<li><p><code>Express</code>应用可使用如下几种中间件：</p>
-<ul>
-<li>应用级中间件</li>
-<li>路由级中间件</li>
-<li>错误处理中间件</li>
-<li>内置中间件</li>
-<li>第三方中间件
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/28/新手学习Express4之二：中间件与模板引擎/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -622,7 +614,7 @@ res.status(500).send(&apos;Something broke!&apos;);
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>4</small></li>
+    <li><a href="/tags/scala/">scala</a><small>6</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   

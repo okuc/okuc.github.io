@@ -70,6 +70,95 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-12-30T14:06:32.000Z"><a href="/2015/12/30/新手学习Express4之三：错误处理、调试Express及使用代理 /">2015-12-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/30/新手学习Express4之三：错误处理、调试Express及使用代理 /">新手学习Express4之三：错误处理、调试Express及使用代理</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><ol>
+<li><p>定义错误处理中间件和定义其他中间件一样，除了需要 4 个参数，而不是 3 个，其签名如下 <code>(err, req, res, next)</code> 。</p>
+<pre><code>app.use(function(err, req, res, next) {
+console.error(err.stack);
+res.status(500).send(&apos;Something broke!&apos;);
+});
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/30/新手学习Express4之三：错误处理、调试Express及使用代理 /#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-28T14:06:32.000Z"><a href="/2015/12/28/新手学习Express4之二：中间件与模板引擎/">2015-12-28</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/28/新手学习Express4之二：中间件与模板引擎/">新手学习Express4之二：中间件与模板引擎</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><ol>
+<li><p>中件间是一个可访问请求对象<code>req</code>和响应对象<code>res</code>的函数，在<code>Express</code>应用的请求-响应循环里，下一个内联的中间件通常用变量<code>next</code>表示。</p>
+<p>如果当前中间件没有终结请求-响应循环，则必须调用<code>next()</code>方法将控制权交给下一个中间件，否则请求就会挂起。</p>
+<p>使用可选择挂载路径，可在应用级别或路由级别装载中间件。</p>
+</li>
+<li><p><code>Express</code>应用可使用如下几种中间件：</p>
+<ul>
+<li>应用级中间件</li>
+<li>路由级中间件</li>
+<li>错误处理中间件</li>
+<li>内置中间件</li>
+<li>第三方中间件
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/28/新手学习Express4之二：中间件与模板引擎/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-12-25T14:06:32.000Z"><a href="/2015/12/25/新手学习Express4之一 路由 /">2015-12-25</a></time>
       
       
@@ -941,94 +1030,6 @@ printjson(cursor.toArray());
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-13T14:06:32.000Z"><a href="/2015/12/13/轻松在eclipse中将maven项目布署到tomcat上/">2015-12-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/13/轻松在eclipse中将maven项目布署到tomcat上/">轻松在eclipse中将maven项目布署到tomcat上</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在eclipse中导入已经建好的maven项目后，往往会出现无法布署到tomcat上的情况，此时，该怎么办呢？</p>
-<ol>
-<li><p>右键项目名，选择<code>Properties</code>。在弹出的页面中，左侧选择<code>Project Facets</code>,在右侧的列表中，选中<code>Dynamic Web Module</code>、<code>Java</code>、<code>JavaScript</code>三项，然后点击右下角的<code>Apply</code>按扭。</p>
-</li>
-<li><p>左侧选择<code>Deployment Assembly</code>,在左则，配置好依赖：</p>
-<ul>
-<li><code>/src/main/java</code>–&gt;<code>WEB-INF/classes</code></li>
-<li><code>/src/main/resources</code>–&gt;<code>WEB-INF/classes</code></li>
-<li><code>/src/main/webapp</code>–&gt;<code>/</code></li>
-<li><code>/src/test/java</code>–&gt;<code>WEB-INF/classes</code></li>
-<li><p><code>Maven Dependencies</code>–&gt;<code>WEB-INF/lib</code></p>
-<p>然后点击右下角的<code>Apply</code>按扭。</p>
-</li>
-</ul>
-</li>
-<li><p>点击<code>OK</code>按扭返回，这回，可以直接在项目名上点击右键，选择<code>Run AS</code> -&gt; <code>Run on Server</code>了。</p>
-</li>
-</ol>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-13T14:06:32.000Z"><a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/">2015-12-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/">新手学习mongodb之二：基本概念及其数据类型</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ol>
-<li><p>MongoDB是面向集合的文档型数据库，文档是MongoDB的核心概念，本质是一种类JSON的BSON格式的数据，BSON在JSON的基础出上添加了一些数据类型，如日期型、int32、int64等。BSON的官方地址如下：<a href="http://bsonspec.org">http://bsonspec.org</a>与传统关系数据库相比，他们的对应关系如下：</p>
-<p> MongoDB | 关系型数据库<br> :—-:|:—-:<br> DataBase|DataBase<br> Collection|Table<br> Document/BSON Document|Record/Row<br> field|Column<br> Index|Index<br> embedded documents/reference|table joins</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/13/新手学习mongodb之二：基本概念及其数据类型/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -1112,7 +1113,7 @@ printjson(cursor.toArray());
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>4</small></li>
+    <li><a href="/tags/scala/">scala</a><small>6</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   

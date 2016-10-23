@@ -70,6 +70,305 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-10-23T14:59:45.000Z"><a href="/2016/10/23/快学scala《六》/">2016-10-23</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/10/23/快学scala《六》/">快学scala六</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h2><ol>
+<li><p>变量、函数、类等的名称统称为标识符。scala中可以使用java的方式：<code>字母和数字字符的序列，以字母或下画线开头</code>，比如<code>fred12</code>或者<code>_Wilma</code>。可以使用<code>Unicode</code>字符。除此之外，还可以使用下列的任意字符：</p>
+<ul>
+<li>除字母、数字、下画线、括号<code>()[]{}</code>或分隔符<code>.,;&#39;``&quot;</code>之外的<code>ASCII</code>字符。即如下这些：<code>！#%&amp;*+-/:&lt;=&gt;?@\^|~</code></li>
+<li><code>Unicode</code>的数学符号，或<code>Unicode</code>的<code>Sm</code>和<code>So</code>类别中的其他符号。如： <code>val √ = scala.math.sqrt _</code>,然后就可以用<code>√(2)</code>来计算平方根。</li>
+<li>可以在反引号中包含几乎任何符号序列来使用。当然一般不这么做，但是当scala和java中关键字冲突时，可以这么做来使用java中的方法：Thread.<code>yield</code>()</li>
+</ul>
+</li>
+<li><p>中置操作符：<code>a 标识符 b</code>，其中标识符代表一个带有两个参数的方法(一个隐式的参数和一个显式的参数)<br><code>1 to 10</code>，<code>1-&gt;10</code>。<br>要定义自已的操作符如下,根据以下法则来计算两个分数的乘积：</p>
+<pre><code>(n1/d1)X(n2/d2)=(n1n2/d1d2)
+
+class Fraction(n:Int,d:Int){
+    private int num = ...
+    private int den = ...
+    ...
+    def *(other:Fraction) = new Fraction(num*other.num,den*other.den)
+}
+</code></pre></li>
+<li><p>一元操作符：<code>中置操作符是二元的</code>，它们有两个参数。只有一个参数的操作符称为一元操作符。如果它出现在参数之后，那么它就是一个<code>后置(Postfix)操作符</code>：<br> <code>a 标识符</code> 等价于 <code>a.标识符()</code><br>如下四个操作符<code>+、-、!、~</code>可以作为<code>前置(prefix)操作符</code>，出现在参数之前，它们被转换成对名为<code>unary_</code>操作符的方法的调用。如：<code>-</code>a 等价于：<code>a.unary_-</code>一样。</p>
+<p>赋值操作符的名称形式为<code>操作符=</code>,以下表达式：<br><code>a 操作符= b</code> 等价于： <code>a = a 操作符 b</code><br>注意：</p>
+<ul>
+<li>&lt;=、 &gt;= 、 !=不是赋值操作符</li>
+<li>以=开头的操作符不是赋值操作符(==、===、=/=)</li>
+<li>如果a有一个名为<code>操作符=</code>的方法，那么该方法会被直接调用.</li>
+</ul>
+</li>
+<li><p>操作符的优先及如下：<code>*、/、%</code>、<code>+、-</code>、<code>:</code>、<code>&lt;&gt;</code>、<code>!=</code>、<code>&amp;</code>、<code>^</code>、<code>|</code>、<code>非操作符</code>。 <code>赋值操作符</code><br><code>后置操作符的优先级低于中置操作符。</code></p>
+</li>
+<li><p>在Scala中，大部分的操作符是<code>左结合</code>的，如：<code>17-2+9</code>，计算方式为<code>(17-2+9)</code>。以下操作符是<code>右结合</code>的：以<code>冒号(:)</code>结尾的操作符，赋值操作符，如：<br><code>1::2::Ni1</code> 的意思是<code>1::(2::Ni1)</code>,<code>右结合</code>的二元操作符是其第二个参数的方法，如：<code>2::Ni1</code>的意思是：<code>Ni1.::(2)</code></p>
+</li>
+<li><p>在scala中，<code>f(arg1,arg2,...)</code>这样的函数调用语法，如果<code>f不是函数或方法，那么这个表达式就等同于调用f.apply(arg1,arg2,...)</code>,除非它出现在赋值语句的等号左侧。表达式<code>f(arg1,arg2,...) = value</code>,等价于<code>f.update(arg1,arg2,...,value)</code>,这个机制被用于数组和映射。如：</p>
+<pre><code>val scores = new scala.collection.mutable.HashMap[String,Int]
+scores(&quot;Bob&quot;) = 100 //调用scores.update(&quot;Bob&quot;,100)
+val bobsScore = scores(&quot;Bob&quot;)//调用Scores.apply(&quot;Bob&quot;)
+</code></pre><p>apply方法经常被用在伴生对象中，用来构造对象而不用显式地使用new。如：</p>
+<pre><code>class Fraction(n:Int,d:Int){
+    ...
+}
+object Fraction{
+    def apply(n:Int,d:Int) = new Fraction(n,d)
+}
+</code></pre><p>定义后，可以用<code>Fraction(3,4)</code>来构造分数，而不是用<code>new Fraction(3,4)</code></p>
+</li>
+<li><p><code>unapply</code>方法当做是伴生对象中<code>apply</code>方法的反向操作,<code>apply</code>方法接受构造参数，然后将它们变成对象；而<code>unapply</code>方法接收一个对象，然后从中提取值。如在变量定义时取出分子和分母：</p>
+<pre><code>var Fraction(a,b) = Fraction(3,4)*Fraction(2,5)//a和b分别被初始化成运算结果的分子和分母
+</code></pre><p>或者用于模式匹配：</p>
+<pre><code>case Fraction(a,b) =&gt; ... //a和b分别被绑定到分子和分母
+</code></pre><p>如果模式匹配失败，<code>unapply</code>方法返回的是一个<code>Option</code>。它包含一个元组，每个匹配到的变量各有一个值与之对应。如：</p>
+<pre><code>Object Fraction{
+   def unapply(input:Fraction) = 
+       if(input.den == 0 ) None else Some ((input.num,input.den))//0表示分母为0时无匹配
+}
+
+val author = &quot;Cay Horstmann&quot;
+val Name(first,last) = author //调用Name.unapply(author)
+
+object Name{
+   def unapply(input:String) = {
+       val pos = input.indexOf(&quot; &quot;)
+       if(pos == -1) None
+       else Some((input.substring(0,pos),input.substring(pos+1)))
+   }
+}
+
+case Currency(amount,&quot;USD&quot;) =&gt; println(&quot;$&quot;+amount) //将调用Currency.unapply
+</code></pre></li>
+<li><p>如果<code>unapply</code>方法要提取单值，则它应该返回一个目标类型的<code>Option</code>。如：</p>
+<pre><code>object Number{
+    def unapply(input:String)Option[Int]=
+    try{
+        Some(Integer.parseInt(input.trim))
+    }catch{
+        case ex:NumberFormatException =&gt;None
+    }
+}
+
+val Number(n) = &quot;1234&quot; //提取数字
+</code></pre><p>也可以只是测试输入并不真的将值提取出来，这样<code>unapply</code>方法应返回<code>Boolean</code>，如：</p>
+<pre><code>object IsCompound{
+    def unapply(input:String)=input.contains(&quot; &quot;)
+}
+
+author match{
+    case Name(first,last@IsCompound())=&gt;...//如果作者是Peter van der Linden也能成功匹配
+    case Name(first,last)=&gt;...
+}
+</code></pre></li>
+<li><p>要提取任意长度的序列，可以使用unapplySeq方法，它返回值是Option[Seq[A]],其中A是被提取的值的类型：</p>
+<pre><code>object Name{
+    def unapplySeq(input:String):Option[Seq[String]]=
+        if(input.trim ==&quot;&quot;)None else Some(input.trim.split(&quot;\\s+&quot;))
+}
+
+author math{
+    case Name(first,last)=&gt;...
+    case Name(first,middle,last)=&gt;...
+    case Name(first,&quot;van&quot;,&quot;der&quot;,last)=&gt;...
+}
+</code></pre></li>
+</ol>
+<h2 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h2><ol>
+<li><p>在Scala中，可以在变量中存放函数：</p>
+<pre><code>import scala.math._ 
+val num = 3.14
+val fun = ceil _
+</code></pre><p>上述代码将<code>num</code>设为<code>3.14</code>，将<code>fun</code>设为<code>ceil</code>函数，后边的<code>_</code>意味着确实指的是这个函数，而不是忘记了给它传参数。</p>
+<pre><code>fun(num) //4.0
+Array(3.14,1.42,2.0).map(fun) //Array(4.0,2.0,2.0)
+</code></pre></li>
+<li><p>匿名函数：<code>(x:Double)=&gt;3*x</code>,该函数将传给它的参数乘以3</p>
+<p><code>val tripe = (x:Double)=&gt;3*x</code> 等价于  <code>def triple(x:Double)=&gt;3*x</code><br><code>Array(3.14,1.42,2.0).map((x:Double)=&gt;3*x)</code> 等价于   <code>Array(3.14,1.42,2.0).map{(x:Double)=&gt;3*x}</code>cx</p>
+</li>
+<li><p>带函数参数的函数</p>
+<pre><code>def valueAtOneQuarter(f:(Double)=&gt;Double) = f(0.25)//定义一个函数，它接受任何Double类型的参数并返回Double的函数,它的类型是((Double)=&gt;Double)=&gt;Double
+valueAtOneQuarter(ceil _) //1.0
+valueAtOneQuarter(sqrt _)//0.5
+
+def mulBy(factor:Double) = (x:Double)=&gt;factor*x //它的类型是(Doutble)=&gt;((Double)=&gt;Double),接受Double类型 参数，返回一个函数,mulBy(2)(3)
+</code></pre></li>
+<li><p>类型推断：当一个匿名函数传递给另一个函数或方法时，Scala会尽可能帮你推断出类型信息，如：</p>
+<pre><code>valueAtOneQuarter(x=&gt;3*x)  //如果参数在=&gt;右侧只出现了一次，可以用_来代替：valueAtOneQuarter(3*_)
+val fun = 3*_错误：无法推断出类型
+val fun = 3*(_:Double)//ok
+val fun:(Double)=&gt;Double = 3*_ //ok，因为我们给出了fun的类型
+</code></pre></li>
+<li><p>一些有用的高阶函数：</p>
+<pre><code>(1 to 9).map(&quot;*&quot; * _).foreach(println _) //打印三角型
+(1 to 9).filter(_%2==0)//2,4,6,8
+(1 to 9).reduceLeft(_ * _)//1*2*3*4*5*6*7*8*9
+&quot;Mary has a little lamb&quot;.split(&quot; &quot;).sortWith(_.length &lt; _.length)//Array(&quot;a&quot;,&quot;had&quot;,&quot;Mary&quot;,&quot;lamb&quot;,&quot;little&quot;)
+</code></pre></li>
+<li><p>闭包：闭包中你的函数可以在变量不再处于作用域内时被调用。</p>
+<pre><code>def mulBy(factor:Double)=(x:Double)=&gt;factor*x
+val triple = mulBy(3)//factor为3，将(x:Double)=&gt;3*x存入triple
+val half = mulBy(0.5)//factor为0.5，将(x:Double)=&gt;0.5*x存入half
+println(triple(14)+&quot; &quot;+half(14)) //打印42  7.每个返回的函数都有自已的factor设置，这被称为闭包
+</code></pre></li>
+<li><p>告诉函数做某个事时，会传另一个函数给它，通常做法是将动作放在一个实现某接口的类中，然后将该类的一个实例传递给另一个方法。这些接口都只有单个抽象方法。在Java中它们被称为SAM类型。如按钮点击时递增一个计数器：</p>
+<pre><code>var counter =0                     
+val button=new JButton(&quot;Increment&quot;)
+button.addActionListener(new ActionListener{
+override def actionPerformed(event:ActionEvent){
+counter += 1
+}
+})   
+
+button.addActionListener((event:ActionEvent)=&gt;counter +=1)
+</code></pre><p>要启用这个语法，需要提供一个隐式转换，下面是一个把函数转成ActionListener的实例：</p>
+<pre><code>implicit def makeAction(action:(ActionEvent)=&gt;Unit) = 
+new ActionListener{
+    override def actionPerformed(event:actionEvent){action(event)}
+}
+</code></pre></li>
+<li><p>柯里化指的是将原业接受两个参数的函数变成新的接受一个函数的过程。新的函数返回一个以原有第二个参数作为参数的函数。</p>
+<pre><code>def mul(x:Int,y:Int) = x * y 
+def mulOneAtAtime(x:Int) = (y:Int)=&gt;x*y//改造成接受一个参数，生成另一个接受单个参数的函数
+mulOneAtATime(6)(7)
+
+//另一个例子：
+val a = Array(&quot;Hello&quot;,&quot;World&quot;)
+val a = Array(&quot;Hello&quot;,&quot;World&quot;)
+a.corresponds(b)(_.equalsIgnoreCase(_))  //def corresponds[B](that:Seq[B])(p:(A,B)=&gt;Boolean):Boolean
+</code></pre></li>
+<li><p>函数在线程中执行某段代码：</p>
+<pre><code>def runInThread(block:()=&gt;Unit){
+    new Thread{
+        override def run(){block()}
+    }.start
+}
+
+ runInThread{()=&gt;println(&quot;Hi&quot;);Thread.sleep(1000);println(&quot;Bye&quot;)}
+</code></pre><p>要想省掉<code>()=&gt;</code>,可以使用换名调用表示法:在参数声明和调用该函数参数的地方略去<code>()</code>,但保留<code>=&gt;</code></p>
+<pre><code>def runInThread(block:=&gt;Unit){
+    new Thread{
+        override def run(){block}
+    }.start
+}
+
+ runInThread{println(&quot;Hi&quot;);Thread.sleep(1000);println(&quot;Bye&quot;)} 
+</code></pre><p>另一个例子：</p>
+<pre><code>def until(condition:=&gt;Boolean)(block:=&gt;Unit)
+  if(!condition){
+    block
+    until(condition){block}
+  }
+ }
+
+var x = 10
+until(x==0){
+x-=1
+println(x)
+}
+</code></pre></li>
+<li><p>在scala中，不需要用<code>return</code>语句返回函数值。函数的返回值就是函数体的值。</p>
+<pre><code>def indexOf(str:String,ch:Char):Int = {
+ var i=0
+ until(i == str.length){
+   if(str(i)==ch) return i
+   i+=1
+ }
+ return -1
+}
+</code></pre></li>
+</ol>
+<p>匿名函数<code>{if(str(i)==ch)return i;i+=1}</code>被传递给<code>until</code>。当<code>return</code>表达式被执行时，包含它的带名函数<code>indexOf</code>终止并返回给定的值。<br>如果要在带名函数中使用<code>return</code>的话，则需要给出其返回类型。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-09-15T14:59:45.000Z"><a href="/2016/09/15/快学scala《五》/">2016-09-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/09/15/快学scala《五》/">快学scala五</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><ol>
+<li><p>按行读取文件</p>
+<pre><code>import scala.io.Source
+val source = Source.fromFile(&quot;myfile.txt&quot;,&quot;UTF-8&quot;)  //第一个参数为字符串或java.io.File,第二个为编码，可以忽略
+val lineIterator = source.getLines//获取行的叠代器并进行处理
+for(line&lt;-lineIterator) 处理line //还可以对迭代器应用toArray或toBuffer方法，将这些行放到数组或数组缓冲中
+
+val lines = source.getLines.toArray
+
+val contents = source.mkString //将整个文件读成一个字符串
+
+source.close //关闭文件对象
+</code></pre></li>
+<li><p>按字符读取文件：</p>
+<pre><code>for(c&lt;-source) 处理c
+</code></pre><p>如果想查看某个字符，但又不处理它，可以如下操作：</p>
+<pre><code>val source = Source.fromFile(&quot;myfile.txt&quot;,&quot;UTF-8&quot;)  //第一个参数为字符串或java.io.File,第二个为编码，可以忽略
+val iter=source.buffered
+while(iter.hasNext){
+  if(iter.head 是符合预期的)
+    处理iter.next
+  else
+    ...
+}
+
+val contents = source.mkString //如果文件不是很大，可以把它读成一个字符串进行处理
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/09/15/快学scala《五》/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-09-09T14:59:45.000Z"><a href="/2016/09/09/快学scala《四》/">2016-09-09</a></time>
       
       
@@ -434,101 +733,6 @@ try(Resource res = ...){
 
 
 
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-06-23T14:59:45.000Z"><a href="/2016/06/23/JAVA程序员学习Scala（二）/">2016-06-23</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/23/JAVA程序员学习Scala（二）/">JAVA程序员学习Scala（二）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ul>
-<li><code>Scala</code>的<code>actor</code>提供了一种基于事件的轻量级线程。只要使用<code>scala.actors.Actor</code>伴生对象的<code>actor()</code>方法，就可以创建一个<code>actor</code>。它接受一个函数值/闭包做参数，一创建好就开始运行。用!()方法给<code>actor</code>发消息，用<code>receive()</code>方法从<code>actor</code>接收消息。<code>receive()</code>也可以闭包为参数，通常用模式匹配处理接收到的消息。</li>
-<li>如果想要遍历容器里的元素，执行一些操作，<code>Scala</code>程序库已经内建了这个方法，<code>foldLeft()</code>,也就是<code>/:</code>方法：<pre><code>val sum = (0 /: (1 to number)){(sum,i)=&gt;sum+i}
-</code></pre></li>
-<li>如果<code>scala</code>类及其引用的类在不同的目录，比如在<code>entities</code>目录中，可以在<code>scala</code>的<code>sourcepath</code>选项里面指定这个目录：<code>scala -sourcepath entities:. userPerson.scala</code>。<code>userPerson.scala</code>用到了<code>entities</code>中的<code>Person.scala</code>类。如果类是以编译过的形式存在不同的目录下，就要使用<code>classpath</code>选项。<code>scalac -d . -classpath LocationOfPersonClassFile UsePersonClass.scala</code>//-d用来说明字节码存放地点。</li>
-<li>如果想在<code>java</code>中运行，只要在<code>classpath</code>里指定<code>scala-library.jar</code>文件。<pre><code>scalac -sourcepath . UsePersonClass.scala
-java -classpath /opt/scala/scala-2.7.4.final/lib/scala-library.jar:. UsePerson
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/06/23/JAVA程序员学习Scala（二）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-06-22T14:59:45.000Z"><a href="/2016/06/22/外网访问内网kafka访问不到问题的解决/">2016-06-22</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/22/外网访问内网kafka访问不到问题的解决/">外网访问内网kafka访问不到问题的解决</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>由于需要在外网访问内网kafka，所以在公司的网络出口处做了端口映射，对kafka所需要9092，zookeeper所需的2181端口都做了映射。但是仍然无法访问，报了以下错误：</p>
-<pre><code>2016-06-22 05:49:18.237-[ProducerSendThread-]- WARN {kafka.utils.Logging$class:89}-Failed to send producer request with correlation id 4073 to broker 0 with data for partitions [TOPIC_,0],[TOPIC_My,0]
-java.nio.channels.ClosedChannelException
-        at kafka.network.BlockingChannel.send(BlockingChannel.scala:100)
-        at kafka.producer.SyncProducer.liftedTree1$1(SyncProducer.scala:73)
-        at kafka.producer.SyncProducer.kafka$producer$SyncProducer$$doSend(SyncProducer.scala:72)
-        at kafka.producer.SyncProducer$$anonfun$send$1$$anonfun$apply$mcV$sp$1.apply$mcV$sp(SyncProducer.scala:103)
-        at kafka.producer.SyncProducer$$anonfun$send$1$$anonfun$apply$mcV$sp$1.apply(SyncProducer.scala:103)
-        at kafka.producer.SyncProducer$$anonfun$send$1$$anonfun$apply$mcV$sp$1.apply(SyncProducer.scala:103)
-        at kafka.metrics.KafkaTimer.time(KafkaTimer.scala:33)
-        at kafka.producer.SyncProducer$$anonfun$send$1.apply$mcV$sp(SyncProducer.scala:102)
-        at kafka.producer.SyncProducer$$anonfun$send$1.apply(SyncProducer.scala:102)
-        at kafka.producer.SyncProducer$$anonfun$send$1.apply(SyncProducer.scala:102)
-        at kafka.metrics.KafkaTimer.time(KafkaTimer.scala:33)
-</code></pre><p> 或者如下错误：</p>
-<pre><code>Exception in thread &quot;main&quot; kafka.common.FailedToSendMessageException: Failed to send messages after 3 tries.
-    at kafka.producer.async.DefaultEventHandler.handle(DefaultEventHandler.scala:90)
-    at kafka.producer.Producer.send(Producer.scala:77)
-    at kafka.javaapi.producer.Producer.send(Producer.scala:33)
-</code></pre><p> 但是，如果我在内网环境中，通过外网ip访问，则没有问题。经过排查，最终解决了该问题，原因如下：<strong>在设置config/server.properties配置文件时，将host.name参数设置为了该机器的ip，导到与客户端交互时，将该内网ip带到了外网，从而出现的问题。</strong><br> 解决方案如下：<br> <strong>将config/server.properties配置文件中的host.name参数设置为该机器的机器名，同时，在客户端机器上设置hosts文件，将该机器名对应的ip设为外网映射端口的ip，即可。或者不设该参数，统一使用机器名来访问（外网需设hosts文件）</strong></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -610,7 +814,7 @@ java.nio.channels.ClosedChannelException
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>4</small></li>
+    <li><a href="/tags/scala/">scala</a><small>6</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   

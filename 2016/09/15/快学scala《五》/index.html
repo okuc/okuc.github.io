@@ -1,0 +1,580 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>快学scala五 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="快学scala五"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-09-15T14:59:45.000Z"><a href="/2016/09/15/快学scala《五》/">2016-09-15</a></time>
+      
+      
+  
+    <h1 class="title">快学scala五</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><ol>
+<li><p>按行读取文件</p>
+<pre><code>import scala.io.Source
+val source = Source.fromFile(&quot;myfile.txt&quot;,&quot;UTF-8&quot;)  //第一个参数为字符串或java.io.File,第二个为编码，可以忽略
+val lineIterator = source.getLines//获取行的叠代器并进行处理
+for(line&lt;-lineIterator) 处理line //还可以对迭代器应用toArray或toBuffer方法，将这些行放到数组或数组缓冲中
+
+val lines = source.getLines.toArray
+
+val contents = source.mkString //将整个文件读成一个字符串
+
+source.close //关闭文件对象
+</code></pre></li>
+<li><p>按字符读取文件：</p>
+<pre><code>for(c&lt;-source) 处理c
+</code></pre><p>如果想查看某个字符，但又不处理它，可以如下操作：</p>
+<pre><code>val source = Source.fromFile(&quot;myfile.txt&quot;,&quot;UTF-8&quot;)  //第一个参数为字符串或java.io.File,第二个为编码，可以忽略
+val iter=source.buffered
+while(iter.hasNext){
+  if(iter.head 是符合预期的)
+    处理iter.next
+  else
+    ...
+}
+
+val contents = source.mkString //如果文件不是很大，可以把它读成一个字符串进行处理
+</code></pre> <a id="more"></a>
+</li>
+<li><p>读取源文件中所有以空格隔开的词法单元:</p>
+<pre><code>val tokens = source.mkString.split(&quot;\\S+&quot;)
+
+val numbers = for(w&lt;-tokens) yield w.toDouble //转成double
+val numbers = tokens.map(_.toDouble) //另一种转成double的方式
+
+print(&quot;How old are you? &quot;) //缺省情况下系统会自动引入Console，因此你并不需要对print和readInt使用限定词
+val age = readInt() //或者使用readDouble或readLong
+</code></pre></li>
+<li><p>从URL或其他源读取：</p>
+<pre><code>val source1 = Source.fromURL(&quot;http://horstamnn.com&quot;,&quot;UTF-8&quot;)
+val source2 = Source.fromString(&quot;Hello,World!&quot;)//从给定的字符串读取，可以用来调试
+val source3 = Source.stdin //从标准输入读取
+</code></pre></li>
+<li><p>读取二进制文件：scala本身没有提供读取二进制文件的方法，你需要全名用java类库：</p>
+<pre><code>var file = new File(filename)
+val in = new FileInputStream(file)
+val bytes = new Array[Byte](file.length.toInt)
+in.read(bytes)
+in.close()
+</code></pre></li>
+<li><p>写入文本文件：</p>
+<pre><code>val out = new PrintWriter(&quot;numbers.txt&quot;)
+for(i&lt;-1 to 100) out.println(i)
+out.close();
+</code></pre><p>如果我们用<code>printf</code>，时则需要指定格式：<code>out.print(&quot;%6d %10.2f&quot;.format(quantity,price)),printf(&quot;%6d %10.2f&quot;,quantity,price)</code>,如果用<code>out</code>中的<code>printf</code>,则这样用<code>out.printf(&quot;%6d %10.2f&quot;,quantity.asInstanceOf[AnyRef],price.asInstanceOf[AnyRef])</code></p>
+</li>
+<li><p>访问目录</p>
+<pre><code>import java.io.File
+def dubdirs(dir:File):Iterator[File] ={
+  val children = dir.listFiles.filter(_.isDirectory)
+  children.toIterator ++ children.toIterator.flatMap(subdirs _)
+}
+
+for(d &lt;- subdirs(dir)) 处理d
+</code></pre><p><code>java7</code>中也可以使用<code>java.nio.file.Files</code>类的<code>walkFileTree</code>方法，该类用到了<code>FileVisitor</code>接口</p>
+</li>
+<li><p>序列化：<code>java</code>和<code>scala</code>中的序列化方式分别如下：</p>
+<pre><code>public class Person implements java.io.Serializable{
+  private static final long serialVersionUID=42L;
+  ...
+}
+
+@SerialVersionUID(42L) class Person extends Serializable//Serializable特质在scala包，因此不需要显式引入。如果能接受缺省的ID，则可略去@SerialVersionUID注解
+</code></pre><p>序列化和反序列化如下：</p>
+<pre><code>val fred = new Person(...)
+import java.io._
+val out = new ObjectOutputStream(new FileOutputStream(&quot;/tmp/test.obj&quot;))
+out.writeObject(fred)
+out.close()
+val in = new ObjectInputStream(new FileInputStream(&quot;/tmp/test.obj&quot;))
+val savedFred = in.readObject().asInstanceOf[person]
+</code></pre><p><code>Scala</code>集合类都是可序列化的，因此你可以把它们用做你的可序列化类的成员：</p>
+<pre><code>class Person extends Serializable{
+  private val friends = new ArrayBuffer[Person] //ok--ArrayBuffer是可序列化的
+  ...
+}
+</code></pre></li>
+<li><p>进程控制：<code>scala.sys.process</code>包提供了用于与<code>shell</code>程序进行交互的工具，可以用<code>Scala</code>编写<code>shell</code>脚本：</p>
+<pre><code>import sys.process._
+&quot;ls -al ...&quot;! //显示上层目录的所有文件，并输出到控制台上。
+</code></pre><p><code>sys.process</code>包含了一个从字符串到<code>ProcessBuilder</code>对象的隐式转换。<code>!</code>操作符执行的就是这个<code>ProcessBuilder</code>对象。如果使用<code>!!</code>,则会使用字符串的形式返回，还可以使用管道</p>
+<pre><code>&quot;ls -al ..&quot; #| &quot;grep sec&quot; !
+</code></pre><p>输入重定向到文件，使用<code>#&gt;</code>操作符</p>
+<pre><code>&quot;ls -al ..&quot; #&gt; new File(&quot;output.txt&quot;)!
+</code></pre><p>追加到文件：</p>
+<pre><code>&quot;ls -al ..&quot; #&gt;&gt; new File(&quot;output.txt&quot;)!
+</code></pre><p>要把某个文件的内容作为输入，使用#&lt;：</p>
+<pre><code>&quot;grep sec&quot; #&lt; new File(&quot;output.txt&quot;)
+</code></pre><p>从URL重定向输入</p>
+<pre><code>&quot;grep Scala&quot; #&lt; new URL(&quot;http://horstmann.com/index.html&quot;)
+
+`shell`中的`|` `&gt;` `&gt;&gt;` `&lt;` `&amp;&amp;` `||`加上`#`前辍，都是可以用的。
+</code></pre><p>如果需要在不同的目录下运行进程，或是使用不同的环境变量，用<code>Process</code>对象的<code>apply</code>方法来构造<code>ProcessBuilser</code>，给出命令和起始目录，以及一串对偶来设置环境变量：</p>
+<pre><code>val p = Process (cmd,new File(dirName),(&quot;LANG&quot;,&quot;en_US&quot;))
+</code></pre><p>然后用<code>！</code>操作执行它：</p>
+<pre><code>&quot;echo 42&quot; #| p !
+</code></pre></li>
+<li><p><code>scala.util.matching.Regex</code>类包含了<code>scala</code>中的正则表达式。</p>
+<pre><code>val numPattern = &quot;[0-9]+&quot;.r  //用String类的r方法来构造Regex对象
+</code></pre><p>如果正则表达式包含反斜杠或引号的话，最好使用“原始”字符串语法：<code>&quot;&quot;&quot;...&quot;&quot;&quot;</code>，如：</p>
+<pre><code>val wsnumwsPattern = &quot;&quot;&quot;\s+[0-9]+\s+&quot;&quot;&quot;.r //和&quot;\\s+[0-9]+\\s+&quot;.r相比要更易读一些
+</code></pre><p><code>findAllIn</code>方法返回遍历所有匹配项的迭代器。你可以在<code>for</code>循环中使用它：</p>
+<pre><code>for(matchString &lt;- numPattern.findAllIn(&quot;99 botles,98 bottles&quot;)) 处理matchString
+</code></pre><p>或者将迭代器转成数组：</p>
+<pre><code>val matches = numPattern.findAllIn(&quot;99 bottles,98 bottles&quot;).toArray
+</code></pre><p>要找到字符串中的首个匹配项，可使用<code>findFirstIn</code>,你得到的结果是一个<code>Option[String]</code></p>
+<pre><code>val ml = wsnumwPattern.findFirstIn(&quot;99 bottles,98 bottles&quot;) //some(&quot; 98 &quot;)
+</code></pre><p>要检查是否某个字符的开始部分匹配，可用<code>findPrefixOf</code></p>
+<pre><code>numPattern.findPrefixOf(&quot; 99 bottles,98 bottles&quot;)//Some(99)
+wsnumwsPattern.findPrefixOf(&quot;99 bottles,98 bottles&quot;)//None
+</code></pre><p>可以使用如下方式替换首个匹配项或全部匹配项：</p>
+<pre><code>numPattern.replaceFirstIn(&quot;99 bottles,98 bottles&quot;,&quot;XX&quot;) //&quot;XX bottles,98 bottles&quot;
+numPattern.replaeAllIn(&quot;99 bottles,98 bottles&quot;,&quot;XX&quot;) //&quot;XX bottles,XX bottles&quot;
+</code></pre></li>
+<li><p>正则表达式分组，即更方便的获取子表达式的值，在想要提取的子表达式两侧加上圆括号即可：</p>
+<pre><code>val numitemPattern = &quot;([0-9]+) ([a-z]+)&quot;.r
+val numitemPattern(num,item) = &quot;99 bottles&quot; //将num设为“99”，item设为“bottles”
+</code></pre><p>如果要从多个匹配项中提取分组内容，可以循环：</p>
+<pre><code>for(numitemPattern(num,item)&lt;-numitemPattern.findAllIn(&quot;99 bottles,98 bottles&quot;))
+</code></pre></li>
+</ol>
+<h2 id="特质"><a href="#特质" class="headerlink" title="特质"></a>特质</h2><ol>
+<li><p>一个类扩展自一个或多个特质，以便使用这些特质提供的服务。特质可能会要求使用它的类支持某个特定的特性。</p>
+<p>Scala和Java一样不允许类从多个超类继承。java中类只能扩展自一个超类，可以实现任意数量的接口，但是这些接口只能包含抽象方法，不能包含字段。scala中的特质可以同时拥有抽象方法和具体方法，而类可以实现多个特质。</p>
+</li>
+<li><p><strong>当做接口使用的特质</strong>：</p>
+<pre><code>trait Logger{
+  def log(msg:String)  // 这是个抽象方法，scala中不需要声明为abstract
+}
+
+class ConsoleLogger extends Logger{//使用extends，而非implements
+  def log(msg:String){println(msg)}//不需要写override
+}
+
+class ConsoleLogger extends Logger with Cloneable with Serializable  //继续多个特质
+</code></pre><p>和java一样，scala只允许一个超类，但可以有任意数量的特质。</p>
+</li>
+<li><p><strong>带具体实现的特质</strong>：</p>
+<pre><code>trait ConsoleLogger{
+  def log(msg:String){println(msg)}
+}
+
+class SavingsAccount extends Account with ConsoleLogger{
+  def withdraw(amount:Double){
+    if(amount&gt;balance)log(&quot;Insufficient funds&quot;)
+    else balance -= amount
+  }
+}
+</code></pre><p>由于特质有了具休的行为，所以当特质改变时，所有混入了该特质的类都必须重新编译。</p>
+</li>
+<li><p><strong>带有特质的对象</strong></p>
+<pre><code>trait Logged{
+  def log(msg:String){ }
+}
+
+class SavingsAccount extends Account with Logged{
+  def withdraw(account:Double){
+    if(amount &gt; balance) log(&quot;Insufficient funds&quot;)  //不会输出任何记录
+    else ...
+  }
+  ...
+}
+</code></pre><p>可以在构造具体对象的时候混入一个更好的日志记录器的实现：</p>
+<pre><code>trait ConsoleLogger extends Logged{
+  override def log(msg:String){println(msg)}
+}
+
+val acct = new SavingsAccount with ConsoleLogger
+
+val acct2 = new SavingsAccount with FileLogger
+</code></pre></li>
+<li><p><strong>叠加在一起的特质</strong>：类或对象可以添加多个互相调用的特质，总是从最后一个开始执行。</p>
+<p>   trait TimestampLogger extends Logged{</p>
+<pre><code>override def log(msg:String){
+  super.log(new java.util.Date()+&quot; &quot;+msg)
+}
+</code></pre><p>   }</p>
+<p>   trait ShortLogger extends Logged{</p>
+<pre><code>val maxLength = 15
+override def log(msg:String){
+  super.log(if(msg.length &lt;= maxLength)msg else msg.substring(0,maxLength-3)+&quot;...&quot;)
+}
+</code></pre><p>   }</p>
+<p>实际上，<code>super.log</code>调用的是特质层级中的下一个特质，具体是那个，要根据特质添加的顺序来定。也可以在方括号中给出名称来控制具体是那一个特质的方法被调用：<code>super[ConsoleLogger].log(...)</code>,这里给出的类型必须是直接超类型。</p>
+<pre><code>val acct1 = new SavingAccount with ConsoleLogger with TimestampLogger with ShortLogger
+
+val acct2 = new SavingAccount with ConsoleLogger  with ShortLogger with TimestampLogger
+</code></pre><p>第一行代码执行后输出的消息为：<code>Sun Feb 06 17：45：45 ICT 2016 Insufficient...</code></p>
+<p>第二行代码执行后输出的消息为：<code>Sun Feb 01 1...</code></p>
+</li>
+<li><p><strong>在特质中重写抽象方法</strong>:如果一个特质中定义了一个抽象方法，其他的特质继承实现了这个特质方法，但在实现中调用了这个父类特质方法，则必须给子类特质也定义成<code>abstract</code>、<code>overide</code>关键字。如下：</p>
+<pre><code>trait Logger{
+  def log(msg:String) //这是个抽象方法
+}
+
+trait TimestampLogger extends Logger{
+  abstract override def log(msg:String){
+    super.log(new java.util.Date()+&quot; &quot;+msg)
+  }
+}
+</code></pre></li>
+<li><p>特质可以包含大量工具方法，而这些工具方法可以依赖一些抽象方法来实现。如日志：</p>
+<pre><code>trait Logger{
+  def log(msg:String)
+  def info(msg:String){log(&quot;INFO:&quot;+msg)}
+  def warn(msg:String){log(&quot;WARN:&quot;+msg)}
+  def severe(msg:String){log(&quot;WARN:&quot;+msg)}
+}
+
+class SavingsAccount extends Account with Logger{
+  def withdraw(amount:Double){
+    if(amount&gt;balance) severe(&quot;Insufficient funds&quot;)
+    else ...
+  }
+  ...
+  override def log(msg:String){println(msg);}
+}
+</code></pre></li>
+<li><p><strong>特质中的字段</strong>，如果给出了初始值，就是具体的，如果没有初始化，就是抽象的。</p>
+<pre><code>trait ShortLogger extends Logged{
+  val maxLength = 15 //具体的字段，使用该特质的类都会获得一个字段与之对应。这些字段不是被继承的；它们只是简单被加到了子类当中。
+}
+
+calss Account{
+  var balance =0.0
+}
+class SavingsAccount extends Account with ConsoleLogger with ShortLogger{
+  var interest = 0.0
+  def withdraw(amount:Double){
+    if(amount&gt;balance) log(&quot;Insufficient funds&quot;)
+    else ...
+  }
+}
+</code></pre><p> 通过上述代码，<code>SavingsAccount</code>类按照正常的方式承继了<code>Account</code>中的字段<code>balance</code>。由于<code>JVM</code>中一个类只能扩展一个超类，因此，<code>maxLength</code>被直接加到了<code>SavingsAccount</code>类中，跟<code>interest</code>字段排在一起。可以把特质中的字段当作是针对使用该特质的类的“装配指令”。任何通过这种方式被混入的字段都自动成为该类自已的字段。</p>
+</li>
+<li><p>特质中的抽象字段在具体的类中必须被重写。</p>
+<pre><code>val maxLength:Int //特质中的抽象字段
+
+val maxLength = 20 //在具体的类中重写，不需要override修饰符。
+</code></pre></li>
+<li><p><strong>特质也有构造器</strong>，由字段的初始化和其他特质体中的语句构成：</p>
+<p>  trait FileLogger extends Logger{</p>
+<pre><code>val out = new PrintWriter(&quot;app.log&quot;)//这是特质构造器的一部分
+out.println(&quot;# &quot;+new Date().toString)//同样是特质构造器的一部分
+def log(msg:String){out.println(msg);out.flush()}
+</code></pre><p>  }</p>
+<p>这些语句在任何混入该特质的对象在构造时都会被执行,执行顺序如下：</p>
+<ul>
+<li>首先调用超类的构造器</li>
+<li>特质构造器在超类构造器之后、类构造器之前执行</li>
+<li>特质由左到右被构造</li>
+<li>每个特质当中，父特质先被构造</li>
+<li>如果多个特质共有一个父特质，而那个父特质已经被构造，则不会被再次构造</li>
+<li>所有特质构造完毕，子类被构造</li>
+</ul>
+<p>综上，<code>8</code>中的例子，构造器将按照如下的顺序执行：</p>
+<ol>
+<li>Account（超类）</li>
+<li>Logger(第一个特质的父特质)</li>
+<li>ConsoleLogger(第一个特质)</li>
+<li>ShortLogger(第二个特质，它的父特质已经被构造)</li>
+<li>SavingsAccount(类)。</li>
+</ol>
+<p><strong>由这个顺序我们可以看出构造器的顺序是类的线性化的反向</strong>。如<code>ShortLogger</code>中调用<code>super</code>会执行<code>ConsoleLogger</code>的方法，而在<code>ConsoleLogger</code>中调用<code>super</code>会执行<code>Logger</code>的方法。</p>
+</li>
+<li><p><strong>特质不能有构造器参数</strong>，<strong>每个特质都有一个无参数的构造器，这是特质与类之间唯一的技术差别</strong>。因此，如果想给日志定义一个文件，可以用提前定义，如：</p>
+<pre><code>trait FileLogger extends Logger{
+  val fileName:String
+  val out = new PrintStream(filename)
+  def log(msg:String){out.println(msg);out.flush()}
+}
+calss SavingsAccount extends {//extends后是提前定义块
+  val filename = &quot;savings.log&quot;
+} with Account with FileLogger{
+  ...///SavingsAccount的实现
+}
+</code></pre><p>另一个解决办法是使用<code>懒值</code>，这样只有字段被使用时才会初始化。不过懒值在每次使用前都会检查是否已经初始化，它们用起来并不高效。</p>
+<pre><code>trait FileLogger extends Logger{
+  val filename:String
+  lazy val out = new PrintStream(filename)
+  def log(msg:String){out.println(msg)}//不需要override
+}
+</code></pre></li>
+<li><p><strong>特质可以扩展特质，也可以扩展类，这个类将会自动成为所有混入该特质的超类</strong>。示例如下：</p>
+<pre><code>trait LoggerException extends Exception with Logged{ //Exception是个超类
+  def log(){log(getMessage())}
+}
+
+calss UnhappyException extends LoggedException{//该类扩展自一个特质,Exception自动成为Unhappy类的超类。
+  override def getMessage() =&quot;arggh!&quot;
+}
+</code></pre><p>如果我们的类已经扩展了另一个类，只是扩展的这个类是特质的超类的一个子类即可，如：<code>class UnhappyException extends IOException with LoggedException,IOException</code>本身是<code>Exception</code>的子类。如果我们的类扩展自一个不相关的类，那么就不能混入这个特质了。如：`class UnhappyFrame extends JFrame with LoggedException //错误，不相关的超类``</p>
+</li>
+<li><p>当特质扩展类时，编译器能够确保所有混入该特质的类都认这个类作超类。Scala还有另一套机制可以保证这一点：自身类型。当特质以如下代码开始定义时：</p>
+<pre><code>this：类型 =&gt;
+</code></pre><p>它便只能被混入指定类型的子类。如下：</p>
+<pre><code>trait LoggedException extends Logged{
+  this:Exception =&gt;
+    def log(){log(getMessage())}
+}
+</code></pre><p>上述代码意味着它只能被混入<code>Exception</code>的子类。因此，<code>getMessage()</code>是合法的。因为`this是Exception，所以必然存在一个getMessage()的方法。</p>
+<pre><code>val f = new JFrame with LoggedException  //错误，JFrame不是Exception的子类型。
+</code></pre><p>带有自身类型的特质和带有超类型的特制动很相似，两种情况都能确保混入该特质的类能够使用某个特定类型的特性。在某些情况下自身类型这种写法比超类型版的特质更灵活。自身类型也同样可以处理结构类型，这个类型只给出类必须拥有的方法，而不是类的名称。示例如下：</p>
+<p>  trait LoggedException extends Logged{</p>
+<pre><code>this:{def getMessage():String }=&gt;
+def log() {log(getMessage())}
+</code></pre><p>  }</p>
+<p>上述特质可以被混入任何拥有getMessage方法的类。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/scala/">scala</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2016/10/23/快学scala《六》/" class="alignleft prev" >Vorherige Seite</a>
+    
+    
+    <a href="/2016/09/09/快学scala《四》/" class="alignright next" >Nächste Seite</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/09/15/快学scala《五》/" data-title="快学scala五" data-url="http://www.52brt.com/2016/09/15/快学scala《五》/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="hidden" name="q" value="site:www.52brt.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
+  
+    <li><a href="/tags/Nashorn/">Nashorn</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/Scala/">Scala</a><small>3</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/ambari/">ambari</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hadoop/">hadoop</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>15</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>9</small></li>
+  
+    <li><a href="/tags/kafka/">kafka</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/scala/">scala</a><small>6</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/其他/">其他</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

@@ -70,6 +70,103 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-08-27T17:23:41.000Z"><a href="/2015/08/28/java连接远程HBase/">2015-08-28</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/28/java连接远程HBase/">java连接远程HBase 1.1.1</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>由于工作需要用到<code>HBase</code>，今晚使用<code>HBase 1.1.1</code>小试牛刀了一把。<code>HBase 1.1.1</code>运行环境为<code>CentOS7.0</code>，java客户端运行环境为<code>Win10</code>，服务端jdk版本为<code>1.8</code>，客户端jdk版本为<code>1.7</code>。</p>
+<p><strong>提示：本文最后可下载源代码</strong></p>
+<p>具体步骤如下：</p>
+<ol>
+<li>下载<code>HBase 1.1.1</code>,下载地址如下：<a href="http://mirrors.cnnic.cn/apache/hbase/1.1.1/hbase-1.1.1-bin.tar.gz">http://mirrors.cnnic.cn/apache/hbase/1.1.1/hbase-1.1.1-bin.tar.gz</a>。</li>
+<li>使用<code>tar -xvf hbase-1.1.1-bin.tar.gz</code>解压。<strong>我使用的是root用户</strong></li>
+<li>进入到解压后的bin目录中，使用<code>./start-hbase.sh</code>启动Hbase，启动成功会显示如下提示：<pre><code>starting master, logging to /home/soft/hbase-1.1.1/bin/../logs/hbase-root-master-MiWiFi-R1CM.out
+</code></pre><strong>由于没有作任何设置，此时，所有数据都保存在临时环境中，一旦重启就会丢失。</strong>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/08/28/java连接远程HBase/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-22T14:35:02.000Z"><a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/">2015-08-22</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/">《Elasticsearch服务器开发》学习笔记（三）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第2章-映射配置-二"><a href="#第2章-映射配置-二" class="headerlink" title="第2章 映射配置(二)"></a>第2章 映射配置(二)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
+<hr>
+<ol>
+<li>lucene 4.0后，允许修改默认的基于TF/IDF的算法。4.0还附加了相似度模型，允许在文档中使用不同的评分公式。</li>
+<li><p>为每个字段设置不同的相似度模型。如下例子：</p>
+<pre><code>{
+   &quot;mappings&quot;:{
+       &quot;post&quot;:{
+           “properties”：{
+               “id”：{“type”：“long”，“store”：“yes”，“precision_step”：“0”}，
+               “name”：{“type”：“string”，“store”：“yes”，“index”：“analyzed”,&quot;similarity&quot;:&quot;BM25&quot;}，
+               “published”：{“type”：“date”，“store”：“yes”，“precision_step”：“0”}，
+               “contents”：{“type”：“long”，“store”：“no”，“index”：“analyzed”},&quot;similarity&quot;:&quot;BM25&quot;
+               }
+           }
+     }
+
+}
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/08/22/《Elasticsearch服务器开发》学习笔记（三）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-08-21T13:26:27.000Z"><a href="/2015/08/21/在批处理-bat-中设置java程序的内存参数/">2015-08-21</a></time>
       
       
@@ -392,7 +489,7 @@ mysql-community-release-el7-5.noarch
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>4</small></li>
+    <li><a href="/tags/scala/">scala</a><small>6</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   

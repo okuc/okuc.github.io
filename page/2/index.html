@@ -70,6 +70,101 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-06-23T14:59:45.000Z"><a href="/2016/06/23/JAVA程序员学习Scala（二）/">2016-06-23</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/23/JAVA程序员学习Scala（二）/">JAVA程序员学习Scala（二）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><code>Scala</code>的<code>actor</code>提供了一种基于事件的轻量级线程。只要使用<code>scala.actors.Actor</code>伴生对象的<code>actor()</code>方法，就可以创建一个<code>actor</code>。它接受一个函数值/闭包做参数，一创建好就开始运行。用!()方法给<code>actor</code>发消息，用<code>receive()</code>方法从<code>actor</code>接收消息。<code>receive()</code>也可以闭包为参数，通常用模式匹配处理接收到的消息。</li>
+<li>如果想要遍历容器里的元素，执行一些操作，<code>Scala</code>程序库已经内建了这个方法，<code>foldLeft()</code>,也就是<code>/:</code>方法：<pre><code>val sum = (0 /: (1 to number)){(sum,i)=&gt;sum+i}
+</code></pre></li>
+<li>如果<code>scala</code>类及其引用的类在不同的目录，比如在<code>entities</code>目录中，可以在<code>scala</code>的<code>sourcepath</code>选项里面指定这个目录：<code>scala -sourcepath entities:. userPerson.scala</code>。<code>userPerson.scala</code>用到了<code>entities</code>中的<code>Person.scala</code>类。如果类是以编译过的形式存在不同的目录下，就要使用<code>classpath</code>选项。<code>scalac -d . -classpath LocationOfPersonClassFile UsePersonClass.scala</code>//-d用来说明字节码存放地点。</li>
+<li>如果想在<code>java</code>中运行，只要在<code>classpath</code>里指定<code>scala-library.jar</code>文件。<pre><code>scalac -sourcepath . UsePersonClass.scala
+java -classpath /opt/scala/scala-2.7.4.final/lib/scala-library.jar:. UsePerson
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/23/JAVA程序员学习Scala（二）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-22T14:59:45.000Z"><a href="/2016/06/22/外网访问内网kafka访问不到问题的解决/">2016-06-22</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/22/外网访问内网kafka访问不到问题的解决/">外网访问内网kafka访问不到问题的解决</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>由于需要在外网访问内网kafka，所以在公司的网络出口处做了端口映射，对kafka所需要9092，zookeeper所需的2181端口都做了映射。但是仍然无法访问，报了以下错误：</p>
+<pre><code>2016-06-22 05:49:18.237-[ProducerSendThread-]- WARN {kafka.utils.Logging$class:89}-Failed to send producer request with correlation id 4073 to broker 0 with data for partitions [TOPIC_,0],[TOPIC_My,0]
+java.nio.channels.ClosedChannelException
+        at kafka.network.BlockingChannel.send(BlockingChannel.scala:100)
+        at kafka.producer.SyncProducer.liftedTree1$1(SyncProducer.scala:73)
+        at kafka.producer.SyncProducer.kafka$producer$SyncProducer$$doSend(SyncProducer.scala:72)
+        at kafka.producer.SyncProducer$$anonfun$send$1$$anonfun$apply$mcV$sp$1.apply$mcV$sp(SyncProducer.scala:103)
+        at kafka.producer.SyncProducer$$anonfun$send$1$$anonfun$apply$mcV$sp$1.apply(SyncProducer.scala:103)
+        at kafka.producer.SyncProducer$$anonfun$send$1$$anonfun$apply$mcV$sp$1.apply(SyncProducer.scala:103)
+        at kafka.metrics.KafkaTimer.time(KafkaTimer.scala:33)
+        at kafka.producer.SyncProducer$$anonfun$send$1.apply$mcV$sp(SyncProducer.scala:102)
+        at kafka.producer.SyncProducer$$anonfun$send$1.apply(SyncProducer.scala:102)
+        at kafka.producer.SyncProducer$$anonfun$send$1.apply(SyncProducer.scala:102)
+        at kafka.metrics.KafkaTimer.time(KafkaTimer.scala:33)
+</code></pre><p> 或者如下错误：</p>
+<pre><code>Exception in thread &quot;main&quot; kafka.common.FailedToSendMessageException: Failed to send messages after 3 tries.
+    at kafka.producer.async.DefaultEventHandler.handle(DefaultEventHandler.scala:90)
+    at kafka.producer.Producer.send(Producer.scala:77)
+    at kafka.javaapi.producer.Producer.send(Producer.scala:33)
+</code></pre><p> 但是，如果我在内网环境中，通过外网ip访问，则没有问题。经过排查，最终解决了该问题，原因如下：<strong>在设置config/server.properties配置文件时，将host.name参数设置为了该机器的ip，导到与客户端交互时，将该内网ip带到了外网，从而出现的问题。</strong><br> 解决方案如下：<br> <strong>将config/server.properties配置文件中的host.name参数设置为该机器的机器名，同时，在客户端机器上设置hosts文件，将该机器名对应的ip设为外网映射端口的ip，即可。或者不设该参数，统一使用机器名来访问（外网需设hosts文件）</strong></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-06-20T14:59:45.000Z"><a href="/2016/06/20/JAVA8学习（八）/">2016-06-20</a></time>
       
       
@@ -281,49 +376,6 @@ long millis = timeElapsed.toMillis();
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-06-04T14:59:45.000Z"><a href="/2016/06/04/JAVA8学习（四）/">2016-06-04</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/04/JAVA8学习（四）/">JAVA8学习（四）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="JavaFX"><a href="#JavaFX" class="headerlink" title="JavaFX"></a>JavaFX</h2><ul>
-<li>在javaFx中，你可以在一个场景上放置任何你想要展现的东西。因此，你可以设计“演员”—即控件的形状的样式和行为。</li>
-<li>场景需要舞台，如果运行在桌面系统上，舞台就是一个顶经的窗口，如果作为一个applet运行，舞台就是一个长方形的区域。</li>
-<li>在任何Application类的子类中，我们都必须重写start方法，然后将场景作为一个参数传递给start方法。</li>
-</ul>
-<p>Button red = new Button(“red”);<br>red.setOnAction(event-&gt;message.setTextFile(Color.REd));</p>
-<ul>
-<li><p>对于大多数JavaFX控件来说，它们的事件处理方式是不同的，以一个滑块为例，当滑块被调整时，它的值就会发生改变。但是，不应该监听滑块发出的表示这些改变的底层事件，相反，滑块有个个JavaFX属性value，该属性会在发生改变时发起事件。<br><code>slider.valueProperty().addListener(property-&gt;message.setFont(new Font(slider.getValue())))</code><br>-<code>java.beans</code>包中的<code>Introspector</code>和<code>BeanInfo</code>类可以遍历一个类中的所有属性。</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/06/04/JAVA8学习（四）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2016-06-04T14:59:45.000Z"><a href="/2016/06/04/JAVA程序员学习Scala（一）/">2016-06-04</a></time>
       
       
@@ -368,6 +420,49 @@ println(&quot;Scala Rocks!!!&quot;)
         
           <div class="alignleft">
             <a href="/2016/06/04/JAVA程序员学习Scala（一）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-04T14:59:45.000Z"><a href="/2016/06/04/JAVA8学习（四）/">2016-06-04</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/04/JAVA8学习（四）/">JAVA8学习（四）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="JavaFX"><a href="#JavaFX" class="headerlink" title="JavaFX"></a>JavaFX</h2><ul>
+<li>在javaFx中，你可以在一个场景上放置任何你想要展现的东西。因此，你可以设计“演员”—即控件的形状的样式和行为。</li>
+<li>场景需要舞台，如果运行在桌面系统上，舞台就是一个顶经的窗口，如果作为一个applet运行，舞台就是一个长方形的区域。</li>
+<li>在任何Application类的子类中，我们都必须重写start方法，然后将场景作为一个参数传递给start方法。</li>
+</ul>
+<p>Button red = new Button(“red”);<br>red.setOnAction(event-&gt;message.setTextFile(Color.REd));</p>
+<ul>
+<li><p>对于大多数JavaFX控件来说，它们的事件处理方式是不同的，以一个滑块为例，当滑块被调整时，它的值就会发生改变。但是，不应该监听滑块发出的表示这些改变的底层事件，相反，滑块有个个JavaFX属性value，该属性会在发生改变时发起事件。<br><code>slider.valueProperty().addListener(property-&gt;message.setFont(new Font(slider.getValue())))</code><br>-<code>java.beans</code>包中的<code>Introspector</code>和<code>BeanInfo</code>类可以遍历一个类中的所有属性。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/04/JAVA8学习（四）/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -499,102 +594,6 @@ long count= words.parallelStream().filter(w-&gt;w.lenght()&gt;12).count();
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-22T14:35:02.000Z"><a href="/2016/05/22/shell学习(五)/">2016-05-22</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/22/shell学习(五)/">shell学习(五)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="linux中的信号"><a href="#linux中的信号" class="headerlink" title="linux中的信号"></a>linux中的信号</h2><ul>
-<li>软中断</li>
-<li>进程间异步通信</li>
-<li><code>man 7 signal</code> 查看系统中对信号的支持</li>
-<li>键盘组合键生成信号<ul>
-<li>终止进程： <code>SIGINT</code> <code>Ctrl+C</code></li>
-<li>暂停进程： <code>SIGSTP</code> <code>Ctrl+Z</code></li>
-</ul>
-</li>
-<li><code>man kill</code> ：查看kill命令的帮助</li>
-<li>程序中的信号处理<ul>
-<li>按照默认方式处理信号</li>
-<li>忽略信号</li>
-<li>按照自定义方式捕捉并处理信号
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/22/shell学习(五)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-20T14:35:02.000Z"><a href="/2016/05/20/shell学习(四)/">2016-05-20</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/20/shell学习(四)/">shell学习(四)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h2><ul>
-<li>参数之前用空格分隔</li>
-<li>位置参数：<code>$+position:$0,$1,$2....$9</code><ul>
-<li><code>$0</code> :程序名</li>
-<li><code>$1,$2....$9</code></li>
-<li><code>${10}</code> //大于10的需要如此处理</li>
-</ul>
-</li>
-<li><p><code>basename</code>:获取脚本的名字</p>
-<pre><code>#! /bin/bash
-echo `basename $0` //输出程序的直实名字，且不包含路径,即取最后一层的名字
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/20/shell学习(四)/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -678,7 +677,7 @@ echo `basename $0` //输出程序的直实名字，且不包含路径,即取最�
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>4</small></li>
+    <li><a href="/tags/scala/">scala</a><small>6</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   
