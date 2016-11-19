@@ -1,0 +1,531 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>快学scala七 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="快学scala七"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-11-19T14:59:45.000Z"><a href="/2016/11/19/快学scala《七》/">2016-11-19</a></time>
+      
+      
+  
+    <h1 class="title">快学scala七</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><ol>
+<li><p><code>scala</code>中所有的集合都继承自<code>Iterable</code>，<code>Iterable</code>指的是那些能生成用来访问集合中所有元素的<code>Iterator</code>的集合。<code>Seq</code>、<code>Set</code>、<code>Map</code>均继承自<code>Iterable</code>,<code>IndexedSeq</code>、<code>SortedSet</code>、<code>SortedMap</code>为他们的子类。</p>
+<pre><code>val coll = ... //某种Iterable
+val iter = coll.iterator
+while(iter.hasNext)
+  对iter.next()执行某种操作
+</code></pre><p><code>Seq</code>是一个有先后次序的值的序列，如数组或列表。<code>IndexedSeq</code>允许我们通过整型的下标快速地访问任意元素。<code>Set</code>是一组没有先后次序的值，在<code>SortedSet</code>中，元素以某种排过序的顺序被访问。<code>Map</code>是一组对偶，<code>SortedMap</code>按照键的排序访问其中的实体。<code>IndexedSeq</code>是数组的超类型，但不是列表的超类型，以便于区分。这与java中<code>ArrayList</code>和<code>LinkedList</code>实现同一个List接口，使得编写那种需要优先考虑随机访问效率的代码十分困难，直到java中加入了<code>RandomAccess</code>这个标记接口。<br>每个<code>scala</code>集合特质或类都有一个带有<code>apply</code>方法的伴生对象，这个<code>apply</code>方法可以用来构建该集合中的实例。</p>
+</li>
+<li><p><code>Scala</code>同时支持可变和不可变的集合，不可变的集合从不改变，所以在共享引用、多线程中使用完全没问题。如<code>scala.collection.mutable.Map</code>和<code>scala.collection.immutable.Map</code>都继承自<code>scala.collection.Map</code>。<code>scala</code>优先采用不可变集合，<code>scala.collection</code>包中的伴生对象产出不可变的集合，<code>scala.collection.Map(&quot;Hello&quot;-&gt;42)</code>是一个不可变的映射。而且总被引入的<code>scala</code>包和<code>Predef</code>对象里有指向不可变特质的类型别名<code>List</code>、<code>Set</code>和<code>Map</code>，如<code>Predef.Map</code>和<code>scala.collection.immutable.Map</code>是一回事。如果使用不可变集合来运算，则会得到一个新的集合</p>
+<pre><code>import scala.collection.mutable//可以用Map得到不可变的映射，用mutable.Map得到可变的映射。
+</code></pre> <a id="more"></a></li>
+<li><p>不可变序列：<code>Seq</code>是所有序列的父类，<code>IndexedSeq</code>、<code>List</code>、<code>Stream</code>、<code>Stack</code>、<code>Queue</code>都继随于它，<code>Vector</code>、<code>Range</code>继承于<code>IndexedSeq</code>。它们都是重要的不可变序列。</p>
+<p><code>Vector</code>是<code>ArrayBuffer</code>的不可变版本：一个带下标的序列，支持快速的随机访问。<code>Range</code>表示一个整数序列，可以用<code>to</code>和<code>until</code>方法来构造<code>Range对象</code>。<br>可变序列：<code>IndexedSeq</code>、<code>Stack</code>、<code>Queue</code>、<code>PriorityQueue</code>、<code>LinkedList</code>、<code>DoubleLinkedList</code>、<code>ArrayBuffer</code>。</p>
+</li>
+<li><p>列表：在<code>scala</code>中，列表要么是<code>Nil(即空表)</code>，要么是一个<code>head</code>元素加上一个<code>tail</code>，而<code>tail</code>又是一个列表。</p>
+<pre><code>val digits = List(4,2)//digits.head的值是4，而digits.tail的值是List(2)。再进一步，digits.tail.head是2，而digits.tail.tail是Nil。
+9::List(4,2)//::操作符是从给定的头和尾巴，结果是List(9,4,2),也可以写作9::4::2::Nil,注意，::是右结合的。9::(4::(2::Nil))
+</code></pre><p>在<code>Java</code>或<code>C++</code>中，用迭代器来遍历链表。在<code>scala</code>中可以这么做，也可以用递归：</p>
+<pre><code>def sum(list:List[Int]):Int =
+    if(list == Nil ) 0 else list.head +sum(list.tail)
+
+//匹配
+def sum(lst:List[Int]):Int = lst match{
+ case Nil =&gt;0
+ case h::t =&gt;h+sum(t)//h是lst.head而t是lst.tail
+}
+</code></pre></li>
+<li><p>可变的<code>LinkedList</code>和不可变的<code>List</code>相似，可以通过<code>elem</code>引用赋值来修改其头部，对<code>next</code>引用赋值来修改其尾部。下面是一个把所有负值都改为0的例子:</p>
+<pre><code>val lst = scala.collection.mutable.LinkedList(1,-2,7,-9)
+var cur = lst
+while(cur != Nil){
+    if(cur.elem &lt; 0)cur.elem =0
+    cur = cur.next
+}
+
+//去除两个元素中的一个
+var cur = lst
+while(cur != Nil &amp;&amp; cur.next != Nil)
+ cur.next = cur.next.next
+ cur = cur.next
+</code></pre><p><code>Scala</code>中还有一个<code>DoubleLinkedList</code>，区别是它多带一个<code>prev</code>引用。如查想把列表中的某个节点变成列表中的最后一个节点，不能将<code>next</code>引用设为<code>Nil</code>，而应该将它设为<code>LinkedList.empty</code>,也不要将它设成<code>null</code>，不然会遇到空指针错误。</p>
+</li>
+<li><p>集是不重复元素的集合，尝试将已有的元素加入是没有效果的。集也没有顺序，其元素根据<code>hashCode</code>方法的值进行组织。</p>
+<pre><code>Set(2,0,1)+1  //没有效果
+Set(1,2,3,4,5,6)//被访问的次序是：5，1，6，2，3，4
+</code></pre><p>链式哈希集可以记住元素被插入的顺序。它会维护一个链表来达到这个目的。</p>
+<pre><code>val weekdays = scala.collection.mutable.LinkedHashSet(&quot;Mo&quot;,&quot;Tu&quot;,&quot;We&quot;,&quot;Th&quot;,&quot;Fr&quot;)
+</code></pre><p>位集是集的一种实现，以一个字位序列的主式存放非负整数。<code>Scala</code>提供了可变和不可变的两个<code>BitSet</code>类。<br><code>contains</code>方法检查某个集是否包含给定的值。<code>subsetOf</code>方法检查某个集当中的所有元素是否都被另一个集包含：</p>
+<pre><code>val digits = Set(1,7,2,9)
+digits contains 0//false
+Set(1,2) subsetOf digit //true
+</code></pre><p><code>union</code>、<code>interesect</code>和<code>diff</code>方法执行通常的集操作，可以写作：<code>|</code>、<code>&amp;</code>、<code>&amp;~</code>。也可以将联合<code>union</code>写作<code>++</code>，将差异<code>diff</code>写作<code>--</code></p>
+<pre><code>val primes = Set(2,3,5,7)
+digits union primes //Set(1,2,3,5,7,9)
+digits &amp; primes //Set(2,7)
+digits -- primes //Set(1,9)
+</code></pre></li>
+<li><p>常用操作：</p>
+<pre><code>`coll:+elem`、`elem+:coll`:有elem被追加到尾部或头部的与coll类型相同的集合，用于Seq
+  `coll+elem`、`coll+(e1,e2,...)`:添加了给定元素的与coll类型相同的集合，用于Set、Map
+`coll-elem`、`coll-(e1,e2,...)`:删除了给定元素的与coll类型相同的集合，用于Set、Map、ArrayBuffer
+`coll++coll2`、`coll2++:coll`:与coll类型相同的信合，包含了两个集合的元素，用于Iterable
+`coll--coll2`,移除了coll2中的元素的与coll型相同的集合（用diff来处理序列），用于Set、Map、ArrayBuffer
+`elem::lst`、`lst2:::lst`:被向前追加了元素或给定列表的列表。和+:以及++:的作用相同，用于List
+`list:::list2`:等同于list++:list2,用于List
+`set|set2`、`set&amp;set2`、`set&amp;~set2`：并集、交集和两个集的差异。|等同于++，&amp;~等同于--，用于Set
+`coll+=elem`、`coll+=(e1,e2,...)`、`coll++=coll2`、`coll-=elem`、`coll-=(e1,e2,...)`、`coll--=coll2`：通过添加或移除给定元素来修改coll，用于可变集合
+`elem+=:coll`、`coll2++=:coll`：通过向前追加给定元素或集合来修改coll，用于ArrayBuffer。
+</code></pre><p> 一般而言，<code>+</code>用于将元素添加到无先后顺序的集合，而<code>+:</code>和<code>:+</code>则是将元素添加到有先后顺序的集合的开头或末尾。</p>
+<pre><code>Vector(1,3,5):+5 //Vector(1,3,5,5)
+1+:Vector(1,2,3) //Vector(1,1,2,3)
+</code></pre><p> <code>+:</code>是右结合的。而且这些操作符都 是返回新的集合，不会修改原有的集合。而可变集合有<code>+=</code>操作符用于修改左侧操作元。</p>
+<pre><code>val numbers = Arraybuffer(1,2,3)
+number +=5
+</code></pre><p> 对于不可变的集，可以在<code>var</code>上使用<code>+=</code>或<code>:+=</code>,如：</p>
+<pre><code>var numbers = Set(1,2,3)
+numbers +=5
+var numberVector = Vector(1,2,3)
+numberVector :+=5 //没法用+=，因为向量没有+操作符
+Set(1,2,3)-2//移除2
+</code></pre><p> 总结如下：</p>
+<ol>
+<li>向前（<code>:+</code>）或向后(<code>+:</code>)追加元素到序列当中。</li>
+<li>添加(<code>+</code>)元素到无先后次序的集合中</li>
+<li>用<code>一</code>移除元素</li>
+<li>用<code>++</code>和<code>--</code>来批量添加和移除元素。</li>
+<li>对于列表，优先使用<code>::</code>和<code>:::</code></li>
+<li>改值操作有<code>+=</code>、<code>++=</code>、<code>-=</code>和<code>--=</code></li>
+<li>对于集合，我更喜欢<code>++</code>、<code>&amp;</code>和<code>--</code></li>
+<li>我尽量不用<code>++:</code>、<code>+=:</code>和<code>++=:</code></li>
+</ol>
+</li>
+<li><p>Iterable最重要的方法如下：</p>
+<ul>
+<li><code>head</code>、<code>last</code>、<code>headOption</code>、<code>lastOption</code>：返回第一个或最后一个元素，或者，以OPtion返回</li>
+<li><code>tail</code>、<code>init</code>：返回除第一个或最后一个元素外其余的部分</li>
+<li><code>length</code>、<code>isEmpty</code>：返回集合长 度或，当度为0时返回ture</li>
+<li><code>map(f)</code>、<code>foreach(f)</code>、<code>flatMap(f)</code>、<code>collect(pf)</code>:将函数应用到所有元素</li>
+<li><code>reduceLeft(op)</code>、<code>reduceRight(op)</code>、<code>foldLeft(init)(op)</code>、<code>foldRight(init)(op)</code>:以非特定顺序将二元操作应用到所有元素。</li>
+<li><code>reduce(op)</code>、<code>fold(init)(op)</code>、<code>aggregate(init)(op,combineOp)</code>:以非特定顺序将二元操作应用到所有元素。</li>
+<li><code>sum</code>、<code>product</code>、<code>max</code>、<code>min</code>:返回和或乘积（前提是元素类型可以被隐式转换成<code>Numeric</code>特质）;或者最大值或最小值 （前提是元素类型可以被转换成<code>Ordered</code>特质）</li>
+<li><code>count(pred)</code>、<code>forall(pred)</code>、<code>exists(pred)</code>：返回所有满足前提表达式的元素计数；所有元素都满足时返回true;;或者至少一个元素满足时返回true</li>
+<li><code>filter(pred)</code>、<code>filterNot(pred)</code>、<code>partition(pred)</code>:返回所有满足前提表达式的元素；所有不满足的元素；或者这两组元素组成的对偶</li>
+<li><code>takeWhile(pred)</code>、<code>dropWhile(pred)</code>、<code>span(pred)</code>:返回满足前提表达式的一组元素（直到遇到第一个不满足的元素）；所有其他元素；或者这两组元素组成的对偶。</li>
+<li><code>take(n)</code>、<code>drop(n)</code>、<code>splitAt(n)</code>:返回头n个元素；所有其他元素；或者，这两组元素组成的对偶</li>
+<li><code>takeRight(n)</code>、<code>dropRight(n)</code>:返回最后n个元素；或者所有其他元素。</li>
+<li><code>slice(from,to)</code>:返回位于从from开始到to结束这个区间内的所有元素</li>
+<li><code>zip(coll2)</code>、<code>zipAll(coll2、fill、fill2)</code>、<code>zipWithIndex</code>：返回由本集合元素和另一个集合的元素组成的对偶。</li>
+<li><code>grouped(n)</code>、<code>sliding(n)</code>:返回长度为n的子集合迭代器；grouped产出下标为0 until n的元素，然后是标为n until 2*n的元素，依次类推；sliding产出下标为0 until n的元素，然后是下标为1 until n+1 的元素，依次类推</li>
+<li><code>mkString(before、between、after)</code>、<code>addString(sb,before,between,after)</code>:做出一个由所有元素组成的字符串，将给定字符串分别添加到首个元素之前、每个元素之间、以及最后一个元素之后。第二个方法将该 字符串追加到字符串构建器（String builder）当中</li>
+<li><code>toIterable</code>、<code>toSeq</code>、<code>toIndexedSeq</code>、<code>toArray</code>、<code>toList</code>、<code>toStream</code>、<code>toSet</code>、<code>toMap</code>：将集合转换成指定类型的集合。</li>
+<li><code>copyToArray(arr)</code>、<code>copyToArray(arr,start,length)</code>、<code>copyToBuffer(buf)</code>:将元素拷贝到数组或缓冲当中</li>
+</ul>
+<p><code>Seq</code>特质在<code>Iterable</code>特质的基础上又额外添加了一些方法：</p>
+<ul>
+<li><code>contains(elem)</code>、<code>containsSlice(seq)</code>、<code>startsWith(seq)</code>、<code>endsWith(seq)</code>:返回true,如果该序列：包含给定元素；包含给定序列；以给定序列开始；或者，以给定序列结束。</li>
+<li><code>indexOf(elem)</code>、<code>lastIndexOf(elem)</code>、<code>indexOfSlice(seq)</code>、<code>lastIndexOfSlice(seq)</code>：返回给守元素或序列在当前序列中的首次或末次出现的下标。</li>
+<li><code>indexWhere(pred)</code>:返回满 足pred的首个元素的下标</li>
+<li><code>prefixLength(pred)</code>、<code>segmentLength(pred,n)</code>:返回满足pred的最长元素序列的长度，从当前序列的下标0或n开始查找</li>
+<li><code>padTo(n,fill)</code>:返回当前序列的一个拷贝，将<code>fill</code>的内容向后追加，直到新序列长度达到n。</li>
+<li><code>intersect(seq)</code>、<code>deff(seq)</code>:返回”多重集合”的交集，或序列之间的差异。举例来说，如果a包含五个1而b包含两个，则a intersect b包含两个1（软小的那个计数），而a diff b包含三个1(三个之间的差异)</li>
+<li><code>reverse</code>：当前序列的反向</li>
+<li><code>sorted</code>、<code>sortWith(less)</code>、<code>sortBy(f):</code>使用元素本身的大小、二元函数less、或者将每个元素映射成一个带先后次序的类型的值的函数f，对当前序列进行排序后的新序列。</li>
+<li><code>permutations</code>、<code>combinations(n)</code>:返回一个遍历所有排列或组合（长度为n的子序列）的迭代器。</li>
+</ul>
+<p>注意这些方法从不改变原有集合，它们返回一个与原集合类型相同的新集合。这有时叫做“统一返回类型”原则。</p>
+</li>
+<li><p>偏函数：</p>
+<pre><code>def ulcase(s:String) = Vector(s.toUpperCase(),s.toLowerCase())
+val names = List(&quot;Peter&quot;,&quot;Paul&quot;,&quot;Mary&quot;)
+names.map(ulcase)得到：
+List(Vector(&quot;PETER&quot;,&quot;peter&quot;),Vector(&quot;PAUL&quot;,&quot;paul&quot;),Vector(&quot;Mary&quot;,&quot;Mary&quot;))
+names.flotMap(ulcase)得到：
+List(&quot;PETER&quot;,&quot;peter&quot;,&quot;PAUL&quot;,&quot;paul&quot;,&quot;Mary&quot;,&quot;Mary&quot;)
+
+collect方法用于偏函数：那些并没有对所有可能的输入值进行定义的函数。它产出被 定义的所有参数的函数值的集俣：
+&quot;-3+4&quot;.collect(case &apos;+&apos; =&gt; 1;case &quot;-&quot; =&gt;-1)//Vector(-1,1)
+names.foreach(println)
+</code></pre></li>
+<li><p><strong>化简、折叠、和扫描</strong><br> <code>reduceLeft</code>、<code>reduceRight</code>：</p>
+<pre><code>            op
+          /    \
+         op   coll(3)
+       /    \
+      op   coll(2)
+     /    \  
+coll(0) coll(1)
+
+ list(1,7,2,9).reduceLeft(_-_)
+
+            -
+          /    \
+         -      9
+       /    \
+      -      2
+        /    \  
+    1     7
+</code></pre><p>以不同于集合首元素的初始元素开始计算通常也很有用，`coll.foldLeft(init)(op)``:</p>
+<pre><code>          op
+        /    \
+       op   coll(2)
+     /    \
+    op   coll(1)
+   /    \  
+init coll(0)
+</code></pre><p>如<code>List(1,7,2,9).foldLeft(0)(_+_)</code>,它也可以简写为：<code>(0/:List(1,7,2,9))(_+_)</code>,<code>foldRight</code>,:`类似。<br><code>scanLeft</code>、<code>scanRight</code>方法将折叠和映射操作结合在一起，返回包含所有中间结果的集合：</p>
+<pre><code>(1 to 10).scanleft(0)(_+_)//返回值是Vector(0,1,3,6,10,15,21,28,36,45,55)
+</code></pre></li>
+<li><p><strong>拉链操作</strong>：将操作应用到同一个集合中相邻的元素。有时，是把两个集合相互对应的元素结合在一起。如：</p>
+<pre><code>val price = List(5.0,20.0,9.95)//产品单价表
+val quantities = List(10,2,1)//产品数是表
+
+zip方法让你将它们组成一个个对偶的列表。
+
+prices zip quantities
+
+List[(Double,Int)] = List((5.0,10),(20.0,2),(9.95,1))
+
+(prices zip quantities) map{p=&gt;p._1*p._2}//返回List(50.0,40.0,9.95)
+(prices zip quantities) map{p=&gt;p._1*p._2} sum //返回所有产品的总价
+</code></pre><p>如果一个集合比另一个短，那么结果中的对偶数是和较短的那个集合的元素数是相同。<code>zipAll</code>方法让你指定较短列表的缺省值：</p>
+<pre><code>List(5.0,20.0,9.95).zipAll(List(10,2),0.0,1) 将得到 List((5.0,10),(20.0,2),(9.95,1))
+</code></pre><p><code>zipWithIndex</code>方法返回对偶的列表，其中每个对偶中第二个组成部分是每个元素的下标：</p>
+<pre><code>&quot;Scala&quot;.zipWithIndex //Vector((&apos;S&apos;,0),(&apos;C&apos;,1),(&apos;a&apos;,2),(&apos;l&apos;,3),(&apos;a&apos;,4))
+</code></pre><p>这在计算具备某种属性的元素的下标时很有用：<code>&quot;Scala&quot;.zipWithIndex.max</code>,值是<code>(&quot;l&quot;,3)</code>,<code>&quot;Scala&quot;.zipWithIndex.max._2</code></p>
+</li>
+<li><p>对于完整构造需要很大开销的集合，迭代器非常有用。如<code>Source.fromFile</code>产生出一个迭代器，是因为将整个文件都读取到内存并不是很高效的做法。<code>Iterable</code>中有一些方法可以产生迭代器，比如<code>grouped或sliding</code>。</p>
+<pre><code>while(iter.hasNexe)
+  对iter.next执行某种操作
+
+form(elem &lt;- iter)
+  对elem执行某种操作
+</code></pre><p><code>Iterator</code>类定义了一些与集合完全相同的方法：除<code>head</code>,<code>headOption</code>,<code>last</code>、<code>lastOption</code>、<code>tail</code>、<code>init</code>、<code>takeRight``、DropRight</code>外，都支持。在调用了如<code>map</code>、<code>filter</code>、<code>count</code>、<code>sum</code>甚直是<code>length</code>方法后，迭代器位于集合的尾端，你不能再继续使用它。对于其他方法，如find和稶<br>，迭代器位于已找到元素或已取得元素之后。也可以使用如<code>toArray</code>、<code>ToIterable</code>、<code>ToSeq</code>、<code>ToSet</code>或<code>toMap</code>来将相应的值拷贝到一个新的集合中。</p>
+</li>
+<li><p>流是一个指向不可变的<code>Iterator</code>替代品，它一般放在尾部，需要时才会计算值。如：</p>
+<pre><code>def numsFrom(n:BigInt):Stream[BigInt] = n #:: numsFrom(n+1)
+
+`#::`操作符很像是列表的操作符，不过它构建出来的是一个流。
+val tenOrMore = numsFrom(10)//得到的值为Stream(10,?)
+tenOrMore.tail.tail.tail //得到的值为Stream(13,?)
+val squares = numsFrom(1).map(x=&gt;x*x) //Stream(1,?),需要用squares.tail来强制对下一个元素求值
+squares.take(5).froce //产出Stream(1,4,9,16,25)
+squares.force //会产生一个无限流，引发OutOfMemoryError
+可以从迭代器构造一个流。如Source.getLines方法返回一个Iterator[String].用这个迭代器，对于每一行你只能访问一次。而流将缓存访问过的行，允许你重新访问他们：
+val words = Source.fromFile(&quot;/usr/share/dict/words&quot;).getLines.toStream
+words //Stream(a,?)
+words(5) //Aachen
+words //Stream(a,a&apos;s,aol,aol&apos;s,Aachen,?)
+</code></pre></li>
+<li><p>流方法是懒执行的，仅当结果被需要时才计算。可以对其他集合应用view方法来得到类似的效果。该方法产出一个其方法总是被懒执行的集合：</p>
+<pre><code>val powers = (0 until 1000).view.map(pow(10,_))//产生一个未被求值的集合。
+powers(100)//pow(10,100)被计算，但其他值的幂并没有被计算,和流不同的是，这些视图并不缓存任何值，再次调用会再次重新被计算
+</code></pre><p>和流一样，用<code>force</code>方法可以对懒视图强制求值。你将得到与原集合相同类型的新集合。懒集合对于处理那种需要以多种方式进行变换的大型集合是很有好处的，因为它避免了构建出大型中间集合的需要。如：</p>
+<pre><code>(0 to 1000).map(pow(10,_)).map(1/_)
+(0 to 1000).view.map(pow(10,_)).map(1/_).force
+</code></pre><p>前者会计算出10的n次方的集合，然后再对每一个得到的值取到数。而后一个是记住了两个map操作的视图。当求值动作为强制执行时，对于每个元素，这两个操作被同时执行，不需要额外构建中间集合。本例是可以通过<code>(0 to 1000).map(x=&gt;pow(10,-x))</code>来实现，不过如果集合在程序中多个不同的地方被处理，你可以将这个累积了不同修改的视图来回传递。</p>
+</li>
+<li><p><code>JavaConversions</code>对象提供了用于在Scala和Java集合之间来回转换的一组方法：</p>
+<p>给目标值显式地指定一个类型来触发转换：</p>
+<pre><code>import scala.collection.JavaConversions._
+val props:scala.collection.mutable.Map[String,String] = System.getProperties()
+</code></pre><p>也可以只引用需要的隐式转换：<code>import scala.collection.JavaConversions.propertiesAsScalaMap</code>,这些转换产出的是包装器，让你可以用目标接口来访问原来的值，如上<code>props</code>就是一个包装器，其方法将调用底层的Java对象，如：<code>props(&quot;com.horstmann.scala&quot;)=&quot;impatient&quot;</code>，那么包装器将调用底层<code>Properties</code>对象的<code>put(&quot;com.horstmann.scala&quot;,&quot;impatient&quot;)</code></p>
+<p>从Scala集合到Java集合转换如下：<br>隐式函数：从scala.collection中的类型：到java.util中的类型</p>
+<ul>
+<li>asJavaCollection:Iterable:Collection</li>
+<li>asJavaIterable:Iterable:Iterable</li>
+<li>asJavaIterator:Iterator:Iterator</li>
+<li>asJavaEnumeration:Iterator:Enumeration</li>
+<li>seqAsJavaList:Seq:List</li>
+<li>mutableSeqAsJavaList:mutable.Seq:List</li>
+<li>bufferAsJavaList:mutable.Buffer:List</li>
+<li>setAsJavaSet:Set:Set</li>
+<li>mutableSetAsJavaSet:mutable.Set:Set</li>
+<li>mapAsJavaMap:Map:Map</li>
+<li>mutableMapAsJavaMap:mutable.Map:Map</li>
+<li>asJavaDictonary:Map:Dictionary</li>
+<li>asJavaConcurrentMap:mutable.ConcurrentMap:concurrent.ConcurrentMap</li>
+</ul>
+<p>从Java集合转到Scala集合如下：隐式函数：java.util类型：scala.collection类型</p>
+<ul>
+<li>collectionAsScalaIterable:Collection:Iterable</li>
+<li>iterableAsScalaIterable:Iterable:Iterable</li>
+<li>asScalaIterator:iterator:Iterator</li>
+<li>enumerationAsScalaIterator:Enumeration:Iterator</li>
+<li>asScalaBuffer:List:mutable.Buffer</li>
+<li>asScalaSet:Set:mutable.Set</li>
+<li>mapAsScalaMap:Map:mutable.Map</li>
+<li>dictionaryAsScalaMap:Dictionary:mutable.Map</li>
+<li>propertiesAsScalaMap:Properties:mutable.Map</li>
+<li>asScalaConcurrentMap:concurrent.ConcurrentMap:mutable.ConcurrentMap</li>
+</ul>
+</li>
+<li><p>当多线程访问可变集合时，需要将集合操作变成同步的，避免一个线程访问时其他线程正在访问它。Scala类库提供了6个特质来解决这个问题：</p>
+<pre><code>SynchronizedBuffer
+SynchronizedMap
+SynchronizedPriorityQueue
+SynchronizedQueue
+SynchronizedSet
+SynchronizedStack
+</code></pre><p>如：</p>
+<pre><code>val scores = new scala.collection.mutable.HashMap[String,Int] with scala.collection.mutable.SynchronizedMap[String,Int]
+</code></pre><p>但是，最好使用<code>java.util.concurrent</code>包中的某个类。如：如果多个线程共享一个映射，那么就用<code>ConcurrentHashMap或concurrentSkipListMap</code>。这些集合比简单地用同步方法执行所有方法的映射更为高效。不同线程可以并发地访问数据结构中互不相到的部分。所以，可以将<code>java.util.concurent</code>中的集合转换成Scala集合来用。</p>
+</li>
+<li><p>并行集合：Scala提供的用于操纵大型集合任务的解决方案十分诱。这些任务可以很自然的并行。如<code>coll</code>是个大型集合，则：<code>coll.par.sum</code>：上述代码会并发地对它求和。<code>par</code>方法产生出当前集合的一个并行实现。该实现会尽可能地并行地执行集合方法。如：<code>coll.par.count(_%2 == 0)</code>会并行地对偶集合求前提表达式的值，然后将结果组合在一起，得出coll中所有偶数的数量。</p>
+<p>对数组、缓冲、哈希表、平衡树而言，并行实现会直接重用底层实际集合的实现，而这是高效的。你可以通过对要遍历的集合应用<code>.par</code>并行化<code>for循环</code>，但结果顺序不固定如：</p>
+<pre><code>for(i&lt;-(0 until 100).par) print(i+&quot; &quot;)
+</code></pre><p>在for/yield循环中，结果是依次组装得：</p>
+<pre><code>for(i&lt;-(0 until 100).par)yield i+&quot; &quot;
+</code></pre><p>如果并行计算修改了共享变量，则结果无法预知：<code>var count =0 for(c&lt;-coll.par){if(c%2==0)count+=1}</code>,这是不对的。</p>
+<p><code>par</code>方法返回的并行集合的类型扩展自<code>ParSeq</code>、<code>ParSet</code>或<code>ParMap</code>特质的类型，所有这些特质都是<code>ParIterabler</code>的子类型。但不是<code>Iterable</code>的子类型，不能将并行集合传递给预期<code>Iterable</code>、<code>Seq</code>、<code>Set</code>、或<code>Map</code>方法。可以用<code>set</code>方法将并行集合转换回串行版本，也可以接受通用<code>GenIterable</code>、<code>GenSeq</code>、<code>GenSet</code>或<code>GenMap</code>类型的参数方法。<br>只有操作符是可自由结合的才能用<code>par</code>，如<code>reduceLeft</code>、<code>ruduceRight</code>、<code>fold</code>、<code>foldLeft</code>、<code>foldRightft</code>都不可能。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/scala/">scala</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    
+    <a href="/2016/10/23/快学scala《六》/" class="alignright next" >Next</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/11/19/快学scala《七》/" data-title="快学scala七" data-url="http://www.52brt.com/2016/11/19/快学scala《七》/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:www.52brt.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
+  
+    <li><a href="/tags/Nashorn/">Nashorn</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/Scala/">Scala</a><small>3</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/ambari/">ambari</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hadoop/">hadoop</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>15</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>9</small></li>
+  
+    <li><a href="/tags/kafka/">kafka</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/scala/">scala</a><small>7</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/其他/">其他</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

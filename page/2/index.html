@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Seite 2 | 我的后院自留地</title>
+  <title>Page 2 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
@@ -64,6 +64,55 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-24T14:59:45.000Z"><a href="/2016/06/24/JAVA8学习（九）/">2016-06-24</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/24/JAVA8学习（九）/">JAVA8学习（九）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><strong>try-with-resources</strong> Java7提供了一个简单实用的代码格式，如下：<br>打开一个资源<pre><code>try{
+    使用该资源
+}finally{
+    关闭该资源
+}
+</code></pre>其中资源所属的类必须实现了AutoCloseable接口。该接口只有一个方法：<code>void close() throws Exception</code><pre><code>try-with-resources语句的最简单形式如下所示：
+try(Resource res = ...){
+   使用res
+}
+</code></pre>当<code>try</code>语句块退出时，会自动调用<code>res.close()</code>方法。下面是一个经典示例—-读取一个文件中的所有单词：<pre><code>try(Scanner in = new Scanner(Paths.get(&quot;/usr/share/dict/words&quot;))){
+   while(in.hasNext()) System.out.println(in.next().toLowerCase());
+}
+</code></pre>当代码块像往常一样退出或者发生异常时，都会调用<code>in.close()</code>方法，就如同之前<code>finally</code>一样<br>在Java7中，可以在同一个<code>catch</code>分支中捕获多个异常类型，如<code>catch(FileNotFoundException|UnknownHostException ex)</code>。<br>对于反射方法的异常，Java7单独引进了一个新的父类：<code>ReflectiveOperationException</code>。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/24/JAVA8学习（九）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="coding">
   
   <div class="post-content">
@@ -524,90 +573,20 @@ println(&quot;Scala Rocks!!!&quot;)
 
 
 
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-06-02T14:59:45.000Z"><a href="/2016/06/02/JAVA8学习（二）/">2016-06-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/02/JAVA8学习（二）/">JAVA8学习（二）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="Stream-API"><a href="#Stream-API" class="headerlink" title="Stream API"></a>Stream API</h2><ul>
-<li><p>要统计一本书的长单词，做法如下：</p>
-<pre><code>String contents = new String(Files.readAllBytes(Paths.get(&quot;alice.txt&quot;)),StandardCharsets.UTF_8);
-List&lt;String&gt; words = Arrays.asList(contents.split(&quot;[\\P{L}]+&quot;));//将字符串分隔成字母，非字母被认为是分隔符
-
-//传统方式
-int count=0;
-for(String w:words){
-    if(w.length()&gt;12)count++;
-}
-
-//java8方式
-long count= words.stream().filter(w-&gt;w.lenght()&gt;12).count();
-</code></pre></li>
-<li><p><code>Stream</code>与集合的区别如下：</p>
-<ul>
-<li><code>Stream</code>自已不会存储元素。元素可能被存储在底层的集合中，或者根据需要产生出来。</li>
-<li><code>Stream</code>操作符不会改变源对象。它们会返回一个持有结果的新的Stream。</li>
-<li><code>Stream</code>是<strong>延迟执行</strong>的。就是说，他们在需要结果的时候才会执行。</li>
-</ul>
-</li>
-<li><p><code>stream</code>与<code>parallelStream</code>的区别是，后者可以并行执行过滤和统计操作。</p>
-<pre><code>//java8方式
-long count= words.parallelStream().filter(w-&gt;w.lenght()&gt;12).count();
-</code></pre></li>
-<li><p>使用<code>stream</code>，会通过三个阶段来建立一个操作流水线：</p>
-<ol>
-<li>创建一个<code>stream</code>。</li>
-<li>在一个或多个步骤中，指定将初始<code>stream</code>转换为另一个<code>stream</code>的中间操作。</li>
-<li>使用一个终止操作来产生一个结果。该操作会强制它之前的延迟操作立即执行。在这之后，该<code>Stream</code>就不会再被使用了。</li>
-</ol>
-</li>
-<li><p><code>stream</code>操作不会按元素的顺序调用执行。</p>
-</li>
-<li>数组也可以转化为<code>stream</code>。<code>Stream.of(contents.split(&quot;[\\P{L}]+&quot;))</code>;<code>of</code>方法可接收一个可变长度的参数，因此可构造任意个参数的<code>Stream</code>。<code>Stream&lt;String&gt; song = Stream.of(&quot;gently&quot;,&quot;down&quot;,&quot;the&quot;,&quot;stream&quot;);</code>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/06/02/JAVA8学习（二）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/" class="alignleft prev">Vorherige Seite</a>
+    <a href="/" class="alignleft prev">Prev</a>
   
   
-    <a href="/page/3/" class="alignright next">Nächste Seite</a>
+    <a href="/page/3/" class="alignright next">Next</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="search" name="q" results="0" placeholder="Search">
     <input type="hidden" name="q" value="site:www.52brt.com">
   </form>
 </div>
@@ -677,7 +656,7 @@ long count= words.parallelStream().filter(w-&gt;w.lenght()&gt;12).count();
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>6</small></li>
+    <li><a href="/tags/scala/">scala</a><small>7</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   

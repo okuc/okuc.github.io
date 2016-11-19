@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Seite 4 | 我的后院自留地</title>
+  <title>Page 4 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
@@ -64,6 +64,50 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-30T01:06:32.000Z"><a href="/2016/03/30/docker常用命令/">2016-03-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/30/docker常用命令/">docker常用命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li><code>sudo docker images</code>：列出当前docker镜像列表</li>
+<li><code>sudo docker ps</code>：列出正在运行的容器列表</li>
+<li><code>sudo docker ps -a</code>：列出所有的容器列表</li>
+<li><code>sudo docker pull centos:6.6</code>：拉取特定的镜像</li>
+<li><code>sudo docker search centos</code>：查找镜象</li>
+<li><code>vim /etc/sysconfig/docker</code>：修改docker默认配置文件</li>
+<li><code>docker version</code>:查看docker版本</li>
+<li><code>sudo service docker restart</code>重启docker服务
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/03/30/docker常用命令/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -479,72 +523,20 @@ $(&apos;#example&apos;).tooltip(options)
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-12-31T14:06:32.000Z"><a href="/2015/12/31/新手学习Express4之四：数据库集成/">2015-12-31</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/31/新手学习Express4之四：数据库集成/">新手学习Express4之四：数据库集成</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="数据库集成"><a href="#数据库集成" class="headerlink" title="数据库集成"></a>数据库集成</h2><ol>
-<li><p>为<code>Express</code>应用添加连接数据库的能力，只需要加载相应数据库的<code>Node.js驱动</code>即可。这里会列举一些常用的例子。</p>
-<p>除本章列举的例子外，更多的可在npm官网<a href="">https://www.npmjs.com</a>来查找。</p>
-</li>
-<li><p><code>Cassandra</code>：</p>
-<ul>
-<li>模块: <code>cassandra-driver</code> (<a href="https://github.com/datastax/nodejs-driver">https://github.com/datastax/nodejs-driver</a>)</li>
-<li>安装: <code>$ npm install cassandra-driver</code></li>
-<li><p>示例:</p>
-<pre><code>var cassandra = require(&apos;cassandra-driver&apos;);
-var client = new cassandra.Client({ contactPoints: [&apos;localhost&apos;]});
-client.execute(&apos;select key from system.local&apos;, function(err, result) {
-if (err) throw err;
-console.log(result.rows[0]);
-});
-</code></pre></li>
-</ul>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/31/新手学习Express4之四：数据库集成/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/page/3/" class="alignleft prev">Vorherige Seite</a>
+    <a href="/page/3/" class="alignleft prev">Prev</a>
   
   
-    <a href="/page/5/" class="alignright next">Nächste Seite</a>
+    <a href="/page/5/" class="alignright next">Next</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="search" name="q" results="0" placeholder="Search">
     <input type="hidden" name="q" value="site:www.52brt.com">
   </form>
 </div>
@@ -614,7 +606,7 @@ console.log(result.rows[0]);
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>6</small></li>
+    <li><a href="/tags/scala/">scala</a><small>7</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   
