@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 8 | 我的后院自留地</title>
+  <title>Seite 8 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
@@ -64,6 +64,47 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-09-13T14:35:02.000Z"><a href="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/">2015-09-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/">《Elasticsearch服务器开发》学习笔记（四）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第3章-搜索-一"><a href="#第3章-搜索-一" class="headerlink" title="第3章 搜索(一)"></a>第3章 搜索(一)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
+<hr>
+<ol>
+<li>查询：<code>curl -XGET &#39;localhost:9200/library/book/_search?q=title:crime&amp;pretty=true&#39;</code>，另外一种查询方式：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code></li>
+<li>分页和结果集大小：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;from&quot;:9,&quot;size&quot;:20,&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code><br>from:该属性指定我们希望在结果中返回的起始文档。它的默认值是0，表示想要得到从第一个文档开始的结果。<br>size:该属性指定了一次查询中返回的最大文档数，默认值是10.如果只对切面结果感兴趣，并不关心文档本身，可以把这个参数设置成0。</li>
+<li>ES可以返回版本信息的查询。查询命令如下：<code>curl -XGET &#39;localhost:9200/library/book/_search?pretty=true&#39; -d &#39;{&quot;version&quot;:true,&quot;query&quot;:{&quot;query_string&quot;:{&quot;query&quot;:&quot;title:crime&quot;}}}&#39;</code>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/09/13/《Elasticsearch服务器开发》学习笔记（四）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -465,7 +506,7 @@ mysql-community-release-el7-5.noarch
 
 <nav id="pagination">
   
-    <a href="/page/7/" class="alignleft prev">Prev</a>
+    <a href="/page/7/" class="alignleft prev">Vorherige Seite</a>
   
   
   <div class="clearfix"></div>
@@ -473,7 +514,7 @@ mysql-community-release-el7-5.noarch
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="search" name="q" results="0" placeholder="Suche">
     <input type="hidden" name="q" value="site:www.52brt.com">
   </form>
 </div>
@@ -543,7 +584,7 @@ mysql-community-release-el7-5.noarch
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>7</small></li>
+    <li><a href="/tags/scala/">scala</a><small>8</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   
