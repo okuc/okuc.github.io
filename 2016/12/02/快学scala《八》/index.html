@@ -1,0 +1,470 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>快学scala八 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="快学scala八"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-12-02T14:59:45.000Z"><a href="/2016/12/02/快学scala《八》/">2016-12-02</a></time>
+      
+      
+  
+    <h1 class="title">快学scala八</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="模式匹配和样例类"><a href="#模式匹配和样例类" class="headerlink" title="模式匹配和样例类"></a>模式匹配和样例类</h2><ol>
+<li><p>与switch`语句等效的代码：</p>
+<pre><code>var sign = ...
+val ch:Char = ...
+
+ch match{
+ case &apos;+&apos; =&gt; sign=1//无须break，只会执行一个分支
+ case &apos;-&apos; =&gt;sign=-1
+ case _ =&gt;sign=0//捕获所有的，与default等效
+}
+</code></pre><p>也可以这么做：</p>
+<pre><code>sign = ch match {
+    case &apos;+&apos; =&gt; 1//无须break，只会执行一个分支
+    case &apos;-&apos; =&gt; -1
+   case _ =&gt; 0//捕获所有的，与default等效
+}
+</code></pre>  <a id="more"></a>
+<p>可以在<code>match</code>表达式中使用任何类型，而不仅仅是数字。</p>
+</li>
+<li><p>如果<code>case</code>分支很多，在<code>java</code>中就必须全部列出来。而在<code>scala</code>中，则不必，而是使用守卫。</p>
+<pre><code>ch match{
+ case &apos;+&apos; =&gt; sign=1//无须break，只会执行一个分支
+ case &apos;-&apos; =&gt;sign=-1
+ case _ if Character.isDigit(ch)=&gt;digit = Character.digit(ch,10)
+ case _ =&gt;sign=0//捕获所有的，与default等效
+}
+</code></pre></li>
+<li><p>模式中可以包含变量：</p>
+<pre><code>str(i) match {
+    case &apos;+&apos; =&gt; sign =1
+    case &apos;-&apos; =&gt; sign=-1
+    case ch =&gt;digit=Character.digit(ch,10)
+}
+
+str(i) match {
+    case ch if Character.isDigit(ch)=&gt;digit  = Character.digit(ch,10)
+}
+</code></pre><p>由于变量模式中，变量名与常量可能冲突，所以约定变量必须以小写字母开头，如果有小写字母开头的常量，则需要将它包在反引号中。</p>
+</li>
+<li><p>类型模式：即针对不同类型进行匹配，在Scala中，更倾向于这样的，而不是isInstanceOf操作符。</p>
+<pre><code>obj match {
+    case x:Int =&gt;x
+    case s:String =&gt;Integer.parseInt(s)
+    case _:BigInt =&gt;Int.MaxValue
+    case _=&gt;0
+}
+</code></pre><p>在匹配类型的时候，必须给出一个变量名，否则，就会出现问题。会拿对象本身来匹配。</p>
+<pre><code>obj match{
+ case _:BigInt =&gt;Int.MaxValue //匹配任何类型为BigInt的对象
+ case BigInt =&gt; -1 //匹配类型为class的BigInt对象
+}
+</code></pre><p>匹配发生在运行期，Java虚拟机中泛型的类型信息是被擦掉的。因此，不能用<strong>类型匹配特定的Map类型</strong>。</p>
+<pre><code>case m:Map[String,Int] =&gt; ...//会出现问题
+case m:Map[_,_] =&gt; ...//ok
+</code></pre></li>
+<li><p>匹配数组、列表和元组：要匹配数组的内容，可以在模式中使用Array表达式，如：</p>
+<pre><code>arr match {
+    case Array(0) =&gt; &quot;0&quot;
+    case Array(x,y)=&gt;x+&quot; &quot;+y
+    case Array(0,_*) =&gt;&quot;0 ...&quot;
+    case _ =&gt; &quot;something else&quot;
+}
+</code></pre><p>第一个模式匹配包含<code>0</code>的数组，第二个模式匹配任何带有两个元素的数组，并将这两个元素分别绑定到变量<code>x</code>和<code>y</code>。第三个表达式匹配任何以<code>0</code>开始的数据。可以以同样的方式匹配列表，使用<code>List</code>表达式。或者，也可以使用<code>::</code>操作符：</p>
+<pre><code>lst match {
+  case 0 :: Nil =&gt; &quot;0&quot;
+  case x::y::Nil=&gt;x+&quot; &quot;+y
+  case 0::tail=&gt;&quot;0 ...&quot;
+  case _=&gt;&quot;something else&quot;
+}
+</code></pre><p>对于元组，可以在模式中使用元组表示法：</p>
+<pre><code>pair match {
+  case (0,_) =&gt;&quot;0 ...&quot;
+  case (y,0) =&gt;y+&quot; 0&quot;
+  case _=&gt; &quot;neither is 0&quot;
+}
+</code></pre></li>
+<li><p>提取器：带有从对象中提取值的<code>unapply</code>或<code>unapplySeq</code>方法的对象。<code>unapply</code>方法用于提取固定数量的对象；而<code>unapplySeq</code>提取的是一个序列，可长可短。</p>
+<pre><code>arr match {
+  case Array(0,x) =&gt; ...
+  ...
+}
+</code></pre><p>Array伴生对象就是一个提取器，它定义一个<code>unapplySeq</code>方法，该方法被调用时，是以被执行匹配动作的表达式作为参数，而不是模式中看上去是参数的表达式。<code>Array.unapplySeq(arr)</code>产生一个序列的值，即数组中的值。第一个值与0进行比较，而第二个值被赋值组x。</p>
+<p>正则表达式是另一个适合使用提取器的场景。如果正则表达式有分组，你可以用提取器来匹配每个分组。如：</p>
+<pre><code>val pattern = &quot;([0-9]+)([a-z]+)&quot;.r
+&quot;99 bottles&quot; match{
+    case pattern(num ,item)=&gt; ...//将num设为&quot;99&quot;,item设为&quot;bottles&quot;
+
+}
+
+pattern.unapplySeq(&quot;99 bottles&quot;)产出一系列匹配分组的字符串。这些字符串被分别赋值给了变是num和item。
+</code></pre></li>
+<li><p>变量声明中的模式： <code>val (x,y) = (1,2)</code>,这对于返回对偶的函数很有用。如，<code>val (q,r)=BigInt(10) /% 3</code>, <code>/&amp;</code>方法返回商和余数的对偶，这两个值分别被<code>q</code>和<code>r</code>捕到。<br>同样的语法也可认用于任何带有变量的模式。例如： <code>val Array(first,second,_*) = arr</code>，上述代码将数组<code>arr</code>的第一个元素和第二个元素分别赋值给<code>first</code>和<code>second</code>。</p>
+</li>
+<li><p>for表达式中的模式：在for中，对每一个遍历到的值，这些变量都会被绑定。这使得我们可以方便的遍历映射：</p>
+<pre><code>import scala.collection.JavaConversions.propertiesAsScalaMap//将Java的Properties转换成Scala映射
+for((k,v)&lt;-System.getProperties()) println(k+&quot; -&gt; &quot; +v)//失败的匹配会被忽略
+for((k,&quot;&quot;)&lt;-System.getProperties()) println(k+&quot; -&gt; &quot; +v)//打印出所有值为空的键，也可以使用守卫：
+for((k,v)&lt;-System.getProperties() if v==&quot;&quot;) println(k+&quot; -&gt; &quot; +v)
+</code></pre></li>
+<li><p>样例类是一种特殊的类，它们经过优化以被用于模式匹配。在本例中，我们有两个扩展自常规(非样例)类的样例类：</p>
+<pre><code>abstract class Amount
+case class Dollar(value:Double) extends Amount
+case class Currency(value:Double,unit:String) extends Amount
+</code></pre><p>你也可以有针对单例的样例对象：</p>
+<pre><code>case object Nothing extends Amount
+</code></pre><p>当我们有一个类型为Amount的对象时，我们可以用模式匹配来匹配它的类型，并将属性值绑定到变量：</p>
+<pre><code>amt match{
+  case Dollar(v) =&gt; &quot;$&quot; + v
+  case Currency(_,u) =&gt; &quot;Oh noes,I got &quot;+u
+  case Nothing =&gt; &quot;&quot;
+}
+</code></pre><p>当声明样例类时，有如下几件事自动发生：</p>
+<ul>
+<li>构造器中的每个参数都成为val–除非它被显式地声明为var(不建议这样做)</li>
+<li>在伴生对象中提供apply方法让他不用new关键字就能构造出相应的对象，比如,Dollar(29.95)或    Currency(29.95,”EUR”)</li>
+<li>提供unapply方法让模式匹配可以工作。</li>
+<li>将生成toString、equals、hashCode和copy方法–除非显式地给出这些方法的定义。</li>
+</ul>
+<p>除上述外，样例类和其他类完全一样，你可以添加方法和字段，扩展它们等等。</p>
+</li>
+<li><p>样例类的copy方法创建一个与现有对象值相同的新对象。如：</p>
+<pre><code>val amt = Currency(29.95,&quot;EUR&quot;)
+val price = amt.copy()
+</code></pre><p>也可以用带名参数来修改某些属性：</p>
+<pre><code>val price = amt.copy(value = 19.95) // Currency(19.95,&quot;EUR&quot;)
+val price = amt.copy(unit = &quot;CHF&quot;)  //Currency(29.95,&quot;CHF&quot;)
+</code></pre></li>
+<li><p><code>case</code>语句中的中置表示法：如果<code>unapply</code>方法产出一个对偶，则你可以在<code>case</code>语句中使用中置表示法。尤其是，对于有两个参数的样例类，可以用中置表过法来表示它。</p>
+<pre><code>amt match　{　case a Currency u =&gt; ...}//等同于case Currency(a,u)
+</code></pre><p>每个<code>List</code>对象要么是<code>Nil</code>，要么是样例类<code>::</code>,定义如下：</p>
+<pre><code>case class ::[E](head:E,tail:List[E]) extends List[E]
+</code></pre><p>所以，可以这么写：</p>
+<pre><code>lst match{case h::t=&gt;...}//等同于case ::(h,t),将调用 ::.unapply(lst)
+result match{case p ~ q =&gt; ...}//等同于case ~(p,q)
+result match{case p~q~r=&gt;...}//等同于 case ~(~(p,q),r)
+case first :: second :: rest //case ::(first,::(second,rest))
+
+case object +: {
+  def unapply[T](input:List[T]) = if(input.isEmpty) None else Some((input.head,input.tail))
+}
+
+1 +: 7 +:  2 +:  9 +: Nil match{
+    case first +: second +: rest =&gt; first +second+rest.length
+}
+</code></pre></li>
+<li><p>样例类经常被用于嵌套结构。</p>
+<pre><code>abstract class Item
+case class Article(description:String,price:Double) extends Item
+case class Bundle(description:String,discount:Double,items:Item*) extends Item
+
+Bundle(&quot;Father&apos;s day special&quot;,20.0,Article(&quot;Scala for the impatient&quot;,39.95),Bundle(&quot;Anchor Distillery Sampler&quot;,10.0,Article(&quot;Old potrero Straight Rye Whisky&quot;,79.95),Article(&quot;Junipero Gin&quot;,32.95)))
+
+case Bundel(_,_,Article(descr,_),_*) =&gt;...//将descr绑定一Bundle的第一个Article的描述
+case Bundel(_,_,art@Article(_,_),rest @ _*)=&gt;... //art就是Bundel中的第一个Article，rest则是乘余的Item序列
+</code></pre><p>在本例中，<code>_*</code>是必需的。<code>case Bundle(_,_,art@Article(_,_),rest)=&gt;..</code>.将只能匹配到那种只有一个<code>Article</code>再加正好一个<code>Item</code>的<code>Bundle</code>，而这个<code>Item</code>将被绑定到<code>res</code>t变量。下面是一个计算某Item价格的实例：</p>
+<pre><code>def price(it:item):Double = it match{
+    case Article(_,p)=&gt;p
+    case Bundle(_,disc,its@_*)=&gt;its.map(price _).sum-disc
+}
+</code></pre><p>样例类适用于那些标记不会改变的结构。如<code>Scala</code>的<code>List</code>就是用样例来实现的：</p>
+<pre><code>abstract class List
+case object Nil extends List
+case class::(head:Any,tail:List) extends List
+</code></pre><p>列表要么是空的，要么有一头一尾（尾部可能是空的，也可能非空）。把样例类用在合适的地方，还是非常方便的。原因如下：</p>
+<ul>
+<li>模式匹配通常比继承更容易把我们引向更精简的代码。</li>
+<li>构造时不需要用new的复合对象更加易读。</li>
+<li>你将免费得到toString、equals、hashCode和copy方法。</li>
+</ul>
+</li>
+<li><p>当用样例类来做模式匹配时，想让编译器帮你确保你已经列出了所有可能的选择，需要将样例类的通用超类声明为<code>sealed</code>。</p>
+<pre><code>sealed abstract class Amount
+case class Dollar(value:Double) extends Amount
+case class Currency(value:Double,unit:String)
+</code></pre><p>密封类的所有子类都必须在与该密封类相同的文件中定义。</p>
+</li>
+<li><p>样例类让你可以在Scala中模拟出枚举类型：</p>
+<pre><code>sealed abstract class TrafficLightColor
+case object Red extends TrafficLightColor
+case object Yellow extends TrafficLightColor
+case object Green extends TrafficLightColor
+color match{
+  case Red =&gt;&quot;stop&quot;
+  case Yellow =&gt;&quot;hurry up&quot;
+  case Green = &gt;&quot;go&quot;
+}
+</code></pre></li>
+<li><p><code>Option</code>类型用样例类来表示那种可能存在，也可能不存在的值。样例子类<code>Some</code>包装了某个值，如<code>Some(&quot;Fred&quot;)</code>,而样例对象<code>None</code>表示没有值。<code>Option</code>支持泛型，上述例子的类型为：<code>Option[String]</code>。<br><code>Map</code>类的<code>get</code>方法返回一个<code>Option</code>，如果对于给定的键没有对应的值，则<code>get</code>返回<code>None</code>。如果有值，则该值包 <code>Some</code>中返回。</p>
+<p>模实匹配来分析这样的值：</p>
+<pre><code>scores.get(&quot;alice&quot;) match{
+ case Some(score) =&gt;println(score)
+ case None =&gt; println(&quot;No score&quot;)
+}
+</code></pre><p>也可以使用<code>isEmpty</code>和<code>get</code></p>
+<pre><code>val alicesScore = scores.get(&quot;Alice&quot;)
+if(alicesScore.isEmpty) println(&quot;No score&quot;)
+else println(alicesScore.get)
+</code></pre><p>用<code>getOrElse</code>方法更好：</p>
+<pre><code>println(alicesScore.getOrElse(&quot;No score&quot;))
+</code></pre><p><code>Map</code>类也提供了<code>getOrElse</code>方法：<code>println(scores.getOrElse(&quot;Alice&quot;,&quot;No score&quot;))
+for(score &lt;- scores.get(&quot;Alice&quot;))println(score)</code>//get方法返回None，什么都不会发生。返回Some则score绑定它的内容。<br><code>Option</code>也可当做一个要么是空，要么带有单个元素的集合，并使用诸如<code>map</code>、<code>foreach</code>、<code>filter</code>等方法。<code>scores.get(&quot;Alice&quot;).foreach(println _)</code>//如果get返回None，则什么也不做</p>
+</li>
+<li><p>被包在花括号内的一组<code>case</code>语句是一个偏函数–一个并非对所有输入值都有定义的函数。它是<code>PartialFunction[A,B]</code>类的一个实例。（A是参数类型，B是返回类型。）该类有两个方法：<code>apply</code>方法从匹配到的模式计算函数值，而<code>isDefinedAt</code>方法在输入至少匹配其中一个模式时返回<code>true</code>。</p>
+<pre><code>val f:PartialFunction[Char,Int]={case &apos;+&apos;=&gt;1;case &apos;-&apos;=&gt;-1}
+f(&apos;-&apos;)//调用f.apply(&apos;-&apos;),返回-1
+f.isDefinedAt(&apos;0&apos;)//false
+f(&apos;0&apos;)//抛出MatchError
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/scala/">scala</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    <a href="/2016/12/08/快学scala《九》/" class="alignleft prev" >Prev</a>
+    
+    
+    <a href="/2016/11/19/快学scala《七》/" class="alignright next" >Next</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/12/02/快学scala《八》/" data-title="快学scala八" data-url="http://www.52brt.com/2016/12/02/快学scala《八》/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:www.52brt.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
+  
+    <li><a href="/tags/Nashorn/">Nashorn</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/Scala/">Scala</a><small>3</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/ambari/">ambari</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hadoop/">hadoop</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>15</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>9</small></li>
+  
+    <li><a href="/tags/kafka/">kafka</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/scala/">scala</a><small>9</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/其他/">其他</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

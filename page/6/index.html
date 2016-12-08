@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Seite 6 | 我的后院自留地</title>
+  <title>Page 6 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
@@ -64,6 +64,43 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-12-16T14:06:32.000Z"><a href="/2015/12/16/新手学习mongodb之五：游标及模糊查询/">2015-12-16</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/12/16/新手学习mongodb之五：游标及模糊查询/">新手学习mongodb之五：游标及模糊查询</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li>使用<code>find</code>函数进行查询时，MongoDB并不是一次返回结果集中的所有文档，而是以多条文档的形式分白费来返回查询结果，返回的文档会缓存到内存中。<br>分批的原则是不超过101个文档或1M的数据，以先达到的标准为主。如果101个文档大于1M，则会减少文档的数量，以小的为准，除第一次外，以后每次可以返回4M的文档。<br>这种批量返回结果的好处是，一方面，它可以减少客户端对服务器连接次数，从而减轻服务器的查询负担；另一方面，当查询结果集很大时，批量返回的结果的方式可以减少客户端的等待时间，提高数据的处理效率。<br>在没有建立索引的字段上进行排序，会把符合条件的全部加载到内存中进行排序，所以，一定要建立索引。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/12/16/新手学习mongodb之五：游标及模糊查询/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -732,43 +769,6 @@ appModule.directive(&apos;hello&apos;, function() {
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/">2015-12-08</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/">新手学习Angularjs之四：常用的绑定命令</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
-<p><code>ng-bind</code>、<code>ng-model</code>、<code>｛{}｝</code>这三个命令如果还不明白，请参考这里<a href="http://www.52brt.com/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">新手学习Angularjs之二：ng-bind、ng-model、大括号的区别</a>,下面，我们重点来看以下几个命令：<code>ng-show/hide</code>、<code>ng-if</code>、<code>ng-submit</code>、<code>ng-disabled</code>、<code>ng-checked</code>、<code>ng-src</code>、<code>ng-href</code>、<code>ng-class</code>、<code>ng-selected</code>、<code>ng-change</code>几个命令。</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之三：几种service的区别/">2015-12-08</a></time>
       
       
@@ -809,29 +809,25 @@ appModule.directive(&apos;hello&apos;, function() {
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-12-07T14:06:32.000Z"><a href="/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">2015-12-07</a></time>
+        <time datetime="2015-12-08T14:06:32.000Z"><a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/">2015-12-08</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">新手学习Angularjs之二：ng-bind、ng-model、大括号的区别</a></h1>
+    <h1 class="title"><a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/">新手学习Angularjs之四：常用的绑定命令</a></h1>
   
 
     </header>
     <div class="entry">
       
         <p>本文假设nodejs及bower环境变量已经设置完成，如果还没有设置，可参见这里：<a href="http://www.52brt.com/2015/12/03/windows下搭建node.js及npm的工作环境_更新版/">windows下搭建node.js及npm的工作环境（更新版）</a>、<a href="http://www.52brt.com/2015/12/05/Node.js的项目创建及依赖维护工作/">Node.js的项目创建及依赖维护工作</a>。</p>
-<p>在学习的过程中，遇到了这三个对象，一时把我给搞糊涂了。经过百度，得到了以下答案：</p>
-<ul>
-<li><code>ng-model</code>：用于双向绑定，所以一般用于前台可输入的控件，如<code>input</code>。</li>
-<li><code>ng-bind</code>：只用于前台展示，所以一般和<code>div</code>结合使用。</li>
-<li><code>双大括号</code>：其基本作用类似<code>ng-bind</code>，但不同的是，在<code>angularjs</code>未加载完成时，由于页面未解释，所以很有可能客户会看到大括号，所以一般<code>&lt;div ng-clock class=&quot;ng-clock&quot;&gt;｛{uname}｝&lt;/div&gt;</code>这样使用，这样可使页面先不加载大括号，待全部加载完成后再解释执行。
+<p><code>ng-bind</code>、<code>ng-model</code>、<code>｛{}｝</code>这三个命令如果还不明白，请参考这里<a href="http://www.52brt.com/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/">新手学习Angularjs之二：ng-bind、ng-model、大括号的区别</a>,下面，我们重点来看以下几个命令：<code>ng-show/hide</code>、<code>ng-if</code>、<code>ng-submit</code>、<code>ng-disabled</code>、<code>ng-checked</code>、<code>ng-src</code>、<code>ng-href</code>、<code>ng-class</code>、<code>ng-selected</code>、<code>ng-change</code>几个命令。</p>
       
     </div>
     <footer>
       
         
           <div class="alignleft">
-            <a href="/2015/12/07/新手学习Angularjs之二：ng-bind、ng-model、大括号的区别/#more" class="more-link">阅读更多</a>
+            <a href="/2015/12/08/新手学习Angularjs之四：常用的绑定命令/#more" class="more-link">阅读更多</a>
           </div>
         
         
@@ -847,17 +843,17 @@ appModule.directive(&apos;hello&apos;, function() {
 
 <nav id="pagination">
   
-    <a href="/page/5/" class="alignleft prev">Vorherige Seite</a>
+    <a href="/page/5/" class="alignleft prev">Prev</a>
   
   
-    <a href="/page/7/" class="alignright next">Nächste Seite</a>
+    <a href="/page/7/" class="alignright next">Next</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="search" name="q" results="0" placeholder="Search">
     <input type="hidden" name="q" value="site:www.52brt.com">
   </form>
 </div>
@@ -927,7 +923,7 @@ appModule.directive(&apos;hello&apos;, function() {
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>8</small></li>
+    <li><a href="/tags/scala/">scala</a><small>9</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   
