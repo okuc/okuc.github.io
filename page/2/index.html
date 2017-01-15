@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 2 | 我的后院自留地</title>
+  <title>Страница 2 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
@@ -64,6 +64,49 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-07-15T14:59:45.000Z"><a href="/2016/07/15/快学scala《二》/">2016-07-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/07/15/快学scala《二》/">快学scala二</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="数组操作"><a href="#数组操作" class="headerlink" title="数组操作"></a>数组操作</h2><ol>
+<li><p>定义长度不变的数组：</p>
+<pre><code>var nums = new Array[Int](10) //10个整数的数组，所有元素初始化为0
+var a = new Array[String](10)//10个元素的字符串数组，所有元素初始化为null
+var s = Array(&quot;Hello&quot;,&quot;World&quot;)//长度为2的Array[String],类型是推导出来的，已提供初始值，不需要new
+s(0)=&quot;Goodbye&quot;  //使用()而不是[]来访问元素
+</code></pre></li>
+<li><p>变长数组，<code>Java</code>有<code>ArrayList</code>，<code>C++</code>有<code>vector</code>。<code>Scala</code>中的等效数据结构为<code>ArrayBufferi</code></p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/07/15/快学scala《二》/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="coding">
   
   <div class="post-content">
@@ -524,82 +567,20 @@ long millis = timeElapsed.toMillis();
 
 
 
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-06-04T14:59:45.000Z"><a href="/2016/06/04/JAVA程序员学习Scala（一）/">2016-06-04</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/04/JAVA程序员学习Scala（一）/">JAVA程序员学习Scala（一）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <ul>
-<li><code>Scala</code>环境设置，将<code>bin</code>目录加到<code>path</code>中即可。</li>
-<li>命令行中，输入<code>scala</code>进入<code>Shell</code>环境，<code>Ctrl+A</code>回到行首，<code>Ctrl+E</code>到达行尾，如果没敲完，就回车，会出现<code>|</code>，提示你继续输入。<code>:quit</code>或者<code>exit</code>退出<code>shell</code>。</li>
-<li>也可以在命令行中，直接输入<code>scala -e &quot;println(\&quot;Hello \&quot;+args(0)+\&quot;,\&quot;+args(1))&quot; Buddy &quot;welcome to Scals</code>,<strong>没测试通过</strong></li>
-<li>还可以使用<code>:load</code>选项把它载入<code>shell</code>。<code>:load script.scala</code>。<code>scala Helloworld.scala</code>。<code>scala后</code>边的参数可以是脚本，也可以是目标文件(<code>.class</code>文件)。在给它传递<code>Java</code>属性的时候，可以用<code>-Dproperty=value</code>格式。在文件前边加上<code>-avaecompiled</code>选项，<code>Scala</code>工具会把字节码存成一个<code>Jar</code>文件。</li>
-<li><p>在类<code>Unix</code>的<code>shell</code>上，可以写脚本：</p>
-<pre><code>#!/usr/bin/env scala
-!#
-println(&quot;hello &quot;+args(0))
- 然后添加执行权限：chmod +x Script.scala即可直接执行。./Sript.scala okuc。okuc是参数。
-- 在windows上，可以在bat批处理中带参数的方式，如下：
-echo off
-cls
-call scala %1
-pause
-</code></pre></li>
-<li><p>一个简单的例子：</p>
-<pre><code>for(i&lt;-1 to 3){//包括3
-  print(i+&quot;,&quot;)
-}
-println(&quot;Scala Rocks!!!&quot;)
-
-for(i&lt;-1 until 3){//不包括3
-  print(i+&quot;,&quot;)
-}
-println(&quot;Scala Rocks!!!&quot;)
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/06/04/JAVA程序员学习Scala（一）/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/" class="alignleft prev">Prev</a>
+    <a href="/" class="alignleft prev">Назад</a>
   
   
-    <a href="/page/3/" class="alignright next">Next</a>
+    <a href="/page/3/" class="alignright next">Вперед</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="search" name="q" results="0" placeholder="Поиск">
     <input type="hidden" name="q" value="site:www.52brt.com">
   </form>
 </div>
@@ -608,7 +589,7 @@ println(&quot;Scala Rocks!!!&quot;)
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Метки</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -669,7 +650,7 @@ println(&quot;Scala Rocks!!!&quot;)
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>9</small></li>
+    <li><a href="/tags/scala/">scala</a><small>10</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   
@@ -703,7 +684,7 @@ println(&quot;Scala Rocks!!!&quot;)
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2016 okuc
+  &copy; 2017 okuc
   
 </div>
 <div class="clearfix"></div></footer>

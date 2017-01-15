@@ -70,6 +70,70 @@ var _hmt = _hmt || [];
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-12-28T14:59:45.000Z"><a href="/2016/12/28/快学scala《十》/">2016-12-28</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/12/28/快学scala《十》/">快学scala十</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="高级类型"><a href="#高级类型" class="headerlink" title="高级类型"></a>高级类型</h2><ol>
+<li><p>单例类型：给定任何引用<code>v</code>，可以得到类型<code>v.type</code>，它可能有两个值：<code>v</code>和<code>null</code>。<br>下面是一个返回<code>this</code>的方法，通过这种方式可以把方法调用串接起来：</p>
+<pre><code>class Document{
+   def setTitle(title:String) = {...;this}
+   def setAuthor(author:String) = {...;this}
+   ...
+}
+
+artical.setTitle(&quot;Whatever Floats Your Boat&quot;).setAuthor(&quot;Cay Horstmann&quot;)
+</code></pre><p>不过，如果你还有子类，则会出现问题：</p>
+<pre><code>class Book extends Document{
+ def addChapter(chapter:String) = {...;this}
+ ...
+}
+val book = new Book();
+book.setTitle(&quot;Scala for the Impatient&quot;).addChapter(chapter1)//错误，因为这个this会被推断为Document,但是Document并没有addChapter方法。解决的方法是声明setTitle的返回类型为this.type。
+
+def setTitle(title:String):this.type = (...;this)
+</code></pre><p>下面是一个接收<code>object</code>实为参数的方法：</p>
+<pre><code>object Title
+class Document{
+ private var useNextArgAs:Any = null
+ def set(obj:Title.type):this.type = {useNextArgAs = obj;this}
+ def to(arg:String) = if(useNextArgAs == Title) title = arg;else ...
+ ...
+}
+
+book.set(Title).to(&quot;Scala for the Impatient&quot;)
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/12/28/快学scala《十》/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-12-08T14:59:45.000Z"><a href="/2016/12/08/快学scala《九》/">2016-12-08</a></time>
       
       
@@ -500,61 +564,18 @@ val contents = source.mkString //如果文件不是很大，可以把它读成�
 
 
 
-  <article class="coding">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-07-15T14:59:45.000Z"><a href="/2016/07/15/快学scala《二》/">2016-07-15</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/07/15/快学scala《二》/">快学scala二</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="数组操作"><a href="#数组操作" class="headerlink" title="数组操作"></a>数组操作</h2><ol>
-<li><p>定义长度不变的数组：</p>
-<pre><code>var nums = new Array[Int](10) //10个整数的数组，所有元素初始化为0
-var a = new Array[String](10)//10个元素的字符串数组，所有元素初始化为null
-var s = Array(&quot;Hello&quot;,&quot;World&quot;)//长度为2的Array[String],类型是推导出来的，已提供初始值，不需要new
-s(0)=&quot;Goodbye&quot;  //使用()而不是[]来访问元素
-</code></pre></li>
-<li><p>变长数组，<code>Java</code>有<code>ArrayList</code>，<code>C++</code>有<code>vector</code>。<code>Scala</code>中的等效数据结构为<code>ArrayBufferi</code></p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/07/15/快学scala《二》/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
   
-    <a href="/page/2/" class="alignright next">Next</a>
+    <a href="/page/2/" class="alignright next">Вперед</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="search" name="q" results="0" placeholder="Поиск">
     <input type="hidden" name="q" value="site:www.52brt.com">
   </form>
 </div>
@@ -563,7 +584,7 @@ s(0)=&quot;Goodbye&quot;  //使用()而不是[]来访问元素
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Метки</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -624,7 +645,7 @@ s(0)=&quot;Goodbye&quot;  //使用()而不是[]来访问元素
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>9</small></li>
+    <li><a href="/tags/scala/">scala</a><small>10</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   
@@ -658,7 +679,7 @@ s(0)=&quot;Goodbye&quot;  //使用()而不是[]来访问元素
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2016 okuc
+  &copy; 2017 okuc
   
 </div>
 <div class="clearfix"></div></footer>

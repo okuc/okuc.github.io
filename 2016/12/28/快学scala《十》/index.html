@@ -1,0 +1,638 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>快学scala十 | 我的后院自留地</title>
+  <meta name="author" content="okuc">
+  
+  <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="快学scala十"/>
+  <meta property="og:site_name" content="我的后院自留地"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="我的后院自留地" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7ea69d6de48b6d7cd2a53bcc519beadc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">我的后院自留地</a></h1>
+  <h2><a href="/">琴棋书画诗酒花 当年件件不离它 而今事事都变更 柴米油盐酱醋茶</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="//">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/coding">编程技术</a></li>
+    
+      <li><a href="/bigData">大数据技术</a></li>
+    
+      <li><a href="/dataV">数据可视化</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="coding">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-12-28T14:59:45.000Z"><a href="/2016/12/28/快学scala《十》/">2016-12-28</a></time>
+      
+      
+  
+    <h1 class="title">快学scala十</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="高级类型"><a href="#高级类型" class="headerlink" title="高级类型"></a>高级类型</h2><ol>
+<li><p>单例类型：给定任何引用<code>v</code>，可以得到类型<code>v.type</code>，它可能有两个值：<code>v</code>和<code>null</code>。<br>下面是一个返回<code>this</code>的方法，通过这种方式可以把方法调用串接起来：</p>
+<pre><code>class Document{
+   def setTitle(title:String) = {...;this}
+   def setAuthor(author:String) = {...;this}
+   ...
+}
+
+artical.setTitle(&quot;Whatever Floats Your Boat&quot;).setAuthor(&quot;Cay Horstmann&quot;)
+</code></pre><p>不过，如果你还有子类，则会出现问题：</p>
+<pre><code>class Book extends Document{
+ def addChapter(chapter:String) = {...;this}
+ ...
+}
+val book = new Book();
+book.setTitle(&quot;Scala for the Impatient&quot;).addChapter(chapter1)//错误，因为这个this会被推断为Document,但是Document并没有addChapter方法。解决的方法是声明setTitle的返回类型为this.type。
+
+def setTitle(title:String):this.type = (...;this)
+</code></pre><p>下面是一个接收<code>object</code>实为参数的方法：</p>
+<pre><code>object Title
+class Document{
+ private var useNextArgAs:Any = null
+ def set(obj:Title.type):this.type = {useNextArgAs = obj;this}
+ def to(arg:String) = if(useNextArgAs == Title) title = arg;else ...
+ ...
+}
+
+book.set(Title).to(&quot;Scala for the Impatient&quot;)
+</code></pre><a id="more"></a>
+</li>
+<li><p>类型投影： 嵌套类从属于包含它的外部对象。如：</p>
+<pre><code>import scala.collection.mutable.ArrayBuffer
+class NetWork{
+ class Member(val name:String){
+   val contacts = new ArrayBuffer[Member]
+ }
+
+ private val members = new ArrayBuffer[Member]
+ def join(name:String) ={
+   val m=new Member(name)
+   members+=m
+   m
+ }
+}
+</code></pre><p>每个网络实例都 有它自已的Member类，如，下例是两个网络：</p>
+<pre><code>val chatter = new Network
+val myFace = new Network
+</code></pre><p><code>chatter.Member</code>和<code>myFace.Member</code>是不同的类。</p>
+<p>不能将其中一个网络的成员添加到另一个网络。如果不想有这个约束，则应该 把<code>Member</code>类直接挪到<code>Network</code>类之外。一个好的地方可能是<code>Network</code>的伴生对象。如果你要的是细粒度的类，只是偶尔想使用更为松散的定义，那么可以用”类型投影”<code>Network#Member</code>，意思是任何<code>Network</code>的<code>Member</code>。</p>
+<pre><code>class Network{
+ class Member(val name:String){
+   val contacts = new ArrayBuffer[network#Member]
+ }
+}
+</code></pre></li>
+<li><p>路径：有如下类型：<code>com.horstmann.impatient.chatter.Member</code>，或者，如果我们将<code>Member</code>嵌套在伴生对象当中的话：<code>com.horstmann.impatient.Network.Member</code>,这种表达式称之为路径。路径的所有组成部分必须是稳定的，必段指定到单个、有穷的范围。组成部分必须是以下中的一种：<code>包</code>、<code>对象</code>、<code>val</code>、<code>this、super、super[S]、C.this、C.super或C.super[S]</code>。<br>路径组成部分不能是类，嵌套的内部类并不是单个类型，而是给每个实例都留出了各自独立的一套类型。类型也不能是<code>var</code>：</p>
+<pre><code>var chatter = new Network
+...
+val fred = new chatter.Member //错误，因为chatter不稳定。
+</code></pre><p>在内部，编译器将所有嵌套的类型表达式<code>a.b.c.T</code>都翻译成类型投影<code>a.b.c.type#T</code>。如：<code>chatter.Member</code>就成为<code>chatter.type#Member</code>–任何位于<code>chatter.type</code>单例中的<code>Member</code>。</p>
+</li>
+<li><p>类型别名：对于复杂类型，可以用<code>type</code>关键字创建一个简单的别名：</p>
+<pre><code>class Book{
+  import scala.collection.mutable._
+  type Index = HashMap[String,(Int,Int)]
+  ...
+}
+</code></pre><p>如上定义后就可以用<code>Book.Index</code>而不是更笨重的类型<code>scala.collection.mutable.HashMap[String,(Int,Int)]</code>。类型别名必须被嵌套在类或对象中。它不能出现在<code>Scala</code>文件的顶层。不过在<code>REPL</code>中可以在顶层声明<code>type</code>，因为<code>REPL</code>中所有的内容都隐式地包含在一个顶层对象中。<code>type</code>关键字同样被用于那些在子类中被具体化的抽象类型，如：</p>
+<pre><code>abstract class Reader{
+ type Contents
+ def read(fileName:String):Contents
+}
+</code></pre></li>
+<li><p>结构类型：一组关于抽象方法、字段和类型的规格说明，这些抽象方法、字段和类型是满足该规格的类型必须具备的。如：</p>
+<pre><code>def appendLines(target:{def append(str:String):Any},lines:Iterable[String]{
+  for(l&lt;-lines){target.append(l);target.append(&quot;\n&quot;)}
+}
+</code></pre><p>上述例子要求<code>target</code>对应的类中，必须有一个指定的名为<code>append</code>的方法，它是通过反射来实现的。这比常规方法，反射调用的开销要大得多，所以，尽量使用特质，不使用结构类型。</p>
+</li>
+<li><p>复合类型：<code>T1 with T2 with T3</code>，其中<code>T1</code>、<code>T2</code>、<code>T3</code>等是类型，要想成为该复合类型的实例，某个值必须满足每一个类型的要求才行。这样的类型也被称为交集类型。可以用复合类型来操纵那些必须提供多个特质的值：</p>
+<pre><code>val image = new ArryBuffer[java.awt.Shape with java.io.Serializable]
+
+val rect = new Rectangle(5,10,20,30)
+image +=rect //OK--Rectangle是Serializable的
+image += new Area(rect) //错误--Area是shape但不是Serializable。
+
+trait ImageShape extends Shape with Serializable//意味着ImageShape扩展自交集类型Shape with Serializable。
+</code></pre><p>可以把结构类型的声明添加到简单类型或复合类型，如：</p>
+<pre><code>Shape with Serializable {def contains(p:Point):Boolean}
+</code></pre><p>该类型的实例必须即是<code>Shape</code>的子类型也是<code>Serializable</code>的子类型，并且必须带有一个<code>Point</code>参数的<code>contains</code>方法。</p>
+<p><code>{def append(str:String):Any}</code> 是 <code>AnyRef{def append(str:String):Any}</code> 的简写。<br><code>Shape with Serializable</code> 是 <code>Shape with Serializable {}</code> 的简写。</p>
+</li>
+<li><p>中置类型：一个带有两个类型参数的类型，类型名称写在两个类型参数之间，如：<code>String Map Int</code> 而不是<code>Map[String,Int]</code>。还可以定义成<code>X</code>来表示：</p>
+<pre><code>type x[A,B] = (A,B)  //之后可以写StringXInt而不是（String，Int）了。
+</code></pre><p>中置类型操作符都有相同的优先级。和常规操作符一样，它们是左结合的，除非它们的名子以<code>:</code>结尾。<code>String x Int x Int</code>。它的意思是<code>((String,Int),Int)</code>。中置类型的名称不能为<code>*</code>。</p>
+</li>
+<li><p>存在类型：它主要是为了与<code>Java</code>的类型通配符兼容。存在类型的定义方式是在类型表达式这后跟上<code>forSome{...}</code>,花括号中包含了<code>type</code>和<code>val</code>的声明。如：</p>
+<pre><code>Array[T] forSome {type T &lt;: JComponent } //Array[_ &lt;:JComponent]
+Array[_] //等价于Array[T] forSome{type T} 
+Map[_,_]//等同于Map[T,U] forSome {type T;type U}
+Map[T,U] forSome{type T;type U&lt;:T}
+n.Member forSome {val n:Network}
+</code></pre><p>存在类型没有特别的用途，完全可以用类型投影<code>Network#Member</code>。</p>
+<pre><code>def process [M &lt;: n.Member forSome {val n:NetWork}](m1:M,m2:M)=(m1,m2)该方法将会接受相同网络的成员，但拒绝那些来自不同网络的成员。
+
+ val chatter = new Network
+ val myFace = new Network
+ val fred = chatter.join(&quot;Fred&quot;)
+ val wilma = catter.join(&quot;Wilma&quot;)
+ val barney = myFace.join(&quot;Barney&quot;)
+ process(fred,wilma) //ok
+ process(fred,barney)//错误
+</code></pre></li>
+<li><p><code>Scala</code>语言参考给出了所有<code>Scala类型</code>的完整清单，列在下边，并简单解释。</p>
+<ul>
+<li>类或特质：<code>class C ...</code>，<code>trait C ...</code></li>
+<li>元组类型：<code>(T1,...,Tn)</code></li>
+<li>函数类型：<code>(T1,...,Tn)=&gt;T</code></li>
+<li>带注解的类型：<code>T@A</code></li>
+<li>参数化类型：<code>A[T1,...,T2]</code></li>
+<li>单例类型：<code>值.type</code></li>
+<li>类型投影：<code>O#I</code></li>
+<li>复合类型：<code>T1 with T2 with .. with Tn{声明}</code></li>
+<li>中置类型：<code>T1 A T2</code></li>
+<li>存在类型：<code>T forSome {type 和val声明}</code></li>
+</ul>
+</li>
+<li><p>特质要求混入它的类扩展自另一个类型。用自身类型的声明来定义特质：<code>this:类型=&gt;</code> ，这样的特质只可以被混入给定类型的子类中。如：</p>
+<pre><code>trait Logged{
+  def log(msg:String)
+}
+
+trait LoggedException extends Logged{
+  this:Exception =&gt; 
+    def log (log(getMessage())) //可以调用getMessage,因为this是一个Exception。
+}
+
+val f = new JFrame with LoggedException//错误，JFrame不是LoggedException的自身类型Exception的子类型，如果有多个类型要求，可以用复合类型。
+</code></pre><p>自身类型不能自动继承：</p>
+<pre><code> trait ManagedException extends LoggedException{...}//错误，ManagedException并未提供Exception。在这种情况下，需要重复自身类型的声明：
+trait ManagedException extends LoggedException{
+ this:Exception =&gt;
+   ...
+}
+</code></pre></li>
+<li><p>在通过组件构建大型系统，每个组件都有不同实现的时候，我们需要将组件的不同选择组装起来。蛋糕模式是一个非常合适的设计，在这个模式中，对每个服务都提供一个组件特质，该特质包含：</p>
+<ul>
+<li>任何所依赖的组件，以自身类型表述。</li>
+<li>描述服务接口的特质。</li>
+<li>一个抽象的val，该val将被初始化成服务的一个实例。</li>
+<li><p>可以有选择性地包含服务接口的实现。</p>
+<pre><code>trait LoggerComponent {
+  trait Logger{ ... }
+  val logger:Logger
+  class FileLogger(file:String) extends Logger{...}
+  ...
+}
+
+trait AuthComponent {
+  this:LoggerComponent =&gt; //让我们可以访问日志器,自身类型的使用表时认证组件依赖日志器组件。
+  trait Auth { ... }
+  class MockAuth(file:String) extends Auth{ ... }
+}
+</code></pre></li>
+</ul>
+<p>这样，组件配置就可以在一个集中的地方完成：</p>
+<pre><code>object AppComponents extends LoggerComponent with AuthComponent {
+
+  val logger = new FileLogger(&quot;test.log&quot;)
+  val auth = new MockAuth(&quot;users.txt&quot;)
+}
+</code></pre><p>上述方式比下述方式要好：</p>
+<pre><code>trait Logger {def log(msg:String)}
+trait Auth {
+ this:Logger =&gt;
+    def login(id:String,password:String):Boolean
+}
+
+trait App {
+  this:Logger with Auth =&gt;
+  ...
+}
+object MyApp extends App with FileLogger(&quot;test.log&quot;) with MockAuth(&quot;users.txt&quot;)
+</code></pre></li>
+<li><p>类或特质可以定义一个在子类中被具体化的抽象类型，如：</p>
+<pre><code>trait Reader {
+  type Contents
+  def read(fileName:String):Contents//Contents类型是抽象的，子类需要指定这个类型
+}
+
+class StringReader extends Reader{
+ type Contents = String
+ def read(fileName:String) = Source.fromFile(fileName,&quot;UTF-8&quot;).mkString
+}
+
+class ImageReader extends Reader {
+ type Contents = BufferedImage
+ def read(fileName:String) = ImageIO.read(new File(fileName))
+}
+</code></pre><p>同样的效果也可以通过类型参数来实现：</p>
+<pre><code>trait Reader[C] {
+ def read(file Name:String):C
+}
+class StringReader extends Reader[String]{
+ def read(fileName:String) = Source.fromFile(fileName,&quot;UTF-8&quot;).mkString
+}
+
+class ImageReader extends Reader[BufferedImage] {
+ def read(fileName:String) = ImageIO.read(new File(fileName))
+}
+</code></pre><p>上述两种实现方式一种是如果类型在类被实例化时给出，则使用类型参数，如HashMap[String,Int],如果类型是在子类中给出的，则使用抽象类型。</p>
+<p>抽象类型可以有类型界定，就和类型参数一样。如：</p>
+<pre><code>trait Listener {
+ type Event &lt;: java.util.EventObject
+ ...
+}
+
+trait ActionListener extends Listener{
+ type Event = java.awt.event.ActionEvent//OK，这是一个子类型
+}
+</code></pre></li>
+<li><p>在<code>java</code>中，每个监听器接口有各自不同的方法名称对应事件的发生：<code>actionPerformed</code>、<code>stateChanged</code>、<code>itemStateChanged</code>等等，我们将把这些方法统一起来：</p>
+<pre><code>trait Listener[E] {
+ def occurred(e:E):Unit
+}
+</code></pre><p>事件源需要一个监听器的集合，和一个触发这些监听器的方法：</p>
+<pre><code>trait Source[E,L&lt;:Listener[E]]{
+ private val listeners = new ArrayBuffer[L]
+ def add(l:L){listeners +=l}
+ def remove(l:L){listeners +=1}
+ def fire(e:E){
+   for(l&lt;-listeners) l.occurred(e)
+ }
+}
+</code></pre><p>现在添加按钮触发动作事件的情况，定义如下监听器类型：</p>
+<pre><code>trait ActionListener extends Listener[ActionEvent]
+</code></pre><p><code>Button</code>类可以混入<code>Source</code>特质：</p>
+<pre><code>class Button extends Source[ActionEnvent,ActionListener]{
+def click(){
+ fire(new ActionEvent(this,AtionEvent.ACTION_PERFORMED,&quot;click&quot;))
+}
+}
+</code></pre><p><code>Button</code>类不需要重复那些监听器管理的代码，并且监听器是类型安全的，你没法给按钮加上<code>ChangeListener</code>。<code>ActionEvent</code>类将事件源设置为<code>this</code>，但是事件源的类型为<code>Object</code>。我们可以用自身类型来让它也是类型安全的：</p>
+<pre><code>trait Event[S]{
+  var source:S=_
+ }
+trait Listener[S,E&lt;:Event[S]]{
+  def occurred(e:E):Unit
+}
+trait Source[S,E&lt;:Event[S],L&lt;:Listener[S,E]]{
+ this:S =&gt;
+  private val listeners = new ArrayBuffer[L]
+  def add(l:L) {listeners +=l}
+  def remove(l:L){listeners -=l}
+  def fire(e:E){
+   e.source = this //这里需要自身类型
+   for(l&lt;-listeners)l.occurred(e)
+  }
+}
+</code></pre><p>自身类型<code>this:S=&gt;</code>,用来将事件源设为<code>this</code>。否则，<code>this</code>只能是某种<code>Source</code>，而并不一定是<code>Event[S]</code>所要求的类型。下面为如何定义按钮：</p>
+<pre><code>class ButtonEvent extends Event[Button]
+trait ButtonListener extends Listener[Button,ButtonEvent]
+class Button extends Source[Button,ButtonEvent,ButtonListener]{
+  def click(){fire(new ButtonEvent)}
+}
+</code></pre><p>上述定义类型参数扩张很厉害，如果用抽象类型，代码会好看一些：</p>
+<pre><code>trait ListenerSupport{
+ type S &lt;: Source
+ type E &lt;: Event
+ type L &lt;: Listener
+
+ trait Event {
+   var Source:S=_
+ }
+ trait Listener {
+   def occurred(e:E):Unit
+ }
+ trait Source {
+  this:S=&gt;
+    private val listeners = new ArrayBuffer[L]
+   def add(l:L) {listeners +=l}
+   def remove(l:L){listeners -=l}
+   def fire(e:E){
+   e.source = this //这里需要自身类型
+   for(l&lt;-listeners)l.occurred(e)
+  }
+ }
+}
+</code></pre><p>上述这些不能拥有顶级的类型声明，所有代码都被包含在<code>Listener</code>特质里，当想定义一个带有按钮事件和按钮监听器的按钮时，可以定义包含在一个扩展有该特质的模块当中。</p>
+<pre><code>object ButtonModule extends ListenerSupport{
+ type S = Button
+ type E = ButtonEvent
+ type L = ButtonListener
+ class ButtonEvent extends Event
+ trait ButtonListener extends Listener
+ class Button extneds Source {
+  def click(){ fire (new ButtonEvent}
+ }
+}
+</code></pre><p>如果要使用这个按扭，则必须引入这个模块：</p>
+<pre><code>object Main{
+ import ButtonModule._
+ def main(args:Array[String]){
+  val b = new Button
+  b.add(new ButtonListener{
+   override def occurred(e:ButtonEvent){println(e)}
+  })
+  b.click()
+ }
+}
+</code></pre></li>
+<li><p>高等类型：泛型类型<code>List</code>依赖于类型<code>T</code>并产出一个特定的类型，如给定类型<code>Int</code>，你得到的是类型<code>List[Int]</code>.因此，像<code>List</code>这样的泛型类型有时补称做类型构造器。在<code>Scala</code>中，可以定义出依赖于其他类型的类型的类型。</p>
+<pre><code>trait Iterable[E]{
+ def iterator():Iterator[E]
+ def map[F](f:(E)=&gt;F):Iterable[F]
+}
+</code></pre><p>下面是一个实现该特质的类：</p>
+<pre><code>class Buffer[E] extends Iterable[E]{
+ def iterator():Iterator[E] = ... 
+ def map[F](f:(E)=&gt;F):Buffer[F] = ...
+}
+</code></pre><p>我们预期<code>map</code>方法返回一个<code>Buffer</code>，而不仅仅是<code>Iterable</code>。这意味着我们不能在<code>Iterable</code>特质中实现这个<code>map</code>方法。一个解决方案是使用类型构造器来参数化<code>Iterable</code>。如：</p>
+<pre><code>trait Iterable[E,C[_]]{
+ def iterator(): Iterator[E]
+ def build[F]():C[F]
+ def map[F](f:(E)=&gt;F):C[F]
+}
+</code></pre><p>这样，<code>Iterable</code>就依赖一个类型构造器来生成结果，以<code>C[_]</code>表示，这样，<code>Iterable</code>就成为了一个高等类型。这样<code>map</code>方法返回的类型不一定是调用该<code>map</code>方法的<code>Iterable</code>相同的类型。如你对<code>Range</code>执行<code>map方</code>法，结果通常不会是另一个<code>Range</code>，因此<code>map</code>必须构造出另一种类型，比如<code>Buffer[F]</code>,这样的一个<code>Range</code>类型声明如下：<code>class Range extends Iterable[Int，Buffer]</code></p>
+<p>要实现<code>Iterable</code>中的<code>map</code>方法，需要能够产出一个包含了任何类型<code>F</code>的值的容器。可以定义一下<code>Container</code>类：</p>
+<pre><code>trait Container[E]{
+   def += (e:E):Unit
+}
+</code></pre><p><code>build</code>方法被要求产出这样一个对象：</p>
+<pre><code>trait Iterable[E,C[X]&lt;:Container[X]]{
+def build[F]():C[F]
+...
+}
+</code></pre><p>有了上述代码后，就可以在<code>Iterable</code>特质中实现map方法了：</p>
+<pre><code>def map[F](f:(E)=&gt;F):C[F]={
+   val res = build[F]()
+   val iter = iterator()
+   while (iter.hasNext) res +=f(iter.next())
+   res
+}
+</code></pre><p>这样，<code>Iterable</code>类就不再需要提供它们自已的<code>map</code>实现了，如下是类的定义：</p>
+<pre><code>class Range(val low:Int,val high:Int) extends Iterable[Int,Buffer]{
+  def iterator() = new Iterator[Int]{
+    private var i =low
+    def hasNext = i&lt;=high
+    def next() = {i+=1;i-1}
+}
+def build[F]() = new Buffer[F]
+}
+</code></pre><p>注意<code>Range</code>是一个<code>Iterable</code>，可以遍历其内容。但是它并不是一个<code>Container</code>：你不能对它添加值。</p>
+<p>而<code>Buffer</code>则即是<code>Iterable</code>也是<code>Container</code>：</p>
+<pre><code>class Buffer[E:Manifest] extends Iterable[E,Buffer] with Container[E]{
+  private var capacity =10
+  private var length =0
+  private var elems = new Array[E](capacity)//参见说明
+  def iterator() = new Iterator[E]{
+    private var i=0
+    def hasNext = i&lt;length
+    def next() = {i+=1;elems(i-1)}
+  }
+  def build[F:Manifest]() = new Buffer[F]
+
+  def += (e:E){
+    if(length == capacity){
+       capacity = 2* capacity
+       val nelems = new Array[E](capacity)//参见说明
+       for(i&lt;- 0 until length) nelems(i) = elems(i)
+       elems = nelems
+    }
+    elems(length) = e
+    length += 1
+  }
+}
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/scala/">scala</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination" >
+    
+    
+    <a href="/2016/12/08/快学scala《九》/" class="alignright next" >Вперед</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<!-- ��˵���ۿ� start -->
+ <div class="ds-thread" data-thread-key="/2016/12/28/快学scala《十》/" data-title="快学scala十" data-url="http://www.52brt.com/2016/12/28/快学scala《十》/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"okuc"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- ��˵����JS���� end -->
+<section id="comment">
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Поиск">
+    <input type="hidden" name="q" value="site:www.52brt.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Метки</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
+  
+    <li><a href="/tags/Bootstrap/">Bootstrap</a><small>5</small></li>
+  
+    <li><a href="/tags/DateTime/">DateTime</a><small>1</small></li>
+  
+    <li><a href="/tags/HBase/">HBase</a><small>1</small></li>
+  
+    <li><a href="/tags/JavaFX/">JavaFX</a><small>1</small></li>
+  
+    <li><a href="/tags/Nashorn/">Nashorn</a><small>1</small></li>
+  
+    <li><a href="/tags/Nodejs/">Nodejs</a><small>7</small></li>
+  
+    <li><a href="/tags/Scala/">Scala</a><small>3</small></li>
+  
+    <li><a href="/tags/TinkerPop3/">TinkerPop3</a><small>1</small></li>
+  
+    <li><a href="/tags/ambari/">ambari</a><small>1</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>7</small></li>
+  
+    <li><a href="/tags/centos6/">centos6</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>3</small></li>
+  
+    <li><a href="/tags/eclipse/">eclipse</a><small>1</small></li>
+  
+    <li><a href="/tags/eclipse插件开发/">eclipse插件开发</a><small>1</small></li>
+  
+    <li><a href="/tags/elasticsearch/">elasticsearch</a><small>6</small></li>
+  
+    <li><a href="/tags/express/">express</a><small>4</small></li>
+  
+    <li><a href="/tags/hadoop/">hadoop</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/java/">java</a><small>15</small></li>
+  
+    <li><a href="/tags/java8/">java8</a><small>9</small></li>
+  
+    <li><a href="/tags/kafka/">kafka</a><small>1</small></li>
+  
+    <li><a href="/tags/lambda/">lambda</a><small>2</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>11</small></li>
+  
+    <li><a href="/tags/markdown/">markdown</a><small>2</small></li>
+  
+    <li><a href="/tags/maven/">maven</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>9</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/scala/">scala</a><small>10</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>5</small></li>
+  
+    <li><a href="/tags/stream/">stream</a><small>2</small></li>
+  
+    <li><a href="/tags/svg/">svg</a><small>1</small></li>
+  
+    <li><a href="/tags/titan/">titan</a><small>1</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>1</small></li>
+  
+    <li><a href="/tags/其他/">其他</a><small>1</small></li>
+  
+    <li><a href="/tags/前端/">前端</a><small>17</small></li>
+  
+    <li><a href="/tags/可视化/">可视化</a><small>1</small></li>
+  
+    <li><a href="/tags/图数据库/">图数据库</a><small>1</small></li>
+  
+    <li><a href="/tags/多线程/">多线程</a><small>1</small></li>
+  
+    <li><a href="/tags/恢复/">恢复</a><small>1</small></li>
+  
+    <li><a href="/tags/数据库/">数据库</a><small>9</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 okuc
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

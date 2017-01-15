@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 8 | 我的后院自留地</title>
+  <title>Страница 8 | 我的后院自留地</title>
   <meta name="author" content="okuc">
   
   <meta name="description" content="hadoop hive hbase cassandra linux elasticsearch eclipse java mysql spark titan tinkpop neo4j">
@@ -64,6 +64,54 @@ var _hmt = _hmt || [];
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-09-28T14:35:02.000Z"><a href="/2015/09/28/《Elasticsearch服务器开发》学习笔记（五）/">2015-09-28</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/09/28/《Elasticsearch服务器开发》学习笔记（五）/">《Elasticsearch服务器开发》学习笔记（五）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="第3章-搜索-二"><a href="#第3章-搜索-二" class="headerlink" title="第3章 搜索(二)"></a>第3章 搜索(二)</h2><p><strong>本系列是本人在学习《Elasticsearch服务器开发》一书中所做的读书笔记，如有读不懂的地方，请直接参考原书。建议直接购买原书，支持正版。</strong></p>
+<hr>
+<ol>
+<li><p>布尔查询：它可以来封装无限数量的查询，并通过下面描述的节点之一使用一个逻辑值来连接他们。</p>
+<ul>
+<li>should:被它封装的布尔查询可能被匹配，也可能不被匹配。被匹配的should节点数目由minimum_should_match参数控制。</li>
+<li>must：被它封装的布尔查询必须被匹配，文档才能返回。</li>
+<li>must_not：被它封装的布尔查询必须不被匹配，文档才能返回。</li>
+</ul>
+<p>上述每个节点都可以在单个布尔查询中出现多次，可以嵌套查询（一个布尔中多含另一个布尔查询）。结果文档的得分将由文档匹配的所有封装后查询得分总和计算得到。<br>还可以在查询主题中添加以下参数控制其行为：</p>
+<ul>
+<li>boost:查询使用的加权值，默认是1.0,加权值越高，匹配文档得到得分越高。</li>
+<li>minimum_should_match：此参数描述了文档被视为匹配时，应该匹配的should子句的最少数量。它可以是个整数值，也可以是个百分比。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/09/28/《Elasticsearch服务器开发》学习笔记（五）/#more" class="more-link">阅读更多</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -464,59 +512,20 @@ mysql-community-release-el7-5.noarch
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-11-26T14:06:32.000Z"><a href="/2014/11/26/windows下搭建node.js及npm的工作环境/">2014-11-26</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/11/26/windows下搭建node.js及npm的工作环境/">windows下搭建node.js及npm的工作环境</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>由于工作需要，决定在windows下搭建一个nodejs及npm的工作环境，在网上查了n篇文章，别管是编译源码安装也好，还是使用node.msi格式安装包也好，总是有问题。最终，功夫不负有心人，还是搭建完成了。作为新手，其实我也不知道这样搭建对不对，但是运行’npm install’反正不出错了。</p>
-<p>下面就把我的一些搭建过程说一下：</p>
-<ol>
-<li>下载node.js。在<a href="http://nodejs.org/download/">http://nodejs.org/download/</a>下载最新版的node.exe文件，我下载时是<code>v0.10.33</code>。下载完成后，在F盘新建nodejs文件夹，将node.exe放到该文件夹下。同时将<code>F:\nodejs</code>添加到环境变量的PATH中。<br>2.下载npm。在<a href="http://nodejs.org/dist/npm/">http://nodejs.org/dist/npm/</a>下载最新版的npm。我下载时的版本是<code>npm-1.4.9.zip</code>。下载完成后，解压到nodejs文件夹中，形成了如下目录，同时添加环境变量<code>NODE_PATH</code>,其值为：<code>F:\nodejs\node_modules</code>。
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2014/11/26/windows下搭建node.js及npm的工作环境/#more" class="more-link">阅读更多</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
-    <a href="/page/7/" class="alignleft prev">Prev</a>
+    <a href="/page/7/" class="alignleft prev">Назад</a>
   
   
-    <a href="/page/9/" class="alignright next">Next</a>
+    <a href="/page/9/" class="alignright next">Вперед</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="search" name="q" results="0" placeholder="Поиск">
     <input type="hidden" name="q" value="site:www.52brt.com">
   </form>
 </div>
@@ -525,7 +534,7 @@ mysql-community-release-el7-5.noarch
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Метки</h3>
   <ul class="entry">
   
     <li><a href="/tags/Angularjs/">Angularjs</a><small>6</small></li>
@@ -586,7 +595,7 @@ mysql-community-release-el7-5.noarch
   
     <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
   
-    <li><a href="/tags/scala/">scala</a><small>9</small></li>
+    <li><a href="/tags/scala/">scala</a><small>10</small></li>
   
     <li><a href="/tags/shell/">shell</a><small>5</small></li>
   
@@ -620,7 +629,7 @@ mysql-community-release-el7-5.noarch
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2016 okuc
+  &copy; 2017 okuc
   
 </div>
 <div class="clearfix"></div></footer>
